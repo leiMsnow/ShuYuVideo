@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/in_toolbar"
+        layout="@layout/include_toolbar"/>
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom_menu"
+        android:layout_below="@+id/in_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorPrimary"
+        android:orientation="horizontal">
+
+        <com.shuyu.core.widget.ChangeColorView
+            android:id="@+id/ccv_main"
+            style="@style/MainMenuStyle"
+            app:changeIcon="@mipmap/ic_menu_main_normal"
+            app:changeText="@string/nav_main"
+            app:changeTextSize="10sp"
+            app:defaultColor="@color/white"/>
+
+        <com.shuyu.core.widget.ChangeColorView
+            android:id="@+id/ccv_vip"
+            style="@style/MainMenuStyle"
+            app:changeIcon="@mipmap/ic_menu_vip_normal"
+            app:changeText="@string/nav_vip"
+            app:changeTextSize="10sp"
+            app:defaultColor="@color/white"/>
+
+        <com.shuyu.core.widget.ChangeColorView
+            android:id="@+id/ccv_private"
+            style="@style/MainMenuStyle"
+            app:changeIcon="@mipmap/ic_menu_private_normal"
+            app:changeText="@string/nav_private"
+            app:changeTextSize="10sp"
+            app:defaultColor="@color/white"/>
+
+        <com.shuyu.core.widget.ChangeColorView
+            android:id="@+id/ccv_myself"
+            style="@style/MainMenuStyle"
+            app:changeIcon="@mipmap/ic_menu_myself_normal"
+            app:changeText="@string/nav_me"
+            app:changeTextSize="10sp"
+            app:defaultColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
