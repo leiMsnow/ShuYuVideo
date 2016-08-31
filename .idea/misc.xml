@@ -50,8 +50,8 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-  <component name="SvnConfiguration" SSL_PROTOCOLS="tlsv1">
-    <configuration>$USER_HOME$/.subversion</configuration>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Azure\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="masterDetails">
     <states>

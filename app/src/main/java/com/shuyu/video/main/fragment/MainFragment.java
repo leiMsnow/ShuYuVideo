@@ -6,14 +6,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ExpandableListView;
 
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.core.widget.TabsView;
 import com.shuyu.video.R;
-import com.shuyu.video.main.adapter.BannerAdapter;
-import com.shuyu.video.model.Banner;
+import com.shuyu.video.main.adapter.ChannelBannerAdapter;
+import com.shuyu.video.main.adapter.ChannelGroupAdapter;
+import com.shuyu.video.model.ChannelBanner;
+import com.shuyu.video.model.ChannelContent;
+import com.shuyu.video.model.ChannelType;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -31,19 +35,20 @@ public class MainFragment extends BaseFragment {
     @Bind(R.id.tb_indicator)
     TabsView tbIndicator;
     @Bind(R.id.rv_container)
-    RecyclerView rvContainer;
+    ExpandableListView rvContainer;
     @Bind(R.id.cpi_indicator)
     CirclePageIndicator cpiIndicator;
 
-    private BannerAdapter mBannerAdapter;
-    private List<Banner> mBanners;
-    private int currIndex = 0;
-    private Timer timer ;
-    private MyHandler mMyHandler;
+    private ChannelBannerAdapter mBannerAdapter;
+    private ChannelGroupAdapter mContentAdapter;
 
-    private String[] mTitles = new String[]{
-            "精选", "推荐", "人气", "美图"
-    };
+    private List<ChannelType> mChannelTypes;
+    private List<ChannelBanner> mChannelBanners;
+    private List<ChannelContent> mChannelContents;
+
+    private int currIndex = 0;
+    private Timer timer;
+    private MyHandler mMyHandler;
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -59,6 +64,15 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        String[] title = new String[]{"推荐", "人气", "青春", "动画"};
+        mChannelTypes = new ArrayList<>();
+        List<String> mTitles = new ArrayList<>();
+        for (String aTitle : title) {
+            mTitles.add(aTitle);
+            ChannelType channelType = new ChannelType();
+            channelType.setTitle(aTitle);
+            mChannelTypes.add(channelType);
+        }
 
         tbIndicator.setChildView(mTitles, new TabsView.TabsChildViewClickListener() {
             @Override
@@ -67,17 +81,35 @@ public class MainFragment extends BaseFragment {
             }
         });
 
-        mBanners = new ArrayList<>();
-        mBanners.add(new Banner());
-        mBanners.add(new Banner());
-        mBanners.add(new Banner());
-        mBanners.add(new Banner());
-
-        mBannerAdapter = new BannerAdapter(mContext, mBanners);
-
+        mChannelBanners = new ArrayList<>();
+        mChannelBanners.add(new ChannelBanner());
+        mChannelBanners.add(new ChannelBanner());
+        mChannelBanners.add(new ChannelBanner());
+        mBannerAdapter = new ChannelBannerAdapter(mContext, mChannelBanners);
         mVpContainer.setAdapter(mBannerAdapter);
         cpiIndicator.setViewPager(mVpContainer);
 
+        mChannelContents = new ArrayList<>();
+        ChannelContent channelContent = new ChannelContent();
+        mChannelContents.add(channelContent);
+        List<ChannelContent.ChannelContentListBean> contentListBeans = new ArrayList<>();
+        channelContent.setChannelContentList(contentListBeans);
+        for (int i = 0; i < 5; i++) {
+            ChannelContent.ChannelContentListBean channelContentListBean = new ChannelContent.ChannelContentListBean();
+            contentListBeans.add(channelContentListBean);
+        }
+        mContentAdapter = new ChannelGroupAdapter(mContext, mChannelContents);
+        rvContainer.setAdapter(mContentAdapter);
+        rvContainer.setGroupIndicator(null);
+        for (int i = 0; i < mChannelContents.size(); i++) {
+            rvContainer.expandGroup(i);
+        }
+        rvContainer.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                return true;
+            }
+        });
     }
 
     @Override
@@ -101,7 +133,7 @@ public class MainFragment extends BaseFragment {
             public void run() {
                 Message message = new Message();
                 message.what = UPDATE_VIEWPAGER;
-                if (currIndex == mBanners.size()) {
+                if (currIndex == mChannelBanners.size()) {
                     currIndex = -1;
                 }
                 message.arg1 = currIndex++;
@@ -114,7 +146,7 @@ public class MainFragment extends BaseFragment {
 
         private WeakReference<MainFragment> activityWeakReference;
 
-        public MyHandler(MainFragment activity) {
+        MyHandler(MainFragment activity) {
             activityWeakReference = new WeakReference<>(activity);
         }
 
@@ -144,5 +176,4 @@ public class MainFragment extends BaseFragment {
             timer = null;
         }
     }
-
 }

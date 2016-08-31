@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cpi="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,7 +12,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_container"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
+        android:layout_height="160dp"
         android:layout_below="@+id/tb_indicator"/>
 
     <com.shuyu.core.widget.CirclePageIndicator
@@ -27,9 +26,11 @@
         android:layout_marginRight="8dp"
         android:paddingLeft="8dp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <ExpandableListView
         android:id="@+id/rv_container"
         android:layout_width="match_parent"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:layout_height="match_parent"
         android:layout_below="@+id/vp_container"/>
 

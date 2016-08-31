@@ -4,7 +4,7 @@ package com.shuyu.video.model;
  * Created by zhangleilei on 8/31/16.
  */
 
-public class Banner {
+public class ChannelBanner {
 
 
     /**

@@ -77,14 +77,14 @@ public class TabsView extends LinearLayout {
      * @param childrenText tabs显示的文本，数组格式
      * @param listener     tabs点击监听，返回相应的索引号，从0开始
      */
-    public void setChildView(String[] childrenText, TabsChildViewClickListener listener) {
+    public void setChildView(List<String> childrenText, TabsChildViewClickListener listener) {
         if (childrenText == null)
             return;
         this.childClickListener = listener;
         mChildrenViews.clear();
         mTabParent.removeAllViews();
 
-        int count = childrenText.length;
+        int count = childrenText.size();
         setIndicatorWidth(count);
 
         for (int i = 0; i < count; i++) {
@@ -94,7 +94,7 @@ public class TabsView extends LinearLayout {
             childViewParams.weight = 1;
             childView.setGravity(Gravity.CENTER);
             childView.setLayoutParams(childViewParams);
-            childView.setText(childrenText[i]);
+            childView.setText(childrenText.get(i));
             if (i == currentPosition) {
                 childView.setTextColor(mContext.getResources().getColor(R.color.theme_red));
                 new Handler().postDelayed(new Runnable() {
