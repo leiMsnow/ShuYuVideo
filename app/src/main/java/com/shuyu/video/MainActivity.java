@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDefaultFragment(savedInstanceState);
+        setTitle(titles[0]);
     }
 
     private void initDefaultFragment(Bundle savedInstanceState) {

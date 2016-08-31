@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:vip="http://schemas.android.com/apk/res-auto"
+    xmlns:cpi="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.shuyu.core.widget.HorizontalIndicatorView
-        android:id="@+id/vp_indicator"
+    <com.shuyu.core.widget.TabsView
+        android:id="@+id/tb_indicator"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        vip:equally_item="true"/>
+        android:layout_height="wrap_content"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_container"
         android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:layout_below="@+id/tb_indicator"/>
+
+    <com.shuyu.core.widget.CirclePageIndicator
+        android:id="@+id/cpi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/vp_container"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:paddingLeft="8dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/vp_indicator"/>
+        android:layout_below="@+id/vp_container"/>
 
 </RelativeLayout>

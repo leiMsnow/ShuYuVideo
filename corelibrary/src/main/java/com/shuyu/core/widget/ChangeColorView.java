@@ -28,7 +28,7 @@ public class ChangeColorView extends View {
     private Bitmap mIconBitmap;
     private String mText = "";
     private int mTextSize = (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics());
+            TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
 
     private Canvas mcCanvas;
     private Bitmap mBitmap;
@@ -44,6 +44,7 @@ public class ChangeColorView extends View {
         this.mAlpha = alpha;
         invalidateView();
     }
+
     public void setUnSelectColor(int mDefaultColor) {
         this.mDefaultColor = mDefaultColor;
         setIconAlpha(1.0f);
@@ -55,7 +56,7 @@ public class ChangeColorView extends View {
     }
 
     public void setIconBitmap(int mIconBitmap) {
-        this.mIconBitmap = BitmapFactory.decodeResource(getResources(),mIconBitmap);
+        this.mIconBitmap = BitmapFactory.decodeResource(getResources(), mIconBitmap);
         setIconAlpha(1.0f);
     }
 
@@ -115,8 +116,8 @@ public class ChangeColorView extends View {
                 mTextSize = (int) ta.getDimension(attr, TypedValue
                         .applyDimension(TypedValue.COMPLEX_UNIT_SP, 12,
                                 getResources().getDisplayMetrics()));
-            } else if(attr == R.styleable.ChangeColorView_defaultColor){
-                mDefaultColor = ta.getColor(attr,0xff333333);
+            } else if (attr == R.styleable.ChangeColorView_defaultColor) {
+                mDefaultColor = ta.getColor(attr, 0xff333333);
             }
         }
         ta.recycle();
