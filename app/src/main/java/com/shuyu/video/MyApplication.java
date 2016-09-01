@@ -11,5 +11,12 @@ public class MyApplication extends CoreApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 加密
+//         AESUtils.getInstance().encryptToBase64Str(json,aesKey)
+
+        // 解密
+        // AESUtils aesUtils = AESUtils.getInstance(aesKey);
+        // String decryptData = AESUtils.decryptFromBase64Str(decodeData);
     }
 }

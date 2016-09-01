@@ -30,14 +30,15 @@ import butterknife.Bind;
 public class MainFragment extends BaseFragment {
 
     public static final int UPDATE_VIEWPAGER = 200;
-    @Bind(R.id.vp_container)
-    ViewPager mVpContainer;
+
     @Bind(R.id.tb_indicator)
     TabsView tbIndicator;
     @Bind(R.id.rv_container)
     ExpandableListView rvContainer;
-    @Bind(R.id.cpi_indicator)
-    CirclePageIndicator cpiIndicator;
+
+    private View vChannelHeader;
+    private ViewPager mVpContainer;
+    private CirclePageIndicator cpiIndicator;
 
     private ChannelBannerAdapter mBannerAdapter;
     private ChannelGroupAdapter mContentAdapter;
@@ -64,6 +65,11 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+        vChannelHeader = View.inflate(mContext,R.layout.header_channel,null);
+        mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
+        cpiIndicator = (CirclePageIndicator) vChannelHeader.findViewById(R.id.cpi_indicator);
+
         String[] title = new String[]{"推荐", "人气", "青春", "动画"};
         mChannelTypes = new ArrayList<>();
         List<String> mTitles = new ArrayList<>();
@@ -110,6 +116,9 @@ public class MainFragment extends BaseFragment {
                 return true;
             }
         });
+
+        rvContainer.addHeaderView(vChannelHeader);
+
     }
 
     @Override
