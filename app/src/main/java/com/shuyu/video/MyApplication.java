@@ -18,5 +18,7 @@ public class MyApplication extends CoreApplication {
         // 解密
         // AESUtils aesUtils = AESUtils.getInstance(aesKey);
         // String decryptData = AESUtils.decryptFromBase64Str(decodeData);
+//        AESkey=!#@ishuyu@2016omc
+//        MD5Key=@2016yu_shu_ai@!#
     }
 }
