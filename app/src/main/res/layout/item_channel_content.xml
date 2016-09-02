@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/iv_url"
-        android:layout_width="160dp"
-        android:layout_centerInParent="true"
-        android:layout_height="160dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitXY"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/iv_url"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="这里是描述"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_desc"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/tv_label2"
+            android:text="人气"/>
+
+        <TextView
+            android:id="@+id/tv_label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_desc"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:text="经典"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

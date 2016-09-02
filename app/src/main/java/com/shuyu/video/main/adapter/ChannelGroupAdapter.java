@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.shuyu.core.decoration.DividerGridItemDecoration;
 import com.shuyu.video.R;
 import com.shuyu.video.model.ChannelContent;
 
@@ -88,10 +89,11 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
             holder.mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_container);
             mContentAdapter = new ChannelContentAdapter(mContext, null,
                     R.layout.item_channel_content);
-            holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+            holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+            holder.mRecyclerView.addItemDecoration(new DividerGridItemDecoration(mContext));
             holder.mRecyclerView.setAdapter(mContentAdapter);
         }
-        mContentAdapter.replaceAll( mChannelContents.get(i).getChannelContentList());
+        mContentAdapter.replaceAll(mChannelContents.get(i).getChannelContentList());
         return view;
     }
 
