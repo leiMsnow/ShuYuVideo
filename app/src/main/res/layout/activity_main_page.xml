@@ -27,6 +27,7 @@
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_main"
             style="@style/MainMenuStyle"
+            app:changeColor="#ff00cc"
             app:changeIcon="@mipmap/ic_menu_main_normal"
             app:changeText="@string/nav_main"
             app:changeTextSize="10sp"
@@ -35,6 +36,7 @@
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_vip"
             style="@style/MainMenuStyle"
+            app:changeColor="#ff00cc"
             app:changeIcon="@mipmap/ic_menu_vip_normal"
             app:changeText="@string/nav_vip"
             app:changeTextSize="10sp"
@@ -43,6 +45,7 @@
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_private"
             style="@style/MainMenuStyle"
+            app:changeColor="#ff00cc"
             app:changeIcon="@mipmap/ic_menu_private_normal"
             app:changeText="@string/nav_private"
             app:changeTextSize="10sp"
@@ -51,6 +54,7 @@
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_myself"
             style="@style/MainMenuStyle"
+            app:changeColor="#ff00cc"
             app:changeIcon="@mipmap/ic_menu_myself_normal"
             app:changeText="@string/nav_me"
             app:changeTextSize="10sp"

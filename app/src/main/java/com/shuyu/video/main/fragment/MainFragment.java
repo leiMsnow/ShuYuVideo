@@ -100,7 +100,7 @@ public class MainFragment extends BaseFragment {
         mChannelContents.add(channelContent);
         List<ChannelContent.ChannelContentListBean> contentListBeans = new ArrayList<>();
         channelContent.setChannelContentList(contentListBeans);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             ChannelContent.ChannelContentListBean channelContentListBean = new ChannelContent.ChannelContentListBean();
             contentListBeans.add(channelContentListBean);
         }

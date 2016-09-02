@@ -18,9 +18,11 @@ import java.util.List;
 
 public class ChannelContentAdapter extends SuperAdapter<ChannelContent.ChannelContentListBean> {
 
+
     public ChannelContentAdapter(Context context, List<ChannelContent.ChannelContentListBean> items,
                                  int layoutResId) {
         super(context, items, layoutResId);
+
     }
 
     @Override
@@ -28,6 +30,5 @@ public class ChannelContentAdapter extends SuperAdapter<ChannelContent.ChannelCo
                        ChannelContent.ChannelContentListBean item) {
         ImageView imageView = holder.findViewById(R.id.iv_url);
         Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
-
     }
 }

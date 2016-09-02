@@ -43,6 +43,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.bg_sexy);
         initMenuFragment();
     }
 
@@ -133,7 +135,8 @@ public class MainActivity extends BaseActivity {
                 changeColorViews.get(i).setIconAlpha(0);
             }
             changeColorViews.get(position).setIconAlpha(1.0f);
-            switchContent(mContent, fragments.get(position), position);
+            if (fragments != null)
+                switchContent(mContent, fragments.get(position), position);
         }
     }
 
