@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Main" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="android:windowBackground">@color/white</item>
         <item name="actionMenuTextColor">@color/white</item>
@@ -21,25 +21,21 @@
 
         <item name="android:listDivider">@drawable/rv_divider</item>
 
-        <!--<item name="colorPrimary">@color/black</item>-->
-        <!--<item name="colorPrimaryDark">@color/black</item>-->
-        <!--<item name="colorAccent">@color/black</item>-->
-
     </style>
 
-    <style name="AppTheme.LightBlue">
+    <style name="AppTheme.Main.LightBlue">
         <item name="colorPrimary">@color/theme_light_blue</item>
         <item name="colorPrimaryDark">@color/theme_light_blue</item>
         <item name="colorAccent">@color/theme_light_blue_700</item>
     </style>
 
 
-    <style name="AppTheme.Translucent">
+    <style name="AppTheme.Main.Translucent">
         <item name="android:windowBackground">@color/translucent_a80</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="AppTheme.Translucent.Full">
+    <style name="AppTheme.Main.Translucent.Full">
         <item name="android:windowFullscreen">true</item>
     </style>
 

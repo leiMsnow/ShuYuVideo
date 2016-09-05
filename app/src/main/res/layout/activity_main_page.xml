@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/in_toolbar"
-        layout="@layout/include_toolbar"/>
+        layout="@layout/include_toolbar" />
 
     <FrameLayout
         android:id="@+id/fl_container"
@@ -21,43 +21,43 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:background="?attr/colorPrimary"
+        android:background="@color/black"
         android:orientation="horizontal">
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_main"
             style="@style/MainMenuStyle"
-            app:changeColor="#ff00cc"
-            app:changeIcon="@mipmap/ic_menu_main_normal"
+            app:changeColor="@color/main_pink"
+            app:changeIcon="@mipmap/ic_nav_main"
             app:changeText="@string/nav_main"
-            app:changeTextSize="10sp"
+            app:changeTextSize="12sp"
             app:defaultColor="@color/white"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_vip"
             style="@style/MainMenuStyle"
-            app:changeColor="#ff00cc"
-            app:changeIcon="@mipmap/ic_menu_vip_normal"
+            app:changeColor="@color/main_pink"
+            app:changeIcon="@mipmap/ic_nav_vip"
             app:changeText="@string/nav_vip"
-            app:changeTextSize="10sp"
+            app:changeTextSize="12sp"
             app:defaultColor="@color/white"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_private"
             style="@style/MainMenuStyle"
-            app:changeColor="#ff00cc"
-            app:changeIcon="@mipmap/ic_menu_private_normal"
+            app:changeColor="@color/main_pink"
+            app:changeIcon="@mipmap/ic_nav_private"
             app:changeText="@string/nav_private"
-            app:changeTextSize="10sp"
+            app:changeTextSize="12sp"
             app:defaultColor="@color/white"/>
 
         <com.shuyu.core.widget.ChangeColorView
-            android:id="@+id/ccv_myself"
+            android:id="@+id/ccv_user"
             style="@style/MainMenuStyle"
-            app:changeColor="#ff00cc"
-            app:changeIcon="@mipmap/ic_menu_myself_normal"
+            app:changeColor="@color/main_pink"
+            app:changeIcon="@mipmap/ic_nav_user"
             app:changeText="@string/nav_me"
-            app:changeTextSize="10sp"
+            app:changeTextSize="12sp"
             app:defaultColor="@color/white"/>
 
     </LinearLayout>

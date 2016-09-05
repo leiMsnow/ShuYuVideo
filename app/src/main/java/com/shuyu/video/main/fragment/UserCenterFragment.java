@@ -6,15 +6,15 @@ import android.os.Bundle;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.video.R;
 
-public class MyselfFragment extends BaseFragment {
+public class UserCenterFragment extends BaseFragment {
 
-    public MyselfFragment() {
+    public UserCenterFragment() {
 
     }
 
 
-    public static MyselfFragment newInstance() {
-        MyselfFragment fragment = new MyselfFragment();
+    public static UserCenterFragment newInstance() {
+        UserCenterFragment fragment = new UserCenterFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

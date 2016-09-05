@@ -8,7 +8,7 @@ import android.view.View;
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.widget.ChangeColorView;
 import com.shuyu.video.main.fragment.MainFragment;
-import com.shuyu.video.main.fragment.MyselfFragment;
+import com.shuyu.video.main.fragment.UserCenterFragment;
 import com.shuyu.video.main.fragment.PrivateFragment;
 import com.shuyu.video.main.fragment.VipFragment;
 
@@ -26,14 +26,13 @@ public class MainActivity extends BaseActivity {
     ChangeColorView mCcvVip;
     @Bind(R.id.ccv_private)
     ChangeColorView mCcvPrivate;
-    @Bind(R.id.ccv_myself)
-    ChangeColorView mCcvMyself;
+    @Bind(R.id.ccv_user)
+    ChangeColorView mCcvUser;
 
     private List<ChangeColorView> changeColorViews = null;
     private List<Fragment> fragments = null;
     private Fragment mContent;
-    private String[] tags = {"main", "vip", "private", "my"};
-    private int[] titles = {R.string.nav_main, R.string.nav_vip, R.string.nav_private, R.string.nav_me};
+    private String[] tags = {"main", "vip", "private", "me"};
 
     @Override
     protected int getLayoutRes() {
@@ -42,9 +41,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.bg_sexy);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         initMenuFragment();
     }
 
@@ -52,7 +50,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDefaultFragment(savedInstanceState);
-        setTitle(titles[0]);
     }
 
     private void initDefaultFragment(Bundle savedInstanceState) {
@@ -62,7 +59,7 @@ public class MainActivity extends BaseActivity {
             MainFragment mainFragment = MainFragment.newInstance();
             VipFragment vipFragment = VipFragment.newInstance();
             PrivateFragment privateFragment = PrivateFragment.newInstance();
-            MyselfFragment myFragment = MyselfFragment.newInstance();
+            UserCenterFragment myFragment = UserCenterFragment.newInstance();
             mContent = mainFragment;
             fts.add(R.id.fl_container, mainFragment, tags[0]);
             fts.add(R.id.fl_container, vipFragment, tags[1]);
@@ -87,7 +84,7 @@ public class MainActivity extends BaseActivity {
                     .findFragmentByTag(tags[1]);
             PrivateFragment privateFragment = (PrivateFragment) getSupportFragmentManager()
                     .findFragmentByTag(tags[2]);
-            MyselfFragment myFragment = (MyselfFragment) getSupportFragmentManager()
+            UserCenterFragment myFragment = (UserCenterFragment) getSupportFragmentManager()
                     .findFragmentByTag(tags[3]);
             getSupportFragmentManager()
                     .beginTransaction()
@@ -104,7 +101,7 @@ public class MainActivity extends BaseActivity {
         changeColorViews.add(mCcvMain);
         changeColorViews.add(mCcvVip);
         changeColorViews.add(mCcvPrivate);
-        changeColorViews.add(mCcvMyself);
+        changeColorViews.add(mCcvUser);
 
         for (int i = 0; i < changeColorViews.size(); i++) {
             changeColorViews.get(i).setOnClickListener(new OnButtonMenuClickListener(i));
@@ -150,13 +147,12 @@ public class MainActivity extends BaseActivity {
         if (mContent != to) {
             mContent = to;
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            if (!to.isAdded()) { // 先判断是否被add过
+            if (!to.isAdded()) {
                 transaction.hide(from)
-                        .add(R.id.fl_container, to, tags[position]).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
+                        .add(R.id.fl_container, to, tags[position]).commitAllowingStateLoss();
             } else {
-                transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
+                transaction.hide(from).show(to).commitAllowingStateLoss();
             }
-            setTitle(titles[position]);
         }
     }
 }

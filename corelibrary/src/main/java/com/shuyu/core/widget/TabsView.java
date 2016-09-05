@@ -49,7 +49,7 @@ public class TabsView extends LinearLayout {
 
         mTabParent = new LinearLayout(mContext);
         LayoutParams tabParams = new LayoutParams(LayoutParams.MATCH_PARENT,
-                DensityUtils.dp2px(mContext, 40));
+                DensityUtils.dp2px(mContext, 48));
         mTabParent.setOrientation(LinearLayout.HORIZONTAL);
         mTabParent.setLayoutParams(tabParams);
 
@@ -95,6 +95,7 @@ public class TabsView extends LinearLayout {
             childView.setGravity(Gravity.CENTER);
             childView.setLayoutParams(childViewParams);
             childView.setText(childrenText.get(i));
+            childView.setTextColor(mContext.getResources().getColor(R.color.normal_dark_grey));
             if (i == currentPosition) {
                 childView.setTextColor(mContext.getResources().getColor(R.color.theme_red));
                 new Handler().postDelayed(new Runnable() {
