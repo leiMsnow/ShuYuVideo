@@ -20,20 +20,21 @@ import java.util.List;
 public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
-    private List<ChannelContent> mChannelContents;
+    private List<ChannelContent.VideoChannelListBean> mChannelContents;
     private ChannelContentAdapter mContentAdapter;
 
     public ChannelGroupAdapter(Context context) {
         mContext = context;
     }
 
-    public void setChannelContents(List<ChannelContent> channelContents) {
+    public void setChannelContents(List<ChannelContent.VideoChannelListBean> channelContents) {
         mChannelContents = channelContents;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getGroupCount() {
-        return mChannelContents.size();
+        return mChannelContents == null ? 0 : mChannelContents.size();
     }
 
     @Override
@@ -77,7 +78,7 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (GroupHolder) view.getTag();
         }
-        ChannelContent content = (ChannelContent) getGroup(i);
+        ChannelContent.VideoChannelListBean content = (ChannelContent.VideoChannelListBean) getGroup(i);
         holder.tvGroupTitle.setText(content.getTitle());
         return view;
     }
@@ -92,7 +93,6 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
             mContentAdapter = new ChannelContentAdapter(mContext, null,
                     R.layout.item_channel_content);
             holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-//            holder.mRecyclerView.addItemDecoration(new DividerGridItemDecoration(mContext));
             holder.mRecyclerView.setAdapter(mContentAdapter);
         }
         mContentAdapter.replaceAll(mChannelContents.get(i).getChannelContentList());

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">红人影院</string>
 
-    <string name="nav_main">精选</string>
+    <string name="nav_main">首页</string>
     <string name="nav_vip">VIP</string>
     <string name="nav_private">私密</string>
     <string name="nav_me">我的</string>

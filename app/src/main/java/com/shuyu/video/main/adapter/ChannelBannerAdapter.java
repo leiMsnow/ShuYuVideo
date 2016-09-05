@@ -14,33 +14,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * Created by zhangleilei on 8/31/16.
  */
 
 public class ChannelBannerAdapter extends PagerAdapter {
 
 
-    private List<ChannelBanner> mBanners;
+    private Context mContext;
+    private List<ChannelBanner> mBanners = new ArrayList<>();
     private List<ImageView> mImageViews = new ArrayList<>();
 
-    public ChannelBannerAdapter(Context context, List<ChannelBanner> banners) {
-        mBanners = banners;
+    public ChannelBannerAdapter(Context context) {
+        mContext = context;
+    }
 
+    public void setBanners(List<ChannelBanner> banners) {
+        mBanners = banners;
         for (int i = 0; i < mBanners.size(); i++) {
-            ImageView imageView = new ImageView(context);
+            ImageView imageView = new ImageView(mContext);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(context)
+            Glide.with(mContext)
                     .load(banners.get(i).getImgUrl())
                     .error(R.mipmap.ic_default_image)
                     .into(imageView);
             mImageViews.add(imageView);
         }
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return mBanners.size();
+        return mBanners == null ? 0 : mBanners.size();
     }
 
     @Override

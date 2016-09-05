@@ -32,7 +32,8 @@ public class MainActivity extends BaseActivity {
     private List<ChangeColorView> changeColorViews = null;
     private List<Fragment> fragments = null;
     private Fragment mContent;
-    private String[] tags = {"main", "vip", "private", "me"};
+    private String[] tags = {"main", "vip", "private", "my"};
+    private int[] titles = {R.string.nav_main, R.string.nav_vip, R.string.nav_private, R.string.nav_me};
 
     @Override
     protected int getLayoutRes() {
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDefaultFragment(savedInstanceState);
+        setTitle(titles[0]);
     }
 
     private void initDefaultFragment(Bundle savedInstanceState) {
@@ -153,6 +155,7 @@ public class MainActivity extends BaseActivity {
             } else {
                 transaction.hide(from).show(to).commitAllowingStateLoss();
             }
+            setTitle(titles[position]);
         }
     }
 }

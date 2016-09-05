@@ -14,13 +14,13 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.core.widget.TabsView;
 import com.shuyu.video.R;
+import com.shuyu.video.api.ApiUtils;
 import com.shuyu.video.api.interfaces.IMainApi;
 import com.shuyu.video.main.adapter.ChannelBannerAdapter;
 import com.shuyu.video.main.adapter.ChannelGroupAdapter;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
 import com.shuyu.video.model.ChannelTitle;
-import com.squareup.okhttp.OkHttpClient;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -31,7 +31,6 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import retrofit.Call;
 import retrofit.Callback;
-import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -53,11 +52,12 @@ public class MainFragment extends BaseFragment {
 
     private List<ChannelTitle> mChannelTitles;
     private List<ChannelBanner> mChannelBanners;
-    private List<ChannelContent> mChannelContents;
+    private List<ChannelContent.VideoChannelListBean> mChannelContents;
 
     private int currIndex = 0;
     private Timer timer;
     private MyHandler mMyHandler;
+    private TabsViewClick tabsViewClick;
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -78,60 +78,24 @@ public class MainFragment extends BaseFragment {
         mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
         cpiIndicator = (CirclePageIndicator) vChannelHeader.findViewById(R.id.cpi_indicator);
 
-
         getChannelTitle();
 
-        String[] title = new String[]{"推荐", "人气", "青春", "动画"};
-        mChannelTitles = new ArrayList<>();
-        List<String> mTitles = new ArrayList<>();
-        for (String aTitle : title) {
-            mTitles.add(aTitle);
-            ChannelTitle channelType = new ChannelTitle();
-            channelType.setTitle(aTitle);
-            mChannelTitles.add(channelType);
-        }
-
-        tbIndicator.setChildView(mTitles, new TabsView.TabsChildViewClickListener() {
-            @Override
-            public void onTabsChildViewCLick(int position) {
-
-            }
-        });
-
+        tabsViewClick = new TabsViewClick();
         mGroupAdapter = new ChannelGroupAdapter(mContext);
-
-        mChannelBanners = new ArrayList<>();
-        mChannelBanners.add(new ChannelBanner());
-        mChannelBanners.add(new ChannelBanner());
-        mChannelBanners.add(new ChannelBanner());
-        mBannerAdapter = new ChannelBannerAdapter(mContext, mChannelBanners);
+        mBannerAdapter = new ChannelBannerAdapter(mContext);
         mVpContainer.setAdapter(mBannerAdapter);
         cpiIndicator.setViewPager(mVpContainer);
 
-        mChannelContents = new ArrayList<>();
-        ChannelContent channelContent = new ChannelContent();
-        mChannelContents.add(channelContent);
-        List<ChannelContent.ChannelContentListBean> contentListBeans = new ArrayList<>();
-        channelContent.setChannelContentList(contentListBeans);
-        for (int i = 0; i < 10; i++) {
-            ChannelContent.ChannelContentListBean channelContentListBean = new ChannelContent.ChannelContentListBean();
-            contentListBeans.add(channelContentListBean);
-        }
-        mGroupAdapter.setChannelContents(mChannelContents);
         rvContainer.setAdapter(mGroupAdapter);
         rvContainer.setGroupIndicator(null);
-        for (int i = 0; i < mChannelContents.size(); i++) {
-            rvContainer.expandGroup(i);
-        }
+
         rvContainer.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
                 return true;
             }
         });
-
         rvContainer.addHeaderView(vChannelHeader);
-
     }
 
     @Override
@@ -140,29 +104,26 @@ public class MainFragment extends BaseFragment {
         mMyHandler = new MyHandler(this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (timer == null) {
-            timer = new Timer();
-            autoUpdateViewPager();
-        }
+    private void getChannelData(int cid) {
+        getChannelBanner(cid);
+        getChannelContent(cid, 1);
     }
 
     private void getChannelTitle() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.51shuyu.com:8008/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(new OkHttpClient())
-                .build();
-
-        IMainApi mainApi = retrofit.create(IMainApi.class);
+        IMainApi mainApi = ApiUtils.createApi(IMainApi.class);
         Call<List<ChannelTitle>> call = mainApi.getChannelList();
         call.enqueue(new Callback<List<ChannelTitle>>() {
             @Override
             public void onResponse(Response<List<ChannelTitle>> response, Retrofit retrofit) {
                 LogUtils.d(MainFragment.class.getSimpleName(), "response: "
                         + response.body().toString());
+                mChannelTitles = response.body();
+                List<String> title = new ArrayList<>();
+                for (ChannelTitle title1 : response.body()) {
+                    title.add(title1.getTitle());
+                }
+                tbIndicator.setChildView(title, tabsViewClick);
+                getChannelData(mChannelTitles.get(0).getId());
             }
 
             @Override
@@ -172,7 +133,64 @@ public class MainFragment extends BaseFragment {
         });
     }
 
+
+    private void getChannelBanner(int cid) {
+        IMainApi mainApi = ApiUtils.createApi(IMainApi.class);
+        Call<List<ChannelBanner>> call = mainApi.getChannelBanner(cid);
+        call.enqueue(new Callback<List<ChannelBanner>>() {
+            @Override
+            public void onResponse(Response<List<ChannelBanner>> response, Retrofit retrofit) {
+                LogUtils.d(MainFragment.class.getSimpleName(), "response: "
+                        + response.body().toString());
+                mChannelBanners = response.body();
+                mBannerAdapter.setBanners(mChannelBanners);
+                autoUpdateViewPager();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                LogUtils.d(MainFragment.class.getSimpleName(), "onFailure");
+            }
+        });
+
+    }
+
+    private void getChannelContent(int cid, int pageNo) {
+        IMainApi mainApi = ApiUtils.createApi(IMainApi.class);
+        Call<ChannelContent> call = mainApi.getChannelContent(cid, pageNo, 10);
+        call.enqueue(new Callback<ChannelContent>() {
+            @Override
+            public void onResponse(Response<ChannelContent> response, Retrofit retrofit) {
+                LogUtils.d(MainFragment.class.getSimpleName(), "response: "
+                        + response.body().toString());
+                mChannelContents = response.body().getVideoChannelList();
+                mGroupAdapter.setChannelContents(mChannelContents);
+                for (int i = 0; i < mChannelContents.size(); i++) {
+                    rvContainer.expandGroup(i);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                LogUtils.d(MainFragment.class.getSimpleName(), "onFailure: " + t);
+            }
+        });
+    }
+
+
+    class TabsViewClick implements TabsView.TabsChildViewClickListener {
+        @Override
+        public void onTabsChildViewCLick(int position) {
+            getChannelData(mChannelTitles.get(position).getId());
+        }
+    }
+
     private void autoUpdateViewPager() {
+        if (mChannelContents == null)
+            return;
+        if (timer == null) {
+            timer = new Timer();
+        }
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

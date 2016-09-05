@@ -16,10 +16,9 @@ import java.util.List;
  * Created by Azure on 2016/8/31.
  */
 
-public class ChannelContentAdapter extends SuperAdapter<ChannelContent.ChannelContentListBean> {
+public class ChannelContentAdapter extends SuperAdapter<ChannelContent.VideoChannelListBean.ChannelContentListBean> {
 
-
-    public ChannelContentAdapter(Context context, List<ChannelContent.ChannelContentListBean> items,
+    public ChannelContentAdapter(Context context, List<ChannelContent.VideoChannelListBean.ChannelContentListBean> items,
                                  int layoutResId) {
         super(context, items, layoutResId);
 
@@ -27,8 +26,9 @@ public class ChannelContentAdapter extends SuperAdapter<ChannelContent.ChannelCo
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition,
-                       ChannelContent.ChannelContentListBean item) {
+                       ChannelContent.VideoChannelListBean.ChannelContentListBean item) {
         ImageView imageView = holder.findViewById(R.id.iv_url);
         Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
+        holder.setText(R.id.tv_desc,item.getTitle());
     }
 }

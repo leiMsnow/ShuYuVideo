@@ -190,4 +190,29 @@ public class ChannelBanner {
     public void setVersionCode(Object versionCode) {
         this.versionCode = versionCode;
     }
+
+
+    @Override
+    public String toString() {
+        return "ChannelBanner{" +
+                "title='" + title + '\'' +
+                ", bannerType=" + bannerType +
+                ", targetId=" + targetId +
+                ", targetUrl='" + targetUrl + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", videoLength=" + videoLength +
+                ", fee=" + fee +
+                ", feeTime='" + feeTime + '\'' +
+                ", feeRule=" + feeRule +
+                ", isPage='" + isPage + '\'' +
+                ", videoType=" + videoType +
+                ", isTryPlay=" + isTryPlay +
+                ", tryPlayLength=" + tryPlayLength +
+                ", softwareSize=" + softwareSize +
+                ", packageName='" + packageName + '\'' +
+                ", md5='" + md5 + '\'' +
+                ", appName=" + appName +
+                ", versionCode=" + versionCode +
+                '}';
+    }
 }
