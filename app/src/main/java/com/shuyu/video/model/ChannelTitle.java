@@ -4,7 +4,7 @@ package com.shuyu.video.model;
  * Created by Azure on 2016/8/31.
  */
 
-public class ChannelType {
+public class ChannelTitle {
     /**
      * id : 1011
      * title : 华北
@@ -56,5 +56,16 @@ public class ChannelType {
 
     public void setIsRmd(int isRmd) {
         this.isRmd = isRmd;
+    }
+
+    @Override
+    public String toString() {
+        return "ChannelTitle{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", channelType=" + channelType +
+                ", imgUrl=" + imgUrl +
+                ", isRmd=" + isRmd +
+                '}';
     }
 }

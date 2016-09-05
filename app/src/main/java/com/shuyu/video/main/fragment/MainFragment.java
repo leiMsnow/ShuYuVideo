@@ -9,15 +9,18 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ExpandableListView;
 
+import com.ray.core.captain.utils.LogUtils;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.core.widget.TabsView;
 import com.shuyu.video.R;
+import com.shuyu.video.api.interfaces.IMainApi;
 import com.shuyu.video.main.adapter.ChannelBannerAdapter;
 import com.shuyu.video.main.adapter.ChannelGroupAdapter;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
-import com.shuyu.video.model.ChannelType;
+import com.shuyu.video.model.ChannelTitle;
+import com.squareup.okhttp.OkHttpClient;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -26,6 +29,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainFragment extends BaseFragment {
 
@@ -41,9 +49,9 @@ public class MainFragment extends BaseFragment {
     private CirclePageIndicator cpiIndicator;
 
     private ChannelBannerAdapter mBannerAdapter;
-    private ChannelGroupAdapter mContentAdapter;
+    private ChannelGroupAdapter mGroupAdapter;
 
-    private List<ChannelType> mChannelTypes;
+    private List<ChannelTitle> mChannelTitles;
     private List<ChannelBanner> mChannelBanners;
     private List<ChannelContent> mChannelContents;
 
@@ -66,18 +74,21 @@ public class MainFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        vChannelHeader = View.inflate(mContext,R.layout.header_channel,null);
+        vChannelHeader = View.inflate(mContext, R.layout.header_channel, null);
         mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
         cpiIndicator = (CirclePageIndicator) vChannelHeader.findViewById(R.id.cpi_indicator);
 
+
+        getChannelTitle();
+
         String[] title = new String[]{"推荐", "人气", "青春", "动画"};
-        mChannelTypes = new ArrayList<>();
+        mChannelTitles = new ArrayList<>();
         List<String> mTitles = new ArrayList<>();
         for (String aTitle : title) {
             mTitles.add(aTitle);
-            ChannelType channelType = new ChannelType();
+            ChannelTitle channelType = new ChannelTitle();
             channelType.setTitle(aTitle);
-            mChannelTypes.add(channelType);
+            mChannelTitles.add(channelType);
         }
 
         tbIndicator.setChildView(mTitles, new TabsView.TabsChildViewClickListener() {
@@ -86,6 +97,8 @@ public class MainFragment extends BaseFragment {
 
             }
         });
+
+        mGroupAdapter = new ChannelGroupAdapter(mContext);
 
         mChannelBanners = new ArrayList<>();
         mChannelBanners.add(new ChannelBanner());
@@ -104,8 +117,8 @@ public class MainFragment extends BaseFragment {
             ChannelContent.ChannelContentListBean channelContentListBean = new ChannelContent.ChannelContentListBean();
             contentListBeans.add(channelContentListBean);
         }
-        mContentAdapter = new ChannelGroupAdapter(mContext, mChannelContents);
-        rvContainer.setAdapter(mContentAdapter);
+        mGroupAdapter.setChannelContents(mChannelContents);
+        rvContainer.setAdapter(mGroupAdapter);
         rvContainer.setGroupIndicator(null);
         for (int i = 0; i < mChannelContents.size(); i++) {
             rvContainer.expandGroup(i);
@@ -134,6 +147,29 @@ public class MainFragment extends BaseFragment {
             timer = new Timer();
             autoUpdateViewPager();
         }
+    }
+
+    private void getChannelTitle() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://www.51shuyu.com:8008/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(new OkHttpClient())
+                .build();
+
+        IMainApi mainApi = retrofit.create(IMainApi.class);
+        Call<List<ChannelTitle>> call = mainApi.getChannelList();
+        call.enqueue(new Callback<List<ChannelTitle>>() {
+            @Override
+            public void onResponse(Response<List<ChannelTitle>> response, Retrofit retrofit) {
+                LogUtils.d(MainFragment.class.getSimpleName(), "response: "
+                        + response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                LogUtils.d(MainFragment.class.getSimpleName(), "onFailure");
+            }
+        });
     }
 
     private void autoUpdateViewPager() {

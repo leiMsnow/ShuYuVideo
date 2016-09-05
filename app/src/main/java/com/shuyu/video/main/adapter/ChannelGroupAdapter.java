@@ -23,8 +23,11 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
     private List<ChannelContent> mChannelContents;
     private ChannelContentAdapter mContentAdapter;
 
-    public ChannelGroupAdapter(Context context, List<ChannelContent> channelContents) {
+    public ChannelGroupAdapter(Context context) {
         mContext = context;
+    }
+
+    public void setChannelContents(List<ChannelContent> channelContents) {
         mChannelContents = channelContents;
     }
 
