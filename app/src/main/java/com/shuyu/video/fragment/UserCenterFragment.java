@@ -1,4 +1,4 @@
-package com.shuyu.video.main.fragment;
+package com.shuyu.video.fragment;
 
 
 import android.os.Bundle;
@@ -6,15 +6,15 @@ import android.os.Bundle;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.video.R;
 
-public class PrivateFragment extends BaseFragment {
+public class UserCenterFragment extends BaseFragment {
 
-    public PrivateFragment() {
+    public UserCenterFragment() {
 
     }
 
 
-    public static PrivateFragment newInstance() {
-        PrivateFragment fragment = new PrivateFragment();
+    public static UserCenterFragment newInstance() {
+        UserCenterFragment fragment = new UserCenterFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

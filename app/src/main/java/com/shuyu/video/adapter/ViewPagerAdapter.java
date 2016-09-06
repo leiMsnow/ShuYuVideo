@@ -1,4 +1,4 @@
-package com.shuyu.video.main.adapter;
+package com.shuyu.video.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

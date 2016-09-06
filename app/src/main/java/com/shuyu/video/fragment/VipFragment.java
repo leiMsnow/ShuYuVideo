@@ -1,4 +1,4 @@
-package com.shuyu.video.main.fragment;
+package com.shuyu.video.fragment;
 
 
 import android.os.Bundle;

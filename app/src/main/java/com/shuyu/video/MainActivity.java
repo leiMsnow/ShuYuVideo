@@ -7,10 +7,10 @@ import android.view.View;
 
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.widget.ChangeColorView;
-import com.shuyu.video.main.fragment.MainFragment;
-import com.shuyu.video.main.fragment.UserCenterFragment;
-import com.shuyu.video.main.fragment.PrivateFragment;
-import com.shuyu.video.main.fragment.VipFragment;
+import com.shuyu.video.fragment.MainFragment;
+import com.shuyu.video.fragment.UserCenterFragment;
+import com.shuyu.video.fragment.PrivateFragment;
+import com.shuyu.video.fragment.VipFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.shuyu.video.main.adapter;
+package com.shuyu.video.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;

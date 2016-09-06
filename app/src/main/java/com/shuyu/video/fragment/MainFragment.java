@@ -1,4 +1,4 @@
-package com.shuyu.video.main.fragment;
+package com.shuyu.video.fragment;
 
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.widget.HorizontalIndicatorView;
 import com.shuyu.video.R;
 import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.main.adapter.ViewPagerAdapter;
+import com.shuyu.video.adapter.ViewPagerAdapter;
 import com.shuyu.video.model.ChannelTitle;
 
 import java.util.ArrayList;
