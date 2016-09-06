@@ -200,8 +200,14 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (isInEditMode())
+            return;
+
         int lineHeight = DensityUtils.dp2px(getContext(), 2);
         TextView currentChild = (TextView) mContainer.getChildAt(mCurrentPosition);
+
+        if (currentChild == null)
+            return;
 
         float lineBottom = getHeight();
         float lineTop = lineBottom - lineHeight;
@@ -221,7 +227,7 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
         mLinePaint.setColor(Color.LTGRAY);
         canvas.drawRect(mContainer.getLeft(), lineTop, mContainer.getWidth(), lineBottom, mLinePaint);
 
-        int splitMargin = DensityUtils.dp2px(getContext(), 12);
+        int splitMargin = DensityUtils.dp2px(getContext(), 16);
         int splitWidth = DensityUtils.dp2px(getContext(), 1);
         int splitTop = getTop() + splitMargin;
         int splitBottom = getBottom() - splitMargin;

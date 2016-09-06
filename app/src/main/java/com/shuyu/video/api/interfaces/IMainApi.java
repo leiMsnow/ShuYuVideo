@@ -6,9 +6,9 @@ import com.shuyu.video.model.ChannelTitle;
 
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by zhangleilei on 9/5/16.
@@ -17,13 +17,13 @@ import retrofit.http.Query;
 public interface IMainApi {
 
     @GET("/qryAllChnl.service/")
-    Call<List<ChannelTitle>> getChannelList();
+    Observable<List<ChannelTitle>> getChannelList();
 
     @GET("/bannerInfo.service/")
-    Call<List<ChannelBanner>> getChannelBanner(@Query("cid") int cid);
+    Observable<List<ChannelBanner>> getChannelBanner(@Query("cid") int cid);
 
     @GET("/qryVideoChannelContentList.service/")
-    Call<ChannelContent> getChannelContent(@Query("cid") int cid,
+    Observable<ChannelContent> getChannelContent(@Query("cid") int cid,
                                                  @Query("pageNo") int pageNo,
                                                  @Query("pageSize") int pageSize);
 
