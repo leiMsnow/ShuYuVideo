@@ -21,7 +21,6 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<ChannelContent.VideoChannelListBean> mChannelContents;
-    private ChannelContentAdapter mContentAdapter;
 
     public ChannelGroupAdapter(Context context) {
         mContext = context;
@@ -90,19 +89,17 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
             holder = new ChildHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.item_channel_child, null);
             holder.mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_container);
-
             holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
             view.setTag(holder);
         } else {
             holder = (ChildHolder) view.getTag();
         }
-        mContentAdapter = new ChannelContentAdapter(mContext,
+        ChannelContentAdapter  mContentAdapter = new ChannelContentAdapter(mContext,
                 mChannelContents.get(i).getChannelContentList(),
                 R.layout.item_channel_content);
         holder.mRecyclerView.setAdapter(mContentAdapter);
         return view;
     }
-
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;

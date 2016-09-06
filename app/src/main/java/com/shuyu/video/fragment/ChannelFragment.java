@@ -9,14 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.shuyu.core.api.BaseApi;
+import com.ray.core.captain.utils.ToastUtils;
 import com.shuyu.core.BaseFragment;
+import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
-import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.adapter.ViewPagerAdapter;
+import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
 
@@ -34,7 +35,7 @@ public class ChannelFragment extends BaseFragment {
     public static final int UPDATE_VIEWPAGER = 200;
 
     @Bind(R.id.rv_container)
-    ExpandableListView rvContainer;
+    ExpandableListView mExpandableListView;
 
     private View vChannelHeader;
     private ViewPager mVpContainer;
@@ -74,18 +75,16 @@ public class ChannelFragment extends BaseFragment {
         mGroupAdapter = new ChannelGroupAdapter(mContext);
         mBannerAdapter = new ChannelBannerAdapter(mContext);
 
+        mExpandableListView.setAdapter(mGroupAdapter);
+        mExpandableListView.setGroupIndicator(null);
 
-        rvContainer.setAdapter(mGroupAdapter);
-        rvContainer.setGroupIndicator(null);
-
-        rvContainer.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
                 return true;
             }
         });
-        rvContainer.addHeaderView(vChannelHeader);
-
+        mExpandableListView.addHeaderView(vChannelHeader);
         if (getArguments() != null) {
             getChannelData(getArguments().getInt(CHANNEL_ID, 0));
         }
@@ -140,7 +139,7 @@ public class ChannelFragment extends BaseFragment {
                         mChannelContents = data.getVideoChannelList();
                         mGroupAdapter.setChannelContents(mChannelContents);
                         for (int i = 0; i < mChannelContents.size(); i++) {
-                            rvContainer.expandGroup(i);
+                            mExpandableListView.expandGroup(i);
                         }
                     }
 

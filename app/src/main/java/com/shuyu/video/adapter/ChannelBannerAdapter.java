@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Created by zhangleilei on 8/31/16.
  */
-
 public class ChannelBannerAdapter extends PagerAdapter {
 
 

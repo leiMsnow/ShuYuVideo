@@ -1,13 +1,13 @@
 package com.shuyu.video.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Azure on 2016/8/31.
  */
 
-public class ChannelContent {
-
+public class ChannelContent implements Serializable{
 
     /**
      * totalPageCount : 1
@@ -60,7 +60,7 @@ public class ChannelContent {
         this.videoChannelList = videoChannelList;
     }
 
-    public static class VideoChannelListBean {
+    public static class VideoChannelListBean implements Serializable{
         private int id;
         private String title;
         private Object imgUrl;
@@ -120,7 +120,7 @@ public class ChannelContent {
             this.channelContentList = channelContentList;
         }
 
-        public static class ChannelContentListBean {
+        public static class ChannelContentListBean implements Serializable{
             private String title;
             private int contentType;
             private String subTitle;
