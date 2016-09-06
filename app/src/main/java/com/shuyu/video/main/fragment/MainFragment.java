@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
-import com.shuyu.core.BaseApi;
+import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.widget.HorizontalIndicatorView;
 import com.shuyu.video.R;
-import com.shuyu.video.api.interfaces.IMainApi;
+import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.main.adapter.ViewPagerAdapter;
 import com.shuyu.video.model.ChannelTitle;
 

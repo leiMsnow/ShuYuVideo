@@ -1,6 +1,10 @@
-package com.shuyu.core;
+package com.shuyu.core.api;
+
+import com.shuyu.core.CoreApplication;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -24,13 +28,6 @@ public class BaseApi {
 
     private static final int TIMEOUT_READ = 25;
     private static final int TIMEOUT_CONNECTION = 25;
-    //设缓存有效期为两天
-    private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;
-    //查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
-    private static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
-    //查询网络的Cache-Control设置，头部Cache-Control设为max-age=0时则不会使用缓存而请求服务器
-    private static final String CACHE_CONTROL_NETWORK = "max-age=0";
-
 
     public static <T> T createApi(Class<T> service) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -74,30 +71,30 @@ public class BaseApi {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        File cacheFile = new File(CoreApplication.getApplication().getCacheDir(), "retrofit_cache");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 10); //100Mb
+        Map<String, String> queryParams = new HashMap<>();
 
+        queryParams.put("imsi", "");
+        queryParams.put("imei", "");
+        queryParams.put("manufacturer", "");
+        queryParams.put("model", "");
+        queryParams.put("versionCode", "");
+        queryParams.put("dcVersion", "");
+        queryParams.put("appId", "");
+        queryParams.put("ditchNo", "");
+        queryParams.put("uuid", "");
+
+        BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
+                .addQueryParamsMap(queryParams)
+                .build();
+
+        File cacheFile = new File(CoreApplication.getApplication().getCacheDir(), "retrofit_cache");
+        //100Mb
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);
         return new OkHttpClient.Builder()
                 .addInterceptor(logInterceptor)
-                //stetho,可以在chrome中查看请求
-//                .addInterceptor(new Interceptor() {
-//                    @Override
-//                    public Response intercept(Chain chain) throws IOException {
-//                        Request request = chain.request()
-//                                .newBuilder()
-//                                .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-//                                .addHeader("Accept-Encoding", "gzip, deflate")
-//                                .addHeader("Connection", "keep-alive")
-//                                .addHeader("Accept", "*/*")
-//                                .addHeader("Cookie", "add cookies here")
-//                                .build();
-//                        return chain.proceed(request);
-//                    }
-//                })
+                .addInterceptor(basicParamsInterceptor)
                 .cache(cache)
-                //失败重连
                 .retryOnConnectionFailure(true)
-                //time out
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
                 .build();

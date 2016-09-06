@@ -1,4 +1,4 @@
-package com.shuyu.video.api.interfaces;
+package com.shuyu.video.api;
 
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
@@ -11,6 +11,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
+ * 首页接口
  * Created by zhangleilei on 9/5/16.
  */
 

@@ -9,11 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.shuyu.core.BaseApi;
+import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
-import com.shuyu.video.api.interfaces.IMainApi;
+import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.main.adapter.ChannelBannerAdapter;
 import com.shuyu.video.main.adapter.ChannelGroupAdapter;
 import com.shuyu.video.main.adapter.ViewPagerAdapter;
@@ -73,8 +73,7 @@ public class ChannelFragment extends BaseFragment {
 
         mGroupAdapter = new ChannelGroupAdapter(mContext);
         mBannerAdapter = new ChannelBannerAdapter(mContext);
-        mVpContainer.setAdapter(mBannerAdapter);
-        cpiIndicator.setViewPager(mVpContainer);
+
 
         rvContainer.setAdapter(mGroupAdapter);
         rvContainer.setGroupIndicator(null);
@@ -116,6 +115,8 @@ public class ChannelFragment extends BaseFragment {
                     public void onSuccess(List<ChannelBanner> data) {
                         mChannelBanners = data;
                         mBannerAdapter.setBanners(mChannelBanners);
+                        mVpContainer.setAdapter(mBannerAdapter);
+                        cpiIndicator.setViewPager(mVpContainer);
                         autoUpdateViewPager();
                     }
 
