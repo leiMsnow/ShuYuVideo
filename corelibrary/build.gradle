@@ -41,9 +41,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile rootProject.ext.dependencies["retrofit2"]
+    compile rootProject.ext.dependencies["retrofit2-gson"]
+    compile rootProject.ext.dependencies["retrofit2-rxjava"]
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
