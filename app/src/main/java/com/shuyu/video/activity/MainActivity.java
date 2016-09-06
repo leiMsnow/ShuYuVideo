@@ -1,4 +1,4 @@
-package com.shuyu.video;
+package com.shuyu.video.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.widget.ChangeColorView;
+import com.shuyu.video.R;
 import com.shuyu.video.fragment.MainFragment;
 import com.shuyu.video.fragment.UserCenterFragment;
 import com.shuyu.video.fragment.PrivateFragment;
@@ -32,7 +33,7 @@ public class MainActivity extends BaseActivity {
     private List<ChangeColorView> changeColorViews = null;
     private List<Fragment> fragments = null;
     private Fragment mContent;
-    private String[] tags = {"main", "vip", "private", "my"};
+    private String[] tags = {"main", "vip", "private", "me"};
     private int[] titles = {R.string.nav_main, R.string.nav_vip, R.string.nav_private, R.string.nav_me};
 
     @Override
