@@ -1,5 +1,8 @@
 package com.shuyu.core.api;
 
+import android.os.Build;
+
+import com.ray.core.captain.utils.AppUtils;
 import com.shuyu.core.CoreApplication;
 
 import java.io.File;
@@ -75,12 +78,12 @@ public class BaseApi {
 
         queryParams.put("imsi", "");
         queryParams.put("imei", "");
-        queryParams.put("manufacturer", "");
-        queryParams.put("model", "");
-        queryParams.put("versionCode", "");
+        queryParams.put("manufacturer", Build.BRAND);
+        queryParams.put("model", Build.MODEL);
+        queryParams.put("versionCode", String.valueOf(Build.VERSION.SDK_INT));
         queryParams.put("dcVersion", "");
-        queryParams.put("appId", "");
-        queryParams.put("ditchNo", "");
+        queryParams.put("appId", AppUtils.getAppName(CoreApplication.getApplication()));
+        queryParams.put("ditchNo", "0");
         queryParams.put("uuid", "");
 
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
@@ -94,6 +97,7 @@ public class BaseApi {
                 .addInterceptor(logInterceptor)
                 .addInterceptor(basicParamsInterceptor)
                 .cache(cache)
+                .addInterceptor(new CacheInterceptor())
                 .retryOnConnectionFailure(true)
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)

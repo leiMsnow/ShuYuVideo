@@ -1,6 +1,7 @@
 package com.shuyu.video.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,17 +10,19 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.ray.core.captain.utils.ToastUtils;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
+import com.shuyu.video.activity.VideoActivity;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.adapter.ViewPagerAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
+
+import org.byteam.superadapter.OnItemClickListener;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

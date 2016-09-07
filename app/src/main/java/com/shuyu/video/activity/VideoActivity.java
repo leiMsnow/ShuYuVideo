@@ -1,6 +1,5 @@
 package com.shuyu.video.activity;
 
-import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 
@@ -27,8 +26,12 @@ public class VideoActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean setOrientationPortrait() {
+        return false;
+    }
+
+    @Override
     protected void initData() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         url = (ChannelContent.VideoChannelListBean.ChannelContentListBean)
                 getIntent().getSerializableExtra(VIDEO_URL);
 

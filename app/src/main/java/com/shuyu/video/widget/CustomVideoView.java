@@ -27,4 +27,4 @@ public class CustomVideoView extends VideoView {
         int height = getDefaultSize(0, heightMeasureSpec);
         setMeasuredDimension(width, height);
     }
-    }
+}

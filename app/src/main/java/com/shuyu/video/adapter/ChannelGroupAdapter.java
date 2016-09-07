@@ -1,6 +1,7 @@
 package com.shuyu.video.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.shuyu.video.R;
+import com.shuyu.video.activity.VideoActivity;
 import com.shuyu.video.model.ChannelContent;
+
+import org.byteam.superadapter.OnItemClickListener;
 
 import java.util.List;
 
@@ -21,9 +25,11 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<ChannelContent.VideoChannelListBean> mChannelContents;
+    private MyOnClickListener mMyOnClickListener;
 
     public ChannelGroupAdapter(Context context) {
         mContext = context;
+        mMyOnClickListener = new MyOnClickListener();
     }
 
     public void setChannelContents(List<ChannelContent.VideoChannelListBean> channelContents) {
@@ -94,15 +100,34 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ChildHolder) view.getTag();
         }
-        ChannelContentAdapter  mContentAdapter = new ChannelContentAdapter(mContext,
+        ChannelContentAdapter mContentAdapter = new ChannelContentAdapter(mContext,
                 mChannelContents.get(i).getChannelContentList(),
                 R.layout.item_channel_content);
         holder.mRecyclerView.setAdapter(mContentAdapter);
+        mMyOnClickListener.setChild(mChannelContents.get(i).getChannelContentList().get(i1));
+        mContentAdapter.setOnItemClickListener(mMyOnClickListener);
         return view;
     }
+
+    private class MyOnClickListener implements OnItemClickListener {
+
+        ChannelContent.VideoChannelListBean.ChannelContentListBean child;
+
+        public void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
+            this.child = child;
+        }
+
+        @Override
+        public void onItemClick(View itemView, int viewType, int position) {
+            Intent intent = new Intent(mContext, VideoActivity.class);
+            intent.putExtra(VideoActivity.VIDEO_URL, child);
+            mContext.startActivity(intent);
+        }
+    }
+
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return true;
+        return mChannelContents.get(i).getChannelContentList().get(i1) != null;
     }
 
     private class GroupHolder {

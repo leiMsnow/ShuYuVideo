@@ -33,11 +33,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         // 使得音量键控制媒体声音
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // 设置竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (setOrientationPortrait()) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }else{
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
         setContentView(getLayoutRes());
         ButterKnife.bind(this);
         initToolbar();
         initData();
+    }
+
+    protected boolean setOrientationPortrait(){
+        return true;
     }
 
     protected abstract int getLayoutRes();
