@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoActivity;
+import com.shuyu.video.activity.WebViewActivity;
 import com.shuyu.video.model.ChannelContent;
 
 import org.byteam.superadapter.OnItemClickListener;
@@ -121,7 +122,7 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         public void onItemClick(View itemView, int viewType, int position) {
             Intent intent = new Intent(mContext, VideoActivity.class);
             if (child.getIsPage().equals("1")){
-                new Intent(mContext, VideoActivity.class);
+                intent =   new Intent(mContext, WebViewActivity.class);
             }
             intent.putExtra(VideoActivity.VIDEO_CONTENT, child);
             mContext.startActivity(intent);

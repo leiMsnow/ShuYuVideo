@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
@@ -19,7 +20,6 @@ import com.shuyu.video.adapter.ViewPagerAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
-
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -40,6 +40,7 @@ public class ChannelFragment extends BaseFragment {
     private View vChannelHeader;
     private ViewPager mVpContainer;
     private CirclePageIndicator cpiIndicator;
+    private TextView tvBannerTitle;
 
     private ChannelBannerAdapter mBannerAdapter;
     private ChannelGroupAdapter mGroupAdapter;
@@ -71,6 +72,7 @@ public class ChannelFragment extends BaseFragment {
         vChannelHeader = View.inflate(mContext, R.layout.header_channel, null);
         mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
         cpiIndicator = (CirclePageIndicator) vChannelHeader.findViewById(R.id.cpi_indicator);
+        tvBannerTitle = (TextView) vChannelHeader.findViewById(R.id.tv_banner_title);
 
         mGroupAdapter = new ChannelGroupAdapter(mContext);
         mBannerAdapter = new ChannelBannerAdapter(mContext);
@@ -112,6 +114,7 @@ public class ChannelFragment extends BaseFragment {
                         mBannerAdapter.setBanners(mChannelBanners);
                         mVpContainer.setAdapter(mBannerAdapter);
                         cpiIndicator.setViewPager(mVpContainer);
+                        tvBannerTitle.setText(data.get(0).getTitle());
                         autoUpdateViewPager();
                     }
 
@@ -154,7 +157,7 @@ public class ChannelFragment extends BaseFragment {
                 Message message = new Message();
                 message.what = UPDATE_VIEWPAGER;
                 if (currIndex == mChannelBanners.size()) {
-                    currIndex = -1;
+                    currIndex = 0;
                 }
                 message.arg1 = currIndex++;
                 mMyHandler.sendMessage(message);
@@ -177,6 +180,7 @@ public class ChannelFragment extends BaseFragment {
             if (fragment != null) {
                 switch (msg.what) {
                     case ChannelFragment.UPDATE_VIEWPAGER:
+                        fragment.tvBannerTitle.setText(fragment.mChannelBanners.get(msg.arg1).getTitle());
                         if (msg.arg1 != 0) {
                             fragment.mVpContainer.setCurrentItem(msg.arg1);
                         } else {

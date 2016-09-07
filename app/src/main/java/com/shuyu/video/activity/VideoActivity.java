@@ -81,10 +81,26 @@ public class VideoActivity extends BaseActivity {
                 return false;
             }
         });
+
+        mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+                seekBar.setSecondaryProgress(i);
+            }
+        });
+
+        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+            }
+        });
     }
 
     @OnClick(R.id.iv_control)
     public void onControlVideo(View view) {
+        if (mMediaPlayer==null)
+            return;
+
         if (mMediaPlayer.isPlaying()) {
             stopPlay();
         } else {
@@ -133,6 +149,7 @@ public class VideoActivity extends BaseActivity {
             try {
                 mMediaPlayer.setDataSource(mVideoUrl);
                 mMediaPlayer.prepare();
+                startPlay();
             } catch (IOException e) {
                 e.printStackTrace();
             }

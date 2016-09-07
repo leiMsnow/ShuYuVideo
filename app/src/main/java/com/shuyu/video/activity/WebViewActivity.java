@@ -1,6 +1,7 @@
 package com.shuyu.video.activity;
 
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.shuyu.core.BaseActivity;
 import com.shuyu.video.R;
@@ -32,5 +33,14 @@ public class WebViewActivity extends BaseActivity {
 
         setTitle(mContentListBean.getTitle());
         webView.loadUrl(mContentListBean.getVideoPageUrl());
+
+        webView.setWebViewClient(new WebViewClient(){
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
     }
 }

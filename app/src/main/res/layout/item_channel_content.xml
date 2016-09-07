@@ -17,6 +17,17 @@
             android:layout_height="144dp"
             android:scaleType="fitXY"/>
 
+        <TextView
+            android:id="@+id/tv_content_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="8dp"
+            android:layout_alignBottom="@+id/iv_url"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:text="巴黎浪漫的描述"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -26,7 +37,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_desc"
+                android:id="@+id/tv_content_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -40,7 +51,7 @@
                 android:id="@+id/tv_label1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/tv_desc"
+                android:layout_alignBaseline="@id/tv_content_title"
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@+id/tv_label2"
                 android:background="@drawable/shape_round_pink"
@@ -52,7 +63,7 @@
                 android:id="@+id/tv_label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/tv_desc"
+                android:layout_alignBaseline="@id/tv_content_title"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/shape_round_yellow"

@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_container"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="160dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
+    <TextView
+        android:id="@+id/tv_banner_title"
+        android:layout_width="wrap_content"
+        tools:text="hello1111"
+        android:layout_toLeftOf="@+id/cpi_indicator"
+        android:layout_toStartOf="@+id/cpi_indicator"
+        android:layout_margin="16dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/theme_pink"
+        android:layout_alignBottom="@+id/vp_container"
+        android:layout_height="wrap_content"/>
 
     <com.shuyu.core.widget.CirclePageIndicator
         android:id="@+id/cpi_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/vp_container"
         android:layout_marginBottom="8dp"
+        app:vpi_fillColor="@color/theme_pink"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:paddingRight="8dp"
+        tools:visibility="invisible"
         android:paddingLeft="8dp"/>
 
 </RelativeLayout>
