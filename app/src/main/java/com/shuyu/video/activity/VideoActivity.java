@@ -37,16 +37,15 @@ public class VideoActivity extends BaseActivity {
     private String mVideoUrl;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
-    private boolean mIsPlaying;
+
+//    @Override
+//    protected boolean setOrientationPortrait() {
+//        return false;
+//    }
 
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_video;
-    }
-
-    @Override
-    protected boolean setOrientationPortrait() {
-        return false;
     }
 
     @Override
@@ -61,64 +60,13 @@ public class VideoActivity extends BaseActivity {
         mVideoUrl = mContentListBean.getVideoUrl();
         if (!TextUtils.isEmpty(mVideoUrl)) {
             svVideo.getHolder().addCallback(callback);
+            svVideo.getHolder().setKeepScreenOn(true);
             seekBar.setOnSeekBarChangeListener(change);
+
         }
     }
 
-    @OnClick(R.id.iv_control)
-    public void onControlVideo(View view) {
-        if (mIsPlaying) {
-            stopPlay();
-        } else {
-            onPlay(0);
-        }
-    }
-
-    private void stopPlay() {
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
-            resetPlay();
-        }
-    }
-
-    private void resetPlay() {
-        if (mMediaPlayer != null) {
-            mIsPlaying = false;
-            mMediaPlayer = null;
-            ivControl.setImageResource(R.mipmap.ic_play);
-        }
-    }
-
-    private void onPlay(final int currentPosition) {
-        ivControl.setImageResource(R.mipmap.ic_pause);
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mMediaPlayer.start();
-                mMediaPlayer.seekTo(currentPosition);
-                seekBar.setMax(mMediaPlayer.getDuration());
-
-                new Thread() {
-
-                    @Override
-                    public void run() {
-                        mIsPlaying = true;
-                        while (mIsPlaying) {
-                            int current = mMediaPlayer.getCurrentPosition();
-                            seekBar.setProgress(current);
-                            try {
-                                sleep(300);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }.start();
-
-            }
-        });
-
+    private void initListener() {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -130,16 +78,56 @@ public class VideoActivity extends BaseActivity {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
                 ToastUtils.getInstance(mContext).showToast("播放发生错误");
-                resetPlay();
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.iv_control)
+    public void onControlVideo(View view) {
+        if (mMediaPlayer.isPlaying()) {
+            stopPlay();
+        } else {
+            startPlay();
+        }
+    }
+
+    private void stopPlay() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+            ivControl.setImageResource(R.mipmap.ic_play);
+        }
+    }
+
+    public void startPlay()  {
+        mMediaPlayer.start();
+        ivControl.setImageResource(R.mipmap.ic_pause);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMediaPlayer!=null&&mMediaPlayer.isPlaying()){
+            mCurrentPosition = mMediaPlayer.getCurrentPosition();
+            mMediaPlayer.stop();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mMediaPlayer!=null) {
+            if (mMediaPlayer.isPlaying())
+                mMediaPlayer.stop();
+            mMediaPlayer.release();
+        }
     }
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             mMediaPlayer = new MediaPlayer();
+            initListener();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDisplay(svVideo.getHolder());
             try {
@@ -157,19 +145,17 @@ public class VideoActivity extends BaseActivity {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-            if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                mCurrentPosition = mMediaPlayer.getCurrentPosition();
-                mMediaPlayer.stop();
-            }
         }
     };
-
 
     private SeekBar.OnSeekBarChangeListener change = new SeekBar.OnSeekBarChangeListener() {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
+            if (b) {
+                int playtime = i * mMediaPlayer.getDuration() / 100;
+                mMediaPlayer.seekTo(playtime);
+            }
         }
 
         @Override
@@ -179,10 +165,7 @@ public class VideoActivity extends BaseActivity {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            int progress = seekBar.getProgress();
-            if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                mMediaPlayer.seekTo(progress);
-            }
+
         }
     };
 
