@@ -49,10 +49,6 @@ public class MainFragment extends BaseFragment {
     private void getChannelTitle() {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelList(),
                 new BaseApi.IResponseListener<List<ChannelTitle>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
 
                     @Override
                     public void onSuccess(List<ChannelTitle> data) {

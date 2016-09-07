@@ -1,7 +1,6 @@
 package com.shuyu.video.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,7 +13,6 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
-import com.shuyu.video.activity.VideoActivity;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.adapter.ViewPagerAdapter;
@@ -22,7 +20,6 @@ import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
 
-import org.byteam.superadapter.OnItemClickListener;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -108,10 +105,6 @@ public class ChannelFragment extends BaseFragment {
     private void getChannelBanner(int cid) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelBanner(cid),
                 new BaseApi.IResponseListener<List<ChannelBanner>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
 
                     @Override
                     public void onSuccess(List<ChannelBanner> data) {
@@ -132,10 +125,6 @@ public class ChannelFragment extends BaseFragment {
     private void getChannelContent(int cid, int pageNo) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelContent(cid, pageNo, 4)
                 , new BaseApi.IResponseListener<ChannelContent>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
 
                     @Override
                     public void onSuccess(ChannelContent data) {

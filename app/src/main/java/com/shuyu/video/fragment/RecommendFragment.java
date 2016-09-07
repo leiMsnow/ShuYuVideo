@@ -6,15 +6,15 @@ import android.os.Bundle;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.video.R;
 
-public class PrivateFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment {
 
-    public PrivateFragment() {
+    public RecommendFragment() {
 
     }
 
 
-    public static PrivateFragment newInstance() {
-        PrivateFragment fragment = new PrivateFragment();
+    public static RecommendFragment newInstance() {
+        RecommendFragment fragment = new RecommendFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

@@ -109,7 +109,7 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
         });
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,1.0f);
         mContainer.addView(textView, layoutParams);
     }
 
@@ -177,9 +177,6 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         if (!isEquallyItem) return;
-        if (isMeasure) return;
-
-        isMeasure = true;
 
         int childWidthCount = 0;
         for (int i = 0; i < mItemCount; i++) {
@@ -224,7 +221,7 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
         }
 
 
-        mLinePaint.setColor(Color.LTGRAY);
+        mLinePaint.setColor(Color.TRANSPARENT);
         canvas.drawRect(mContainer.getLeft(), lineTop, mContainer.getWidth(), lineBottom, mLinePaint);
 
         int splitMargin = DensityUtils.dp2px(getContext(), 16);

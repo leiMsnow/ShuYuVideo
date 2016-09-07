@@ -3,6 +3,7 @@ package com.shuyu.video.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
 import android.view.View;
 
 import com.shuyu.core.BaseActivity;
@@ -10,7 +11,7 @@ import com.shuyu.core.widget.ChangeColorView;
 import com.shuyu.video.R;
 import com.shuyu.video.fragment.MainFragment;
 import com.shuyu.video.fragment.UserCenterFragment;
-import com.shuyu.video.fragment.PrivateFragment;
+import com.shuyu.video.fragment.RecommendFragment;
 import com.shuyu.video.fragment.VipFragment;
 
 import java.util.ArrayList;
@@ -33,8 +34,8 @@ public class MainActivity extends BaseActivity {
     private List<ChangeColorView> changeColorViews = null;
     private List<Fragment> fragments = null;
     private Fragment mContent;
-    private String[] tags = {"main", "vip", "private", "me"};
-    private int[] titles = {R.string.nav_main, R.string.nav_vip, R.string.nav_private, R.string.nav_me};
+    private String[] tags = {"main", "vip", "recommend", "me"};
+    private int[] titles = {R.string.nav_main, R.string.nav_vip, R.string.nav_recommend, R.string.nav_me};
 
     @Override
     protected int getLayoutRes() {
@@ -55,13 +56,19 @@ public class MainActivity extends BaseActivity {
         setTitle(titles[0]);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     private void initDefaultFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             fragments = new ArrayList<>();
             FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
             MainFragment mainFragment = MainFragment.newInstance();
             VipFragment vipFragment = VipFragment.newInstance();
-            PrivateFragment privateFragment = PrivateFragment.newInstance();
+            RecommendFragment privateFragment = RecommendFragment.newInstance();
             UserCenterFragment myFragment = UserCenterFragment.newInstance();
             mContent = mainFragment;
             fts.add(R.id.fl_container, mainFragment, tags[0]);
@@ -85,7 +92,7 @@ public class MainActivity extends BaseActivity {
                     .findFragmentByTag(tags[0]);
             VipFragment vipFragment = (VipFragment) getSupportFragmentManager()
                     .findFragmentByTag(tags[1]);
-            PrivateFragment privateFragment = (PrivateFragment) getSupportFragmentManager()
+            RecommendFragment privateFragment = (RecommendFragment) getSupportFragmentManager()
                     .findFragmentByTag(tags[2]);
             UserCenterFragment myFragment = (UserCenterFragment) getSupportFragmentManager()
                     .findFragmentByTag(tags[3]);

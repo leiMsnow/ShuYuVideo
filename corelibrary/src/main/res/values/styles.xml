@@ -55,7 +55,7 @@
     </style>
 
     <style name="Widget.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="WindowAnimationStyle" parent="android:Animation.Activity">

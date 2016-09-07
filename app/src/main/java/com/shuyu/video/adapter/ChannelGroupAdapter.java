@@ -120,7 +120,10 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         @Override
         public void onItemClick(View itemView, int viewType, int position) {
             Intent intent = new Intent(mContext, VideoActivity.class);
-            intent.putExtra(VideoActivity.VIDEO_URL, child);
+            if (child.getIsPage().equals("1")){
+                new Intent(mContext, VideoActivity.class);
+            }
+            intent.putExtra(VideoActivity.VIDEO_CONTENT, child);
             mContext.startActivity(intent);
         }
     }

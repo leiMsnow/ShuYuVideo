@@ -49,8 +49,7 @@ public class BaseApi {
                 .subscribe(new Subscriber<T>() {
                     @Override
                     public void onCompleted() {
-                        if (listener != null)
-                            listener.onCompleted();
+
                     }
 
                     @Override
@@ -106,8 +105,6 @@ public class BaseApi {
 
 
     public interface IResponseListener<T> {
-
-        void onCompleted();
 
         void onSuccess(T data);
 

@@ -47,7 +47,7 @@
             style="@style/MainMenuStyle"
             app:changeColor="@color/main_pink"
             app:changeIcon="@mipmap/ic_nav_private"
-            app:changeText="@string/nav_private"
+            app:changeText="@string/nav_recommend"
             app:changeTextSize="12sp"
             app:defaultColor="@color/white"/>
 
