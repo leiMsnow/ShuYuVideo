@@ -16,8 +16,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ray.core.captain.utils.DensityUtils;
 import com.shuyu.core.R;
+import com.shuyu.core.uils.DensityUtils;
 
 /**
  * ViewPager滑动指示器

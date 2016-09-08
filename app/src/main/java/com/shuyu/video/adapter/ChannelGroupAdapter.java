@@ -11,15 +11,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.shuyu.video.R;
-import com.shuyu.video.activity.VideoActivity;
-import com.shuyu.video.activity.WebViewActivity;
+import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.model.ChannelContent;
+import com.shuyu.video.utils.Constants;
 
 import org.byteam.superadapter.OnItemClickListener;
 
 import java.util.List;
-
-import static com.shuyu.video.fragment.VideoFragment.VIDEO_DETAIL_ID;
 
 /**
  * Created by Azure on 2016/8/31.
@@ -119,17 +117,14 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
         ChannelContent.VideoChannelListBean.ChannelContentListBean child;
 
-        public void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
+        void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
             this.child = child;
         }
 
         @Override
         public void onItemClick(View itemView, int viewType, int position) {
-            Intent intent = new Intent(mContext, VideoActivity.class);
-            if (child.getIsPage().equals("1")) {
-                intent = new Intent(mContext, WebViewActivity.class);
-            }
-            intent.putExtra(VIDEO_DETAIL_ID, child);
+            Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+            intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
             mContext.startActivity(intent);
         }
     }

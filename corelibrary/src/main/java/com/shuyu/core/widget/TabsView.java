@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ray.core.captain.utils.DensityUtils;
 import com.shuyu.core.R;
+import com.shuyu.core.uils.DensityUtils;
 
 import java.util.ArrayList;
 import java.util.List;

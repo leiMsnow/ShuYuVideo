@@ -35,7 +35,6 @@ dependencies {
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["cardview"]
 
-    compile 'com.ray.core:captain:1.+'
     compile 'org.byteam.superadapter:superadapter:3.+'
 
     compile 'com.jakewharton:butterknife:7.0.0'

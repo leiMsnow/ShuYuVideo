@@ -11,23 +11,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import com.ray.core.captain.utils.ToastUtils;
 import com.shuyu.core.BaseFragment;
-import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
-import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
+import com.shuyu.video.utils.Constants;
 
 import java.io.IOException;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class VideoFragment extends BaseFragment {
 
-    public static final String VIDEO_DETAIL_ID = "VIDEO_DETAIL_ID";
 
     @Bind(R.id.sv_video)
     SurfaceView svVideo;
@@ -38,8 +34,7 @@ public class VideoFragment extends BaseFragment {
     @Bind(R.id.iv_full)
     ImageView ivFull;
 
-    private ChannelContent.VideoChannelListBean.ChannelContentListBean mContentListBean;
-    private String mVideoUrl;
+    private  ChannelContent.VideoChannelListBean.ChannelContentListBean data;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
 
@@ -58,20 +53,25 @@ public class VideoFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        int detailId = getArguments().getInt(VIDEO_DETAIL_ID, 0);
+        data = (ChannelContent.VideoChannelListBean.ChannelContentListBean)
+                getArguments().getSerializable(Constants.VIDEO_DETAILS);
 
-        if (detailId == 0)
+        if (data == null)
             return;
-
-        getVideoDetails(detailId);
-
+        svVideo.getHolder().addCallback(callback);
+        svVideo.getHolder().setKeepScreenOn(true);
+        seekBar.setOnSeekBarChangeListener(change);
     }
 
     private void initMediaPlayer() {
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mMediaPlayer.setDisplay(svVideo.getHolder());
+
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                ivControl.setImageResource(R.mipmap.ic_play);
+                ivControl.setImageResource(R.mipmap.ic_vide_play);
             }
         });
 
@@ -100,7 +100,8 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
             mMediaPlayer.reset();
-            ivControl.setImageResource(R.mipmap.ic_play);
+            ivControl.setImageResource(R.mipmap.ic_vide_play);
+            mMediaPlayer.release();
         }
     }
 
@@ -108,43 +109,17 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             mMediaPlayer.pause();
             mCurrentPosition = mMediaPlayer.getCurrentPosition();
-            ivControl.setImageResource(R.mipmap.ic_play);
+            ivControl.setImageResource(R.mipmap.ic_vide_play);
         }
     }
 
     public void startPlay() {
         if (mMediaPlayer != null) {
-
-            if (mCurrentPosition > 0) {
+            if (mCurrentPosition > 0)
                 mMediaPlayer.seekTo(mCurrentPosition);
-            }
             mMediaPlayer.start();
-            ivControl.setImageResource(R.mipmap.ic_pause);
+            ivControl.setImageResource(R.mipmap.ic_video_pause);
         }
-    }
-
-    private void getVideoDetails(int id) {
-        BaseApi.createApi(IMainApi.class);
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoDetails(id),
-                new BaseApi.IResponseListener<List<ChannelBanner>>() {
-                    @Override
-                    public void onSuccess(List<ChannelBanner> data) {
-                        mVideoUrl = mContentListBean.getVideoUrl();
-                        if (!TextUtils.isEmpty(mVideoUrl)) {
-                            svVideo.getHolder().addCallback(callback);
-                            svVideo.getHolder().setKeepScreenOn(true);
-                            seekBar.setOnSeekBarChangeListener(change);
-                            mMediaPlayer = new MediaPlayer();
-                            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            initMediaPlayer();
-                        }
-                    }
-
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
     }
 
     @Override
@@ -160,18 +135,19 @@ public class VideoFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         stopPlay();
-        mMediaPlayer.release();
     }
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
-            mMediaPlayer.setDisplay(svVideo.getHolder());
-            try {
-                mMediaPlayer.setDataSource(mVideoUrl);
-                mMediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!TextUtils.isEmpty(data.getVideoUrl())) {
+                initMediaPlayer();
+                try {
+                    mMediaPlayer.setDataSource(data.getVideoUrl());
+                    mMediaPlayer.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

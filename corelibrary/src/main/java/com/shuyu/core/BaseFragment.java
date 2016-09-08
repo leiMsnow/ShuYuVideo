@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ray.core.captain.utils.KeyBoardUtils;
+import com.shuyu.core.uils.KeyBoardUtils;
 
 import butterknife.ButterKnife;
 

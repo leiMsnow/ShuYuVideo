@@ -27,7 +27,8 @@ public class ChannelContentAdapter extends SuperAdapter<ChannelContent.VideoChan
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition,
                        ChannelContent.VideoChannelListBean.ChannelContentListBean item) {
         ImageView imageView = holder.findViewById(R.id.iv_url);
-        Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
+        if (imageView!=null)
+            Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
         holder.setText(R.id.tv_content_title,item.getTitle());
         holder.setText(R.id.tv_content_desc,item.getDescription());
     }

@@ -2,8 +2,8 @@ package com.shuyu.core.api;
 
 import android.os.Build;
 
-import com.ray.core.captain.utils.AppUtils;
 import com.shuyu.core.CoreApplication;
+import com.shuyu.core.uils.AppUtils;
 
 import java.io.File;
 import java.util.HashMap;

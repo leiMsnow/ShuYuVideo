@@ -10,8 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
 
-import com.ray.core.captain.utils.DensityUtils;
-import com.ray.core.captain.utils.KeyBoardUtils;
+import com.shuyu.core.uils.DensityUtils;
+import com.shuyu.core.uils.KeyBoardUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_header_url"
+        android:layout_width="64dp"
+        android:src="@mipmap/ic_contact_picture"
+        android:layout_margin="16dp"
+        android:layout_height="64dp"/>
+
+    <ImageView
+        android:id="@+id/iv_hot"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/iv_header_url"
+        android:src="@mipmap/ic_hot_comment"
+        android:layout_width="25dp"
+        android:layout_height="12dp"/>
+
+    <TextView
+        android:layout_toRightOf="@+id/iv_header_url"
+        android:layout_below="@+id/iv_hot"
+        android:id="@+id/tv_comment"
+        android:layout_width="match_parent"
+        tools:text="评论内容"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

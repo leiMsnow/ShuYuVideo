@@ -3,6 +3,7 @@ package com.shuyu.video.api;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
 import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.VideoComment;
 
 import java.util.List;
 
@@ -29,6 +30,9 @@ public interface IMainApi {
                                                        @Query("pageSize") int pageSize);
 
     @GET("/videoDtl.service/")
-    Observable<List<ChannelBanner>> getVideoDetails(@Query("id") int id);
+    Observable<ChannelContent.VideoChannelListBean.ChannelContentListBean> getVideoDetails(@Query("id") int id);
+
+    @GET("/videoComment.service/")
+    Observable<List<VideoComment>> getVideoComments();
 
 }

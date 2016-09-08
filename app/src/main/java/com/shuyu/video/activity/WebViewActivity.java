@@ -9,7 +9,7 @@ import com.shuyu.video.model.ChannelContent;
 
 import butterknife.Bind;
 
-import static com.shuyu.video.fragment.VideoFragment.VIDEO_DETAIL_ID;
+import static com.shuyu.video.utils.Constants.VIDEO_DETAIL_ID;
 
 
 public class WebViewActivity extends BaseActivity {
