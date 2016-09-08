@@ -100,7 +100,6 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
             mMediaPlayer.reset();
-            ivControl.setImageResource(R.mipmap.ic_vide_play);
             mMediaPlayer.release();
         }
     }

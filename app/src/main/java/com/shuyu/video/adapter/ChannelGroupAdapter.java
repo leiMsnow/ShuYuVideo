@@ -1,7 +1,6 @@
 package com.shuyu.video.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.shuyu.video.R;
-import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.model.ChannelContent;
-import com.shuyu.video.utils.Constants;
-
-import org.byteam.superadapter.OnItemClickListener;
 
 import java.util.List;
 
@@ -26,11 +21,11 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<ChannelContent.VideoChannelListBean> mChannelContents;
-    private MyOnClickListener mMyOnClickListener;
+//    private MyOnClickListener mMyOnClickListener;
 
     public ChannelGroupAdapter(Context context) {
         mContext = context;
-        mMyOnClickListener = new MyOnClickListener();
+//        mMyOnClickListener = new MyOnClickListener();
     }
 
     public void setChannelContents(List<ChannelContent.VideoChannelListBean> channelContents) {
@@ -99,35 +94,33 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
             holder.mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_container);
             holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
             view.setTag(holder);
-            mContentAdapter = new ChannelContentAdapter(mContext,null,
-                    R.layout.item_channel_content);
-            holder.mRecyclerView.setAdapter(mContentAdapter);
         } else {
             holder = (ChildHolder) view.getTag();
-            mContentAdapter = (ChannelContentAdapter) holder.mRecyclerView.getAdapter();
         }
-
-        mContentAdapter.replaceAll(mChannelContents.get(i).getChannelContentList());
-        mMyOnClickListener.setChild(mChannelContents.get(i).getChannelContentList().get(i1));
-        mContentAdapter.setOnItemClickListener(mMyOnClickListener);
+        mContentAdapter = new ChannelContentAdapter(mContext,
+                mChannelContents.get(i).getChannelContentList(),
+                R.layout.item_channel_content);
+        holder.mRecyclerView.setAdapter(mContentAdapter);
+//        mMyOnClickListener.setChild(mChannelContents.get(i).getChannelContentList().get(i1));
+//        mContentAdapter.setOnItemClickListener(mMyOnClickListener);
         return view;
     }
 
-    private class MyOnClickListener implements OnItemClickListener {
-
-        ChannelContent.VideoChannelListBean.ChannelContentListBean child;
-
-        void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
-            this.child = child;
-        }
-
-        @Override
-        public void onItemClick(View itemView, int viewType, int position) {
-            Intent intent = new Intent(mContext, VideoDetailsActivity.class);
-            intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
-            mContext.startActivity(intent);
-        }
-    }
+//    private class MyOnClickListener implements OnItemClickListener {
+//
+//        ChannelContent.VideoChannelListBean.ChannelContentListBean child;
+//
+//        void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
+//            this.child = child;
+//        }
+//
+//        @Override
+//        public void onItemClick(View itemView, int viewType, int position) {
+//            Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+//            intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
+//            mContext.startActivity(intent);
+//        }
+//    }
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
