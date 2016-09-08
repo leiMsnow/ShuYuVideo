@@ -25,6 +25,8 @@
             android:name=".activity.WebViewActivity"
             android:launchMode="singleTask">
         </activity>
+        <activity android:name=".activity.VideoDetailsActivity">
+        </activity>
     </application>
 
 </manifest>

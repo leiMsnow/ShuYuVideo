@@ -19,14 +19,15 @@
 
         <TextView
             android:id="@+id/tv_content_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="8dp"
             android:layout_alignBottom="@+id/iv_url"
-            android:textColor="@color/white"
+            android:layout_alignParentLeft="true"
+            android:padding="8dp"
+            android:background="@drawable/shape_gradient"
             android:maxLines="1"
-            android:text="巴黎浪漫的描述"/>
+            android:text="巴黎浪漫的描述"
+            android:textColor="@color/white"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,6 +45,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@+id/tv_label1"
+                android:ellipsize="end"
+                android:maxLength="5"
                 android:maxLines="1"
                 android:text="巴黎浪漫"/>
 
@@ -55,9 +58,14 @@
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@+id/tv_label2"
                 android:background="@drawable/shape_round_pink"
+                android:maxLength="2"
+                android:paddingBottom="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="2dp"
                 android:text="人气"
                 android:textColor="@color/white"
-                android:textSize="12sp"/>
+                android:textSize="10sp"/>
 
             <TextView
                 android:id="@+id/tv_label2"
@@ -67,9 +75,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/shape_round_yellow"
+                android:maxLength="2"
+                android:paddingBottom="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="2dp"
                 android:text="经典"
                 android:textColor="@color/white"
-                android:textSize="12sp"/>
+                android:textSize="10sp"/>
 
         </RelativeLayout>
     </RelativeLayout>

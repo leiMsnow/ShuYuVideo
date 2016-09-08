@@ -19,6 +19,8 @@ import org.byteam.superadapter.OnItemClickListener;
 
 import java.util.List;
 
+import static com.shuyu.video.fragment.VideoFragment.VIDEO_DETAIL_ID;
+
 /**
  * Created by Azure on 2016/8/31.
  */
@@ -92,19 +94,22 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         ChildHolder holder;
+        ChannelContentAdapter mContentAdapter;
         if (view == null) {
             holder = new ChildHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.item_channel_child, null);
             holder.mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_container);
             holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
             view.setTag(holder);
+            mContentAdapter = new ChannelContentAdapter(mContext,null,
+                    R.layout.item_channel_content);
+            holder.mRecyclerView.setAdapter(mContentAdapter);
         } else {
             holder = (ChildHolder) view.getTag();
+            mContentAdapter = (ChannelContentAdapter) holder.mRecyclerView.getAdapter();
         }
-        ChannelContentAdapter mContentAdapter = new ChannelContentAdapter(mContext,
-                mChannelContents.get(i).getChannelContentList(),
-                R.layout.item_channel_content);
-        holder.mRecyclerView.setAdapter(mContentAdapter);
+
+        mContentAdapter.replaceAll(mChannelContents.get(i).getChannelContentList());
         mMyOnClickListener.setChild(mChannelContents.get(i).getChannelContentList().get(i1));
         mContentAdapter.setOnItemClickListener(mMyOnClickListener);
         return view;
@@ -121,10 +126,10 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         @Override
         public void onItemClick(View itemView, int viewType, int position) {
             Intent intent = new Intent(mContext, VideoActivity.class);
-            if (child.getIsPage().equals("1")){
-                intent =   new Intent(mContext, WebViewActivity.class);
+            if (child.getIsPage().equals("1")) {
+                intent = new Intent(mContext, WebViewActivity.class);
             }
-            intent.putExtra(VideoActivity.VIDEO_CONTENT, child);
+            intent.putExtra(VIDEO_DETAIL_ID, child);
             mContext.startActivity(intent);
         }
     }

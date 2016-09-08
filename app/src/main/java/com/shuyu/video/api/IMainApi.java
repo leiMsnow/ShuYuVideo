@@ -24,8 +24,11 @@ public interface IMainApi {
     Observable<List<ChannelBanner>> getChannelBanner(@Query("cid") int cid);
 
     @GET("/qryVideoChannelContentList.service/")
-    Observable<ChannelContent> getChannelContent(@Query("cid") int cid,
-                                                 @Query("pageNo") int pageNo,
-                                                 @Query("pageSize") int pageSize);
+    Observable<ChannelContent> getVideoListByChannelId(@Query("cid") int cid,
+                                                       @Query("pageNo") int pageNo,
+                                                       @Query("pageSize") int pageSize);
+
+    @GET("/videoDtl.service/")
+    Observable<List<ChannelBanner>> getVideoDetails(@Query("id") int id);
 
 }

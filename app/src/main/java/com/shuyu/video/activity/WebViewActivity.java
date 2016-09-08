@@ -9,7 +9,8 @@ import com.shuyu.video.model.ChannelContent;
 
 import butterknife.Bind;
 
-import static com.shuyu.video.activity.VideoActivity.VIDEO_CONTENT;
+import static com.shuyu.video.fragment.VideoFragment.VIDEO_DETAIL_ID;
+
 
 public class WebViewActivity extends BaseActivity {
 
@@ -26,7 +27,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initData() {
         mContentListBean = (ChannelContent.VideoChannelListBean.ChannelContentListBean)
-                getIntent().getSerializableExtra(VIDEO_CONTENT);
+                getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
 
         if (mContentListBean == null)
             return;

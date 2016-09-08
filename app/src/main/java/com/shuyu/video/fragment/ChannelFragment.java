@@ -126,7 +126,7 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void getChannelContent(int cid, int pageNo) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelContent(cid, pageNo, 4)
+        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoListByChannelId(cid, pageNo, 4)
                 , new BaseApi.IResponseListener<ChannelContent>() {
 
                     @Override
