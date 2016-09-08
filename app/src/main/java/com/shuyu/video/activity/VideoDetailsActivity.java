@@ -28,8 +28,6 @@ public class VideoDetailsActivity extends BaseActivity {
     RecyclerView lrvView;
     @Bind(R.id.iv_url)
     ImageView mIvUrl;
-    @Bind(R.id.iv_play)
-    ImageView mIvPlay;
 
     private int mVideoId;
     private ChannelContent.VideoChannelListBean.ChannelContentListBean mVideoDetails;
@@ -84,13 +82,14 @@ public class VideoDetailsActivity extends BaseActivity {
                 });
     }
 
-    @OnClick(R.id.iv_play)
+    @OnClick(R.id.iv_url)
     public void onClick(View view){
         if (mVideoDetails.getIsPage().equals("1")) {
             AppUtils.openBrowser(mContext, mVideoDetails.getVideoPageUrl());
         }else{
-         Intent   intent = new Intent(mContext, VideoDetailsActivity.class);
-            intent.putExtra(Constants.VIDEO_DETAIL_ID, mVideoDetails.getId());
+            Intent   intent = new Intent(mContext, VideoActivity.class);
+            intent.putExtra(Constants.VIDEO_DETAILS, mVideoDetails);
+            startActivity(intent);
         }
     }
 
