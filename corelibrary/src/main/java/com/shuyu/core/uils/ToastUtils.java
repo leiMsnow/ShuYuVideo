@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shuyu.core.CoreApplication;
 import com.shuyu.core.R;
 
 /**
@@ -25,11 +26,11 @@ public class ToastUtils {
         createToast();
     }
 
-    public static ToastUtils getInstance(Context context) {
+    public static ToastUtils getInstance() {
         if (instance == null) {
             synchronized (ToastUtils.class) {
                 if (instance == null) {
-                    instance = new ToastUtils(context);
+                    instance = new ToastUtils(CoreApplication.getApplication());
                 }
             }
         }

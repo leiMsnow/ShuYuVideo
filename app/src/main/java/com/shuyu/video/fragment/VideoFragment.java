@@ -78,7 +78,7 @@ public class VideoFragment extends BaseFragment {
         mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                ToastUtils.getInstance(mContext).showToast("播放发生错误");
+                ToastUtils.getInstance().showToast("播放发生错误");
                 return false;
             }
         });

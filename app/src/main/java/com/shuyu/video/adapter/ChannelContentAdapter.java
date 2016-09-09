@@ -22,30 +22,28 @@ import java.util.List;
 public class ChannelContentAdapter extends SuperAdapter<ChannelContent.VideoChannelListBean.ChannelContentListBean> {
 
 
-    private MyOnClickListener mOnClickListener;
-
     ChannelContentAdapter(Context context, List<ChannelContent.VideoChannelListBean.ChannelContentListBean> items,
                           int layoutResId) {
         super(context, items, layoutResId);
-        mOnClickListener = new MyOnClickListener();
     }
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition,
                        ChannelContent.VideoChannelListBean.ChannelContentListBean item) {
-        ImageView imageView = holder.findViewById(R.id.iv_url);
-        if (imageView!=null)
+        ImageView imageView = holder.findViewById(R.id.iv_channel_content_url);
+        if (imageView != null) {
             Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
-        holder.setText(R.id.tv_content_title,item.getTitle());
-        holder.setText(R.id.tv_content_desc,item.getDescription());
-        mOnClickListener.setChild(item);
-        holder.setOnClickListener(R.id.iv_url,mOnClickListener);
+            holder.setOnClickListener(R.id.iv_channel_content_url, new MyOnClickListener(item));
+        }
+        holder.setText(R.id.tv_content_title, item.getTitle());
+        holder.setText(R.id.tv_content_desc, item.getDescription());
     }
+
     private class MyOnClickListener implements View.OnClickListener {
 
         ChannelContent.VideoChannelListBean.ChannelContentListBean child;
 
-        void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
+        public MyOnClickListener(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
             this.child = child;
         }
 

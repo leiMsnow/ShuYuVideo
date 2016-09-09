@@ -21,11 +21,9 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<ChannelContent.VideoChannelListBean> mChannelContents;
-//    private MyOnClickListener mMyOnClickListener;
 
     public ChannelGroupAdapter(Context context) {
         mContext = context;
-//        mMyOnClickListener = new MyOnClickListener();
     }
 
     public void setChannelContents(List<ChannelContent.VideoChannelListBean> channelContents) {
@@ -97,31 +95,13 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ChildHolder) view.getTag();
         }
+
         mContentAdapter = new ChannelContentAdapter(mContext,
                 mChannelContents.get(i).getChannelContentList(),
                 R.layout.item_channel_content);
         holder.mRecyclerView.setAdapter(mContentAdapter);
-//        mMyOnClickListener.setChild(mChannelContents.get(i).getChannelContentList().get(i1));
-//        mContentAdapter.setOnItemClickListener(mMyOnClickListener);
         return view;
     }
-
-//    private class MyOnClickListener implements OnItemClickListener {
-//
-//        ChannelContent.VideoChannelListBean.ChannelContentListBean child;
-//
-//        void setChild(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
-//            this.child = child;
-//        }
-//
-//        @Override
-//        public void onItemClick(View itemView, int viewType, int position) {
-//            Intent intent = new Intent(mContext, VideoDetailsActivity.class);
-//            intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
-//            mContext.startActivity(intent);
-//        }
-//    }
-
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return mChannelContents.get(i).getChannelContentList().get(i1) != null;
