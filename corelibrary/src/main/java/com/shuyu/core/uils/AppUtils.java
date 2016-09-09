@@ -110,7 +110,7 @@ public class AppUtils {
     public static String getSerialNumber(Context context) {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getSimSerialNumber();
+        return mTelephonyMgr.getSimSerialNumber() == null?"":mTelephonyMgr.getSimSerialNumber();
     }
 
     public static String getUUID(Context context) {

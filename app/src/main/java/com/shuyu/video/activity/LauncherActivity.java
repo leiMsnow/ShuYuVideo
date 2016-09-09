@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.RunInfo;
@@ -44,7 +45,7 @@ public class LauncherActivity extends BaseActivity {
                 new BaseApi.IResponseListener<List<RunInfo>>() {
             @Override
             public void onSuccess(List<RunInfo> data) {
-//                SPUtils.put(mContext, BaseApi.BASE_URL, data.get(0).getFirstHost());
+                SPUtils.put(mContext, BaseApi.BASE_URL, data.get(0).getFirstHost());
                 Glide.with(mContext).load(data.get(0).getContentUrl()).into(ivLauncherUrl);
                 sendLauncher(data.get(0).getStayTime());
             }
