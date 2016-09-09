@@ -58,6 +58,7 @@ public class VideoDetailsActivity extends BaseActivity {
                     public void onSuccess(ChannelContent.VideoChannelListBean.ChannelContentListBean data) {
                         Glide.with(mContext).load(data.getImgUrl()).into(mIvUrl);
                         mVideoDetails = data;
+                        setTitle(data.getTitle());
                     }
 
                     @Override

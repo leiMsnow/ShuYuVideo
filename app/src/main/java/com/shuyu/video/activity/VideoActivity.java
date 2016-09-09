@@ -1,19 +1,24 @@
 package com.shuyu.video.activity;
 
-import com.shuyu.core.BaseActivity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+
 import com.shuyu.video.R;
 import com.shuyu.video.fragment.VideoFragment;
 
 
-public class VideoActivity extends BaseActivity {
-
+public class VideoActivity extends AppCompatActivity {
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.activity_video;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_video);
+
+        initData();
     }
 
-    @Override
+
     protected void initData() {
 
         getSupportFragmentManager().beginTransaction()
@@ -21,6 +26,5 @@ public class VideoActivity extends BaseActivity {
                 .commit();
 
     }
-
 
 }

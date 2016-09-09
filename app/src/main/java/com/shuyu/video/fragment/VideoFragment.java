@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
@@ -33,8 +34,10 @@ public class VideoFragment extends BaseFragment {
     SeekBar seekBar;
     @Bind(R.id.iv_full)
     ImageView ivFull;
+    @Bind(R.id.iv_video_url)
+    ImageView ivVideoUrl;
 
-    private  ChannelContent.VideoChannelListBean.ChannelContentListBean data;
+    private ChannelContent.VideoChannelListBean.ChannelContentListBean data;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
 
@@ -58,6 +61,9 @@ public class VideoFragment extends BaseFragment {
 
         if (data == null)
             return;
+
+        Glide.with(this).load(data.getImgUrl()).into(ivVideoUrl);
+
         svVideo.getHolder().addCallback(callback);
         svVideo.getHolder().setKeepScreenOn(true);
         seekBar.setOnSeekBarChangeListener(change);
@@ -71,7 +77,7 @@ public class VideoFragment extends BaseFragment {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                ivControl.setImageResource(R.mipmap.ic_vide_play);
+                ivControl.setImageResource(R.mipmap.ic_video_play);
             }
         });
 
@@ -108,16 +114,23 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             mMediaPlayer.pause();
             mCurrentPosition = mMediaPlayer.getCurrentPosition();
-            ivControl.setImageResource(R.mipmap.ic_vide_play);
+            ivControl.setImageResource(R.mipmap.ic_video_play);
         }
     }
 
     public void startPlay() {
         if (mMediaPlayer != null) {
+            ivControl.setImageResource(R.mipmap.ic_video_pause);
+            ivVideoUrl.setVisibility(View.GONE);
+            try {
+                mMediaPlayer.setDataSource(data.getVideoUrl());
+                mMediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (mCurrentPosition > 0)
                 mMediaPlayer.seekTo(mCurrentPosition);
             mMediaPlayer.start();
-            ivControl.setImageResource(R.mipmap.ic_video_pause);
         }
     }
 
@@ -141,12 +154,6 @@ public class VideoFragment extends BaseFragment {
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             if (!TextUtils.isEmpty(data.getVideoUrl())) {
                 initMediaPlayer();
-                try {
-                    mMediaPlayer.setDataSource(data.getVideoUrl());
-                    mMediaPlayer.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         }
 

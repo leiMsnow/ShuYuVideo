@@ -19,13 +19,16 @@
         <activity
             android:name=".activity.VideoActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".activity.WebViewActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".activity.VideoDetailsActivity">
+        <activity
+            android:name=".activity.VideoDetailsActivity"
+            android:configChanges="orientation|keyboardHidden" >
         </activity>
     </application>
 
