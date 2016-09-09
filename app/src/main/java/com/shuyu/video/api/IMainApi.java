@@ -3,6 +3,7 @@ package com.shuyu.video.api;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelContent;
 import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.VideoComment;
 
 import java.util.List;
@@ -18,21 +19,24 @@ import rx.Observable;
 
 public interface IMainApi {
 
-    @GET("/qryAllChnl.service/")
+    @GET("http://www.51shuyu.com:8008/runInfo.service/")
+    Observable<List<RunInfo>> getRunInfo();
+
+    @GET("qryAllChnl.service/")
     Observable<List<ChannelTitle>> getChannelList();
 
-    @GET("/bannerInfo.service/")
+    @GET("bannerInfo.service/")
     Observable<List<ChannelBanner>> getChannelBanner(@Query("cid") int cid);
 
-    @GET("/qryVideoChannelContentList.service/")
+    @GET("qryVideoChannelContentList.service/")
     Observable<ChannelContent> getVideoListByChannelId(@Query("cid") int cid,
                                                        @Query("pageNo") int pageNo,
                                                        @Query("pageSize") int pageSize);
 
-    @GET("/videoDtl.service/")
+    @GET("videoDtl.service/")
     Observable<ChannelContent.VideoChannelListBean.ChannelContentListBean> getVideoDetails(@Query("id") int id);
 
-    @GET("/videoComment.service/")
+    @GET("videoComment.service/")
     Observable<List<VideoComment>> getVideoComments();
 
 }

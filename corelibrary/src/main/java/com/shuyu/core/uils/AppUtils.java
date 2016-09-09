@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import com.shuyu.core.CoreApplication;
+
 import java.util.UUID;
 
 /**
@@ -56,6 +58,17 @@ public class AppUtils {
         }
         return null;
     }
+
+    public static String getPackageName() {
+        try {
+            return CoreApplication.getApplication().getPackageName();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
 
     /**
      * [获取应用程序版本名称信息]
@@ -105,7 +118,8 @@ public class AppUtils {
                 Settings.Secure.ANDROID_ID);
         UUID deiceUUID = new UUID(androidId.hashCode(), ((long) getIMEI(context).hashCode() << 32) |
                 getSerialNumber(context).hashCode());
-        return deiceUUID.toString();
+        return "client_" + deiceUUID.toString();
+//        client_6b533cdf-9636-4a2f-bc0f-eb536892bd2f
     }
 
 
@@ -120,9 +134,9 @@ public class AppUtils {
         context.startActivity(intent);
     }
 
-    public static void openBrowser(Context context,String url){
+    public static void openBrowser(Context context, String url) {
         Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         context.startActivity(intent);
     }
 }
