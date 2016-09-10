@@ -5,7 +5,7 @@ import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelEntity;
 import com.shuyu.video.model.ChannelTitle;
 import com.shuyu.video.model.HotWord;
-import com.shuyu.video.model.LiveVideoEntitiy;
+import com.shuyu.video.model.LiveVideoEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoData;
 import com.shuyu.video.model.VideoComment;
@@ -103,7 +103,7 @@ public interface IMainApi {
      * @return
      */
     @GET("liveVideoList.service")
-    Observable<LiveVideoEntitiy> getLiveVideoList(@Query("pageNo") int pageNo);
+    Observable<LiveVideoEntity> getLiveVideoList(@Query("pageNo") int pageNo);
 
     /**
      * 视频下方评论

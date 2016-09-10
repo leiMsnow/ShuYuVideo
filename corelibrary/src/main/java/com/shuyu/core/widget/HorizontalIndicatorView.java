@@ -97,7 +97,7 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
 
         TextView textView = new TextView(getContext());
         textView.setText(title);
-        textView.setTextSize(14);
+        textView.setTextSize(16);
         textView.setTextColor(mIndicatorDefaultColor);
         textView.setGravity(Gravity.CENTER);
         textView.setPadding(mItemPadding, 0, mItemPadding, 0);
@@ -141,8 +141,10 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
         for (int i = 0; i < mItemCount; i++) {
             TextView child = (TextView) mContainer.getChildAt(i);
             child.setTextColor(mIndicatorDefaultColor);
+            child.setTextSize(16);
             if (position == i) {
                 child.setTextColor(mIndicatorColor);
+                child.setTextSize(18);
             }
         }
     }
@@ -197,8 +199,7 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (isInEditMode())
-            return;
+        if (isInEditMode()) return;
 
         int lineHeight = DensityUtils.dp2px(getContext(), 2);
         TextView currentChild = (TextView) mContainer.getChildAt(mCurrentPosition);
@@ -216,31 +217,33 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
             lineLeft = (mCurrentOffset * nextChild.getLeft()) + ((1f - mCurrentOffset) * lineLeft);
             lineRight = (mCurrentOffset * nextChild.getRight()) + ((1f - mCurrentOffset) * lineRight);
 
-            drawTextColor(currentChild, mIndicatorColor, mIndicatorDefaultColor);
-            drawTextColor(nextChild, mIndicatorDefaultColor, mIndicatorColor);
+            drawTextColor(currentChild, mIndicatorColor, mIndicatorDefaultColor,18,16);
+            drawTextColor(nextChild, mIndicatorDefaultColor, mIndicatorColor,16,18);
         }
 
 
-        mLinePaint.setColor(Color.TRANSPARENT);
-        canvas.drawRect(mContainer.getLeft(), lineTop, mContainer.getWidth(), lineBottom, mLinePaint);
-
-        int splitMargin = DensityUtils.dp2px(getContext(), 16);
-        int splitWidth = DensityUtils.dp2px(getContext(), 1);
-        int splitTop = getTop() + splitMargin;
-        int splitBottom = getBottom() - splitMargin;
-        for (int i = 0; i < mItemCount; i++) {
-            canvas.drawRect(mContainer.getChildAt(i).getRight(), splitTop,
-                    mContainer.getChildAt(i).getRight() + splitWidth, splitBottom, mLinePaint);
-        }
+//        mLinePaint.setColor(Color.TRANSPARENT);
+//        canvas.drawRect(mContainer.getLeft(), lineTop, mContainer.getWidth(), lineBottom, mLinePaint);
+//        int splitMargin = DensityUtils.dp2px(getContext(), 16);
+//        int splitWidth = DensityUtils.dp2px(getContext(), 1);
+//        int splitTop = getTop() + splitMargin;
+//        int splitBottom = getBottom() - splitMargin;
+//        for (int i = 0; i < mItemCount; i++) {
+//            canvas.drawRect(mContainer.getChildAt(i).getRight(), splitTop,
+//                    mContainer.getChildAt(i).getRight() + splitWidth, splitBottom, mLinePaint);
+//        }
 
         mLinePaint.setColor(mIndicatorColor);
         canvas.drawRect(lineLeft + mItemPadding, lineTop, lineRight - mItemPadding, lineBottom, mLinePaint);
 
     }
 
-    private void drawTextColor(TextView view, int beforeColor, int nextColor) {
+    private void drawTextColor(TextView view, int beforeColor, int nextColor,
+                                              int beforeSize, int afterSize) {
         ArgbEvaluator evaluator = new ArgbEvaluator();
         int changeColor = (int) evaluator.evaluate(mCurrentOffset, beforeColor, nextColor);
+        int changeSize = (int) evaluator.evaluate(mCurrentOffset,beforeSize,afterSize);
+//        view.setTextSize(changeSize);
         view.setTextColor(changeColor);
     }
 

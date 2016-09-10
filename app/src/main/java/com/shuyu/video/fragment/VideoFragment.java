@@ -154,6 +154,7 @@ public class VideoFragment extends BaseFragment {
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             if (!TextUtils.isEmpty(mPlayDetails.getVideoUrl())) {
                 initMediaPlayer();
+                startPlay();
             }
         }
 

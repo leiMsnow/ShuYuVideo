@@ -8,7 +8,6 @@
         android:id="@+id/rv_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tb_indicator"
         android:divider="@null"
         android:dividerHeight="0dp"/>
 

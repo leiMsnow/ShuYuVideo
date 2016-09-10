@@ -22,7 +22,6 @@ import butterknife.Bind;
 
 public class SearchActivity extends AppBaseActivity {
 
-
     @Bind(R.id.rv_hot_word)
     RecyclerView rvHotWord;
     @Bind(R.id.rv_hot_video)
@@ -52,7 +51,6 @@ public class SearchActivity extends AppBaseActivity {
         mSearchFragment = SearchFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_container, mSearchFragment)
-                .hide(mSearchFragment)
                 .commit();
 
         mHotWordAdapter = new HotWordAdapter(mContext, null, R.layout.item_hot_word);

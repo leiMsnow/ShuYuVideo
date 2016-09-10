@@ -67,7 +67,7 @@
 
     <style name="Widget.TextView.Style" parent="android:Widget.TextView">
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:textColor">@color/normal_dark_grey</item>
+        <item name="android:textColor">@color/main_black</item>
     </style>
 
     <!-- 横向分割线-->

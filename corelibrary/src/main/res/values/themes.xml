@@ -3,7 +3,7 @@
 
     <style name="AppTheme.Main" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/weak_grey</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="navigationIcon">@mipmap/ic_menu_back</item>
         <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow.Light</item>

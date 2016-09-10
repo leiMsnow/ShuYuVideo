@@ -72,6 +72,7 @@ public class VipPageAdapter extends PagerAdapter {
         }
 
         Glide.with(mContext).load(mLiveVideoDataList.get(position).getImgUrl()).into(holder.ivUrl);
+        holder.btnVideo.setText(mLiveVideoDataList.get(position).getTitle());
         holder.btnVideo.setTag(mLiveVideoDataList.get(position));
         holder.btnVideo.setOnClickListener(mOnClickListener);
         container.addView(convertView);

@@ -3,9 +3,11 @@
                                     xmlns:app="http://schemas.android.com/apk/res-auto"
                                     android:layout_width="match_parent"
                                     android:layout_height="174dp"
-                                    android:layout_margin="8dp"
-                                    app:cardCornerRadius="0dp"
-                                    app:cardElevation="1dp">
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginBottom="8dp"
+                                    app:cardCornerRadius="2dp"
+                                    app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,10 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/iv_channel_content_url"
             android:layout_alignParentLeft="true"
-            android:padding="8dp"
+            android:padding="4dp"
             android:background="@drawable/shape_gradient"
             android:maxLines="1"
             android:text="巴黎浪漫的描述"
+            android:textSize="12sp"
             android:textColor="@color/white"/>
 
         <RelativeLayout
@@ -39,10 +42,10 @@
 
             <TextView
                 android:id="@+id/tv_content_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@+id/tv_label1"
                 android:ellipsize="end"
@@ -85,6 +88,16 @@
                 android:textSize="10sp"/>
 
         </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/selector_play"
+            android:layout_marginBottom="30dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_content_desc"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageView"/>
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

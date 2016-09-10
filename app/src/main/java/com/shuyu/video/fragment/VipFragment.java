@@ -14,7 +14,7 @@ import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
 import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.model.LiveVideoEntitiy;
+import com.shuyu.video.model.LiveVideoEntity;
 import com.shuyu.video.model.VideoDetails;
 import com.shuyu.video.utils.Constants;
 
@@ -68,9 +68,9 @@ public class VipFragment extends BaseFragment {
 
     private void getLiveVideoList() {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getLiveVideoList(1),
-                new BaseApi.IResponseListener<LiveVideoEntitiy>() {
+                new BaseApi.IResponseListener<LiveVideoEntity>() {
                     @Override
-                    public void onSuccess(LiveVideoEntitiy data) {
+                    public void onSuccess(LiveVideoEntity data) {
                         mPageAdapter.setLiveVideoDataList(data.getNightVideoDetailList());
                         vpContainer.setOffscreenPageLimit(mPageAdapter.getCount());
                     }
