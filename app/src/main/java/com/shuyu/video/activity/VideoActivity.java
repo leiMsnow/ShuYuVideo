@@ -18,8 +18,9 @@ public class VideoActivity extends AppCompatActivity {
         initData();
     }
 
-
     protected void initData() {
+
+        if (getIntent() == null) return;
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_container, VideoFragment.newInstance(getIntent().getExtras()))

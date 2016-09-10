@@ -11,10 +11,11 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.transformer.ZoomOutPageTransformer;
 import com.shuyu.video.R;
-import com.shuyu.video.activity.VideoDetailsActivity;
+import com.shuyu.video.activity.VideoActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
 import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.model.LiveVideoData;
+import com.shuyu.video.model.LiveVideoEntitiy;
+import com.shuyu.video.model.VideoDetails;
 import com.shuyu.video.utils.Constants;
 
 import butterknife.Bind;
@@ -49,9 +50,9 @@ public class VipFragment extends BaseFragment {
         mPageAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int videoId = Integer.parseInt(v.getTag().toString());
-                Intent intent = new Intent(mContext, VideoDetailsActivity.class);
-                intent.putExtra(Constants.VIDEO_DETAIL_ID, videoId);
+                VideoDetails vip = (VideoDetails) v.getTag();
+                Intent intent = new Intent(mContext, VideoActivity.class);
+                intent.putExtra(Constants.VIDEO_DETAILS, vip);
                 mContext.startActivity(intent);
             }
         });
@@ -67,9 +68,9 @@ public class VipFragment extends BaseFragment {
 
     private void getLiveVideoList() {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getLiveVideoList(1),
-                new BaseApi.IResponseListener<LiveVideoData>() {
+                new BaseApi.IResponseListener<LiveVideoEntitiy>() {
                     @Override
-                    public void onSuccess(LiveVideoData data) {
+                    public void onSuccess(LiveVideoEntitiy data) {
                         mPageAdapter.setLiveVideoDataList(data.getNightVideoDetailList());
                         vpContainer.setOffscreenPageLimit(mPageAdapter.getCount());
                     }

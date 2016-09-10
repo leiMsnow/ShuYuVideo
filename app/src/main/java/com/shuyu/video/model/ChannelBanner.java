@@ -6,7 +6,7 @@ package com.shuyu.video.model;
 
 public class ChannelBanner {
 
-    private String title = "title";
+    private String title ;
     private int bannerType;
     private int targetId;
     private String targetUrl;

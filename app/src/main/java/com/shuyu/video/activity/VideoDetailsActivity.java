@@ -1,6 +1,5 @@
 package com.shuyu.video.activity;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,12 +8,12 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.api.BaseApi;
-import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
 import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.model.ChannelData;
 import com.shuyu.video.model.VideoComment;
+import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 
 import java.util.List;
@@ -30,8 +29,9 @@ public class VideoDetailsActivity extends BaseActivity {
     ImageView mIvUrl;
 
     private int mVideoId;
-    private ChannelData.VideoChannel.ChannelContent mVideoDetails;
+    private VideoDetails mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_video_details;
@@ -40,11 +40,11 @@ public class VideoDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-        if (getIntent()==null) return;
+        if (getIntent() == null) return;
         mVideoId = getIntent().getIntExtra(Constants.VIDEO_DETAIL_ID, 0);
-        if(mVideoId==0) return;
+        if (mVideoId == 0) return;
 
-        mCommentAdapter = new VideoCommentAdapter(mContext,null,R.layout.item_video_comment);
+        mCommentAdapter = new VideoCommentAdapter(mContext, null, R.layout.item_video_comment);
         lrvView.setLayoutManager(new LinearLayoutManager(mContext));
         lrvView.setAdapter(mCommentAdapter);
         getVideoDetails(mVideoId);
@@ -53,9 +53,9 @@ public class VideoDetailsActivity extends BaseActivity {
 
     private void getVideoDetails(int id) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoDetails(id),
-                new BaseApi.IResponseListener<ChannelData.VideoChannel.ChannelContent>() {
+                new BaseApi.IResponseListener<VideoDetails>() {
                     @Override
-                    public void onSuccess(ChannelData.VideoChannel.ChannelContent data) {
+                    public void onSuccess(VideoDetails data) {
                         Glide.with(mContext).load(data.getImgUrl()).into(mIvUrl);
                         mVideoDetails = data;
                         setTitle(data.getTitle());
@@ -68,7 +68,7 @@ public class VideoDetailsActivity extends BaseActivity {
                 });
     }
 
-    private void getVideoComment(){
+    private void getVideoComment() {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoCommentList(),
                 new BaseApi.IResponseListener<List<VideoComment>>() {
                     @Override
@@ -84,14 +84,8 @@ public class VideoDetailsActivity extends BaseActivity {
     }
 
     @OnClick(R.id.iv_url)
-    public void onClick(View view){
-        if (mVideoDetails.getIsPage().equals("1")) {
-            AppUtils.openBrowser(mContext, mVideoDetails.getVideoPageUrl());
-        }else{
-            Intent   intent = new Intent(mContext, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_DETAILS, mVideoDetails);
-            startActivity(intent);
-        }
+    public void onClick(View view) {
+        CommonUtils.goToVideoPage(mContext,mVideoDetails);
     }
 
 }

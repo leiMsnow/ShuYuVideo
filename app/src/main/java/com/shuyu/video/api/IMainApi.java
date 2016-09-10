@@ -2,11 +2,12 @@ package com.shuyu.video.api;
 
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.ChannelBanner;
-import com.shuyu.video.model.ChannelData;
+import com.shuyu.video.model.ChannelEntity;
 import com.shuyu.video.model.ChannelTitle;
-import com.shuyu.video.model.LiveVideoData;
+import com.shuyu.video.model.LiveVideoEntitiy;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.VideoComment;
+import com.shuyu.video.model.VideoDetails;
 
 import java.util.List;
 
@@ -21,27 +22,94 @@ import rx.Observable;
 
 public interface IMainApi {
 
+    /**
+     * 应用启动画面接口
+     *
+     * @return
+     */
     @GET(BaseApi.LOCAL_SERVER_URL + "runInfo.service")
     Observable<List<RunInfo>> getRunInfo();
 
+    /**
+     * 顶部（导航）频道列表
+     *
+     * @return
+     */
     @GET("qryAllChnl.service")
     Observable<List<ChannelTitle>> getChannelList();
 
+    /**
+     * 轮播图Banner
+     *
+     * @param cid
+     * @return
+     */
     @GET("bannerInfo.service")
     Observable<List<ChannelBanner>> getChannelBannerList(@Query("cid") int cid);
 
+    /**
+     * 视频频道内容列表
+     *
+     * @param cid
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     @GET("qryVideoChannelContentList.service")
-    Observable<ChannelData> getVideoListByChannelId(@Query("cid") int cid,
-                                                    @Query("pageNo") int pageNo,
-                                                    @Query("pageSize") int pageSize);
+    Observable<ChannelEntity> getVideoListByChannelId(@Query("cid") int cid,
+                                                      @Query("pageNo") int pageNo,
+                                                      @Query("pageSize") int pageSize);
 
+
+    /**
+     * 视频详情
+     *
+     * @param id
+     * @return
+     */
     @GET("videoDtl.service")
-    Observable<ChannelData.VideoChannel.ChannelContent> getVideoDetails(@Query("id") int id);
+    Observable<VideoDetails> getVideoDetails(@Query("id") int id);
 
+
+    /**
+     * 图库频道内容列表
+     *
+     * @param cid
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GET("qryPicChannelContentList.service")
+    Observable<ChannelEntity> getPictureListByChannelId(@Query("cid") int cid,
+                                                        @Query("pageNo") int pageNo,
+                                                        @Query("pageSize") int pageSize);
+
+    /**
+     * 图片详情
+     *
+     * @param groupId
+     * @return
+     */
+    @GET("pictureList.service")
+    Observable<VideoDetails> getPictureDetails(@Query("groupId") int groupId);
+
+
+    /**
+     * vip专区视频列表
+     *
+     * @param pageNo
+     * @return
+     */
+    @GET("liveVideoList.service")
+    Observable<LiveVideoEntitiy> getLiveVideoList(@Query("pageNo") int pageNo);
+
+    /**
+     * 视频下方评论
+     *
+     * @return
+     */
     @GET("videoComment.service")
     Observable<List<VideoComment>> getVideoCommentList();
 
-    @GET("liveVideoList.service")
-    Observable<LiveVideoData> getLiveVideoList(@Query("pageNo") int pageNo);
 
 }

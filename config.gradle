@@ -3,18 +3,11 @@ def supportVersion = "24.2.0"
 def retrofitVersion = "2.1.0"
 ext {
 
-    android = [compileSdkVersion: 24,
-               buildToolsVersion: "24.0.1",
-               minSdkVersion    : 15,
-               targetSdkVersion : 22,
-               versionCode      : 1,
-               versionName      : "1.0.0"]
-
     dependencies = [
-            "cardview-v7"     : "com.android.support:cardview-v7:${supportVersion}",
-            "support-v4"      : "com.android.support:appcompat-v7:${supportVersion}",
-            "support-v7"      : "com.android.support:support-v4:${supportVersion}",
+            "support-v4"      : "com.android.support:support-v4:${supportVersion}",
+            "support-v7"      : "com.android.support:appcompat-v7:${supportVersion}",
             "design"          : "com.android.support:design:${supportVersion}",
+            "cardview-v7"     : "com.android.support:cardview-v7:${supportVersion}",
             "cardview"        : "com.android.support:cardview-v7:${supportVersion}",
             "retrofit2"       : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             "retrofit2-gson"  : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
@@ -23,4 +16,11 @@ ext {
             "leakcanary-no-op": "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2"
 
     ]
+    android = [compileSdkVersion: 24,
+               buildToolsVersion: "24.0.1",
+               minSdkVersion    : 15,
+               targetSdkVersion : 22,
+               versionCode      : 1,
+               versionName      : "1.0.0"]
+
 }

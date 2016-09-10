@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.video.R;
-import com.shuyu.video.model.LiveVideoData;
+import com.shuyu.video.model.VideoDetails;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ import java.util.List;
 public class VipPageAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<LiveVideoData.NightVideoDetail> mLiveVideoDataList = new ArrayList<>();
+    private List<VideoDetails> mLiveVideoDataList = new ArrayList<>();
     private LinkedList<View> mConvertViews = new LinkedList<>();
     private View.OnClickListener mOnClickListener;
 
@@ -30,7 +30,7 @@ public class VipPageAdapter extends PagerAdapter {
         mOnClickListener = onClickListener;
     }
 
-    public void setLiveVideoDataList(List<LiveVideoData.NightVideoDetail> liveVideoDataList) {
+    public void setLiveVideoDataList(List<VideoDetails> liveVideoDataList) {
         mLiveVideoDataList.clear();
         mLiveVideoDataList.addAll(liveVideoDataList);
         notifyDataSetChanged();
@@ -72,7 +72,7 @@ public class VipPageAdapter extends PagerAdapter {
         }
 
         Glide.with(mContext).load(mLiveVideoDataList.get(position).getImgUrl()).into(holder.ivUrl);
-        holder.btnVideo.setTag(mLiveVideoDataList.get(position).getId());
+        holder.btnVideo.setTag(mLiveVideoDataList.get(position));
         holder.btnVideo.setOnClickListener(mOnClickListener);
         container.addView(convertView);
         return convertView;

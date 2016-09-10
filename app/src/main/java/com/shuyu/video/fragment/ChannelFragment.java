@@ -19,7 +19,7 @@ import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.adapter.ViewPagerAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
-import com.shuyu.video.model.ChannelData;
+import com.shuyu.video.model.ChannelEntity;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -46,7 +46,7 @@ public class ChannelFragment extends BaseFragment {
     private ChannelGroupAdapter mGroupAdapter;
 
     private List<ChannelBanner> mChannelBanners;
-    private List<ChannelData.VideoChannel> mChannelContents;
+    private List<ChannelEntity.VideoChannel> mChannelContents;
 
     private int currIndex = 0;
     private Timer timer;
@@ -127,10 +127,10 @@ public class ChannelFragment extends BaseFragment {
 
     private void getChannelContent(int cid, int pageNo) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoListByChannelId(cid, pageNo, 4)
-                , new BaseApi.IResponseListener<ChannelData>() {
+                , new BaseApi.IResponseListener<ChannelEntity>() {
 
                     @Override
-                    public void onSuccess(ChannelData data) {
+                    public void onSuccess(ChannelEntity data) {
                         mChannelContents = data.getVideoChannelList();
                         mGroupAdapter.setChannelContents(mChannelContents);
                         for (int i = 0; i < mChannelContents.size(); i++) {

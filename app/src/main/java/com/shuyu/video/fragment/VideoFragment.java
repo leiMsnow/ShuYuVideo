@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
-import com.shuyu.video.model.ChannelData;
+import com.shuyu.video.model.VideoDetails;
 import com.shuyu.video.utils.Constants;
 
 import java.io.IOException;
@@ -23,8 +23,8 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class VideoFragment extends BaseFragment {
 
+public class VideoFragment extends BaseFragment {
 
     @Bind(R.id.sv_video)
     SurfaceView svVideo;
@@ -37,7 +37,7 @@ public class VideoFragment extends BaseFragment {
     @Bind(R.id.iv_video_url)
     ImageView ivVideoUrl;
 
-    private ChannelData.VideoChannel.ChannelContent data;
+    private VideoDetails mPlayDetails;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
 
@@ -56,13 +56,11 @@ public class VideoFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        data = (ChannelData.VideoChannel.ChannelContent)
-                getArguments().getSerializable(Constants.VIDEO_DETAILS);
+        mPlayDetails = (VideoDetails) getArguments().getSerializable(Constants.VIDEO_DETAILS);
 
-        if (data == null)
-            return;
+        if (mPlayDetails == null) return;
 
-        Glide.with(this).load(data.getImgUrl()).into(ivVideoUrl);
+        Glide.with(this).load(mPlayDetails.getImgUrl()).into(ivVideoUrl);
 
         svVideo.getHolder().addCallback(callback);
         svVideo.getHolder().setKeepScreenOn(true);
@@ -92,13 +90,15 @@ public class VideoFragment extends BaseFragment {
 
     @OnClick(R.id.iv_control)
     public void onControlVideo(View view) {
-        if (mMediaPlayer == null)
-            return;
+        if (view.getId() == R.id.iv_control) {
+            if (mMediaPlayer == null)
+                return;
 
-        if (mMediaPlayer.isPlaying()) {
-            pausePlay();
-        } else {
-            startPlay();
+            if (mMediaPlayer.isPlaying()) {
+                pausePlay();
+            } else {
+                startPlay();
+            }
         }
     }
 
@@ -123,7 +123,7 @@ public class VideoFragment extends BaseFragment {
             ivControl.setImageResource(R.mipmap.ic_video_pause);
             ivVideoUrl.setVisibility(View.GONE);
             try {
-                mMediaPlayer.setDataSource(data.getVideoUrl());
+                mMediaPlayer.setDataSource(mPlayDetails.getVideoUrl());
                 mMediaPlayer.prepare();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -152,7 +152,7 @@ public class VideoFragment extends BaseFragment {
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
-            if (!TextUtils.isEmpty(data.getVideoUrl())) {
+            if (!TextUtils.isEmpty(mPlayDetails.getVideoUrl())) {
                 initMediaPlayer();
             }
         }
