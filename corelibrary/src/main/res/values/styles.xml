@@ -37,7 +37,7 @@
         <item name="submitBackground">@drawable/selector_textfield_search_material</item>
         <item name="closeIcon">@mipmap/ic_clear_mtrl_alpha</item>
         <item name="searchIcon">@mipmap/ic_menu_search</item>
-        <item name="searchHintIcon">@null</item>
+        <!--<item name="searchHintIcon">@null</item>-->
         <item name="goIcon">@mipmap/ic_go_search</item>
     </style>
 

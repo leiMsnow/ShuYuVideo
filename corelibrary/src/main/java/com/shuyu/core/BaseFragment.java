@@ -20,7 +20,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected View mView;
     protected Context mContext;
-//    private Unbinder mUnbinder;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.shuyu.core.BaseActivity;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
@@ -21,7 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class VideoDetailsActivity extends BaseActivity {
+public class VideoDetailsActivity extends AppBaseActivity {
 
     @Bind(R.id.lrv_view)
     RecyclerView lrvView;

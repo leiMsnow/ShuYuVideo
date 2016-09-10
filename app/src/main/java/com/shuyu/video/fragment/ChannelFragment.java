@@ -37,7 +37,6 @@ public class ChannelFragment extends BaseFragment {
     @Bind(R.id.rv_container)
     ExpandableListView mExpandableListView;
 
-    private View vChannelHeader;
     private ViewPager mVpContainer;
     private CirclePageIndicator cpiIndicator;
     private TextView tvBannerTitle;
@@ -69,7 +68,7 @@ public class ChannelFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        vChannelHeader = View.inflate(mContext, R.layout.header_channel, null);
+        View vChannelHeader = View.inflate(mContext, R.layout.header_channel, null);
         mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
         cpiIndicator = (CirclePageIndicator) vChannelHeader.findViewById(R.id.cpi_indicator);
         tvBannerTitle = (TextView) vChannelHeader.findViewById(R.id.tv_banner_title);

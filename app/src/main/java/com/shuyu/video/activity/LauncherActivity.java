@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.shuyu.core.BaseActivity;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends AppBaseActivity {
 
     private static final int STAY_TIME_FLAG = 0;
 

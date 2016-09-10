@@ -10,6 +10,7 @@ import java.util.List;
 public class VideoDetails implements Serializable {
     private int id;
     private String title;
+    private int contentType;
     private String videoPageUrl;
     private String videoUrl;
     private int videoLength;
@@ -25,6 +26,14 @@ public class VideoDetails implements Serializable {
     private int feeRule;
     private int isClip;
     private List<?> clipUrlList;
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
+    }
 
     public int getId() {
         return id;

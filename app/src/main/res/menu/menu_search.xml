@@ -6,6 +6,7 @@
         android:id="@+id/menu_search"
         android:icon="@mipmap/ic_menu_search"
         android:title="@string/search"
-        app:showAsAction="always"/>
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"/>
 
 </menu>

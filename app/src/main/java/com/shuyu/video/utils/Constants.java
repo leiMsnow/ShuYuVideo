@@ -8,5 +8,6 @@ public interface Constants {
 
     public static final String VIDEO_DETAIL_ID = "VIDEO_DETAIL_ID";
     public static final String VIDEO_DETAILS = "VIDEO_DETAILS";
+    public static final String KEY_WORD = "KEY_WORD";
 
 }

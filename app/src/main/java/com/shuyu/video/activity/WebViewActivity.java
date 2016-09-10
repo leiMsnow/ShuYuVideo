@@ -3,7 +3,6 @@ package com.shuyu.video.activity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.shuyu.core.BaseActivity;
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoDetails;
 
@@ -12,7 +11,7 @@ import butterknife.Bind;
 import static com.shuyu.video.utils.Constants.VIDEO_DETAIL_ID;
 
 
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends AppBaseActivity {
 
     @Bind(R.id.web_view)
     WebView webView;

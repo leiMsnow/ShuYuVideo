@@ -4,8 +4,10 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelEntity;
 import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.LiveVideoEntitiy;
 import com.shuyu.video.model.RunInfo;
+import com.shuyu.video.model.SearchVideoData;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoDetails;
 
@@ -110,6 +112,29 @@ public interface IMainApi {
      */
     @GET("videoComment.service")
     Observable<List<VideoComment>> getVideoCommentList();
+
+    /**
+     * 热搜词（搜索标签）
+     *
+     * @return
+     */
+    @GET("hotword.service")
+    Observable<HotWord> getHotWordList(@Query("pageNo") int pageNo,
+                                       @Query("pageSize") int pageSize);
+
+
+    /**
+     * 搜索
+     *
+     * @param word
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GET("searchVideo.service")
+    Observable<SearchVideoData> searchVideo(@Query("word") String word,
+                                            @Query("pageNo") int pageNo,
+                                            @Query("pageSize") int pageSize);
 
 
 }

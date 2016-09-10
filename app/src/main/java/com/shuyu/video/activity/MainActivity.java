@@ -1,17 +1,18 @@
 package com.shuyu.video.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
-import com.shuyu.core.BaseActivity;
 import com.shuyu.core.widget.ChangeColorView;
 import com.shuyu.video.R;
 import com.shuyu.video.fragment.MainFragment;
-import com.shuyu.video.fragment.UserCenterFragment;
 import com.shuyu.video.fragment.RecommendFragment;
+import com.shuyu.video.fragment.UserCenterFragment;
 import com.shuyu.video.fragment.VipFragment;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppBaseActivity {
 
     @Bind(R.id.ccv_main)
     ChangeColorView mCcvMain;
@@ -60,6 +61,18 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_search) {
+            Intent intent = new Intent(mContext, SearchActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
     private void initDefaultFragment(Bundle savedInstanceState) {

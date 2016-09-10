@@ -3,7 +3,6 @@ package com.shuyu.video.model;
 /**
  * Created by Azure on 2016/8/31.
  */
-
 public class ChannelTitle {
 
     private int id;

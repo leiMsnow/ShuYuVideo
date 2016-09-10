@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/in_toolbar"
+        layout="@layout/include_toolbar"/>
+
+    <TextView
+        android:id="@+id/tv_hot_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/in_toolbar"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@mipmap/ic_hot_word"
+        android:drawablePadding="4dp"
+        android:text="热门标签"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hot_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_hot_word"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_hot_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_hot_word"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="热门视频"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hot_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rv_hot_word"/>
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/in_toolbar"
+        android:background="@color/weak_light_grey"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>
