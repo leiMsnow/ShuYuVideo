@@ -2,4 +2,5 @@
 <resources>
 
     <color name="main_pink">#ff00cc</color>
+    <color name="main_pink_pressed">#aaff00cc</color>
 </resources>

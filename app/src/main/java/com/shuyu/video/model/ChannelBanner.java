@@ -6,33 +6,11 @@ package com.shuyu.video.model;
 
 public class ChannelBanner {
 
-
-    /**
-     * title :
-     * bannerType : 3
-     * targetId : 46
-     * targetUrl :
-     * imgUrl : http://appstoreimg.weichuanji.com/20160729/429b9dc7-c46b-42c1-bcb7-ddb13ab848db-7.png
-     * videoLength : 0
-     * fee : 0
-     * feeTime : 00:00:00
-     * feeRule : 0
-     * isPage : 0
-     * videoType : 0
-     * isTryPlay : 0
-     * tryPlayLength : 0
-     * softwareSize : 0
-     * packageName :
-     * md5 :
-     * appName : null
-     * versionCode : null
-     */
-
     private String title = "title";
     private int bannerType;
     private int targetId;
     private String targetUrl;
-    private String imgUrl = "http://s.wasu.tv/mams/pic/201605/19/23/2016051923041274354e52867.jpg";
+    private String imgUrl ;
     private int videoLength;
     private int fee;
     private String feeTime;
@@ -191,28 +169,4 @@ public class ChannelBanner {
         this.versionCode = versionCode;
     }
 
-
-    @Override
-    public String toString() {
-        return "ChannelBanner{" +
-                "title='" + title + '\'' +
-                ", bannerType=" + bannerType +
-                ", targetId=" + targetId +
-                ", targetUrl='" + targetUrl + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", videoLength=" + videoLength +
-                ", fee=" + fee +
-                ", feeTime='" + feeTime + '\'' +
-                ", feeRule=" + feeRule +
-                ", isPage='" + isPage + '\'' +
-                ", videoType=" + videoType +
-                ", isTryPlay=" + isTryPlay +
-                ", tryPlayLength=" + tryPlayLength +
-                ", softwareSize=" + softwareSize +
-                ", packageName='" + packageName + '\'' +
-                ", md5='" + md5 + '\'' +
-                ", appName=" + appName +
-                ", versionCode=" + versionCode +
-                '}';
-    }
 }

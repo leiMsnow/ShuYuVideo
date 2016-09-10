@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoDetailsActivity;
-import com.shuyu.video.model.ChannelContent;
+import com.shuyu.video.model.ChannelData;
 import com.shuyu.video.utils.Constants;
 
 import org.byteam.superadapter.SuperAdapter;
@@ -19,17 +19,17 @@ import java.util.List;
 /**
  * Created by Azure on 2016/8/31.
  */
-public class ChannelContentAdapter extends SuperAdapter<ChannelContent.VideoChannelListBean.ChannelContentListBean> {
+public class ChannelContentAdapter extends SuperAdapter<ChannelData.VideoChannel.ChannelContent> {
 
 
-    ChannelContentAdapter(Context context, List<ChannelContent.VideoChannelListBean.ChannelContentListBean> items,
+    ChannelContentAdapter(Context context, List<ChannelData.VideoChannel.ChannelContent> items,
                           int layoutResId) {
         super(context, items, layoutResId);
     }
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition,
-                       ChannelContent.VideoChannelListBean.ChannelContentListBean item) {
+                       ChannelData.VideoChannel.ChannelContent item) {
         ImageView imageView = holder.findViewById(R.id.iv_channel_content_url);
         if (imageView != null) {
             Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
@@ -41,9 +41,9 @@ public class ChannelContentAdapter extends SuperAdapter<ChannelContent.VideoChan
 
     private class MyOnClickListener implements View.OnClickListener {
 
-        ChannelContent.VideoChannelListBean.ChannelContentListBean child;
+        ChannelData.VideoChannel.ChannelContent child;
 
-        public MyOnClickListener(ChannelContent.VideoChannelListBean.ChannelContentListBean child) {
+        public MyOnClickListener(ChannelData.VideoChannel.ChannelContent child) {
             this.child = child;
         }
 

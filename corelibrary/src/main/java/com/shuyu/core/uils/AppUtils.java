@@ -92,25 +92,25 @@ public class AppUtils {
     public static String getIMSI(Context context) {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getSubscriberId();
+        return mTelephonyMgr.getSubscriberId() == null ? "" : mTelephonyMgr.getSubscriberId();
     }
 
     public static String getIMEI(Context context) {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getDeviceId();
+        return mTelephonyMgr.getDeviceId() == null ? "" : mTelephonyMgr.getDeviceId();
     }
 
     public static String getTelNumber(Context context) {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getLine1Number();
+        return mTelephonyMgr.getLine1Number() == null ? "" : mTelephonyMgr.getLine1Number();
     }
 
     public static String getSerialNumber(Context context) {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getSimSerialNumber() == null?"":mTelephonyMgr.getSimSerialNumber();
+        return mTelephonyMgr.getSimSerialNumber() == null ? "" : mTelephonyMgr.getSimSerialNumber();
     }
 
     public static String getUUID(Context context) {
@@ -119,7 +119,6 @@ public class AppUtils {
         UUID deiceUUID = new UUID(androidId.hashCode(), ((long) getIMEI(context).hashCode() << 32) |
                 getSerialNumber(context).hashCode());
         return "client_" + deiceUUID.toString();
-//        client_6b533cdf-9636-4a2f-bc0f-eb536892bd2f
     }
 
 

@@ -13,7 +13,7 @@ import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
 import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.model.ChannelContent;
+import com.shuyu.video.model.ChannelData;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.utils.Constants;
 
@@ -30,7 +30,7 @@ public class VideoDetailsActivity extends BaseActivity {
     ImageView mIvUrl;
 
     private int mVideoId;
-    private ChannelContent.VideoChannelListBean.ChannelContentListBean mVideoDetails;
+    private ChannelData.VideoChannel.ChannelContent mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
     @Override
     protected int getLayoutRes() {
@@ -53,9 +53,9 @@ public class VideoDetailsActivity extends BaseActivity {
 
     private void getVideoDetails(int id) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoDetails(id),
-                new BaseApi.IResponseListener<ChannelContent.VideoChannelListBean.ChannelContentListBean>() {
+                new BaseApi.IResponseListener<ChannelData.VideoChannel.ChannelContent>() {
                     @Override
-                    public void onSuccess(ChannelContent.VideoChannelListBean.ChannelContentListBean data) {
+                    public void onSuccess(ChannelData.VideoChannel.ChannelContent data) {
                         Glide.with(mContext).load(data.getImgUrl()).into(mIvUrl);
                         mVideoDetails = data;
                         setTitle(data.getTitle());
@@ -69,7 +69,7 @@ public class VideoDetailsActivity extends BaseActivity {
     }
 
     private void getVideoComment(){
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoComments(),
+        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoCommentList(),
                 new BaseApi.IResponseListener<List<VideoComment>>() {
                     @Override
                     public void onSuccess(List<VideoComment> data) {

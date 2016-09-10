@@ -3,6 +3,7 @@ package com.shuyu.video.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -45,14 +46,18 @@ public class LauncherActivity extends BaseActivity {
                 new BaseApi.IResponseListener<List<RunInfo>>() {
             @Override
             public void onSuccess(List<RunInfo> data) {
-                SPUtils.put(mContext, BaseApi.BASE_URL, data.get(0).getFirstHost());
+                if (TextUtils.isEmpty(data.get(0).getFirstHost())) {
+                    SPUtils.put(mContext, BaseApi.BASE_URL, BaseApi.LOCAL_SERVER_URL);
+                }else{
+                    SPUtils.put(mContext, BaseApi.BASE_URL, data.get(0).getFirstHost());
+                }
                 Glide.with(mContext).load(data.get(0).getContentUrl()).into(ivLauncherUrl);
                 sendLauncher(data.get(0).getStayTime());
             }
 
             @Override
             public void onFail() {
-                sendLauncher(1);
+                sendLauncher(0);
             }
         });
     }

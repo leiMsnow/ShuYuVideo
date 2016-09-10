@@ -1,13 +1,16 @@
 package com.shuyu.core.api;
 
 import android.os.Build;
+import android.util.Base64;
 
 import com.shuyu.core.CoreApplication;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.SPUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -30,15 +33,15 @@ public class BaseApi {
 
     public static final String BASE_URL = "BASE_URL";
 
-    private static final String SERVER_URL_TEST = "http://www.51shuyu.com:8008/";
-//    private static final String SERVER_URL_NEW = "http://mmys-cps.ywpod.com/mmys-cps/ ";
+//    public static final String LOCAL_SERVER_URL = "http://www.51shuyu.com:8008/";
+    public static final String LOCAL_SERVER_URL = "http://101.201.233.134:8008/";
 
     private static final int TIMEOUT_READ = 25;
     private static final int TIMEOUT_CONNECTION = 25;
 
     public static <T> T createApi(Class<T> service) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SPUtils.get(CoreApplication.getApplication(),BASE_URL,SERVER_URL_TEST).toString())
+                .baseUrl(SPUtils.get(CoreApplication.getApplication(), BASE_URL, LOCAL_SERVER_URL).toString())
                 .client(genericClient())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -91,18 +94,17 @@ public class BaseApi {
         queryParams.put("ditchNo", "0");
         queryParams.put("uuid", AppUtils.getUUID(CoreApplication.getApplication()));
 
-        Map<String, String> headerParams = new HashMap<>();
-        headerParams.put("Host","mmys-cps.ywpod.com");
-        headerParams.put("Connection","Keep-Alive");
-        headerParams.put("Accept-Encoding","gzip");
-        headerParams.put("User-Agent","okhttp/2.5.0");
-        headerParams.put("H-Quality","L");
-        headerParams.put("Pay-Key","YXBwSWQ9MTAwMSZpbWVpPTg2Mjc1NjAzMTA3MTM4OCZpbXNpPW51bGwmY2hh" +
-                "bm5lbE5vPXNwd3lz%0AYl8xMTExMTEwMzFfMDAwMjM4MSZwYXlWZXJzaW9uPTEzMg%3D%3D%0A");
+        List<String> headerParams = new ArrayList<>();
+        headerParams.add("Host:mmys-cps.ywpod.com");
+        headerParams.add("Connection:Keep-Alive");
+        headerParams.add("Accept-Encoding:gzip");
+        headerParams.add("User-Agent:okhttp/2.5.0");
+        headerParams.add("H-Quality:L");
+        headerParams.add("Pay-Key:" + getPayKey(queryParams));
 
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
                 .addQueryParamsMap(queryParams)
-                .addHeaderParamsMap(headerParams)
+                .addHeaderLinesList(headerParams)
                 .build();
 
         File cacheFile = new File(CoreApplication.getApplication().getCacheDir(), "retrofit_cache");
@@ -117,6 +119,29 @@ public class BaseApi {
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
                 .build();
+    }
+
+    private static String getPayKey(Map<String, String> headerParams) {
+
+        StringBuilder encodeString = new StringBuilder();
+
+        encodeString
+                .append("appId=")
+                .append(headerParams.get("appId"))
+                .append("&")
+                .append("imei=")
+                .append(headerParams.get("imei"))
+                .append("&")
+                .append("imsi=")
+                .append(headerParams.get("imsi"))
+                .append("&")
+                .append("channelNo=")
+                .append(headerParams.get("channelNo"))
+                .append("&")
+                .append("payVersion=132");
+        byte[] bytes = encodeString.toString().getBytes();
+        return new String((Base64.encode(bytes, Base64.DEFAULT))).replace("\n", "");
+
     }
 
 

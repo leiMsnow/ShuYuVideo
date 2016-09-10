@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
-import com.shuyu.video.model.ChannelContent;
+import com.shuyu.video.model.ChannelData;
 import com.shuyu.video.utils.Constants;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class VideoFragment extends BaseFragment {
     @Bind(R.id.iv_video_url)
     ImageView ivVideoUrl;
 
-    private ChannelContent.VideoChannelListBean.ChannelContentListBean data;
+    private ChannelData.VideoChannel.ChannelContent data;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
 
@@ -56,7 +56,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        data = (ChannelContent.VideoChannelListBean.ChannelContentListBean)
+        data = (ChannelData.VideoChannel.ChannelContent)
                 getArguments().getSerializable(Constants.VIDEO_DETAILS);
 
         if (data == null)

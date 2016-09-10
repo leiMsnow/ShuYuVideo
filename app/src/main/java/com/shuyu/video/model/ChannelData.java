@@ -7,26 +7,14 @@ import java.util.List;
  * Created by Azure on 2016/8/31.
  */
 
-public class ChannelContent implements Serializable{
+public class ChannelData implements Serializable{
 
-    /**
-     * totalPageCount : 1
-     * totalItemCount : 1
-     * pageNo : 1
-     * videoChannelList : [{"id":2091,"title":"综艺节目","imgUrl":null,"channelContentList":[{"title":"相亲才会赢_20160525_穿尖头皮鞋的电台主播","contentType":1,"subTitle":"尖头皮鞋大头皮鞋","id":500072,"description":"","imgUrl":"http://s.wasu.tv/mams/pic/201605/25/22/20160525225438506063b35b7.jpg","videoPageUrl":"http://www.wasu.cn/wap/Play/show/id/7526130?refer=souying","videoUrl":"http://183.131.82.139/play/E55B869DEA59AF3002CEDA99B5652DC4F842628A.mp4","isPage":"1","videoLength":2097,"fee":400,"feeTime":"00:00:00","feeRule":1,"isClip":1,"clipUrlList":[],"tags":"相亲,综艺","isTryplay":1,"tryPlayLength":0,"videoType":1}]}]
-     */
 
     private int totalPageCount;
     private int totalItemCount;
     private int pageNo;
-    /**
-     * id : 2091
-     * title : 综艺节目
-     * imgUrl : null
-     * channelContentList : [{"title":"相亲才会赢_20160525_穿尖头皮鞋的电台主播","contentType":1,"subTitle":"尖头皮鞋大头皮鞋","id":500072,"description":"","imgUrl":"http://s.wasu.tv/mams/pic/201605/25/22/20160525225438506063b35b7.jpg","videoPageUrl":"http://www.wasu.cn/wap/Play/show/id/7526130?refer=souying","videoUrl":"http://183.131.82.139/play/E55B869DEA59AF3002CEDA99B5652DC4F842628A.mp4","isPage":"1","videoLength":2097,"fee":400,"feeTime":"00:00:00","feeRule":1,"isClip":1,"clipUrlList":[],"tags":"相亲,综艺","isTryplay":1,"tryPlayLength":0,"videoType":1}]
-     */
 
-    private List<VideoChannelListBean> videoChannelList;
+    private List<VideoChannel> videoChannelList;
 
     public int getTotalPageCount() {
         return totalPageCount;
@@ -52,41 +40,20 @@ public class ChannelContent implements Serializable{
         this.pageNo = pageNo;
     }
 
-    public List<VideoChannelListBean> getVideoChannelList() {
+    public List<VideoChannel> getVideoChannelList() {
         return videoChannelList;
     }
 
-    public void setVideoChannelList(List<VideoChannelListBean> videoChannelList) {
+    public void setVideoChannelList(List<VideoChannel> videoChannelList) {
         this.videoChannelList = videoChannelList;
     }
 
-    public static class VideoChannelListBean implements Serializable{
+    public static class VideoChannel implements Serializable{
         private int id;
         private String title;
         private Object imgUrl;
-        /**
-         * title : 相亲才会赢_20160525_穿尖头皮鞋的电台主播
-         * contentType : 1
-         * subTitle : 尖头皮鞋大头皮鞋
-         * id : 500072
-         * description :
-         * imgUrl : http://s.wasu.tv/mams/pic/201605/25/22/20160525225438506063b35b7.jpg
-         * videoPageUrl : http://www.wasu.cn/wap/Play/show/id/7526130?refer=souying
-         * videoUrl : http://183.131.82.139/play/E55B869DEA59AF3002CEDA99B5652DC4F842628A.mp4
-         * isPage : 1
-         * videoLength : 2097
-         * fee : 400
-         * feeTime : 00:00:00
-         * feeRule : 1
-         * isClip : 1
-         * clipUrlList : []
-         * tags : 相亲,综艺
-         * isTryplay : 1
-         * tryPlayLength : 0
-         * videoType : 1
-         */
 
-        private List<ChannelContentListBean> channelContentList;
+        private List<ChannelContent> channelContentList;
 
         public int getId() {
             return id;
@@ -112,15 +79,15 @@ public class ChannelContent implements Serializable{
             this.imgUrl = imgUrl;
         }
 
-        public List<ChannelContentListBean> getChannelContentList() {
+        public List<ChannelContent> getChannelContentList() {
             return channelContentList;
         }
 
-        public void setChannelContentList(List<ChannelContentListBean> channelContentList) {
+        public void setChannelContentList(List<ChannelContent> channelContentList) {
             this.channelContentList = channelContentList;
         }
 
-        public static class ChannelContentListBean implements Serializable{
+        public static class ChannelContent implements Serializable{
             private String title;
             private int contentType;
             private String subTitle;

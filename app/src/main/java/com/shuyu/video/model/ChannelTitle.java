@@ -5,13 +5,7 @@ package com.shuyu.video.model;
  */
 
 public class ChannelTitle {
-    /**
-     * id : 1011
-     * title : 华北
-     * channelType : 2
-     * imgUrl : null
-     * isRmd : 1
-     */
+
     private int id;
     private String title;
     private int channelType;
@@ -58,14 +52,4 @@ public class ChannelTitle {
         this.isRmd = isRmd;
     }
 
-    @Override
-    public String toString() {
-        return "ChannelTitle{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", channelType=" + channelType +
-                ", imgUrl=" + imgUrl +
-                ", isRmd=" + isRmd +
-                '}';
-    }
 }
