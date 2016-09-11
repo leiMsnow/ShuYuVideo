@@ -33,15 +33,16 @@ public class BaseApi {
 
     public static final String BASE_URL = "BASE_URL";
 
-//    public static final String LOCAL_SERVER_URL = "http://www.51shuyu.com:8008/";
+    //    public static final String LOCAL_SERVER_URL = "http://www.51shuyu.com:8008/";
     public static final String LOCAL_SERVER_URL = "http://101.201.233.134:8008/";
 
     private static final int TIMEOUT_READ = 15;
     private static final int TIMEOUT_CONNECTION = 15;
 
     public static <T> T createApi(Class<T> service) {
+        final String url = SPUtils.get(CoreApplication.getApplication(), BASE_URL, LOCAL_SERVER_URL).toString() + "%20/";
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SPUtils.get(CoreApplication.getApplication(), BASE_URL, LOCAL_SERVER_URL).toString())
+                .baseUrl(url)
                 .client(genericClient())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -79,6 +80,7 @@ public class BaseApi {
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         Map<String, String> queryParams = new HashMap<>();
 
@@ -90,7 +92,7 @@ public class BaseApi {
         queryParams.put("versionCode", "10101");
         queryParams.put("dcVersion", "000002");
 //        queryParams.put("appId", AppUtils.getPackageName());
-        queryParams.put("appId", "1021");
+        queryParams.put("appId", "1001");
         queryParams.put("ditchNo", "0");
         queryParams.put("uuid", AppUtils.getUUID(CoreApplication.getApplication()));
 

@@ -14,7 +14,7 @@
 
     <com.shuyu.core.widget.CirclePageIndicator
         android:id="@+id/cpi_indicator"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/vp_container"
         android:layout_alignParentEnd="true"

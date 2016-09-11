@@ -59,7 +59,7 @@ public interface IMainApi {
      * @param pageSize
      * @return
      */
-    @GET("qryVideoChannelContentList.service")
+    @GET("qryVideoChannelContentList.service?rv=2")
     Observable<ChannelVideoEntity> getVideoListByChannelId(@Query("cid") int cid,
                                                            @Query("pageNo") int pageNo,
                                                            @Query("pageSize") int pageSize);
@@ -83,7 +83,7 @@ public interface IMainApi {
      * @param pageSize
      * @return
      */
-    @GET("qryPicChannelContentList.service")
+    @GET("qryPicChannelContentList.service?picRv=2")
     Observable<ChannelPictureEntity> getPictureListByChannelId(@Query("cid") int cid,
                                                                @Query("pageNo") int pageNo,
                                                                @Query("pageSize") int pageSize);

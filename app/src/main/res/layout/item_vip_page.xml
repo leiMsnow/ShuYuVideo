@@ -25,7 +25,7 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/selector_btn"
         android:text="进入观看"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/iv_url"
