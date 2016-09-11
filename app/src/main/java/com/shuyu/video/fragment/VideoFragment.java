@@ -39,6 +39,8 @@ public class VideoFragment extends BaseFragment {
     ImageView ivVideoUrl;
     @Bind(R.id.tv_video_time)
     TextView tvVideoTime;
+//    @Bind(R.id.vv_play)
+//    VideoView mVideoView;
 
     private VideoPicDetails mPlayDetails;
     private MediaPlayer mMediaPlayer;
@@ -68,6 +70,9 @@ public class VideoFragment extends BaseFragment {
         svVideo.getHolder().addCallback(callback);
         svVideo.getHolder().setKeepScreenOn(true);
         seekBar.setOnSeekBarChangeListener(change);
+
+//        mVideoView.setVideoPath(mPlayDetails.getVideoUrl());
+//        mVideoView.start();
     }
 
     private void initMediaPlayer() {
@@ -76,7 +81,6 @@ public class VideoFragment extends BaseFragment {
         mMediaPlayer.setDisplay(svVideo.getHolder());
         try {
             mMediaPlayer.setDataSource(mPlayDetails.getVideoUrl());
-            seekBar.setMax(mMediaPlayer.getDuration());
             mMediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,7 +135,6 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             ivControl.setImageResource(R.mipmap.ic_video_pause);
             ivVideoUrl.setVisibility(View.GONE);
-//            setVideoTime(mMediaPlayer.getDuration());
 
             if (mCurrentPosition > 0)
                 mMediaPlayer.seekTo(mCurrentPosition);

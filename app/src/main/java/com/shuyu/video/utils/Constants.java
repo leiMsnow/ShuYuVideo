@@ -17,6 +17,7 @@ public interface Constants {
     String VIDEO_DETAILS = "VIDEO_DETAILS";
 
     String PICTURE_DETAIL_ID = "PICTURE_DETAIL_ID";
+    String PICTURE_URL = "PICTURE_URL";
 
     String LAUNCHER_IMG = "LAUNCHER_IMG";
 

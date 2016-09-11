@@ -23,7 +23,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/selector_btn_pink"
+        android:background="@drawable/selector_btn"
         android:text="进入观看"
         android:textColor="@color/white"/>
 

@@ -26,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
     protected Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         // 设置竖屏
         if (setOrientationPortrait()) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }else{
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
         setContentView(getLayoutRes());
@@ -44,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    protected boolean setOrientationPortrait(){
+    protected boolean setOrientationPortrait() {
         return true;
     }
 
@@ -83,6 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             return 0;
         return DensityUtils.dp2px(mContext, 56);
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (menu.getClass().getSimpleName().equals("MenuBuilder")) {

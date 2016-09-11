@@ -9,7 +9,7 @@
         android:id="@+id/tb_indicator"
         android:layout_width="match_parent"
         app:equally_item="true"
-        app:indicator_color="@color/main_pink"
+        app:indicator_color="@color/black"
         android:layout_height="40dp"/>
 
 

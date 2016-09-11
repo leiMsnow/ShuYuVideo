@@ -19,7 +19,7 @@
     <LinearLayout
         android:id="@+id/ll_bottom_menu"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/black"
         android:orientation="horizontal">
@@ -27,37 +27,37 @@
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_main"
             style="@style/MainMenuStyle"
-            app:changeColor="@color/main_pink"
+            app:changeColor="?attr/app_main_color"
             app:changeIcon="@mipmap/ic_nav_main"
             app:changeText="@string/nav_main"
-            app:changeTextSize="12sp"
+            app:changeTextSize="10sp"
             app:defaultColor="@color/white"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_vip"
             style="@style/MainMenuStyle"
-            app:changeColor="@color/main_pink"
+            app:changeColor="?attr/app_main_color"
             app:changeIcon="@mipmap/ic_nav_vip"
             app:changeText="@string/nav_vip"
-            app:changeTextSize="12sp"
+            app:changeTextSize="10sp"
             app:defaultColor="@color/white"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_private"
             style="@style/MainMenuStyle"
-            app:changeColor="@color/main_pink"
-            app:changeIcon="@mipmap/ic_nav_private"
+            app:changeColor="?attr/app_main_color"
+            app:changeIcon="@mipmap/ic_nav_recommend"
             app:changeText="@string/nav_recommend"
-            app:changeTextSize="12sp"
+            app:changeTextSize="10sp"
             app:defaultColor="@color/white"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_user"
             style="@style/MainMenuStyle"
-            app:changeColor="@color/main_pink"
+            app:changeColor="?attr/app_main_color"
             app:changeIcon="@mipmap/ic_nav_user"
             app:changeText="@string/nav_me"
-            app:changeTextSize="12sp"
+            app:changeTextSize="10sp"
             app:defaultColor="@color/white"/>
 
     </LinearLayout>

@@ -37,8 +37,11 @@
             android:name=".activity.SearchActivity"
             android:label="@string/search">
         </activity>
-        <activity android:name=".activity.PictureDetailsActivity"
+        <activity
+            android:name=".activity.PictureDetailsActivity"
             android:label="详情">
+        </activity>
+        <activity android:name=".activity.PictureActivity">
         </activity>
     </application>
 

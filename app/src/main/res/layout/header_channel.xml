@@ -25,7 +25,7 @@
         app:paddingStart="8dp"
         app:paddingEnd="8dp"
         app:vpi_centered="false"
-        app:vpi_fillColor="@color/main_pink"
+        app:vpi_fillColor="?attr/app_main_color"
         tools:visibility="visible"/>
 
     <TextView
