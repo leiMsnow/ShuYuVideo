@@ -70,7 +70,9 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = "shuyuvideo_${variant.productFlavors[0].name}" +
+                        def fileName =
+                                //${buildConfigField.IS_DEBUG}+
+                                "shuyuvideo_${variant.productFlavors[0].name}" +
                                 "${defaultConfig.versionName}_${releaseTime()}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }

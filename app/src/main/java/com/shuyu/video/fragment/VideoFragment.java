@@ -39,8 +39,6 @@ public class VideoFragment extends BaseFragment {
     ImageView ivVideoUrl;
     @Bind(R.id.tv_video_time)
     TextView tvVideoTime;
-//    @Bind(R.id.vv_play)
-//    VideoView mVideoView;
 
     private VideoPicDetails mPlayDetails;
     private MediaPlayer mMediaPlayer;
@@ -71,8 +69,6 @@ public class VideoFragment extends BaseFragment {
         svVideo.getHolder().setKeepScreenOn(true);
         seekBar.setOnSeekBarChangeListener(change);
 
-//        mVideoView.setVideoPath(mPlayDetails.getVideoUrl());
-//        mVideoView.start();
     }
 
     private void initMediaPlayer() {
