@@ -10,12 +10,13 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 
 import java.io.IOException;
@@ -36,8 +37,10 @@ public class VideoFragment extends BaseFragment {
     ImageView ivFull;
     @Bind(R.id.iv_video_url)
     ImageView ivVideoUrl;
+    @Bind(R.id.tv_video_time)
+    TextView tvVideoTime;
 
-    private VideoDetails mPlayDetails;
+    private VideoPicDetails mPlayDetails;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
 
@@ -56,7 +59,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        mPlayDetails = (VideoDetails) getArguments().getSerializable(Constants.VIDEO_DETAILS);
+        mPlayDetails = (VideoPicDetails) getArguments().getSerializable(Constants.VIDEO_DETAILS);
 
         if (mPlayDetails == null) return;
 
@@ -71,7 +74,13 @@ public class VideoFragment extends BaseFragment {
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setDisplay(svVideo.getHolder());
-
+        try {
+            mMediaPlayer.setDataSource(mPlayDetails.getVideoUrl());
+            seekBar.setMax(mMediaPlayer.getDuration());
+            mMediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -122,16 +131,18 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             ivControl.setImageResource(R.mipmap.ic_video_pause);
             ivVideoUrl.setVisibility(View.GONE);
-            try {
-                mMediaPlayer.setDataSource(mPlayDetails.getVideoUrl());
-                mMediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            setVideoTime(mMediaPlayer.getDuration());
+
             if (mCurrentPosition > 0)
                 mMediaPlayer.seekTo(mCurrentPosition);
             mMediaPlayer.start();
         }
+    }
+
+    private void setVideoTime(int time){
+        int musicTime = time / 1000;
+        String videoTime = musicTime / 60 + ":" + musicTime % 60;
+        tvVideoTime.setText(videoTime);
     }
 
     @Override
@@ -171,8 +182,8 @@ public class VideoFragment extends BaseFragment {
     private SeekBar.OnSeekBarChangeListener change = new SeekBar.OnSeekBarChangeListener() {
 
         @Override
-        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            if (b) {
+        public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
+            if (fromUser) {
                 int playtime = i * mMediaPlayer.getDuration() / 100;
                 mMediaPlayer.seekTo(playtime);
             }
@@ -188,6 +199,5 @@ public class VideoFragment extends BaseFragment {
 
         }
     };
-
 
 }

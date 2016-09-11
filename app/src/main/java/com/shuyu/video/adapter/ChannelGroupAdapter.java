@@ -10,7 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.shuyu.video.R;
-import com.shuyu.video.model.ChannelEntity;
+import com.shuyu.video.model.SubChannel;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ import java.util.List;
 public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
-    private List<ChannelEntity.VideoChannel> mChannelContents;
+    private List<SubChannel> mChannelContents;
 
     public ChannelGroupAdapter(Context context) {
         mContext = context;
     }
 
-    public void setChannelContents(List<ChannelEntity.VideoChannel> channelContents) {
+    public void setChannelContents(List<SubChannel> channelContents) {
         mChannelContents = channelContents;
         notifyDataSetChanged();
     }
@@ -77,7 +77,7 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (GroupHolder) view.getTag();
         }
-        ChannelEntity.VideoChannel content = (ChannelEntity.VideoChannel) getGroup(i);
+        SubChannel content = (SubChannel) getGroup(i);
         holder.tvGroupTitle.setText(content.getTitle());
         return view;
     }

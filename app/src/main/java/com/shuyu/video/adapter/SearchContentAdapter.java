@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoDetailsActivity;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 
 import org.byteam.superadapter.SuperAdapter;
@@ -19,17 +19,17 @@ import java.util.List;
 /**
  * Created by Azure on 2016/8/31.
  */
-public class SearchContentAdapter extends SuperAdapter<VideoDetails> {
+public class SearchContentAdapter extends SuperAdapter<VideoPicDetails> {
 
 
-    public  SearchContentAdapter(Context context, List<VideoDetails> items,
+    public  SearchContentAdapter(Context context, List<VideoPicDetails> items,
                          int layoutResId) {
         super(context, items, layoutResId);
     }
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition,
-                       VideoDetails item) {
+                       VideoPicDetails item) {
         ImageView imageView = holder.findViewById(R.id.iv_video_url);
         if (imageView != null) {
             Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
@@ -41,9 +41,9 @@ public class SearchContentAdapter extends SuperAdapter<VideoDetails> {
 
     private class MyOnClickListener implements View.OnClickListener {
 
-        VideoDetails child;
+        VideoPicDetails child;
 
-        MyOnClickListener(VideoDetails child) {
+        MyOnClickListener(VideoPicDetails child) {
             this.child = child;
         }
 

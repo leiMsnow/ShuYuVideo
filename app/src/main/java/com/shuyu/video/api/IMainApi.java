@@ -2,14 +2,16 @@ package com.shuyu.video.api;
 
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.ChannelBanner;
-import com.shuyu.video.model.ChannelEntity;
+import com.shuyu.video.model.ChannelPictureEntity;
+import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.ChannelTitle;
 import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.LiveVideoEntity;
+import com.shuyu.video.model.PictureDetails;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoData;
 import com.shuyu.video.model.VideoComment;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 
 import java.util.List;
 
@@ -58,9 +60,9 @@ public interface IMainApi {
      * @return
      */
     @GET("qryVideoChannelContentList.service")
-    Observable<ChannelEntity> getVideoListByChannelId(@Query("cid") int cid,
-                                                      @Query("pageNo") int pageNo,
-                                                      @Query("pageSize") int pageSize);
+    Observable<ChannelVideoEntity> getVideoListByChannelId(@Query("cid") int cid,
+                                                           @Query("pageNo") int pageNo,
+                                                           @Query("pageSize") int pageSize);
 
 
     /**
@@ -70,7 +72,7 @@ public interface IMainApi {
      * @return
      */
     @GET("videoDtl.service")
-    Observable<VideoDetails> getVideoDetails(@Query("id") int id);
+    Observable<VideoPicDetails> getVideoDetails(@Query("id") int id);
 
 
     /**
@@ -82,9 +84,9 @@ public interface IMainApi {
      * @return
      */
     @GET("qryPicChannelContentList.service")
-    Observable<ChannelEntity> getPictureListByChannelId(@Query("cid") int cid,
-                                                        @Query("pageNo") int pageNo,
-                                                        @Query("pageSize") int pageSize);
+    Observable<ChannelPictureEntity> getPictureListByChannelId(@Query("cid") int cid,
+                                                               @Query("pageNo") int pageNo,
+                                                               @Query("pageSize") int pageSize);
 
     /**
      * 图片详情
@@ -93,7 +95,7 @@ public interface IMainApi {
      * @return
      */
     @GET("pictureList.service")
-    Observable<VideoDetails> getPictureDetails(@Query("groupId") int groupId);
+    Observable<List<PictureDetails>> getPictureDetails(@Query("groupId") int groupId);
 
 
     /**

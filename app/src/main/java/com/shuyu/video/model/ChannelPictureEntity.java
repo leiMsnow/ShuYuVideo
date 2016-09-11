@@ -3,17 +3,15 @@ package com.shuyu.video.model;
 import java.util.List;
 
 /**
- * Created by zhangleilei on 9/10/16.
+ * Created by Azure on 2016/8/31.
  */
-
-public class SearchVideoData {
-
+public class ChannelPictureEntity {
 
     private int totalPageCount;
-    private int pageNo;
     private int totalItemCount;
+    private int pageNo;
 
-    private List<VideoPicDetails> channelContentList;
+    private List<SubChannel> picChannelList;
 
     public int getTotalPageCount() {
         return totalPageCount;
@@ -21,14 +19,6 @@ public class SearchVideoData {
 
     public void setTotalPageCount(int totalPageCount) {
         this.totalPageCount = totalPageCount;
-    }
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
     }
 
     public int getTotalItemCount() {
@@ -39,12 +29,19 @@ public class SearchVideoData {
         this.totalItemCount = totalItemCount;
     }
 
-    public List<VideoPicDetails> getChannelContentList() {
-        return channelContentList;
+    public int getPageNo() {
+        return pageNo;
     }
 
-    public void setChannelContentList(List<VideoPicDetails> channelContentList) {
-        this.channelContentList = channelContentList;
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
     }
 
+    public List<SubChannel> getPicChannelList() {
+        return picChannelList;
+    }
+
+    public void setPicChannelList(List<SubChannel> picChannelList) {
+        this.picChannelList = picChannelList;
+    }
 }

@@ -16,10 +16,13 @@ import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
-import com.shuyu.video.adapter.ViewPagerAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
-import com.shuyu.video.model.ChannelEntity;
+import com.shuyu.video.model.ChannelPictureEntity;
+import com.shuyu.video.model.ChannelVideoEntity;
+import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.SubChannel;
+import com.shuyu.video.utils.Constants;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -29,8 +32,6 @@ import java.util.TimerTask;
 import butterknife.Bind;
 
 public class ChannelFragment extends BaseFragment {
-
-    public static final String CHANNEL_ID = "channel_id";
 
     public static final int UPDATE_VIEWPAGER = 200;
 
@@ -45,17 +46,17 @@ public class ChannelFragment extends BaseFragment {
     private ChannelGroupAdapter mGroupAdapter;
 
     private List<ChannelBanner> mChannelBanners;
-    private List<ChannelEntity.VideoChannel> mChannelContents;
+    private List<SubChannel> mChannelContents;
 
-    private int currIndex = 0;
     private Timer timer;
+    private int currIndex = 0;
     private MyHandler mMyHandler;
 
-    public static ChannelFragment newInstance(int cid, String title) {
+    public static ChannelFragment newInstance(ChannelTitle channelTitle) {
         ChannelFragment fragment = new ChannelFragment();
         Bundle args = new Bundle();
-        args.putInt(CHANNEL_ID, cid);
-        args.putString(ViewPagerAdapter.ARG_TITLE, title);
+        args.putSerializable(Constants.CHANNEL_DETAILS, channelTitle);
+        args.putString(Constants.BANNEL_TITLE, channelTitle.getTitle());
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,6 +68,11 @@ public class ChannelFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+        if (getArguments() == null) return;
+        ChannelTitle channelTitle = (ChannelTitle) getArguments().getSerializable(Constants.CHANNEL_DETAILS);
+        if (channelTitle == null) return;
+        getChannelData(channelTitle);
 
         View vChannelHeader = View.inflate(mContext, R.layout.header_channel, null);
         mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
@@ -86,9 +92,25 @@ public class ChannelFragment extends BaseFragment {
             }
         });
         mExpandableListView.addHeaderView(vChannelHeader);
-        if (getArguments() != null) {
-            getChannelData(getArguments().getInt(CHANNEL_ID, 0));
-        }
+
+
+        cpiIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tvBannerTitle.setText(mChannelBanners.get(position).getTitle());
+                currIndex = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -97,11 +119,14 @@ public class ChannelFragment extends BaseFragment {
         mMyHandler = new MyHandler(this);
     }
 
-    private void getChannelData(int cid) {
-        getChannelBanner(cid);
-        getChannelContent(cid, 1);
+    private void getChannelData(ChannelTitle channelTitle) {
+        getChannelBanner(channelTitle.getId());
+        if (channelTitle.getChannelType() == Constants.BANNEL_VIDEO) {
+            getVideoList(channelTitle.getId(), 1);
+        } else if (channelTitle.getChannelType() == Constants.BANNEL_PICTURE) {
+            getPictureList(channelTitle.getId(), 1);
+        }
     }
-
 
     private void getChannelBanner(int cid) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelBannerList(cid),
@@ -124,13 +149,33 @@ public class ChannelFragment extends BaseFragment {
                 });
     }
 
-    private void getChannelContent(int cid, int pageNo) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoListByChannelId(cid, pageNo, 4)
-                , new BaseApi.IResponseListener<ChannelEntity>() {
+    private void getVideoList(int cid, int pageNo) {
+        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoListByChannelId(cid, pageNo, 6)
+                , new BaseApi.IResponseListener<ChannelVideoEntity>() {
 
                     @Override
-                    public void onSuccess(ChannelEntity data) {
+                    public void onSuccess(ChannelVideoEntity data) {
                         mChannelContents = data.getVideoChannelList();
+                        mGroupAdapter.setChannelContents(mChannelContents);
+                        for (int i = 0; i < mChannelContents.size(); i++) {
+                            mExpandableListView.expandGroup(i);
+                        }
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
+    }
+
+    private void getPictureList(int cid, int pageNo) {
+        BaseApi.request(BaseApi.createApi(IMainApi.class).getPictureListByChannelId(cid, pageNo, 6)
+                , new BaseApi.IResponseListener<ChannelPictureEntity>() {
+
+                    @Override
+                    public void onSuccess(ChannelPictureEntity data) {
+                        mChannelContents = data.getPicChannelList();
                         mGroupAdapter.setChannelContents(mChannelContents);
                         for (int i = 0; i < mChannelContents.size(); i++) {
                             mExpandableListView.expandGroup(i);
@@ -174,7 +219,6 @@ public class ChannelFragment extends BaseFragment {
 
         @Override
         public void handleMessage(Message msg) {
-
             ChannelFragment fragment = activityWeakReference.get();
             if (fragment != null) {
                 switch (msg.what) {

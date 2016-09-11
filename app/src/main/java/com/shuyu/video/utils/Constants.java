@@ -11,9 +11,20 @@ public interface Constants {
      String ENVIRONMENT = BuildConfig.ENVIRONMENT;
      boolean IS_DEBUG = BuildConfig.IS_DEBUG;
 
+    String CHANNEL_DETAILS = "CHANNEL_DETAILS";
+
     String VIDEO_DETAIL_ID = "VIDEO_DETAIL_ID";
     String VIDEO_DETAILS = "VIDEO_DETAILS";
 
+    String PICTURE_DETAIL_ID = "PICTURE_DETAIL_ID";
+
     String LAUNCHER_IMG = "LAUNCHER_IMG";
+
+    String BANNEL_TITLE = "BANNEL_TITLE";
+
+    int BANNEL_VIDEO = 1;
+    int BANNEL_PICTURE = 2;
+    int BANNEL_APP = 3;
+    int BANNEL_WAP = 4;
 
 }

@@ -7,8 +7,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.video.R;
+import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.activity.VideoDetailsActivity;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 
 import org.byteam.superadapter.SuperAdapter;
@@ -19,17 +20,16 @@ import java.util.List;
 /**
  * Created by Azure on 2016/8/31.
  */
-public class ChannelContentAdapter extends SuperAdapter<VideoDetails> {
+public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
 
-
-    ChannelContentAdapter(Context context, List<VideoDetails> items,
+    ChannelContentAdapter(Context context, List<VideoPicDetails> items,
                           int layoutResId) {
         super(context, items, layoutResId);
     }
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition,
-                       VideoDetails item) {
+                       VideoPicDetails item) {
         ImageView imageView = holder.findViewById(R.id.iv_channel_content_url);
         if (imageView != null) {
             Glide.with(mContext).load(item.getImgUrl()).error(R.mipmap.ic_default_image).into(imageView);
@@ -37,21 +37,32 @@ public class ChannelContentAdapter extends SuperAdapter<VideoDetails> {
         }
         holder.setText(R.id.tv_content_title, item.getTitle());
         holder.setText(R.id.tv_content_desc, item.getDescription());
+        if (item.getContentType()==Constants.BANNEL_VIDEO) {
+            holder.setVisibility(R.id.iv_play, View.VISIBLE);
+        }else if (item.getContentType()==Constants.BANNEL_PICTURE){
+            holder.setVisibility(R.id.iv_play, View.GONE);
+        }
     }
 
     private class MyOnClickListener implements View.OnClickListener {
 
-        VideoDetails child;
+        VideoPicDetails child;
 
-        MyOnClickListener(VideoDetails child) {
+        MyOnClickListener(VideoPicDetails child) {
             this.child = child;
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(mContext, VideoDetailsActivity.class);
-            intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
-            mContext.startActivity(intent);
+            if (child.getContentType()==Constants.BANNEL_VIDEO){
+                Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+                intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
+                mContext.startActivity(intent);
+            }else if(child.getContentType()==Constants.BANNEL_PICTURE){
+                Intent intent = new Intent(mContext, PictureDetailsActivity.class);
+                intent.putExtra(Constants.PICTURE_DETAIL_ID, child.getId());
+                mContext.startActivity(intent);
+            }
         }
     }
 }

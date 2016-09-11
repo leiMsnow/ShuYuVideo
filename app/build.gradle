@@ -51,7 +51,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            buildConfigField "boolean","IS_DEBUG","true"
+            buildConfigField "boolean", "IS_DEBUG", "true"
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
@@ -59,7 +59,7 @@ android {
 
         release {
             signingConfig signingConfigs.release
-            buildConfigField "boolean","IS_DEBUG","false"
+            buildConfigField "boolean", "IS_DEBUG", "false"
             minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
@@ -83,13 +83,13 @@ android {
     productFlavors {
         dev {
             applicationId "com.shuyou.video.dev"
-            resValue "string","app_name","dev影院"
+            resValue "string", "app_name", "dev影院"
             buildConfigField "String", "ENVIRONMENT", '"dev"'
         }
-        prod {
-            applicationId "com.shuyou.video.prod"
-            resValue "string","app_name","红人影院"
-            buildConfigField "String", "ENVIRONMENT", '"prod"'
+        online {
+            applicationId "com.shuyou.video.online"
+            resValue "string", "app_name", "红人影院"
+            buildConfigField "String", "ENVIRONMENT", '"online"'
         }
     }
 }

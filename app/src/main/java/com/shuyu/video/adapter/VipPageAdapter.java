@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.video.R;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ import java.util.List;
 public class VipPageAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<VideoDetails> mLiveVideoDataList = new ArrayList<>();
+    private List<VideoPicDetails> mLiveVideoDataList = new ArrayList<>();
     private LinkedList<View> mConvertViews = new LinkedList<>();
     private View.OnClickListener mOnClickListener;
 
@@ -30,7 +30,7 @@ public class VipPageAdapter extends PagerAdapter {
         mOnClickListener = onClickListener;
     }
 
-    public void setLiveVideoDataList(List<VideoDetails> liveVideoDataList) {
+    public void setLiveVideoDataList(List<VideoPicDetails> liveVideoDataList) {
         mLiveVideoDataList.clear();
         mLiveVideoDataList.addAll(liveVideoDataList);
         notifyDataSetChanged();

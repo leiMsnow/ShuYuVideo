@@ -4,7 +4,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.shuyu.video.R;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 
 import butterknife.Bind;
 
@@ -16,7 +16,7 @@ public class WebViewActivity extends AppBaseActivity {
     @Bind(R.id.web_view)
     WebView webView;
 
-    private VideoDetails mContentListBean;
+    private VideoPicDetails mContentListBean;
 
     @Override
     protected int getLayoutRes() {
@@ -25,7 +25,7 @@ public class WebViewActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-        mContentListBean = (VideoDetails)
+        mContentListBean = (VideoPicDetails)
                 getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
 
         if (mContentListBean == null)

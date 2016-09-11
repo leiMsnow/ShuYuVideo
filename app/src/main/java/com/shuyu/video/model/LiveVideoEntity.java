@@ -13,7 +13,7 @@ public class LiveVideoEntity {
     private Object pageNo;
     private int totalItemCount;
 
-    private List<VideoDetails> nightVideoDetailList;
+    private List<VideoPicDetails> nightVideoDetailList;
 
     public Object getTotalPageCount() {
         return totalPageCount;
@@ -39,11 +39,11 @@ public class LiveVideoEntity {
         this.totalItemCount = totalItemCount;
     }
 
-    public List<VideoDetails> getNightVideoDetailList() {
+    public List<VideoPicDetails> getNightVideoDetailList() {
         return nightVideoDetailList;
     }
 
-    public void setNightVideoDetailList(List<VideoDetails> nightVideoDetailList) {
+    public void setNightVideoDetailList(List<VideoPicDetails> nightVideoDetailList) {
         this.nightVideoDetailList = nightVideoDetailList;
     }
 

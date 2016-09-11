@@ -11,7 +11,7 @@ import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.VideoComment;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 
@@ -28,7 +28,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     ImageView mIvUrl;
 
     private int mVideoId;
-    private VideoDetails mVideoDetails;
+    private VideoPicDetails mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
 
     @Override
@@ -52,9 +52,9 @@ public class VideoDetailsActivity extends AppBaseActivity {
 
     private void getVideoDetails(int id) {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoDetails(id),
-                new BaseApi.IResponseListener<VideoDetails>() {
+                new BaseApi.IResponseListener<VideoPicDetails>() {
                     @Override
-                    public void onSuccess(VideoDetails data) {
+                    public void onSuccess(VideoPicDetails data) {
                         Glide.with(mContext).load(data.getImgUrl()).into(mIvUrl);
                         mVideoDetails = data;
                         setTitle(data.getTitle());

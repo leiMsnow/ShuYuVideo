@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.activity.VideoActivity;
-import com.shuyu.video.model.VideoDetails;
+import com.shuyu.video.model.VideoPicDetails;
 
 /**
  * Created by zhangleilei on 9/10/16.
@@ -14,7 +14,7 @@ import com.shuyu.video.model.VideoDetails;
 public class CommonUtils {
 
     public static void goToVideoPage(Context mContext,
-                                     VideoDetails mVideoDetails) {
+                                     VideoPicDetails mVideoDetails) {
         if (mVideoDetails.getIsPage().equals("1")) {
             AppUtils.openBrowser(mContext, mVideoDetails.getVideoPageUrl());
         } else {

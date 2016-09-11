@@ -33,8 +33,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SearchActivity"
+        <activity
+            android:name=".activity.SearchActivity"
             android:label="@string/search">
+        </activity>
+        <activity android:name=".activity.PictureDetailsActivity"
+            android:label="详情">
         </activity>
     </application>
 

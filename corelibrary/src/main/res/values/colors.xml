@@ -6,11 +6,13 @@
     <color name="transparent">#00000000</color>
     <color name="translucent_a90">#bf000000</color>
     <color name="translucent_a80">#8f000000</color>
+    <color name="translucent_a70">#77000000</color>
     <color name="translucent_a60">#66000000</color>
     <color name="translucent_a50">#55000000</color>
-    <color name="translucent_a30">#4f000000</color>
-    <color name="translucent_a20">#33000000</color>
-    <color name="translucent_a10">#22000000</color>
+    <color name="translucent_a40">#44000000</color>
+    <color name="translucent_a30">#33000000</color>
+    <color name="translucent_a20">#22000000</color>
+    <color name="translucent_a10">#11000000</color>
     <!-- black-->
     <color name="black">#000000</color>
     <color name="black_1">#353535</color>

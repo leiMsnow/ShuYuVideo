@@ -7,7 +7,8 @@ import java.util.List;
  * Created by zhangleilei on 9/10/16.
  */
 
-public class VideoDetails implements Serializable {
+public class VideoPicDetails implements Serializable {
+
     private int id;
     private String title;
     private int contentType;

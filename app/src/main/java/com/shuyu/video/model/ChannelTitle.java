@@ -1,9 +1,11 @@
 package com.shuyu.video.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Azure on 2016/8/31.
  */
-public class ChannelTitle {
+public class ChannelTitle implements Serializable {
 
     private int id;
     private String title;

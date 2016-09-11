@@ -66,8 +66,7 @@ public class MainFragment extends BaseFragment {
     private void addFragments(List<ChannelTitle> data) {
         List<Fragment> mFragments = new ArrayList<>();
         for (ChannelTitle channelTitle : data) {
-            mFragments.add(ChannelFragment.newInstance(channelTitle.getId(),
-                    channelTitle.getTitle()));
+            mFragments.add(ChannelFragment.newInstance(channelTitle));
         }
         mPagerAdapter.setFragments(mFragments);
         rvContainer.setAdapter(mPagerAdapter);
