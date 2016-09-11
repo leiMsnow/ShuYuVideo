@@ -26,7 +26,7 @@ public class CacheInterceptor implements Interceptor {
         }
         Response response = chain.proceed(request);
         if (NetUtils.isConnected((CoreApplication.getApplication()))) {
-            int maxAge = 0;
+            int maxAge = 30*60*24;
             // 有网络时 设置缓存超时时间0个小时
             response.newBuilder()
                     .header("Cache-Control", "public, max-age=" + maxAge)

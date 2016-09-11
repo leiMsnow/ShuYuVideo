@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">腾讯视频</string>
+    <!--<string name="app_name">腾讯视频</string>-->
 
     <string name="nav_main">首页</string>
     <string name="nav_vip">VIP</string>

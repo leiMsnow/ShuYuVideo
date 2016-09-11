@@ -176,3 +176,9 @@
       *** nativeHd(...);
       *** nativeHe(...);
 }
+
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}
+
+-keep class java.nio.file.** {*;}

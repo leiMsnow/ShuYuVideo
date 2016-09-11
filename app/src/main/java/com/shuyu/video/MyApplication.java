@@ -1,6 +1,8 @@
 package com.shuyu.video;
 
 import com.shuyu.core.CoreApplication;
+import com.shuyu.core.uils.LogUtils;
+import com.shuyu.video.utils.Constants;
 
 /**
  * Created by zhangleilei on 8/31/16.
@@ -11,6 +13,8 @@ public class MyApplication extends CoreApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        LogUtils.isDebug = Constants.IS_DEBUG;
 
         // 加密
 //         AESUtils.getInstance().encryptToBase64Str(json,aesKey)

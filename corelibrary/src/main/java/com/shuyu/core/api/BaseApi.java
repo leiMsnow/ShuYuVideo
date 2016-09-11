@@ -36,8 +36,8 @@ public class BaseApi {
 //    public static final String LOCAL_SERVER_URL = "http://www.51shuyu.com:8008/";
     public static final String LOCAL_SERVER_URL = "http://101.201.233.134:8008/";
 
-    private static final int TIMEOUT_READ = 25;
-    private static final int TIMEOUT_CONNECTION = 25;
+    private static final int TIMEOUT_READ = 15;
+    private static final int TIMEOUT_CONNECTION = 15;
 
     public static <T> T createApi(Class<T> service) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -114,7 +114,7 @@ public class BaseApi {
                 .cache(cache)
                 .retryOnConnectionFailure(true)
                 .addInterceptor(logInterceptor)
-                .addInterceptor(new CacheInterceptor())
+                .addNetworkInterceptor(new CacheInterceptor())
                 .addInterceptor(basicParamsInterceptor)
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)

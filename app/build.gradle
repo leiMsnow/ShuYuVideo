@@ -26,11 +26,12 @@ android {
         javaMaxHeapSize "2g"
     }
     signingConfigs {
+
         release {
-//            storeFile file("../shuyuvideo.keystore")
-//            storePassword "shuyuvideo"
-//            keyAlias "shuyuvideo.keystore"
-//            keyPassword "shuyuvideo"
+            keyAlias 'shuyouvideo'
+            keyPassword 'shuyouvideo123'
+            storeFile file('../shuyou.jks')
+            storePassword 'shuyou123'
         }
     }
 
@@ -49,35 +50,52 @@ android {
 
     buildTypes {
         debug {
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
+            buildConfigField "boolean","IS_DEBUG","true"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
         }
 
         release {
+            signingConfig signingConfigs.release
+            buildConfigField "boolean","IS_DEBUG","false"
             minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-//            applicationVariants.all { variant ->
-//                //完成后改名
-//                variant.outputs.each { output ->
-//                    def outputFile = output.outputFile
-//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                        def fileName = "shuyuvideo-${variant.productFlavors[0].name}.apk"
-//                        output.outputFile = new File(outputFile.parent, fileName)
-//                    }
-//                }
-//            }
-
-//            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "shuyuvideo_${variant.productFlavors[0].name}" +
+                                "${defaultConfig.versionName}_${releaseTime()}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
         }
     }
 
     // 多渠道打包
-//    productFlavors {
-//        'test' {}
-//    }
+    productFlavors {
+        dev {
+            applicationId "com.shuyou.video.dev"
+            resValue "string","app_name","dev影院"
+            buildConfigField "String", "ENVIRONMENT", '"dev"'
+        }
+        prod {
+            applicationId "com.shuyou.video.prod"
+            resValue "string","app_name","红人影院"
+            buildConfigField "String", "ENVIRONMENT", '"prod"'
+        }
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {

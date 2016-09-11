@@ -12,6 +12,7 @@ import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.RunInfo;
+import com.shuyu.video.utils.Constants;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -35,8 +36,8 @@ public class LauncherActivity extends AppBaseActivity {
     @Override
     protected void initData() {
         mMyHandler = new MyHandler(this);
+        Glide.with(mContext).load(SPUtils.get(mContext,Constants.LAUNCHER_IMG,"")).into(ivLauncherUrl);
         getRunInfo();
-
     }
 
 
@@ -50,6 +51,7 @@ public class LauncherActivity extends AppBaseActivity {
                 }else{
                     SPUtils.put(mContext, BaseApi.BASE_URL, data.get(0).getFirstHost());
                 }
+                SPUtils.put(mContext, Constants.LAUNCHER_IMG,data.get(0).getContentUrl());
                 Glide.with(mContext).load(data.get(0).getContentUrl()).into(ivLauncherUrl);
                 sendLauncher(data.get(0).getStayTime());
             }
