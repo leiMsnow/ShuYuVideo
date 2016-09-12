@@ -9,6 +9,13 @@
         android:id="@+id/in_toolbar"
         layout="@layout/include_toolbar"/>
 
+    <View
+        android:layout_width="6dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_hot_word"
+        android:layout_alignTop="@+id/tv_hot_word"
+        android:background="?attr/app_main_color"/>
+
     <TextView
         android:id="@+id/tv_hot_word"
         android:layout_width="match_parent"
@@ -17,7 +24,6 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:drawableLeft="@mipmap/ic_hot_word"
         android:drawablePadding="4dp"
         android:text="热门标签"/>
 
