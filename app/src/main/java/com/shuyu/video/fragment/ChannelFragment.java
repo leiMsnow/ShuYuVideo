@@ -201,10 +201,18 @@ public class ChannelFragment extends BaseFragment {
         for (int i = 0; i < mChannelContents.size(); i++) {
             mExpandableListView.expandGroup(i);
             for (int j = 0; j < mChannelContents.get(i).getChannelContentList().size(); j++) {
+                int index1 = random.nextInt(tagColorResId.length);
+                int index2 = random.nextInt(tagColorResId.length);
+                if (index1 == index2) {
+                    index1++;
+                    if (index1 == tagColorResId.length) {
+                        index1 = 0;
+                    }
+                }
                 mChannelContents.get(i).getChannelContentList().get(j).setTagColor(
                         new int[]{
-                                tagColorResId[random.nextInt(tagColorResId.length)],
-                                tagColorResId[random.nextInt(tagColorResId.length)]
+                                tagColorResId[index1],
+                                tagColorResId[index2]
                         }
                 );
             }

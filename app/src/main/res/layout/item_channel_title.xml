@@ -4,13 +4,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-    <ImageView
+    <View
         android:id="@+id/iv_channel_tags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginLeft="8dp"
         android:layout_centerVertical="true"
-        android:src="@mipmap/ic_channel_tags"/>
+        android:background="@mipmap/ic_channel_tags"/>
 
     <TextView
         android:id="@+id/tv_title"
@@ -18,7 +18,7 @@
         android:layout_toRightOf="@+id/iv_channel_tags"
         android:layout_height="40dp"
         android:gravity="center"
-        android:layout_marginLeft="6dp"
+        android:layout_marginLeft="2dp"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="title"/>

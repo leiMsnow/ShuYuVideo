@@ -84,7 +84,7 @@ public class VideoFragment extends BaseFragment {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                ivControl.setImageResource(R.mipmap.ic_video_play);
+                ivControl.setImageResource(R.drawable.selector_video_play);
             }
         });
 
@@ -123,13 +123,13 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             mMediaPlayer.pause();
             mCurrentPosition = mMediaPlayer.getCurrentPosition();
-            ivControl.setImageResource(R.mipmap.ic_video_play);
+            ivControl.setImageResource(R.drawable.selector_video_play);
         }
     }
 
     public void startPlay() {
         if (mMediaPlayer != null) {
-            ivControl.setImageResource(R.mipmap.ic_video_pause);
+            ivControl.setImageResource(R.drawable.selector_video_pause);
             ivVideoUrl.setVisibility(View.GONE);
 
             if (mCurrentPosition > 0)

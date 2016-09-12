@@ -27,9 +27,6 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
             R.id.tv_tag1, R.id.tv_tag2
     };
 
-
-
-
     ChannelContentAdapter(Context context, List<VideoPicDetails> items,
                           int layoutResId) {
         super(context, items, layoutResId);
@@ -46,20 +43,21 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
         holder.setText(R.id.tv_content_title, item.getTitle());
         holder.setText(R.id.tv_subtitle, item.getSubTitle());
         if (item.getContentType() == Constants.BANNEL_VIDEO) {
-            holder.setVisibility(R.id.iv_play, View.VISIBLE);
+//            holder.setVisibility(R.id.iv_play, View.VISIBLE);
+            holder.setVisibility(R.id.tv_view_number, View.VISIBLE);
+            holder.setText(R.id.tv_view_number, item.getViewNumber());
         } else if (item.getContentType() == Constants.BANNEL_PICTURE) {
-            holder.setVisibility(R.id.iv_play, View.GONE);
+//            holder.setVisibility(R.id.iv_play, View.GONE);
+            holder.setVisibility(R.id.tv_view_number, View.GONE);
         }
 
-        String[] tags = item.getTags().split(",");
-        if (tags.length >= tagIds.length) {
-
-            for (int i = 0; i < tagIds.length; i++) {
-                holder.setText(tagIds[i], tags[i]);
-                holder.setBackgroundResource(tagIds[i], item.getTagColor()[i]);
-            }
+        String[] tags = item.getTags();
+        for (int i = 0; i < tags.length; i++) {
+            if (i > 2) break;
+            holder.setVisibility(tagIds[i], View.VISIBLE);
+            holder.setText(tagIds[i], tags[i]);
+            holder.setBackgroundResource(tagIds[i], item.getTagColor()[i]);
         }
-
     }
 
     private class MyOnClickListener implements View.OnClickListener {

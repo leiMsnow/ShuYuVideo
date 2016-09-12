@@ -1,5 +1,7 @@
 package com.shuyu.video.model;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,6 +30,15 @@ public class VideoPicDetails implements Serializable {
     private int isClip;
     private List<?> clipUrlList;
     private int[] tagColor;
+    private int viewNumber;
+
+    public String getViewNumber() {
+        return String.valueOf(viewNumber);
+    }
+
+    public void setViewNumber(int viewNumber) {
+        this.viewNumber = viewNumber;
+    }
 
     public int[] getTagColor() {
         return tagColor;
@@ -93,8 +104,12 @@ public class VideoPicDetails implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public String getTags() {
-        return tags;
+    public String[] getTags() {
+        String[] newTags = new String[]{};
+        if (!TextUtils.isEmpty(tags)) {
+            newTags = tags.split(",");
+        }
+        return newTags;
     }
 
     public void setTags(String tags) {

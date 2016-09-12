@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class SearchContentAdapter extends SuperAdapter<VideoPicDetails> {
 
-
     public  SearchContentAdapter(Context context, List<VideoPicDetails> items,
                          int layoutResId) {
         super(context, items, layoutResId);

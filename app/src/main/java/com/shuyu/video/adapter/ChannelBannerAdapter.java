@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class ChannelBannerAdapter extends PagerAdapter {
 
-
     private Context mContext;
     private List<ChannelBanner> mBanners = new ArrayList<>();
     private List<ImageView> mImageViews = new ArrayList<>();
