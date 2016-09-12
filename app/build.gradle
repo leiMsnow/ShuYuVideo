@@ -53,9 +53,11 @@ android {
         debug {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "true"
-            minifyEnabled false
-            zipAlignEnabled false
-            shrinkResources false
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            // 移除无用的resource文件
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
@@ -72,8 +74,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName =
-                                //${buildConfigField.IS_DEBUG}+
-                                "shuyuvideo_${variant.productFlavors[0].name}" +
+                                "shuyuvideo_${variant.productFlavors[0].name}_" +
                                 "${defaultConfig.versionName}_${releaseTime()}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
@@ -85,12 +86,12 @@ android {
     // 多渠道打包
     productFlavors {
         dev {
-            applicationId "com.shuyou.video.dev"
+            applicationIdSuffix ".dev"
             resValue "string", "app_name", "dev影院"
             buildConfigField "String", "ENVIRONMENT", '"dev"'
         }
         online {
-            applicationId "com.shuyou.video.online"
+            applicationIdSuffix ".online"
             resValue "string", "app_name", "红人影院"
             buildConfigField "String", "ENVIRONMENT", '"online"'
         }
@@ -98,7 +99,7 @@ android {
 }
 
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyyMMddHHmmss")
 }
 
 dependencies {

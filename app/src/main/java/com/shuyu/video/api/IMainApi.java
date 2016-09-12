@@ -104,7 +104,7 @@ public interface IMainApi {
      * @param pageNo
      * @return
      */
-    @GET("liveVideoList.service")
+    @GET("liveVideoList.service?rv=2")
     Observable<LiveVideoEntity> getLiveVideoList(@Query("pageNo") int pageNo);
 
     /**
@@ -133,7 +133,7 @@ public interface IMainApi {
      * @param pageSize
      * @return
      */
-    @GET("searchVideo.service")
+    @GET("searchVideo.service?rv=2")
     Observable<SearchVideoData> searchVideo(@Query("word") String word,
                                             @Query("pageNo") int pageNo,
                                             @Query("pageSize") int pageSize);

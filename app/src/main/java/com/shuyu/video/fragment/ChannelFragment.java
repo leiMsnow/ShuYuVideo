@@ -26,6 +26,7 @@ import com.shuyu.video.utils.Constants;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,6 +52,17 @@ public class ChannelFragment extends BaseFragment {
     private Timer timer;
     private int currIndex = 0;
     private MyHandler mMyHandler;
+
+    private int[] tagColorResId = new int[]{
+            R.drawable.shape_round_red,
+            R.drawable.shape_round_orange,
+            R.drawable.shape_round_yellow,
+            R.drawable.shape_round_light_green,
+            R.drawable.shape_round_light_blue,
+            R.drawable.shape_round_pink,
+            R.drawable.shape_round_deep_purple
+
+    };
 
     public static ChannelFragment newInstance(ChannelTitle channelTitle) {
         ChannelFragment fragment = new ChannelFragment();
@@ -156,10 +168,7 @@ public class ChannelFragment extends BaseFragment {
                     @Override
                     public void onSuccess(ChannelVideoEntity data) {
                         mChannelContents = data.getVideoChannelList();
-                        mGroupAdapter.setChannelContents(mChannelContents);
-                        for (int i = 0; i < mChannelContents.size(); i++) {
-                            mExpandableListView.expandGroup(i);
-                        }
+                        updateGroupData();
                     }
 
                     @Override
@@ -176,10 +185,7 @@ public class ChannelFragment extends BaseFragment {
                     @Override
                     public void onSuccess(ChannelPictureEntity data) {
                         mChannelContents = data.getPicChannelList();
-                        mGroupAdapter.setChannelContents(mChannelContents);
-                        for (int i = 0; i < mChannelContents.size(); i++) {
-                            mExpandableListView.expandGroup(i);
-                        }
+                        updateGroupData();
                     }
 
                     @Override
@@ -187,6 +193,22 @@ public class ChannelFragment extends BaseFragment {
 
                     }
                 });
+    }
+
+    private void updateGroupData() {
+        Random random = new Random();
+        mGroupAdapter.setChannelContents(mChannelContents);
+        for (int i = 0; i < mChannelContents.size(); i++) {
+            mExpandableListView.expandGroup(i);
+            for (int j = 0; j < mChannelContents.get(i).getChannelContentList().size(); j++) {
+                mChannelContents.get(i).getChannelContentList().get(j).setTagColor(
+                        new int[]{
+                                tagColorResId[random.nextInt(tagColorResId.length)],
+                                tagColorResId[random.nextInt(tagColorResId.length)]
+                        }
+                );
+            }
+        }
     }
 
     private void autoUpdateViewPager() {

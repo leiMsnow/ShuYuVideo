@@ -6,6 +6,7 @@ import android.util.Base64;
 import com.shuyu.core.CoreApplication;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.SPUtils;
+import com.shuyu.core.uils.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,24 +56,28 @@ public class BaseApi {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<T>() {
-                    @Override
-                    public void onCompleted() {
+                               @Override
+                               public void onCompleted() {
 
-                    }
+                               }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (listener != null)
-                            listener.onFail();
-                    }
+                               @Override
+                               public void onError(Throwable e) {
+                                   ToastUtils.getInstance().showToast("网络异常,请稍后重试");
+                                   if (listener != null) {
+                                       listener.onFail();
+                                   }
+                               }
 
-                    @Override
-                    public void onNext(T data) {
-                        if (listener != null) {
-                            listener.onSuccess(data);
-                        }
-                    }
-                });
+                               @Override
+                               public void onNext(T data) {
+                                   if (listener != null) {
+                                       listener.onSuccess(data);
+                                   }
+                               }
+                           }
+
+                );
     }
 
 

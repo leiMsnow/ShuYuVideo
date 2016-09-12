@@ -36,7 +36,7 @@ public class SearchContentAdapter extends SuperAdapter<VideoPicDetails> {
             holder.setOnClickListener(R.id.iv_video_url, new MyOnClickListener(item));
         }
         holder.setText(R.id.tv_video_title, item.getTitle());
-        holder.setText(R.id.tv_video_desc, item.getDescription());
+        holder.setText(R.id.tv_video_subtitle, item.getSubTitle());
     }
 
     private class MyOnClickListener implements View.OnClickListener {

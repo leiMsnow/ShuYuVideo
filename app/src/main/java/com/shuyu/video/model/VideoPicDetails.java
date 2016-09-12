@@ -27,6 +27,15 @@ public class VideoPicDetails implements Serializable {
     private int feeRule;
     private int isClip;
     private List<?> clipUrlList;
+    private int[] tagColor;
+
+    public int[] getTagColor() {
+        return tagColor;
+    }
+
+    public void setTagColor(int[] tagColor) {
+        this.tagColor = tagColor;
+    }
 
     public int getContentType() {
         return contentType;
