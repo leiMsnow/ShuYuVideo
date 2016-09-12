@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.Main.Theme" parent="AppTheme.Main.Dark">
+    <style name="AppTheme.Main.Theme" >
         <item name="colorPrimary">?attr/app_main_color</item>
         <item name="colorPrimaryDark">?attr/app_main_color</item>
         <item name="colorAccent">?attr/app_main_color</item>
