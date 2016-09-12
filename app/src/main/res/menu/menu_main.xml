@@ -3,9 +3,15 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_gift"
+        android:icon="@mipmap/ic_menu_gift"
+        app:showAsAction="always"
+        android:title="@string/recommend"/>
+
+    <item
         android:id="@+id/menu_search"
         android:icon="@mipmap/ic_menu_search"
-        android:title="@string/search"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:title="@string/search"/>
 
 </menu>
