@@ -9,6 +9,7 @@
         android:layout_height="32dp"
         android:layout_margin="4dp"
         android:gravity="center"
+        android:clickable="true"
         android:textColor="@color/color_hot_word"
         android:background="@drawable/selector_hot_word"/>
 

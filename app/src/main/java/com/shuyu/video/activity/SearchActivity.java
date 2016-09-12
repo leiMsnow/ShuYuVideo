@@ -33,7 +33,6 @@ public class SearchActivity extends AppBaseActivity {
 
     private HotWordAdapter mHotWordAdapter;
     private SearchContentAdapter mSearchContentAdapter;
-    private SearchFragment mSearchFragment;
     private ISearchListener mSearchListener;
 
     public void setSearchListener(ISearchListener searchListener) {
@@ -48,9 +47,8 @@ public class SearchActivity extends AppBaseActivity {
     @Override
     protected void initData() {
 
-        mSearchFragment = SearchFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_container, mSearchFragment)
+                .add(R.id.fl_container, SearchFragment.newInstance())
                 .commit();
 
         mHotWordAdapter = new HotWordAdapter(mContext, null, R.layout.item_hot_word);

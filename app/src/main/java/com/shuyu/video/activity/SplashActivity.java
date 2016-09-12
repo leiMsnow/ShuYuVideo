@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class LauncherActivity extends AppBaseActivity {
+public class SplashActivity extends AppBaseActivity {
 
     private static final int STAY_TIME_FLAG = 0;
 
@@ -77,16 +77,16 @@ public class LauncherActivity extends AppBaseActivity {
 
     private static class MyHandler extends Handler {
 
-        private WeakReference<LauncherActivity> activityWeakReference;
+        private WeakReference<SplashActivity> activityWeakReference;
 
-        MyHandler(LauncherActivity activity) {
+        MyHandler(SplashActivity activity) {
             activityWeakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
 
-            LauncherActivity activity = activityWeakReference.get();
+            SplashActivity activity = activityWeakReference.get();
             if (activity != null) {
                 if (msg.what == STAY_TIME_FLAG) {
                     activity.startActivity(new Intent(activity.mContext, MainActivity.class));

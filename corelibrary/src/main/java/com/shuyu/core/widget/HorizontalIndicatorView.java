@@ -39,7 +39,6 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
     private boolean isEquallyItem = false;
     private int mIndicatorColor = Color.RED;
     private int mIndicatorDefaultColor = Color.DKGRAY;
-    private boolean isMeasure = false;
 
     public HorizontalIndicatorView(Context context) {
         this(context, null);
@@ -56,7 +55,8 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HorizontalIndicatorView);
         isEquallyItem = typedArray.getBoolean(R.styleable.HorizontalIndicatorView_equally_item, false);
-        mIndicatorColor = typedArray.getColor(R.styleable.HorizontalIndicatorView_indicator_color, Color.RED);
+        mIndicatorColor = typedArray.getColor(R.styleable.HorizontalIndicatorView_hiv_changeColor, Color.BLACK);
+        mIndicatorDefaultColor = typedArray.getColor(R.styleable.HorizontalIndicatorView_hiv_defaultColor, Color.DKGRAY);
         typedArray.recycle();
 
         initView();

@@ -31,7 +31,7 @@ public class SearchFragment extends BaseFragment {
             ((SearchActivity) context).setSearchListener(new SearchActivity.ISearchListener() {
                 @Override
                 public void onSearch(String keyword) {
-                    searchVideo("爱情");
+                    searchVideo(keyword);
                 }
             });
         }

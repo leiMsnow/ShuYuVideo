@@ -19,9 +19,9 @@
     <LinearLayout
         android:id="@+id/ll_bottom_menu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/black"
+        android:background="@color/weak_grey"
         android:orientation="horizontal">
 
         <com.shuyu.core.widget.ChangeColorView
@@ -31,7 +31,7 @@
             app:changeIcon="@mipmap/ic_nav_main"
             app:changeText="@string/nav_main"
             app:changeTextSize="10sp"
-            app:defaultColor="@color/white"/>
+            app:defaultColor="@color/main_black"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_vip"
@@ -40,7 +40,7 @@
             app:changeIcon="@mipmap/ic_nav_vip"
             app:changeText="@string/nav_vip"
             app:changeTextSize="10sp"
-            app:defaultColor="@color/white"/>
+            app:defaultColor="@color/main_black"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_private"
@@ -49,7 +49,7 @@
             app:changeIcon="@mipmap/ic_nav_recommend"
             app:changeText="@string/nav_recommend"
             app:changeTextSize="10sp"
-            app:defaultColor="@color/white"/>
+            app:defaultColor="@color/main_black"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_user"
@@ -58,7 +58,7 @@
             app:changeIcon="@mipmap/ic_nav_user"
             app:changeText="@string/nav_me"
             app:changeTextSize="10sp"
-            app:defaultColor="@color/white"/>
+            app:defaultColor="@color/main_black"/>
 
     </LinearLayout>
 
