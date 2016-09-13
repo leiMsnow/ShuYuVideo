@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -111,6 +112,7 @@ public class SplashActivity extends AppBaseActivity {
                     activity.startActivity(new Intent(activity.mContext, MainActivity.class));
                     activity.finish();
                 } else if (msg.what == MESSAGE_COUNTDOWN) {
+                    activity.tvCountdown.setVisibility(View.VISIBLE);
                     activity.tvCountdown.setText(msg.arg1 + "s");
                 }
             }

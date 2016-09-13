@@ -27,6 +27,7 @@
         android:paddingRight="8dp"
         android:paddingTop="4dp"
         android:textColor="@color/white"
+        android:visibility="gone"
         tools:text="5"/>
 
 </RelativeLayout>
