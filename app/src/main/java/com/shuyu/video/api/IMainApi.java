@@ -115,7 +115,7 @@ public interface IMainApi {
      * @return
      */
     @GET("appstore.service")
-    Observable<AppStoreEntity> getAppstoreList(@Query("pageNo") int pageNo);
+    Observable<AppStoreEntity> getAppStoreList(@Query("pageNo") int pageNo);
 
     /**
      * 视频下方评论

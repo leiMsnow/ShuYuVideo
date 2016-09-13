@@ -53,6 +53,8 @@ android {
         debug {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "true"
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "debug影院"
 //            minifyEnabled true
 //            zipAlignEnabled true
 //            // 移除无用的resource文件

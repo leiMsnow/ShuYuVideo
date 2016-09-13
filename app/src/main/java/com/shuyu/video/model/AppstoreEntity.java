@@ -5,9 +5,7 @@ import java.util.List;
 /**
  * Created by zhangleilei on 9/13/16.
  */
-
 public class AppStoreEntity {
-
 
     private int totalPageCount;
     private int pageNo;
@@ -37,6 +35,5 @@ public class AppStoreEntity {
     public void setAppInfoList(List<AppInfoListEntity> appInfoList) {
         this.appInfoList = appInfoList;
     }
-
 
 }

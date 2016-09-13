@@ -40,8 +40,11 @@ public class BaseApi {
     private static final int TIMEOUT_READ = 15;
     private static final int TIMEOUT_CONNECTION = 15;
 
+    private static OkHttpClient mOkHttpClient;
+
     public static <T> T createApi(Class<T> service) {
-        final String url = SPUtils.get(CoreApplication.getApplication(), BASE_URL, LOCAL_SERVER_URL).toString() + "%20/";
+        final String url = SPUtils.get(CoreApplication.getApplication()
+                , BASE_URL, LOCAL_SERVER_URL).toString() + "%20/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(genericClient())
@@ -81,11 +84,13 @@ public class BaseApi {
     }
 
 
-    private static OkHttpClient genericClient() {
+    public static OkHttpClient genericClient() {
+
+        if (mOkHttpClient != null)
+            return mOkHttpClient;
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         Map<String, String> queryParams = new HashMap<>();
 
@@ -117,7 +122,7 @@ public class BaseApi {
         File cacheFile = new File(CoreApplication.getApplication().getCacheDir(), "retrofit_cache");
         //100Mb
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);
-        return new OkHttpClient.Builder()
+        return mOkHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
                 .retryOnConnectionFailure(true)
                 .addInterceptor(logInterceptor)
@@ -129,9 +134,7 @@ public class BaseApi {
     }
 
     private static String getPayKey(Map<String, String> headerParams) {
-
         StringBuilder encodeString = new StringBuilder();
-
         encodeString
                 .append("appId=")
                 .append(headerParams.get("appId"))
@@ -148,7 +151,6 @@ public class BaseApi {
                 .append("payVersion=132");
         byte[] bytes = encodeString.toString().getBytes();
         return new String((Base64.encode(bytes, Base64.DEFAULT))).replace("\n", "");
-
     }
 
 

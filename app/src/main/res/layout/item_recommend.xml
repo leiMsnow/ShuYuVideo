@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="96dp">
+
+    <ImageView
+        android:id="@+id/iv_app_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_default_image"/>
+
+    <TextView
+        android:id="@+id/tv_app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_app_icon"
+        android:layout_toRightOf="@+id/iv_app_icon"
+        android:textSize="16sp"
+        tools:text="title"/>
+
+    <TextView
+        android:id="@+id/tv_app_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_app_title"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@+id/btn_down"
+        android:layout_toRightOf="@+id/iv_app_icon"
+        android:maxLines="3"
+        android:textSize="12sp"
+        android:textColor="@color/normal_dark_grey"
+        tools:text="description"/>
+
+    <Button
+        android:id="@+id/btn_down"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/selector_btn_down"
+        android:text="下载"
+        android:textColor="@color/color_btn_down"/>
+
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        style="@style/Widget.ProgressBar.Horizontal.Main"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:progress="33"
+        android:secondaryProgress="66"/>
+
+</RelativeLayout>
