@@ -53,7 +53,7 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
 
         String[] tags = item.getTags();
         for (int i = 0; i < tags.length; i++) {
-            if (i > 2) break;
+            if (i == 2) break;
             holder.setVisibility(tagIds[i], View.VISIBLE);
             holder.setText(tagIds[i], tags[i]);
             holder.setBackgroundResource(tagIds[i], item.getTagColor()[i]);

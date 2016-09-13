@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
@@ -26,8 +25,8 @@ public class SearchActivity extends AppBaseActivity {
     RecyclerView rvHotWord;
     @Bind(R.id.rv_hot_video)
     RecyclerView rvHotVideo;
-    @Bind(R.id.tv_hot_video)
-    TextView tvHotVideo;
+    @Bind(R.id.ll_hot_video)
+    View tvHotVideo;
     @Bind(R.id.fl_container)
     View mContainer;
 

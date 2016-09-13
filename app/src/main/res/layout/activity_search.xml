@@ -35,21 +35,19 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"/>
 
-    <TextView
-        android:id="@+id/tv_hot_video"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/ll_hot_video"
+        layout="@layout/include_title_tags"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv_hot_word"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="热门视频"
         android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_hot_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_hot_video"
+        android:layout_below="@+id/ll_hot_video"
         android:padding="4dp"/>
 
     <FrameLayout

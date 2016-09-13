@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.video.R;
@@ -73,16 +74,16 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
             holder = new GroupHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.item_channel_title, null);
             holder.tvGroupTitle = (TextView) view.findViewById(R.id.tv_title);
-            holder.ivTags = view.findViewById(R.id.iv_channel_tags);
+            holder.ivTags = (ImageView) view.findViewById(R.id.iv_channel_tags);
             view.setTag(holder);
         } else {
             holder = (GroupHolder) view.getTag();
         }
         SubChannel content = (SubChannel) getGroup(i);
         if (i == 0) {
-            holder.ivTags.setBackgroundResource(R.mipmap.ic_channel_hot_tags);
+            holder.ivTags.setImageResource(R.mipmap.ic_channel_hot_tags);
         } else {
-            holder.ivTags.setBackgroundResource(R.mipmap.ic_channel_tags);
+            holder.ivTags.setImageResource(R.mipmap.ic_channel_tags);
         }
         holder.tvGroupTitle.setText(content.getTitle());
         return view;
@@ -115,7 +116,7 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
     }
 
     private class GroupHolder {
-        View ivTags;
+        ImageView ivTags;
         TextView tvGroupTitle;
     }
 

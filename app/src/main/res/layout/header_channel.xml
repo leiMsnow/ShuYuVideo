@@ -12,6 +12,21 @@
         android:layout_height="175dp"
         android:layout_alignParentTop="true"/>
 
+
+    <TextView
+        android:id="@+id/tv_banner_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/vp_container"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/shape_gradient"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        tools:text="hi,there"/>
+
+
     <com.shuyu.core.widget.CirclePageIndicator
         android:id="@+id/cpi_indicator"
         android:layout_width="match_parent"
@@ -22,24 +37,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:paddingStart="8dp"
         app:paddingEnd="8dp"
+        app:paddingStart="8dp"
         app:vpi_centered="false"
         app:vpi_fillColor="?attr/app_main_color"
         tools:visibility="visible"/>
-
-    <TextView
-        android:id="@+id/tv_banner_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/vp_container"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="8dp"
-        android:background="@drawable/shape_gradient"
-        android:maxLines="1"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        tools:text="hello1111"/>
 
 </RelativeLayout>

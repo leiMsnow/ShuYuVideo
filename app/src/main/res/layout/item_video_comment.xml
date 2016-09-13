@@ -6,9 +6,13 @@
 
     <ImageView
         android:id="@+id/iv_header_url"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_margin="16dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
         android:src="@mipmap/ic_contact_picture"/>
 
     <ImageView

@@ -162,7 +162,7 @@ public class ChangeColorView extends View {
         mTextPaint.setColor(mChangeColor);
         mTextPaint.setAlpha(alpha);
         int x = getMeasuredWidth() / 2 - mTextBound.width() / 2;
-        int y = mIconRect.bottom + mTextBound.height() + 8;
+        int y = mIconRect.bottom + mTextBound.height();
         if (mIconBitmap == null) {
             y = getMeasuredHeight() / 2 + mTextBound.height() / 2;
         }
@@ -173,7 +173,7 @@ public class ChangeColorView extends View {
         mTextPaint.setColor(mDefaultColor);
         mTextPaint.setAlpha(255 - alpha);
         int x = getMeasuredWidth() / 2 - mTextBound.width() / 2;
-        int y = mIconRect.bottom + mTextBound.height()+ 8;
+        int y = mIconRect.bottom + mTextBound.height();
         if (mIconBitmap == null) {
             y = getMeasuredHeight() / 2 + mTextBound.height() / 2;
         }

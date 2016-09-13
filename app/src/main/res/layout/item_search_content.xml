@@ -18,6 +18,7 @@
         <ImageView
             android:id="@+id/iv_video_url"
             android:layout_width="match_parent"
+            android:scaleType="fitXY"
             android:layout_height="144dp"/>
 
         <TextView
