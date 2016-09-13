@@ -33,7 +33,7 @@ public class VideoPicDetails implements Serializable {
     private int viewNumber;
 
     public String getViewNumber() {
-        return String.valueOf(viewNumber);
+        return String.format("%,d%n", viewNumber);
     }
 
     public void setViewNumber(int viewNumber) {

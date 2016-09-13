@@ -1,6 +1,7 @@
 package com.shuyu.video.api;
 
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.video.model.AppStoreEntity;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelPictureEntity;
 import com.shuyu.video.model.ChannelVideoEntity;
@@ -106,6 +107,15 @@ public interface IMainApi {
      */
     @GET("liveVideoList.service?rv=2")
     Observable<LiveVideoEntity> getLiveVideoList(@Query("pageNo") int pageNo);
+
+
+    /**
+     * 应用商店（应用推广）
+     * @param pageNo
+     * @return
+     */
+    @GET("appstore.service")
+    Observable<AppStoreEntity> getAppstoreList(@Query("pageNo") int pageNo);
 
     /**
      * 视频下方评论
