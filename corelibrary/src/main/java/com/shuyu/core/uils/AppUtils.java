@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
 
 import com.shuyu.core.CoreApplication;
 
+import java.io.IOException;
 import java.util.UUID;
 
 /**
@@ -137,5 +138,26 @@ public class AppUtils {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         context.startActivity(intent);
+    }
+
+    public static void install(Context context, String filePath) {
+        chmod("777", filePath);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        File file = new File(filePath);
+//        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        intent.setDataAndType(Uri.parse("file://"+filePath), "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+    public static void chmod(String permission, String path) {
+        try {
+            String command = "chmod " + permission + " " + path;
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

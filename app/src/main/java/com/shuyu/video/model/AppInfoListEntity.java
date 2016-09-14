@@ -1,6 +1,6 @@
 package com.shuyu.video.model;
 
-public class AppInfoListEntity {
+public class AppInfoListEntity extends DownloadEntity {
     private int id;
     private String title;
     private String brief;
