@@ -7,8 +7,9 @@
         android:id="@+id/rv_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/white"
         android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:layout_gravity="center"/>
+        android:paddingRight="4dp"/>
 
 </FrameLayout>

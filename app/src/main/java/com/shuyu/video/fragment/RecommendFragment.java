@@ -6,12 +6,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadSampleListener;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.AppSoreAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.AppStoreEntity;
+
+import java.io.File;
 
 import butterknife.Bind;
 
@@ -44,7 +51,7 @@ public class RecommendFragment extends BaseFragment {
         mAppSoreAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                createDownloadTask(v.getTag().toString()).start();
             }
         });
         getAppStoreInfo();
@@ -66,36 +73,62 @@ public class RecommendFragment extends BaseFragment {
                 });
     }
 
-    private void download(String url) {
+    private BaseDownloadTask createDownloadTask(String url) {
 
+        final String fileName = url.substring(url.lastIndexOf("/") + 1);
+        final String downloadPath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator
+                + "downloadApk" + File.separator + fileName;
 
-//        Call<ResponseBody> call = BaseApi.createApi(IDownload.class).downloadFile(url);
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                try {
-//                    InputStream is = response.body().byteStream();
-//                    File file = new File(Environment.getExternalStorageDirectory(), "12345.apk");
-//                    FileOutputStream fos = new FileOutputStream(file);
-//                    BufferedInputStream bis = new BufferedInputStream(is);
-//                    byte[] buffer = new byte[1024];
-//                    int len;
-//                    while ((len = bis.read(buffer)) != -1) {
-//                        fos.write(buffer, 0, len);
-//                        fos.flush();
-//                    }
-//                    fos.close();
-//                    bis.close();
-//                    is.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
+        return FileDownloader.getImpl().create(url)
+                .setPath(downloadPath + fileName, false)
+                .setCallbackProgressTimes(300)
+                .setMinIntervalUpdateSpeed(400)
+//                .setTag(tag)
+                .setListener(new FileDownloadSampleListener() {
+
+                    @Override
+                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.pending(task, soFarBytes, totalBytes);
+                        LogUtils.d("download","pending");
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.progress(task, soFarBytes, totalBytes);
+                        LogUtils.d("download","progress");
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                        super.error(task, e);
+                        LogUtils.d("download","error");
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue,
+                                             int soFarBytes, int totalBytes) {
+                        super.connected(task, etag, isContinue, soFarBytes, totalBytes);
+                        LogUtils.d("download","connected");
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.paused(task, soFarBytes, totalBytes);
+                        LogUtils.d("download","paused");
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        super.completed(task);
+                        LogUtils.d("download","completed");
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+                        super.warn(task);
+                        LogUtils.d("download","warn");
+                    }
+                });
     }
 }

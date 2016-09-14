@@ -3,7 +3,11 @@ package com.shuyu.core.uils;
 import android.os.Environment;
 import android.os.StatFs;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * SD卡相关的辅助类
@@ -77,5 +81,29 @@ public class SDCardUtils {
      */
     public static String getRootDirectoryPath() {
         return Environment.getRootDirectory().getAbsolutePath();
+    }
+
+    public static String getDownloadFilePath() {
+        return getSDCardPath() + AppUtils.getPackageName();
+    }
+
+    public static void saveFile(String filePath,String fileName,InputStream inputStream) {
+        try {
+            InputStream is = inputStream;
+            File file = new File(filePath, fileName);
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(is);
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = bis.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+                fos.flush();
+            }
+            fos.close();
+            bis.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

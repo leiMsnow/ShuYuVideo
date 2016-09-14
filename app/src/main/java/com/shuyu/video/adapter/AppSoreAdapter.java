@@ -33,6 +33,7 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
                 .setText(R.id.tv_app_desc, item.getSummary());
         ImageView imageView = holder.findViewById(R.id.iv_app_icon);
         ImageUtils.showImage(mContext, item.getIconUrl(), imageView);
+        holder.setTag(R.id.btn_down,item.getDownloadUrl());
         holder.setOnClickListener(R.id.btn_down, mOnClickListener);
     }
 }
