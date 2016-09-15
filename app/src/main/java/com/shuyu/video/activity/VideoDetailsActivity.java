@@ -1,5 +1,6 @@
 package com.shuyu.video.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,12 +8,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
-import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 
 import java.util.List;
@@ -84,7 +85,13 @@ public class VideoDetailsActivity extends AppBaseActivity {
 
     @OnClick(R.id.iv_url)
     public void onClick(View view) {
-        CommonUtils.goToVideoPage(mContext,mVideoDetails);
+        if (mVideoDetails.getIsPage().equals("1")) {
+            AppUtils.openBrowser(mContext, mVideoDetails.getVideoPageUrl());
+        } else {
+            Intent intent = new Intent(mContext, VideoActivity.class);
+            intent.putExtra(Constants.VIDEO_DETAILS, mVideoDetails);
+            mContext.startActivity(intent);
+        }
     }
 
 }

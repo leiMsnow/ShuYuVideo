@@ -4,6 +4,8 @@ package com.shuyu.video.fragment;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,12 +16,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.core.BaseFragment;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -43,7 +48,8 @@ public class VideoFragment extends BaseFragment {
     private VideoPicDetails mPlayDetails;
     private MediaPlayer mMediaPlayer;
     private int mCurrentPosition;
-
+    private Timer mTimer = new Timer();
+    private int mPlayProgress;
 
     public static VideoFragment newInstance(Bundle bundle) {
         VideoFragment fragment = new VideoFragment();
@@ -68,7 +74,7 @@ public class VideoFragment extends BaseFragment {
         svVideo.getHolder().addCallback(callback);
         svVideo.getHolder().setKeepScreenOn(true);
         seekBar.setOnSeekBarChangeListener(change);
-
+        mTimer.schedule(mTimerTask, 0, 1000);
     }
 
     private void initMediaPlayer() {
@@ -81,13 +87,26 @@ public class VideoFragment extends BaseFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                startPlay();
+            }
+        });
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 ivControl.setImageResource(R.drawable.selector_video_play);
             }
         });
-
+        mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                seekBar.setSecondaryProgress(percent);
+                int currentProgress = seekBar.getMax() * mp.getCurrentPosition() / mp.getDuration();
+                LogUtils.i("videoPlayer", currentProgress + "% play" + percent + "% buffer");
+            }
+        });
         mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
@@ -114,8 +133,12 @@ public class VideoFragment extends BaseFragment {
     private void stopPlay() {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
-            mMediaPlayer.reset();
             mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
         }
     }
 
@@ -131,14 +154,13 @@ public class VideoFragment extends BaseFragment {
         if (mMediaPlayer != null) {
             ivControl.setImageResource(R.drawable.selector_video_pause);
             ivVideoUrl.setVisibility(View.GONE);
-
             if (mCurrentPosition > 0)
                 mMediaPlayer.seekTo(mCurrentPosition);
             mMediaPlayer.start();
         }
     }
 
-    private void setVideoTime(int time){
+    private void setVideoTime(int time) {
         int musicTime = time / 1000;
         String videoTime = musicTime / 60 + ":" + musicTime % 60;
         tvVideoTime.setText(videoTime);
@@ -163,8 +185,7 @@ public class VideoFragment extends BaseFragment {
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             if (!TextUtils.isEmpty(mPlayDetails.getVideoUrl())) {
-                initMediaPlayer();
-                startPlay();
+//                initMediaPlayer();
             }
         }
 
@@ -183,8 +204,7 @@ public class VideoFragment extends BaseFragment {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
             if (fromUser) {
-                int playtime = i * mMediaPlayer.getDuration() / 100;
-                mMediaPlayer.seekTo(playtime);
+                mPlayProgress = i * mMediaPlayer.getDuration() / seekBar.getMax();
             }
         }
 
@@ -195,7 +215,32 @@ public class VideoFragment extends BaseFragment {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
+            mMediaPlayer.seekTo(mPlayProgress);
+        }
+    };
 
+    TimerTask mTimerTask = new TimerTask() {
+        @Override
+        public void run() {
+            if (mMediaPlayer == null)
+                return;
+            if (mMediaPlayer.isPlaying() && !seekBar.isPressed()) {
+                handleProgress.sendEmptyMessage(0);
+            }
+        }
+    };
+
+    Handler handleProgress = new Handler() {
+        public void handleMessage(Message msg) {
+
+            int position = mMediaPlayer.getCurrentPosition();
+            int duration = mMediaPlayer.getDuration();
+
+            if (duration > 0) {
+                long pos = seekBar.getMax() * position / duration;
+                seekBar.setProgress((int) pos);
+                setVideoTime(duration);
+            }
         }
     };
 

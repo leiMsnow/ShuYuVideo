@@ -34,15 +34,12 @@ public class CoreApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
-
         FileDownloader.init(getApplicationContext());
     }
-
 
     public static CoreApplication getApplication() {
         return mApplication;
     }
-
 
     public OkHttpClient genericClient() {
 
