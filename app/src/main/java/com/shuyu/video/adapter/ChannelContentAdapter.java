@@ -16,6 +16,7 @@ import org.byteam.superadapter.SuperAdapter;
 import org.byteam.superadapter.internal.SuperViewHolder;
 
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -23,13 +24,45 @@ import java.util.List;
  */
 public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
 
+    private Random random = new Random();
+
     private int[] tagIds = new int[]{
             R.id.tv_tag1, R.id.tv_tag2
     };
+    private int[] tagColorResId = new int[]{
+            R.drawable.shape_round_red,
+            R.drawable.shape_round_orange,
+            R.drawable.shape_round_yellow,
+            R.drawable.shape_round_light_green,
+            R.drawable.shape_round_light_blue,
+            R.drawable.shape_round_pink,
+            R.drawable.shape_round_deep_purple
 
-    ChannelContentAdapter(Context context, List<VideoPicDetails> items,
-                          int layoutResId) {
+    };
+
+    public ChannelContentAdapter(Context context, List<VideoPicDetails> items,
+                                 int layoutResId) {
         super(context, items, layoutResId);
+        addTagsColor(items);
+    }
+
+    public void replaceAllData(List<VideoPicDetails> items) {
+        addTagsColor(items);
+        super.replaceAll(items);
+    }
+
+    private void addTagsColor(List<VideoPicDetails> items) {
+        if (items == null) return;
+        for (int j = 0; j < items.size(); j++) {
+            int index1 = random.nextInt(tagColorResId.length);
+            int index2 = random.nextInt(tagColorResId.length);
+            if (index1 == index2) {
+                index1++;
+                if (index1 == tagColorResId.length)
+                    index1 = 0;
+            }
+            items.get(j).setTagColor(new int[]{tagColorResId[index1], tagColorResId[index2]});
+        }
     }
 
     @Override

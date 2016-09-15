@@ -37,6 +37,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:padding="4dp"
         app:paddingEnd="8dp"
         app:paddingStart="8dp"
         app:vpi_centered="false"

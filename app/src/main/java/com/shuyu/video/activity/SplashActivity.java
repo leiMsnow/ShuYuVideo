@@ -80,7 +80,7 @@ public class SplashActivity extends AppBaseActivity {
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (mSecond == -1) {
+                if (mSecond == 0) {
                     Message message = new Message();
                     message.what = MESSAGE_GOTO_MAIN;
                     mMyHandler.sendMessage(message);

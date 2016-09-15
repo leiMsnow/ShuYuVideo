@@ -7,11 +7,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
+import com.shuyu.video.adapter.ChannelContentAdapter;
 import com.shuyu.video.adapter.HotWordAdapter;
-import com.shuyu.video.adapter.SearchContentAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.fragment.SearchFragment;
 import com.shuyu.video.model.HotWord;
@@ -29,9 +30,11 @@ public class SearchActivity extends AppBaseActivity {
     View tvHotVideo;
     @Bind(R.id.fl_container)
     View mContainer;
+    @Bind(R.id.tv_title)
+    TextView tvSearchTitle;
 
     private HotWordAdapter mHotWordAdapter;
-    private SearchContentAdapter mSearchContentAdapter;
+    private ChannelContentAdapter mSearchContentAdapter;
     private ISearchListener mSearchListener;
 
     public void setSearchListener(ISearchListener searchListener) {
@@ -45,7 +48,7 @@ public class SearchActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-
+        tvSearchTitle.setText("热搜标签");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_container, SearchFragment.newInstance())
                 .commit();
@@ -60,10 +63,9 @@ public class SearchActivity extends AppBaseActivity {
             }
         });
 
-        mSearchContentAdapter = new SearchContentAdapter(mContext, null, R.layout.item_search_content);
+        mSearchContentAdapter = new ChannelContentAdapter(mContext, null, R.layout.item_channel_content);
         rvHotVideo.setLayoutManager(new GridLayoutManager(mContext, 2));
         rvHotVideo.setAdapter(mSearchContentAdapter);
-
         getHotWord();
     }
 
@@ -135,7 +137,7 @@ public class SearchActivity extends AppBaseActivity {
                     @Override
                     public void onSuccess(SearchVideoData data) {
                         tvHotVideo.setVisibility(View.VISIBLE);
-                        mSearchContentAdapter.replaceAll(data.getChannelContentList());
+                        mSearchContentAdapter.replaceAllData(data.getChannelContentList());
                     }
 
                     @Override

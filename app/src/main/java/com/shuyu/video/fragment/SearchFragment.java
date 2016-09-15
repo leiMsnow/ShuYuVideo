@@ -10,7 +10,7 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.SearchActivity;
-import com.shuyu.video.adapter.SearchContentAdapter;
+import com.shuyu.video.adapter.ChannelContentAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.SearchVideoData;
 
@@ -21,8 +21,7 @@ public class SearchFragment extends BaseFragment {
     @Bind(R.id.rv_container)
     RecyclerView rvContainer;
 
-    private SearchContentAdapter mSearchContentAdapter;
-
+    private ChannelContentAdapter mSearchContentAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -53,7 +52,7 @@ public class SearchFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        mSearchContentAdapter = new SearchContentAdapter(mContext, null, R.layout.item_search_content);
+        mSearchContentAdapter = new ChannelContentAdapter(mContext, null, R.layout.item_channel_content);
         rvContainer.setLayoutManager(new GridLayoutManager(mContext, 2));
         rvContainer.setAdapter(mSearchContentAdapter);
 
@@ -64,7 +63,7 @@ public class SearchFragment extends BaseFragment {
                 new BaseApi.IResponseListener<SearchVideoData>() {
                     @Override
                     public void onSuccess(SearchVideoData data) {
-                        mSearchContentAdapter.replaceAll(data.getChannelContentList());
+                        mSearchContentAdapter.replaceAllData(data.getChannelContentList());
                     }
 
                     @Override

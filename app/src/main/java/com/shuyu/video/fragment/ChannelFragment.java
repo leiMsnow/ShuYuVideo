@@ -1,7 +1,6 @@
 package com.shuyu.video.fragment;
 
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,14 +19,13 @@ import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelPictureEntity;
-import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.SubChannel;
 import com.shuyu.video.utils.Constants;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,16 +52,6 @@ public class ChannelFragment extends BaseFragment {
     private int currIndex = 0;
     private MyHandler mMyHandler;
 
-    private int[] tagColorResId = new int[]{
-            R.drawable.shape_round_red,
-            R.drawable.shape_round_orange,
-            R.drawable.shape_round_yellow,
-            R.drawable.shape_round_light_green,
-            R.drawable.shape_round_light_blue,
-            R.drawable.shape_round_pink,
-            R.drawable.shape_round_deep_purple
-
-    };
 
     public static ChannelFragment newInstance(ChannelTitle channelTitle) {
         ChannelFragment fragment = new ChannelFragment();
@@ -197,26 +185,9 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void updateGroupData() {
-        Random random = new Random();
         mGroupAdapter.setChannelContents(mChannelContents);
         for (int i = 0; i < mChannelContents.size(); i++) {
             mExpandableListView.expandGroup(i);
-            for (int j = 0; j < mChannelContents.get(i).getChannelContentList().size(); j++) {
-                int index1 = random.nextInt(tagColorResId.length);
-                int index2 = random.nextInt(tagColorResId.length);
-                if (index1 == index2) {
-                    index1++;
-                    if (index1 == tagColorResId.length) {
-                        index1 = 0;
-                    }
-                }
-                mChannelContents.get(i).getChannelContentList().get(j).setTagColor(
-                        new int[]{
-                                tagColorResId[index1],
-                                tagColorResId[index2]
-                        }
-                );
-            }
         }
     }
 
