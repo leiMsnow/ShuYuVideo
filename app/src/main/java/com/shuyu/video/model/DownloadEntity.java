@@ -27,12 +27,10 @@ public class DownloadEntity {
     public @interface DownloadState {
     }
 
-    private String url;
-    private String filePath;
-    private String fileName;
     private int currentSize;
     private int totalSize;
     private int speed;
+    private String savePath;
 
     @DownloadState
     private int downloadState = NORMAL;
@@ -46,29 +44,12 @@ public class DownloadEntity {
         this.downloadState = downloadState;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getSavePath() {
+        return savePath;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public String getFileName() {
-        return fileName = getUrl().substring(
-                getUrl().lastIndexOf("/") + 1);
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setSavePath(String savePath) {
+        this.savePath = savePath;
     }
 
     public int getCurrentSize() {

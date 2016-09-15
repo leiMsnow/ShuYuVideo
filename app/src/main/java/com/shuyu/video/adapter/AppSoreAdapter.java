@@ -35,7 +35,6 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
                 .setText(R.id.tv_app_desc, item.getSummary());
         ImageView imageView = holder.findViewById(R.id.iv_app_icon);
         ImageUtils.showImage(mContext, item.getIconUrl(), imageView);
-        item.setUrl(item.getDownloadUrl());
         holder.setTag(R.id.btn_down, item);
         holder.setOnClickListener(R.id.btn_down, mOnClickListener);
 
@@ -45,6 +44,7 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
             case DownloadEntity.PENDING:
                 holder.setText(R.id.btn_down, "准备中");
                 holder.setEnabled(R.id.btn_down, false);
+                progressBar.setMax(item.getTotalSize());
                 break;
             case DownloadEntity.PAUSED:
                 holder.setText(R.id.btn_down, "继续");
@@ -54,7 +54,6 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
                 holder.setText(R.id.btn_down, "下载中");
                 holder.setEnabled(R.id.btn_down, false);
                 progressBar.setProgress(item.getCurrentSize());
-                progressBar.setMax(item.getTotalSize());
                 break;
             case DownloadEntity.CONNECTED:
                 holder.setText(R.id.btn_down, "开始下载");
@@ -63,6 +62,8 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
             case DownloadEntity.COMPLETED:
                 holder.setText(R.id.btn_down, "安装");
                 holder.setEnabled(R.id.btn_down, true);
+                progressBar.setProgress(item.getCurrentSize());
+                progressBar.setMax(item.getTotalSize());
                 break;
             case DownloadEntity.ERROR:
             case DownloadEntity.WARN:

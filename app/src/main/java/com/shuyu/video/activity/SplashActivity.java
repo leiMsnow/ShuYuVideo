@@ -13,9 +13,6 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.db.helper.AppInfoHelper;
-import com.shuyu.video.model.AppInfoListEntity;
-import com.shuyu.video.model.AppStoreEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.utils.Constants;
 
@@ -25,8 +22,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-
-import static com.shuyu.core.api.BaseApi.createApi;
 
 public class SplashActivity extends AppBaseActivity {
 
@@ -52,7 +47,6 @@ public class SplashActivity extends AppBaseActivity {
         mMyHandler = new MyHandler(this);
         Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, "")).into(ivLauncherUrl);
         getRunInfo();
-        getAppStoreInfo();
     }
 
     private void getRunInfo() {
@@ -78,22 +72,7 @@ public class SplashActivity extends AppBaseActivity {
                 });
     }
 
-    private void getAppStoreInfo() {
-        BaseApi.request(createApi(IMainApi.class).getAppStoreList(1),
-                new BaseApi.IResponseListener<AppStoreEntity>() {
-                    @Override
-                    public void onSuccess(AppStoreEntity data) {
-                        for (AppInfoListEntity entity : data.getAppInfoList()) {
-                            AppInfoHelper.getHelper().addData(entity);
-                        }
-                    }
 
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
-    }
 
 
     private void startCountdown() {

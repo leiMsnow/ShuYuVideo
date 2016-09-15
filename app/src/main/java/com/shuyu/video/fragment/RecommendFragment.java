@@ -51,30 +51,31 @@ public class RecommendFragment extends BaseFragment {
         mAppSoreAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadEntity entity = (DownloadEntity) v.getTag();
+                AppInfoListEntity entity = (AppInfoListEntity) v.getTag();
                 if (entity.getDownloadState() == DownloadEntity.NORMAL) {
                     createDownloadTask(entity).start();
                 } else if (entity.getDownloadState() == DownloadEntity.COMPLETED) {
-                    AppUtils.install(mContext, entity.getFilePath());
+                    AppUtils.install(mContext, entity.getSavePath());
                 }
             }
         });
         getAppStoreInfo();
     }
 
-
     private void getAppStoreInfo() {
         List<AppInfoListEntity> entities = AppInfoHelper.getHelper().getDataAll();
         mAppSoreAdapter.replaceAll(entities);
     }
 
-    private BaseDownloadTask createDownloadTask(DownloadEntity downloadEntity) {
+    private BaseDownloadTask createDownloadTask(AppInfoListEntity downloadEntity) {
 
-        final String downloadPath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator
-                + "downloadApk" + File.separator + downloadEntity.getFileName();
-        downloadEntity.setFilePath(downloadPath);
-        return FileDownloader.getImpl().create(downloadEntity.getUrl())
-                .setPath(downloadPath + downloadEntity.getFileName(), false)
+        String fileName = downloadEntity.getDownloadUrl().substring(
+                downloadEntity.getDownloadUrl().lastIndexOf("/") + 1);
+        String savePath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator
+                + "downloadApk" + File.separator + fileName;
+        downloadEntity.setSavePath(savePath);
+        return FileDownloader.getImpl().create(downloadEntity.getDownloadUrl())
+                .setPath(savePath, false)
                 .setCallbackProgressTimes(300)
                 .setMinIntervalUpdateSpeed(400)
                 .setTag(downloadEntity)
@@ -85,7 +86,7 @@ public class RecommendFragment extends BaseFragment {
                         super.pending(task, soFarBytes, totalBytes);
                         LogUtils.d("download", "PENDING");
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PENDING);
-                        ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
+//                        ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
                         ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
@@ -93,10 +94,10 @@ public class RecommendFragment extends BaseFragment {
                     @Override
                     protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         super.progress(task, soFarBytes, totalBytes);
-                        LogUtils.d("download", "PROGRESS");
+                        LogUtils.d("download", "soFarBytes：" + soFarBytes + "   totalBytes: " + totalBytes);
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PROGRESS);
                         ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
-                        ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
+//                        ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -130,11 +131,11 @@ public class RecommendFragment extends BaseFragment {
                     protected void completed(BaseDownloadTask task) {
                         super.completed(task);
                         LogUtils.d("download", "COMPLETED");
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.COMPLETED);
+                        ((AppInfoListEntity) task.getTag()).setCurrentSize(task.getSmallFileSoFarBytes());
+                        ((AppInfoListEntity) task.getTag()).setTotalSize(task.getSmallFileTotalBytes());
                         AppInfoListEntity appInfo = ((AppInfoListEntity) task.getTag());
-                        appInfo.setDownloadState(DownloadEntity.COMPLETED);
-                        appInfo.setCurrentSize(task.getSmallFileSoFarBytes());
-                        appInfo.setTotalSize(task.getSmallFileTotalBytes());
-                        AppInfoHelper.getHelper().addData(appInfo);
+                        AppInfoHelper.getHelper().update(appInfo);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 

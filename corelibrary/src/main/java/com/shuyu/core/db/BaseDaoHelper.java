@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -83,6 +84,20 @@ public abstract class BaseDaoHelper<D extends AbstractDao, T> implements IDaoHel
     public void deleteAll() {
         if (checkDaoNotNull()) {
             tableDao.deleteAll();
+        }
+    }
+
+    @Override
+    public void update(T bean) {
+        if (checkDaoNotNull() && bean != null) {
+            tableDao.update(bean);
+        }
+    }
+
+    @Override
+    public void updateAll(Iterator<T> entities) {
+        if (checkDaoNotNull() && entities != null) {
+            tableDao.updateInTx(entities);
         }
     }
 
