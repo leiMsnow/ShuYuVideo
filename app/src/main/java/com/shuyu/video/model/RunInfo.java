@@ -3,9 +3,7 @@ package com.shuyu.video.model;
 /**
  * Created by zhangleilei on 9/9/16.
  */
-
 public class RunInfo {
-
 
     private String contentId;
     private String contentUrl;
@@ -15,6 +13,10 @@ public class RunInfo {
     private long validEndDate;
     private String firstHost;
     private int contentLevel;
+    private int onlineInterval;
+    private int notifyCount;
+    private int notifyInterval;
+    private String wapUrl;
 
     public String getContentId() {
         return contentId;
@@ -78,5 +80,37 @@ public class RunInfo {
 
     public void setContentLevel(int contentLevel) {
         this.contentLevel = contentLevel;
+    }
+
+    public int getOnlineInterval() {
+        return onlineInterval;
+    }
+
+    public void setOnlineInterval(int onlineInterval) {
+        this.onlineInterval = onlineInterval;
+    }
+
+    public int getNotifyCount() {
+        return notifyCount;
+    }
+
+    public void setNotifyCount(int notifyCount) {
+        this.notifyCount = notifyCount;
+    }
+
+    public int getNotifyInterval() {
+        return notifyInterval;
+    }
+
+    public void setNotifyInterval(int notifyInterval) {
+        this.notifyInterval = notifyInterval;
+    }
+
+    public String getWapUrl() {
+        return wapUrl;
+    }
+
+    public void setWapUrl(String wapUrl) {
+        this.wapUrl = wapUrl;
     }
 }

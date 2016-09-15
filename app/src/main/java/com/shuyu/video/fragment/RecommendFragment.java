@@ -11,20 +11,18 @@ import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.shuyu.core.BaseFragment;
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.AppSoreAdapter;
-import com.shuyu.video.api.IMainApi;
-import com.shuyu.video.model.AppStoreEntity;
+import com.shuyu.video.db.helper.AppInfoHelper;
+import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.DownloadEntity;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.Bind;
-
-import static com.shuyu.core.api.BaseApi.createApi;
 
 public class RecommendFragment extends BaseFragment {
 
@@ -66,18 +64,8 @@ public class RecommendFragment extends BaseFragment {
 
 
     private void getAppStoreInfo() {
-        BaseApi.request(createApi(IMainApi.class).getAppStoreList(1),
-                new BaseApi.IResponseListener<AppStoreEntity>() {
-                    @Override
-                    public void onSuccess(AppStoreEntity data) {
-                        mAppSoreAdapter.replaceAll(data.getAppInfoList());
-                    }
-
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
+        List<AppInfoListEntity> entities = AppInfoHelper.getHelper().getDataAll();
+        mAppSoreAdapter.replaceAll(entities);
     }
 
     private BaseDownloadTask createDownloadTask(DownloadEntity downloadEntity) {
@@ -96,9 +84,9 @@ public class RecommendFragment extends BaseFragment {
                     protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         super.pending(task, soFarBytes, totalBytes);
                         LogUtils.d("download", "PENDING");
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.PENDING);
-                        ((DownloadEntity) task.getTag()).setCurrentSize(soFarBytes);
-                        ((DownloadEntity) task.getTag()).setTotalSize(totalBytes);
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PENDING);
+                        ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
+                        ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -106,9 +94,9 @@ public class RecommendFragment extends BaseFragment {
                     protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         super.progress(task, soFarBytes, totalBytes);
                         LogUtils.d("download", "PROGRESS");
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.PROGRESS);
-                        ((DownloadEntity) task.getTag()).setCurrentSize(soFarBytes);
-                        ((DownloadEntity) task.getTag()).setTotalSize(totalBytes);
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PROGRESS);
+                        ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
+                        ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -117,7 +105,7 @@ public class RecommendFragment extends BaseFragment {
                         super.error(task, e);
                         LogUtils.d("download", "ERROR");
                         e.printStackTrace();
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.ERROR);
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.ERROR);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -126,7 +114,7 @@ public class RecommendFragment extends BaseFragment {
                                              int soFarBytes, int totalBytes) {
                         super.connected(task, etag, isContinue, soFarBytes, totalBytes);
                         LogUtils.d("download", "CONNECTED");
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.CONNECTED);
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.CONNECTED);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -134,7 +122,7 @@ public class RecommendFragment extends BaseFragment {
                     protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         super.paused(task, soFarBytes, totalBytes);
                         LogUtils.d("download", "PAUSED");
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.PAUSED);
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PAUSED);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -142,9 +130,11 @@ public class RecommendFragment extends BaseFragment {
                     protected void completed(BaseDownloadTask task) {
                         super.completed(task);
                         LogUtils.d("download", "COMPLETED");
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.COMPLETED);
-                        ((DownloadEntity) task.getTag()).setCurrentSize(task.getSmallFileSoFarBytes());
-                        ((DownloadEntity) task.getTag()).setTotalSize(task.getSmallFileSoFarBytes());
+                        AppInfoListEntity appInfo = ((AppInfoListEntity) task.getTag());
+                        appInfo.setDownloadState(DownloadEntity.COMPLETED);
+                        appInfo.setCurrentSize(task.getSmallFileSoFarBytes());
+                        appInfo.setTotalSize(task.getSmallFileTotalBytes());
+                        AppInfoHelper.getHelper().addData(appInfo);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
@@ -152,7 +142,7 @@ public class RecommendFragment extends BaseFragment {
                     protected void warn(BaseDownloadTask task) {
                         super.warn(task);
                         LogUtils.d("download", "WARN");
-                        ((DownloadEntity) task.getTag()).setDownloadState(DownloadEntity.WARN);
+                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.WARN);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
                 });

@@ -1,6 +1,14 @@
 package com.shuyu.video.model;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
+@Entity(nameInDb = "AppInfo")
 public class AppInfoListEntity extends DownloadEntity {
+
+    @Id(autoincrement = true)
+    private Long appId;
     private int id;
     private String title;
     private String brief;
@@ -13,13 +21,53 @@ public class AppInfoListEntity extends DownloadEntity {
     private int softwareSize;
     private int appType;
     private String md5;
-    private Object downloadCount;
+    private int downloadCount;
     private String imgUrl;
     private int downloadType;
     private int onlineInterval;
     private int notifyCount;
     private int notifyInterval;
-    private Object adImgUrl;
+    private String adImgUrl;
+
+    @Generated(hash = 1890216724)
+    public AppInfoListEntity(Long appId, int id, String title, String brief,
+            String summary, String downloadUrl, String iconUrl, String versionCode,
+            String versionName, String packageName, int softwareSize, int appType,
+            String md5, int downloadCount, String imgUrl, int downloadType,
+            int onlineInterval, int notifyCount, int notifyInterval, String adImgUrl) {
+        this.appId = appId;
+        this.id = id;
+        this.title = title;
+        this.brief = brief;
+        this.summary = summary;
+        this.downloadUrl = downloadUrl;
+        this.iconUrl = iconUrl;
+        this.versionCode = versionCode;
+        this.versionName = versionName;
+        this.packageName = packageName;
+        this.softwareSize = softwareSize;
+        this.appType = appType;
+        this.md5 = md5;
+        this.downloadCount = downloadCount;
+        this.imgUrl = imgUrl;
+        this.downloadType = downloadType;
+        this.onlineInterval = onlineInterval;
+        this.notifyCount = notifyCount;
+        this.notifyInterval = notifyInterval;
+        this.adImgUrl = adImgUrl;
+    }
+
+    @Generated(hash = 412036776)
+    public AppInfoListEntity() {
+    }
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
 
     public int getId() {
         return id;
@@ -117,11 +165,11 @@ public class AppInfoListEntity extends DownloadEntity {
         this.md5 = md5;
     }
 
-    public Object getDownloadCount() {
+    public int getDownloadCount() {
         return downloadCount;
     }
 
-    public void setDownloadCount(Object downloadCount) {
+    public void setDownloadCount(int downloadCount) {
         this.downloadCount = downloadCount;
     }
 
@@ -165,11 +213,11 @@ public class AppInfoListEntity extends DownloadEntity {
         this.notifyInterval = notifyInterval;
     }
 
-    public Object getAdImgUrl() {
+    public String getAdImgUrl() {
         return adImgUrl;
     }
 
-    public void setAdImgUrl(Object adImgUrl) {
+    public void setAdImgUrl(String adImgUrl) {
         this.adImgUrl = adImgUrl;
     }
 }

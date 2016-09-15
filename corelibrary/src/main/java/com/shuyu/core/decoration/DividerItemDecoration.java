@@ -10,6 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by zhangleilei on 9/2/16.
  */
@@ -17,8 +20,9 @@ import android.view.View;
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({HORIZONTAL,VERTICAL})
-    public @interface Orientation{};
+    public @interface Orientation{}
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
