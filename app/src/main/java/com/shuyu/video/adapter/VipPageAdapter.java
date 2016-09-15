@@ -63,9 +63,9 @@ public class VipPageAdapter extends PagerAdapter {
         if (mConvertViews.size() == 0) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.item_vip_page, null);
-            holder.cvVip = convertView.findViewById(R.id.cv_vip);
             holder.ivUrl = (ImageView) convertView.findViewById(R.id.iv_url);
-            holder.btnVideo = (TextView) convertView.findViewById(R.id.tv_video_title);
+            holder.ivPlay = (ImageView) convertView.findViewById(R.id.iv_play);
+            holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_video_title);
             convertView.setTag(holder);
         } else {
             convertView = mConvertViews.removeFirst();
@@ -73,17 +73,17 @@ public class VipPageAdapter extends PagerAdapter {
         }
 
         Glide.with(mContext).load(mLiveVideoDataList.get(position).getImgUrl()).into(holder.ivUrl);
-        holder.btnVideo.setText(mLiveVideoDataList.get(position).getTitle());
-        holder.cvVip.setTag(mLiveVideoDataList.get(position));
-        holder.cvVip.setOnClickListener(mOnClickListener);
+        holder.tvTitle.setText(mLiveVideoDataList.get(position).getTitle());
+        holder.ivPlay.setTag(mLiveVideoDataList.get(position));
+        holder.ivPlay.setOnClickListener(mOnClickListener);
         container.addView(convertView);
         return convertView;
     }
 
     private class ViewHolder {
-        View cvVip;
         ImageView ivUrl;
-        TextView btnVideo;
+        ImageView ivPlay;
+        TextView tvTitle;
     }
 
     @Override

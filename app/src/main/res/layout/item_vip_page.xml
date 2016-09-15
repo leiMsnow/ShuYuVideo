@@ -8,7 +8,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/cv_vip"
         android:layout_above="@+id/tv_video_title"
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
@@ -36,9 +35,11 @@
                 android:visibility="gone"/>
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:id="@+id/iv_play"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
+                android:scaleType="centerInside"
                 android:src="@drawable/selector_play"/>
 
         </RelativeLayout>
