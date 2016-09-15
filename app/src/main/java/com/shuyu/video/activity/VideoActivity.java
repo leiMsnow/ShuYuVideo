@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shuyu.video.R;
-import com.shuyu.video.fragment.VideoFragment;
+import com.shuyu.video.fragment.VideoPlayerFragment;
 
 
 public class VideoActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class VideoActivity extends AppCompatActivity {
         if (getIntent() == null) return;
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_container, VideoFragment.newInstance(getIntent().getExtras()))
+                .add(R.id.fl_container, VideoPlayerFragment.newInstance(getIntent().getExtras()))
                 .commit();
 
     }

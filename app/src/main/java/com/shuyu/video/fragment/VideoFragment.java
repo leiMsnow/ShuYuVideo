@@ -29,7 +29,7 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-
+@Deprecated
 public class VideoFragment extends BaseFragment {
 
     @Bind(R.id.sv_video)
@@ -185,7 +185,7 @@ public class VideoFragment extends BaseFragment {
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             if (!TextUtils.isEmpty(mPlayDetails.getVideoUrl())) {
-//                initMediaPlayer();
+                initMediaPlayer();
             }
         }
 

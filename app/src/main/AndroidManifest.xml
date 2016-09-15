@@ -22,7 +22,7 @@
             android:launchMode="singleTask"/>
         <activity
             android:name=".activity.VideoActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.Main.Dark"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
