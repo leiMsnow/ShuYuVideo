@@ -64,10 +64,8 @@
                 android:layout_toLeftOf="@+id/ll_tags"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:maxLength="5"
                 android:maxLines="1"
                 tools:text="巴黎浪漫"/>
-
 
             <LinearLayout
                 android:id="@+id/ll_tags"

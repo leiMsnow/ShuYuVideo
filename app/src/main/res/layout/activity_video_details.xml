@@ -6,15 +6,13 @@
 
     <include
         android:id="@+id/in_toolbar"
-        layout="@layout/include_toolbar" />
+        layout="@layout/include_toolbar"/>
 
     <RelativeLayout
         android:id="@+id/rl_container"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:layout_below="@+id/in_toolbar"
-        android:background="#f2f4f9"
-        android:paddingBottom="20dp">
+        android:layout_below="@+id/in_toolbar">
 
         <ImageView
             android:id="@+id/iv_url"
@@ -23,8 +21,9 @@
             android:scaleType="fitXY"/>
 
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:id="@+id/imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:src="@drawable/selector_play"/>
 
