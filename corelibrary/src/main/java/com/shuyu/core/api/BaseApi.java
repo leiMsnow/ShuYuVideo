@@ -19,12 +19,8 @@ import rx.schedulers.Schedulers;
 public class BaseApi {
 
     public static final String BASE_URL = "BASE_URL";
-
     //    public static final String LOCAL_SERVER_URL = "http://www.51shuyu.com:8008/";
     public static final String LOCAL_SERVER_URL = "http://101.201.233.134:8008/";
-
-
-
 
     public static <T> T createApi(Class<T> service) {
         final String url = SPUtils.get(CoreApplication.getApplication()
@@ -37,7 +33,6 @@ public class BaseApi {
                 .build();
         return retrofit.create(service);
     }
-
 
     public static <T> void request(Observable<T> observable, final IResponseListener<T> listener) {
         observable.subscribeOn(Schedulers.io())
@@ -63,12 +58,8 @@ public class BaseApi {
                                    }
                                }
                            }
-
                 );
     }
-
-
-
 
     public interface IResponseListener<T> {
 

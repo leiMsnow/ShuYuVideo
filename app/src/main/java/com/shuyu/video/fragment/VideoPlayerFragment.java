@@ -14,7 +14,7 @@ import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
 import butterknife.Bind;
-
+@Deprecated
 public class VideoPlayerFragment extends BaseFragment {
 
     @Bind(R.id.video_view)
@@ -74,8 +74,8 @@ public class VideoPlayerFragment extends BaseFragment {
     protected void initData() {
         mPlayDetails = (VideoPicDetails) getArguments().getSerializable(Constants.VIDEO_DETAILS);
         if (mPlayDetails == null) return;
-
         mVideoView.setMediaController(mMediaController);
+        mVideoView.setFullscreen(true);
         setVideoAreaSize();
         mVideoView.setVideoViewCallback(new UniversalVideoView.VideoViewCallback() {
             @Override

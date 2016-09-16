@@ -11,7 +11,7 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.transformer.ZoomOutPageTransformer;
 import com.shuyu.video.R;
-import com.shuyu.video.activity.VideoActivity;
+import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
 import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.LiveVideoEntity;
@@ -51,8 +51,9 @@ public class VipFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 VideoPicDetails vip = (VideoPicDetails) v.getTag();
-                Intent intent = new Intent(mContext, VideoActivity.class);
-                intent.putExtra(Constants.VIDEO_DETAILS, vip);
+                Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+                intent.putExtra(Constants.VIDEO_DETAIL_ID, vip.getId());
+                intent.putExtra(Constants.IS_VIP_VIDEO,true);
                 mContext.startActivity(intent);
             }
         });

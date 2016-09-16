@@ -14,6 +14,7 @@ public interface Constants {
     String CHANNEL_DETAILS = "CHANNEL_DETAILS";
 
     String VIDEO_DETAIL_ID = "VIDEO_DETAIL_ID";
+    String IS_VIP_VIDEO = "IS_VIP_VIDEO";
     String VIDEO_DETAILS = "VIDEO_DETAILS";
 
     String PICTURE_DETAIL_ID = "PICTURE_DETAIL_ID";

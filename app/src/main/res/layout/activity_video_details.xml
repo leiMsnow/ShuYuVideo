@@ -8,11 +8,27 @@
         android:id="@+id/in_toolbar"
         layout="@layout/include_toolbar"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_container"
+    <FrameLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:layout_below="@+id/in_toolbar">
+        android:layout_below="@+id/in_toolbar"
+        android:background="@color/black">
+
+        <com.universalvideoview.UniversalVideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:uvv_autoRotation="false"
+            app:uvv_fitXY="false"/>
+
+        <com.universalvideoview.UniversalMediaController
+            android:id="@+id/media_controller"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:uvv_scalable="true"/>
 
         <ImageView
             android:id="@+id/iv_url"
@@ -21,19 +37,19 @@
             android:scaleType="fitXY"/>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_video_player"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:src="@drawable/selector_play"/>
 
-    </RelativeLayout>
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/rl_container">
+        android:layout_below="@+id/video_layout">
 
         <View
             android:layout_width="6dp"
@@ -68,6 +84,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_comment"/>
-
 
 </RelativeLayout>

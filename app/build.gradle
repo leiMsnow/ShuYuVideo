@@ -126,4 +126,5 @@ def releaseTime() {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':corelibrary')
+    compile project(':universalvideoview')
 }
