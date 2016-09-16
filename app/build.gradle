@@ -108,7 +108,7 @@ android {
     productFlavors {
         dev {
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "dev影院"
+            resValue "string", "app_name", "斗牛影院"
             buildConfigField "String", "ENVIRONMENT", '"dev"'
         }
         online {
