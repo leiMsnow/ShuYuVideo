@@ -21,6 +21,11 @@ public class ChannelBannerAdapter extends PagerAdapter {
     private Context mContext;
     private List<ChannelBanner> mBanners = new ArrayList<>();
     private List<ImageView> mImageViews = new ArrayList<>();
+    private View.OnClickListener mOnClickListener;
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
+    }
 
     public ChannelBannerAdapter(Context context) {
         mContext = context;
@@ -52,6 +57,8 @@ public class ChannelBannerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        mImageViews.get(position).setTag(mBanners.get(position));
+        mImageViews.get(position).setOnClickListener(mOnClickListener);
         container.addView(mImageViews.get(position));
         return mImageViews.get(position);
     }

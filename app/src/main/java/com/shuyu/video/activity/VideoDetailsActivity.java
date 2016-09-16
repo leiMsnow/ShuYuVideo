@@ -45,6 +45,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     private boolean mIsVIP;
     private int mCachedHeight;
     private int mCurrentPosition;
+    private boolean mIsPlaying;
 
     @Override
     protected int getLayoutRes() {
@@ -71,6 +72,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
         super.onPause();
         if (mVideoView != null) {
             mCurrentPosition = mVideoView.getCurrentPosition();
+            mIsPlaying = mVideoView.isPlaying();
             mVideoView.pause();
         }
     }
@@ -81,7 +83,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
         if (mVideoView != null) {
             if (mCurrentPosition != 0) {
                 mVideoView.seekTo(mCurrentPosition);
-                if (mVideoView.isPlaying())
+                if (mIsPlaying)
                     startPlay();
             }
         }

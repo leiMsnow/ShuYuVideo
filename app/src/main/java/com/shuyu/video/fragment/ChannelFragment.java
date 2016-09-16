@@ -1,6 +1,7 @@
 package com.shuyu.video.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
+import com.shuyu.video.activity.PictureDetailsActivity;
+import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.api.IMainApi;
@@ -22,6 +26,7 @@ import com.shuyu.video.model.ChannelPictureEntity;
 import com.shuyu.video.model.ChannelTitle;
 import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.SubChannel;
+import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 
 import java.lang.ref.WeakReference;
@@ -110,6 +115,26 @@ public class ChannelFragment extends BaseFragment {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        mBannerAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChannelBanner channelBanner = (ChannelBanner) v.getTag();
+                if (channelBanner.getBannerType() == Constants.BANNEL_VIDEO) {
+                    Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+                    intent.putExtra(Constants.VIDEO_DETAIL_ID, channelBanner.getTargetId());
+                    mContext.startActivity(intent);
+                } else if (channelBanner.getBannerType() == Constants.BANNEL_PICTURE) {
+                    Intent intent = new Intent(mContext, PictureDetailsActivity.class);
+                    intent.putExtra(Constants.PICTURE_DETAIL_ID, channelBanner.getTargetId());
+                    mContext.startActivity(intent);
+                } else if (channelBanner.getBannerType() == Constants.BANNEL_APP) {
+                    CommonUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();
+                } else if (channelBanner.getBannerType() == Constants.BANNEL_WAP) {
+                    AppUtils.openBrowser(mContext, channelBanner.getTargetUrl());
+                }
             }
         });
     }

@@ -7,19 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.liulishuo.filedownloader.BaseDownloadTask;
-import com.liulishuo.filedownloader.FileDownloadSampleListener;
-import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.AppUtils;
-import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.AppSoreAdapter;
 import com.shuyu.video.db.helper.AppInfoHelper;
 import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.DownloadEntity;
+import com.shuyu.video.utils.CommonUtils;
+import com.shuyu.video.utils.MyFileDownloadListener;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -68,69 +65,43 @@ public class RecommendFragment extends BaseFragment {
     }
 
     private BaseDownloadTask createDownloadTask(AppInfoListEntity downloadEntity) {
-
-        String fileName = downloadEntity.getDownloadUrl().substring(
-                downloadEntity.getDownloadUrl().lastIndexOf("/") + 1);
-        String savePath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator
-                + "downloadApk" + File.separator + fileName;
-        downloadEntity.setSavePath(savePath);
-        return FileDownloader.getImpl().create(downloadEntity.getDownloadUrl())
-                .setPath(savePath, false)
-                .setCallbackProgressTimes(300)
-                .setMinIntervalUpdateSpeed(400)
-                .setTag(downloadEntity)
-                .setListener(new FileDownloadSampleListener() {
-
+        return CommonUtils.createDownloadTask(downloadEntity.getDownloadUrl(), downloadEntity,
+                new MyFileDownloadListener() {
                     @Override
-                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.pending(task, soFarBytes, totalBytes);
-                        LogUtils.d("download", "PENDING");
+                    public void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PENDING);
-//                        ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
                         ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.progress(task, soFarBytes, totalBytes);
-                        LogUtils.d("download", "soFarBytes：" + soFarBytes + "   totalBytes: " + totalBytes);
+                    public void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PROGRESS);
                         ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
-//                        ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    protected void error(BaseDownloadTask task, Throwable e) {
-                        super.error(task, e);
-                        LogUtils.d("download", "ERROR");
-                        e.printStackTrace();
+                    public void error(BaseDownloadTask task, Throwable e) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.ERROR);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue,
-                                             int soFarBytes, int totalBytes) {
-                        super.connected(task, etag, isContinue, soFarBytes, totalBytes);
-                        LogUtils.d("download", "CONNECTED");
+                    public void connected(BaseDownloadTask task, String etag, boolean isContinue,
+                                          int soFarBytes, int totalBytes) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.CONNECTED);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.paused(task, soFarBytes, totalBytes);
-                        LogUtils.d("download", "PAUSED");
+                    public void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PAUSED);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    protected void completed(BaseDownloadTask task) {
-                        super.completed(task);
-                        LogUtils.d("download", "COMPLETED");
+                    public void completed(BaseDownloadTask task) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.COMPLETED);
                         ((AppInfoListEntity) task.getTag()).setCurrentSize(task.getSmallFileSoFarBytes());
                         ((AppInfoListEntity) task.getTag()).setTotalSize(task.getSmallFileTotalBytes());
@@ -140,9 +111,7 @@ public class RecommendFragment extends BaseFragment {
                     }
 
                     @Override
-                    protected void warn(BaseDownloadTask task) {
-                        super.warn(task);
-                        LogUtils.d("download", "WARN");
+                    public void warn(BaseDownloadTask task) {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.WARN);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }

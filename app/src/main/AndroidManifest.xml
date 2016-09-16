@@ -44,7 +44,7 @@
             android:name=".activity.PictureDetailsActivity"
             android:label="详情">
         </activity>
-        <activity android:name=".activity.PictureActivity">
+        <activity android:name=".activity.PictureShowActivity">
         </activity>
     </application>
 

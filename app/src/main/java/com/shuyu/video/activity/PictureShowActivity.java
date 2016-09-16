@@ -8,7 +8,7 @@ import com.shuyu.video.utils.Constants;
 
 import butterknife.Bind;
 
-public class PictureActivity extends AppBaseActivity {
+public class PictureShowActivity extends AppBaseActivity {
 
     @Bind(R.id.iv_picture_url)
     ImageView mIvPictureUrl;

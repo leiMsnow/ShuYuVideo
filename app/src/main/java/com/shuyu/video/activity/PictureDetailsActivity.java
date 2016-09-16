@@ -32,6 +32,9 @@ public class PictureDetailsActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
+        int pictureId = getIntent().getIntExtra(Constants.PICTURE_DETAIL_ID, 0);
+        if (pictureId == 0) return;
+
         mPictureAdapter = new PictureAdapter(mContext, null, R.layout.item_picture);
         mRvContainer.setAdapter(mPictureAdapter);
         mRvContainer.setLayoutManager(new GridLayoutManager(mContext, 3));
@@ -39,13 +42,11 @@ public class PictureDetailsActivity extends AppBaseActivity {
         mPictureAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
-                Intent intent = new Intent(mContext, PictureActivity.class);
+                Intent intent = new Intent(mContext, PictureShowActivity.class);
                 intent.putExtra(Constants.PICTURE_URL, mPictureAdapter.getItem(position).getImgurl());
                 startActivity(intent);
             }
         });
-
-        int pictureId = getIntent().getIntExtra(Constants.PICTURE_DETAIL_ID, 0);
         getPictureDetails(pictureId);
     }
 
