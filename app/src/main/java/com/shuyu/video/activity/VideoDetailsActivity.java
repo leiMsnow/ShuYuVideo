@@ -44,6 +44,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     private VideoCommentAdapter mCommentAdapter;
     private boolean mIsVIP;
     private int mCachedHeight;
+    private int mCurrentPosition;
 
     @Override
     protected int getLayoutRes() {
@@ -68,8 +69,21 @@ public class VideoDetailsActivity extends AppBaseActivity {
     @Override
     public void onPause() {
         super.onPause();
-        if (mVideoView != null && mVideoView.isPlaying()) {
+        if (mVideoView != null) {
+            mCurrentPosition = mVideoView.getCurrentPosition();
             mVideoView.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mVideoView != null) {
+            if (mCurrentPosition != 0) {
+                mVideoView.seekTo(mCurrentPosition);
+                if (mVideoView.isPlaying())
+                    startPlay();
+            }
         }
     }
 
@@ -125,6 +139,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                     mVideoLayout.setLayoutParams(layoutParams);
+                    mMediaController.setTitle(mVideoDetails.getTitle());
                     lrvView.setVisibility(View.GONE);
                     mToolbar.setVisibility(View.GONE);
                 } else {
@@ -134,6 +149,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     }
                     ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    mMediaController.setTitle("");
                     layoutParams.height = mCachedHeight;
                     mVideoLayout.setLayoutParams(layoutParams);
                     lrvView.setVisibility(View.VISIBLE);
@@ -183,9 +199,13 @@ public class VideoDetailsActivity extends AppBaseActivity {
         if (mVideoDetails.getIsPage().equals("1")) {
             AppUtils.openBrowser(mContext, mVideoDetails.getVideoPageUrl());
         } else {
-            mIvUrl.setVisibility(View.GONE);
-            ivVideoPlayer.setVisibility(View.GONE);
-            mVideoView.start();
+            startPlay();
         }
+    }
+
+    private void startPlay() {
+        mIvUrl.setVisibility(View.GONE);
+        ivVideoPlayer.setVisibility(View.GONE);
+        mVideoView.start();
     }
 }
