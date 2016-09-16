@@ -128,7 +128,10 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     lrvView.setVisibility(View.GONE);
                     mToolbar.setVisibility(View.GONE);
                 } else {
-                    if (mIsVIP) return;
+                    if (mIsVIP) {
+                        finish();
+                        return;
+                    }
                     ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = mCachedHeight;
