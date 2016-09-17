@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -36,12 +37,16 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 
+import static com.shuyu.video.R.id.swipe_container;
+
 public class ChannelFragment extends BaseFragment {
 
     public static final int UPDATE_VIEWPAGER = 200;
 
     @Bind(R.id.rv_container)
     ExpandableListView mExpandableListView;
+    @Bind(swipe_container)
+    SwipeRefreshLayout mSwipeContainer;
 
     private ViewPager mVpContainer;
     private CirclePageIndicator cpiIndicator;
@@ -76,9 +81,17 @@ public class ChannelFragment extends BaseFragment {
     protected void initData() {
 
         if (getArguments() == null) return;
-        ChannelTitle channelTitle = (ChannelTitle) getArguments().getSerializable(Constants.CHANNEL_DETAILS);
+        final ChannelTitle channelTitle = (ChannelTitle) getArguments().getSerializable(Constants.CHANNEL_DETAILS);
         if (channelTitle == null) return;
         getChannelData(channelTitle);
+
+        mSwipeContainer.setColorSchemeResources(R.color.app_main_color);
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getChannelData(channelTitle);
+            }
+        });
 
         View vChannelHeader = View.inflate(mContext, R.layout.header_channel, null);
         mVpContainer = (ViewPager) vChannelHeader.findViewById(R.id.vp_container);
@@ -166,11 +179,12 @@ public class ChannelFragment extends BaseFragment {
                         cpiIndicator.setViewPager(mVpContainer);
                         tvBannerTitle.setText(data.get(0).getTitle());
                         autoUpdateViewPager();
+                        mSwipeContainer.setRefreshing(false);
                     }
 
                     @Override
                     public void onFail() {
-
+                        mSwipeContainer.setRefreshing(false);
                     }
                 });
     }

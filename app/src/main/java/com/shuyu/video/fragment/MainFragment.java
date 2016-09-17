@@ -4,29 +4,34 @@ package com.shuyu.video.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.BaseFragment;
+import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.HorizontalIndicatorView;
 import com.shuyu.video.R;
-import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.adapter.ViewPagerAdapter;
+import com.shuyu.video.api.IMainApi;
 import com.shuyu.video.model.ChannelTitle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnPageChange;
+
+import static com.shuyu.video.R.id.swipe_container;
 
 public class MainFragment extends BaseFragment {
-
 
     @Bind(R.id.tb_indicator)
     HorizontalIndicatorView tbIndicator;
     @Bind(R.id.rv_container)
-    ViewPager rvContainer;
+    ViewPager mViewPager;
+
 
     private ViewPagerAdapter mPagerAdapter;
+    private  List<Fragment> mFragments = new ArrayList<>();
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -44,7 +49,9 @@ public class MainFragment extends BaseFragment {
     protected void initData() {
         mPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         getChannelTitle();
+
     }
+
 
     private void getChannelTitle() {
         BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelList(),
@@ -60,17 +67,15 @@ public class MainFragment extends BaseFragment {
 
                     }
                 });
-
     }
 
     private void addFragments(List<ChannelTitle> data) {
-        List<Fragment> mFragments = new ArrayList<>();
-        for (ChannelTitle channelTitle : data) {
-            mFragments.add(ChannelFragment.newInstance(channelTitle));
-        }
-        mPagerAdapter.setFragments(mFragments);
-        rvContainer.setAdapter(mPagerAdapter);
-        tbIndicator.setViewPager(rvContainer);
+            mFragments.clear();
+            for (ChannelTitle channelTitle : data) {
+                mFragments.add(ChannelFragment.newInstance(channelTitle));
+            }
+            mPagerAdapter.setFragments(mFragments);
+            mViewPager.setAdapter(mPagerAdapter);
+            tbIndicator.setViewPager(mViewPager);
     }
-
 }
