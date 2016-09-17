@@ -1,16 +1,22 @@
 package com.shuyu.video.activity;
 
 import android.media.MediaPlayer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
 import com.shuyu.video.api.IServiceApi;
@@ -39,6 +45,8 @@ public class VideoDetailsActivity extends AppBaseActivity {
     UniversalMediaController mMediaController;
     @Bind(R.id.video_layout)
     FrameLayout mVideoLayout;
+    @Bind(R.id.tv_comment)
+    TextView tvComment;
 
     private VideoPicDetails mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
@@ -63,8 +71,42 @@ public class VideoDetailsActivity extends AppBaseActivity {
             mCommentAdapter = new VideoCommentAdapter(mContext, null, R.layout.item_video_comment);
             lrvView.setLayoutManager(new LinearLayoutManager(mContext));
             lrvView.setAdapter(mCommentAdapter);
+            tvComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCommentDialog();
+                }
+            });
             getVideoComment();
         }
+    }
+
+    private void showCommentDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        View view = View.inflate(mContext, R.layout.alert_comment, null);
+        alertDialog.setView(view);
+        final AlertDialog dialog = alertDialog.create();
+        final EditText editText = (EditText) view.findViewById(R.id.et_comment);
+        final Button btnSubmit = (Button) view.findViewById(R.id.btn_submit);
+        final Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(editText.getText().toString())) {
+                    ToastUtils.getInstance().showToast("请输入评论内容");
+                    return;
+                }
+                ToastUtils.getInstance().showToast("评论成功");
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
