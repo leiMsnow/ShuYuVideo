@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/shape_gradient_bg"
+        android:background="@drawable/shape_gradient_title"
         android:orientation="horizontal">
 
         <ImageButton
@@ -44,8 +44,7 @@
             android:contentDescription="返回"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:src="@drawable/uvv_back_btn"
-            android:visibility="invisible"/>
+            android:src="@mipmap/ic_menu_back"/>
 
         <TextView
             android:id="@+id/title"
@@ -59,7 +58,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textColor="#ffffff"
-            android:textSize="18dp"/>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

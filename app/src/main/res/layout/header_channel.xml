@@ -20,7 +20,7 @@
         android:layout_alignBottom="@+id/vp_container"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/shape_gradient_bg"
+        android:background="@drawable/shape_gradient"
         android:maxLines="1"
         android:padding="8dp"
         android:textColor="@color/white"

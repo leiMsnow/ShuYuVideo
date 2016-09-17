@@ -58,7 +58,6 @@ public class UniversalMediaController extends FrameLayout {
     private boolean mIsFullScreen = false;
 //    private boolean mFullscreenEnabled = false;
 
-
     private static final int sDefaultTimeout = 3000;
 
     private static final int STATE_PLAYING = 1;
@@ -96,6 +95,12 @@ public class UniversalMediaController extends FrameLayout {
     private View mControlLayout;
 
     private View mCenterPlayButton;
+
+    private OnClickListener mOnBackClickListener;
+
+    public void setBackListener(OnClickListener mOnBackClickListener) {
+       this.mOnBackClickListener = mOnBackClickListener;
+    }
 
     public UniversalMediaController(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -521,6 +526,9 @@ public class UniversalMediaController extends FrameLayout {
                 updateScaleButton();
                 updateBackButton();
                 mPlayer.setFullscreen(false);
+            }else{
+                if (mOnBackClickListener!=null)
+                    mOnBackClickListener.onClick(v);
             }
 
         }
@@ -558,11 +566,7 @@ public class UniversalMediaController extends FrameLayout {
     }
 
     void updateBackButton() {
-        mBackButton.setVisibility(mIsFullScreen ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    boolean isFullScreen() {
-        return mIsFullScreen;
+        mBackButton.setVisibility(View.VISIBLE);
     }
 
     private void doPauseResume() {
@@ -577,15 +581,12 @@ public class UniversalMediaController extends FrameLayout {
 
     private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         int newPosition = 0;
-
         boolean change = false;
-
         public void onStartTrackingTouch(SeekBar bar) {
             if (mPlayer == null) {
                 return;
             }
             show(3600000);
-
             mDragging = true;
             mHandler.removeMessages(SHOW_PROGRESS);
         }
@@ -668,12 +669,6 @@ public class UniversalMediaController extends FrameLayout {
     public void setTitle(String titile) {
         mTitle.setText(titile);
     }
-
-//    public void setFullscreenEnabled(boolean enabled) {
-//        mFullscreenEnabled = enabled;
-//        mScaleButton.setVisibility(mIsFullScreen ? VISIBLE : GONE);
-//    }
-
 
     public void setOnErrorView(int resId) {
         errorLayout.removeAllViews();

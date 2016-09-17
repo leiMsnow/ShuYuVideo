@@ -65,14 +65,13 @@ public class MainActivity extends AppBaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == R.id.menu_search) {
             Intent intent = new Intent(mContext, SearchActivity.class);
             startActivity(intent);
+        }else  if (item.getItemId() == R.id.menu_gift){
+            setMenuFragment(2);
         }
-
         return super.onOptionsItemSelected(item);
-
     }
 
     private void initDefaultFragment(Bundle savedInstanceState) {

@@ -22,18 +22,12 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"/>
         <activity
-            android:name=".activity.VideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.Main.Dark">
-        </activity>
-        <activity
             android:name=".activity.WebViewActivity"
             android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".activity.VideoDetailsActivity"
+            android:theme="@style/AppTheme.Main.Dark"
             android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity

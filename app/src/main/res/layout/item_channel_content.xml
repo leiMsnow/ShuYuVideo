@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/iv_channel_content_url"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/shape_gradient_bg"
+            android:background="@drawable/shape_gradient"
             android:maxLines="1"
             android:padding="4dp"
             android:textColor="@color/white"

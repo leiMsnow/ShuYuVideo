@@ -119,14 +119,20 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 mVideoLayout.setLayoutParams(videoLayoutParams);
                 mVideoView.setMediaController(mMediaController);
                 mVideoView.setVideoPath(mVideoDetails.getVideoUrl());
+                mMediaController.setTitle(mVideoDetails.getTitle());
                 mVideoView.requestFocus();
                 if (mIsVIP) {
                     mVideoView.start();
                     mVideoView.setFullscreen(true);
                     mIvUrl.setVisibility(View.GONE);
                     ivVideoPlayer.setVisibility(View.GONE);
-                    mMediaController.setTitle(mVideoDetails.getTitle());
                 }
+                mMediaController.setBackListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
             }
         });
     }
@@ -141,9 +147,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                     mVideoLayout.setLayoutParams(layoutParams);
-                    mMediaController.setTitle(mVideoDetails.getTitle());
                     lrvView.setVisibility(View.GONE);
-                    mToolbar.setVisibility(View.GONE);
                 } else {
                     if (mIsVIP) {
                         finish();
@@ -151,15 +155,12 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     }
                     ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                    mMediaController.setTitle("");
                     layoutParams.height = mCachedHeight;
                     mVideoLayout.setLayoutParams(layoutParams);
                     lrvView.setVisibility(View.VISIBLE);
-                    mToolbar.setVisibility(View.VISIBLE);
                 }
             }
 
-            // 视频暂停
             @Override
             public void onPause(MediaPlayer mediaPlayer) {
             }
@@ -169,12 +170,10 @@ public class VideoDetailsActivity extends AppBaseActivity {
             public void onStart(MediaPlayer mediaPlayer) {
             }
 
-            // 视频开始缓冲
             @Override
             public void onBufferingStart(MediaPlayer mediaPlayer) {
             }
 
-            // 视频结束缓冲
             @Override
             public void onBufferingEnd(MediaPlayer mediaPlayer) {
             }

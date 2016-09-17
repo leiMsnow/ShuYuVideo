@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/shape_gradient_bg"
+            android:background="@drawable/shape_gradient"
             android:padding="8dp"
             android:visibility="gone"
             android:textColor="@color/white"

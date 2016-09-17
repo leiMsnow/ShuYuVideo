@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.core.api.BaseApi;
@@ -30,8 +31,8 @@ public class SearchActivity extends AppBaseActivity {
     View tvHotVideo;
     @Bind(R.id.fl_container)
     View mContainer;
-    @Bind(R.id.tv_title)
-    TextView tvSearchTitle;
+
+    private ImageView ivTags;
 
     private HotWordAdapter mHotWordAdapter;
     private ChannelContentAdapter mSearchContentAdapter;
@@ -48,12 +49,18 @@ public class SearchActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-        tvSearchTitle.setText("热搜标签");
+        View tagHeader = View.inflate(mContext,R.layout.include_title_tags,null);
+        ((TextView)tagHeader.findViewById(R.id.tv_title)).setText("热搜标签");
+
+        ivTags = (ImageView) findViewById(R.id.ll_hot_video).findViewById(R.id.iv_channel_tags);
+        ivTags .setImageResource(R.mipmap.ic_channel_tags);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_container, SearchFragment.newInstance())
                 .commit();
 
         mHotWordAdapter = new HotWordAdapter(mContext, null, R.layout.item_hot_word);
+        mHotWordAdapter.addHeaderView(tagHeader);
         rvHotWord.setLayoutManager(new GridLayoutManager(mContext, 4));
         rvHotWord.setAdapter(mHotWordAdapter);
         mHotWordAdapter.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +110,6 @@ public class SearchActivity extends AppBaseActivity {
             public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query)) {
                     openSearchResult(query);
-
                 }
                 return false;
             }
