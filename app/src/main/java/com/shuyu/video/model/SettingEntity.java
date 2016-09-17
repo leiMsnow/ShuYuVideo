@@ -1,17 +1,42 @@
 package com.shuyu.video.model;
 
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by Azure on 2016/9/11.
  */
 
 public class SettingEntity {
 
-    private String title;
-    private int resId;
+    public static final int RECOMMEND = 0;
+    public static final int CLEAR = 1;
+    public static final int FEEDBACK = 2;
+    public static final int UPDATE = 3;
+    public static final int ABOUT = 4;
 
-    public SettingEntity(int resId, String title) {
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({RECOMMEND,CLEAR,FEEDBACK,UPDATE,ABOUT})
+    public @interface SettingType{}
+
+    private  int setId;
+    private int resId;
+    private String title;
+
+    public SettingEntity(@SettingType int setId, int resId, String title) {
+        this.setId = setId;
         this.resId = resId;
         this.title = title;
+    }
+
+    public int getSetId() {
+        return setId;
+    }
+
+    public void setSetId(int setId) {
+        this.setId = setId;
     }
 
     public int getResId() {

@@ -4,23 +4,19 @@ package com.shuyu.video.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.HorizontalIndicatorView;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.ViewPagerAdapter;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ChannelTitle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnPageChange;
-
-import static com.shuyu.video.R.id.swipe_container;
 
 public class MainFragment extends BaseFragment {
 
@@ -54,7 +50,7 @@ public class MainFragment extends BaseFragment {
 
 
     private void getChannelTitle() {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelList(),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getChannelList(),
                 new BaseApi.IResponseListener<List<ChannelTitle>>() {
 
                     @Override

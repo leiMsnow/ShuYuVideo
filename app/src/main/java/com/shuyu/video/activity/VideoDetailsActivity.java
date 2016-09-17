@@ -13,7 +13,7 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -90,7 +90,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void getVideoDetails(int id) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoDetails(id),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoDetails(id),
                 new BaseApi.IResponseListener<VideoPicDetails>() {
                     @Override
                     public void onSuccess(VideoPicDetails data) {
@@ -181,7 +181,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void getVideoComment() {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoCommentList(),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoCommentList(),
                 new BaseApi.IResponseListener<List<VideoComment>>() {
                     @Override
                     public void onSuccess(List<VideoComment> data) {

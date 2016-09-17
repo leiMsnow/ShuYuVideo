@@ -13,7 +13,7 @@ import com.shuyu.core.widget.transformer.ZoomOutPageTransformer;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.LiveVideoEntity;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -67,7 +67,7 @@ public class VipFragment extends BaseFragment {
     }
 
     private void getLiveVideoList() {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getLiveVideoList(1),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getLiveVideoList(1),
                 new BaseApi.IResponseListener<LiveVideoEntity>() {
                     @Override
                     public void onSuccess(LiveVideoEntity data) {

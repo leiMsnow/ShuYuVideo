@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.db.helper.AppInfoHelper;
 import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.AppStoreEntity;
@@ -56,7 +56,7 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void getRunInfo() {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getRunInfo(),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getRunInfo(),
                 new BaseApi.IResponseListener<List<RunInfo>>() {
                     @Override
                     public void onSuccess(List<RunInfo> data) {
@@ -126,7 +126,7 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void getAppStoreInfo() {
-        BaseApi.request(createApi(IMainApi.class).getAppStoreList(1),
+        BaseApi.request(createApi(IServiceApi.class).getAppStoreList(1),
                 new BaseApi.IResponseListener<AppStoreEntity>() {
                     @Override
                     public void onSuccess(final AppStoreEntity data) {

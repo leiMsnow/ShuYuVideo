@@ -4,8 +4,9 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.AppStoreEntity;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelPictureEntity;
-import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.ChannelVideoEntity;
+import com.shuyu.video.model.FeedbackEntity;
 import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.LiveVideoEntity;
 import com.shuyu.video.model.PictureDetails;
@@ -17,6 +18,7 @@ import com.shuyu.video.model.VideoPicDetails;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -25,7 +27,7 @@ import rx.Observable;
  * Created by zhangleilei on 9/5/16.
  */
 
-public interface IMainApi {
+public interface IServiceApi {
 
     /**
      * 应用启动画面接口
@@ -148,5 +150,9 @@ public interface IMainApi {
                                             @Query("pageNo") int pageNo,
                                             @Query("pageSize") int pageSize);
 
+
+    @POST("userFeedback.service?qType=1")
+    Observable<FeedbackEntity> feedback(@Query("content") String content,
+                                        @Query("contactWay") String contact);
 
 }

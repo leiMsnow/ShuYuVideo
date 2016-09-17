@@ -64,7 +64,6 @@ public class HorizontalIndicatorView extends HorizontalScrollView {
 
 
     private void initView() {
-
         setFillViewport(true);
 
         mContainer = new LinearLayout(getContext());

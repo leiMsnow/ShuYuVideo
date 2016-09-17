@@ -8,7 +8,7 @@ import android.view.View;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.PictureAdapter;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.PictureDetails;
 import com.shuyu.video.utils.Constants;
 
@@ -51,7 +51,7 @@ public class PictureDetailsActivity extends AppBaseActivity {
     }
 
     private void getPictureDetails(int groupId) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getPictureDetails(groupId),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getPictureDetails(groupId),
                 new BaseApi.IResponseListener<List<PictureDetails>>() {
                     @Override
                     public void onSuccess(List<PictureDetails> data) {

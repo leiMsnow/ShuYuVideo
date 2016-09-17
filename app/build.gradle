@@ -96,7 +96,7 @@ android {
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName =
                                 "shuyuvideo_${variant.productFlavors[0].name}_" +
-                                "${defaultConfig.versionName}_${releaseTime()}.apk"
+                                        "${defaultConfig.versionName}_${releaseTime()}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }

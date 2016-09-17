@@ -14,7 +14,7 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.ChannelContentAdapter;
 import com.shuyu.video.adapter.HotWordAdapter;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.fragment.SearchFragment;
 import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.SearchVideoData;
@@ -122,7 +122,7 @@ public class SearchActivity extends AppBaseActivity {
     }
 
     private void getHotWord() {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getHotWordList(1, 16),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getHotWordList(1, 16),
                 new BaseApi.IResponseListener<HotWord>() {
                     @Override
                     public void onSuccess(HotWord data) {
@@ -138,7 +138,7 @@ public class SearchActivity extends AppBaseActivity {
     }
 
     private void searchVideo(String keyword) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).searchVideo(keyword, 1, 4),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).searchVideo(keyword, 1, 4),
                 new BaseApi.IResponseListener<SearchVideoData>() {
                     @Override
                     public void onSuccess(SearchVideoData data) {

@@ -27,8 +27,8 @@
         </activity>
         <activity
             android:name=".activity.VideoDetailsActivity"
-            android:theme="@style/AppTheme.Main.Dark"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme.Main.Dark">
         </activity>
         <activity
             android:name=".activity.SearchActivity"
@@ -36,9 +36,17 @@
         </activity>
         <activity
             android:name=".activity.PictureDetailsActivity"
-            android:label="详情">
+            android:label="@string/details">
         </activity>
         <activity android:name=".activity.PictureShowActivity">
+        </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/about">
+        </activity>
+        <activity android:name=".activity.FeedbackActivity"
+                  android:windowSoftInputMode="adjustResize"
+                  android:label="@string/feedback">
         </activity>
     </application>
 

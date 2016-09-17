@@ -75,47 +75,47 @@ public class MainActivity extends AppBaseActivity {
     }
 
     private void initDefaultFragment(Bundle savedInstanceState) {
+        MainFragment mainFragment = (MainFragment) getSupportFragmentManager()
+                .findFragmentByTag(tags[0]);
+        VipFragment vipFragment = (VipFragment) getSupportFragmentManager()
+                .findFragmentByTag(tags[1]);
+        RecommendFragment privateFragment = (RecommendFragment) getSupportFragmentManager()
+                .findFragmentByTag(tags[2]);
+        UserCenterFragment myFragment = (UserCenterFragment) getSupportFragmentManager()
+                .findFragmentByTag(tags[3]);
         if (savedInstanceState == null) {
             fragments = new ArrayList<>();
             FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-            MainFragment mainFragment = MainFragment.newInstance();
-            VipFragment vipFragment = VipFragment.newInstance();
-            RecommendFragment privateFragment = RecommendFragment.newInstance();
-            UserCenterFragment myFragment = UserCenterFragment.newInstance();
+            mainFragment = MainFragment.newInstance();
+            vipFragment = VipFragment.newInstance();
+            privateFragment = RecommendFragment.newInstance();
+            myFragment = UserCenterFragment.newInstance();
+
             mContent = mainFragment;
             fts.add(R.id.fl_container, mainFragment, tags[0]);
             fts.add(R.id.fl_container, vipFragment, tags[1]);
             fts.add(R.id.fl_container, privateFragment, tags[2]);
             fts.add(R.id.fl_container, myFragment, tags[3]);
 
-            fts.show(mainFragment)
-                    .hide(vipFragment)
-                    .hide(privateFragment)
-                    .hide(myFragment)
-                    .commitAllowingStateLoss();
+            fts.show(mainFragment).hide(vipFragment).hide(privateFragment)
+                    .hide(myFragment).commitAllowingStateLoss();
 
             fragments.add(mainFragment);
             fragments.add(vipFragment);
             fragments.add(privateFragment);
             fragments.add(myFragment);
-
         } else {
-            MainFragment mainFragment = (MainFragment) getSupportFragmentManager()
-                    .findFragmentByTag(tags[0]);
-            VipFragment vipFragment = (VipFragment) getSupportFragmentManager()
-                    .findFragmentByTag(tags[1]);
-            RecommendFragment privateFragment = (RecommendFragment) getSupportFragmentManager()
-                    .findFragmentByTag(tags[2]);
-            UserCenterFragment myFragment = (UserCenterFragment) getSupportFragmentManager()
-                    .findFragmentByTag(tags[3]);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .show(mainFragment)
-                    .hide(vipFragment)
-                    .hide(privateFragment)
-                    .hide(myFragment)
+            getSupportFragmentManager().beginTransaction() .hide(mainFragment)
+                    .hide(vipFragment) .hide(privateFragment)
+                    .hide(myFragment).show(mContent)
                     .commitAllowingStateLoss();
         }
+        myFragment.setRecommendListener(new UserCenterFragment.IRecommendListener() {
+            @Override
+            public void recommendTab() {
+                setMenuFragment(2);
+            }
+        });
     }
 
     private void initMenuFragment() {

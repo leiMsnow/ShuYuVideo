@@ -8,7 +8,6 @@ import java.util.List;
 
 public class ChannelVideoEntity {
 
-
     private int totalPageCount;
     private int totalItemCount;
     private int pageNo;

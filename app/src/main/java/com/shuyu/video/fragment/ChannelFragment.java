@@ -21,7 +21,7 @@ import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
-import com.shuyu.video.api.IMainApi;
+import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelPictureEntity;
 import com.shuyu.video.model.ChannelTitle;
@@ -168,7 +168,7 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void getChannelBanner(int cid) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getChannelBannerList(cid),
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getChannelBannerList(cid),
                 new BaseApi.IResponseListener<List<ChannelBanner>>() {
 
                     @Override
@@ -190,7 +190,7 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void getVideoList(int cid, int pageNo) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getVideoListByChannelId(cid, pageNo, 6)
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoListByChannelId(cid, pageNo, 6)
                 , new BaseApi.IResponseListener<ChannelVideoEntity>() {
 
                     @Override
@@ -207,7 +207,7 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void getPictureList(int cid, int pageNo) {
-        BaseApi.request(BaseApi.createApi(IMainApi.class).getPictureListByChannelId(cid, pageNo, 6)
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getPictureListByChannelId(cid, pageNo, 6)
                 , new BaseApi.IResponseListener<ChannelPictureEntity>() {
 
                     @Override
