@@ -6,4 +6,7 @@
     <color name="uvv_light_gray">#ffF0F0F0</color>
     <color name="uvv_titlebar_bg">#7f000000</color>
 
+    <color name="main_orange">#ff7e00</color>
+    <color name="main_orange_pressed">#ce6907</color>
+
 </resources>

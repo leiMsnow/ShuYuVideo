@@ -105,9 +105,9 @@ public class MainActivity extends AppBaseActivity {
             fragments.add(privateFragment);
             fragments.add(myFragment);
         } else {
-            getSupportFragmentManager().beginTransaction() .hide(mainFragment)
+            getSupportFragmentManager().beginTransaction() .show(mainFragment)
                     .hide(vipFragment) .hide(privateFragment)
-                    .hide(myFragment).show(mContent)
+                    .hide(myFragment)
                     .commitAllowingStateLoss();
         }
         myFragment.setRecommendListener(new UserCenterFragment.IRecommendListener() {

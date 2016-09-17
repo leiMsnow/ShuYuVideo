@@ -14,6 +14,7 @@
         android:visibility="gone">
 
         <include layout="@layout/uvv_on_loading_layout"/>
+
     </LinearLayout>
 
     <LinearLayout

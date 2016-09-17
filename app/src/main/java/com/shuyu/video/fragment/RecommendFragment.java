@@ -105,6 +105,7 @@ public class RecommendFragment extends BaseFragment {
                         ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.COMPLETED);
                         ((AppInfoListEntity) task.getTag()).setCurrentSize(task.getSmallFileSoFarBytes());
                         ((AppInfoListEntity) task.getTag()).setTotalSize(task.getSmallFileTotalBytes());
+                        ((AppInfoListEntity) task.getTag()).setSavePath(task.getPath());
                         AppInfoListEntity appInfo = ((AppInfoListEntity) task.getTag());
                         AppInfoHelper.getHelper().update(appInfo);
                         mAppSoreAdapter.notifyDataSetChanged();

@@ -34,10 +34,10 @@
 
                 <gradient
                     android:angle="-90"
-                    android:centerColor="?attr/colorPrimary"
+                    android:centerColor="@color/main_orange"
                     android:centerY="0.75"
-                    android:endColor="?attr/colorPrimary"
-                    android:startColor="?attr/colorPrimary"/>
+                    android:endColor="@color/main_orange"
+                    android:startColor="@color/main_orange"/>
             </shape>
         </clip>
     </item>

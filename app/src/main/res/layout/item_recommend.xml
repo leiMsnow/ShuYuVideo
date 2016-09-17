@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="96dp">
+                android:layout_height="72dp">
 
     <ImageView
         android:id="@+id/iv_app_icon"
@@ -10,7 +10,7 @@
         android:layout_height="64dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_default_image"/>
 
@@ -31,7 +31,7 @@
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@+id/btn_down"
         android:layout_toRightOf="@+id/iv_app_icon"
-        android:maxLines="3"
+        android:maxLines="2"
         android:textSize="12sp"
         android:textColor="@color/normal_dark_grey"
         tools:text="description"/>
@@ -53,6 +53,7 @@
         style="@style/Widget.ProgressBar.Horizontal.Main"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
