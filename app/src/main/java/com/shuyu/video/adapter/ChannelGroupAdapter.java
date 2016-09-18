@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.shuyu.video.R;
 import com.shuyu.video.model.SubChannel;
+import com.shuyu.video.utils.Constants;
 
 import java.util.List;
 
@@ -83,7 +84,11 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         if (i == 0) {
             holder.ivTags.setImageResource(R.mipmap.ic_channel_hot_tags);
         } else {
-            holder.ivTags.setImageResource(R.mipmap.ic_channel_tags);
+            if (content.getChannelContentList().get(0).getContentType() == Constants.BANNEL_VIDEO) {
+                holder.ivTags.setImageResource(R.mipmap.ic_channel_tv_tags);
+            } else if (content.getChannelContentList().get(0).getContentType() == Constants.BANNEL_PICTURE) {
+                holder.ivTags.setImageResource(R.mipmap.ic_channel_img_tags);
+            }
         }
         holder.tvGroupTitle.setText(content.getTitle());
         return view;
