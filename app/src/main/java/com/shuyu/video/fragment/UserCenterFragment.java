@@ -83,8 +83,8 @@ public class UserCenterFragment extends BaseFragment {
         settingEntityList.add(new SettingEntity(SettingEntity.RECOMMEND,R.mipmap.ic_protocol, "精品推荐"));
         settingEntityList.add(new SettingEntity(SettingEntity.CLEAR,R.mipmap.ic_clean_cache, "清除缓存"));
         settingEntityList.add(new SettingEntity(SettingEntity.FEEDBACK,R.mipmap.ic_feedback, getString(R.string.feedback)));
-        settingEntityList.add(new SettingEntity(SettingEntity.UPDATE,R.mipmap.ic_protocol, "版本更新"));
-        settingEntityList.add(new SettingEntity(SettingEntity.ABOUT,R.mipmap.ic_copyright, getString(R.string.about)));
+        settingEntityList.add(new SettingEntity(SettingEntity.UPDATE,R.mipmap.ic_update, "版本更新"));
+        settingEntityList.add(new SettingEntity(SettingEntity.ABOUT,R.mipmap.ic_about, getString(R.string.about)));
 
         return settingEntityList;
     }

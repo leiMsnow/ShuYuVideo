@@ -53,7 +53,7 @@ public class SearchActivity extends AppBaseActivity {
         ((TextView)tagHeader.findViewById(R.id.tv_title)).setText("热搜标签");
 
         ivTags = (ImageView) findViewById(R.id.ll_hot_video).findViewById(R.id.iv_channel_tags);
-        ivTags .setImageResource(R.mipmap.ic_channel_tags);
+        ivTags .setImageResource(R.mipmap.ic_channel_tv_tags);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_container, SearchFragment.newInstance())

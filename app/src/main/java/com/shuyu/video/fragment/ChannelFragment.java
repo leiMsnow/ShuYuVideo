@@ -173,13 +173,14 @@ public class ChannelFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(List<ChannelBanner> data) {
+                        mSwipeContainer.setRefreshing(false);
+                        cancelTimer();
                         mChannelBanners = data;
                         mBannerAdapter.setBanners(mChannelBanners);
                         mVpContainer.setAdapter(mBannerAdapter);
                         cpiIndicator.setViewPager(mVpContainer);
                         tvBannerTitle.setText(data.get(0).getTitle());
                         autoUpdateViewPager();
-                        mSwipeContainer.setRefreshing(false);
                     }
 
                     @Override
@@ -235,19 +236,19 @@ public class ChannelFragment extends BaseFragment {
             return;
         if (timer == null) {
             timer = new Timer();
-        }
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Message message = new Message();
-                message.what = UPDATE_VIEWPAGER;
-                if (currIndex == mChannelBanners.size()) {
-                    currIndex = 0;
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = new Message();
+                    message.what = UPDATE_VIEWPAGER;
+                    if (currIndex == mChannelBanners.size()) {
+                        currIndex = 0;
+                    }
+                    message.arg1 = currIndex++;
+                    mMyHandler.sendMessage(message);
                 }
-                message.arg1 = currIndex++;
-                mMyHandler.sendMessage(message);
-            }
-        }, 5 * 1000, 5 * 1000);
+            }, 5 * 1000, 5 * 1000);
+        }
     }
 
     private static class MyHandler extends Handler {
@@ -279,6 +280,10 @@ public class ChannelFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        cancelTimer();
+    }
+
+    private void cancelTimer(){
         if (timer != null) {
             timer.cancel();
             timer = null;

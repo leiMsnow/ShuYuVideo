@@ -10,15 +10,17 @@
 
     <ImageView
         android:id="@+id/iv_setting_icon"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
-        tools:src="@mipmap/ic_protocol"/>
+        tools:src="@mipmap/ic_update"/>
 
     <TextView
         android:id="@+id/tv_setting_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@+id/iv_arrow"
         android:layout_toRightOf="@+id/iv_setting_icon"
