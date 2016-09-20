@@ -5,16 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/in_toolbar"
-        layout="@layout/include_toolbar" />
-
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_bottom_menu"
-        android:layout_below="@+id/in_toolbar"/>
+        android:layout_alignParentTop="true"/>
 
     <LinearLayout
         android:id="@+id/ll_bottom_menu"

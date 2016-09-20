@@ -8,8 +8,8 @@ import com.shuyu.video.BuildConfig;
 
 public interface Constants {
 
-     String ENVIRONMENT = BuildConfig.ENVIRONMENT;
-     boolean IS_DEBUG = BuildConfig.IS_DEBUG;
+    String ENVIRONMENT = BuildConfig.ENVIRONMENT;
+    boolean IS_DEBUG = BuildConfig.IS_DEBUG;
 
     String CHANNEL_DETAILS = "CHANNEL_DETAILS";
 
@@ -22,11 +22,13 @@ public interface Constants {
 
     String LAUNCHER_IMG = "LAUNCHER_IMG";
 
-    String BANNEL_TITLE = "BANNEL_TITLE";
+    String DISCLAIMER = "DISCLAIMER";
 
-    int BANNEL_VIDEO = 1;
-    int BANNEL_PICTURE = 2;
-    int BANNEL_APP = 3;
-    int BANNEL_WAP = 4;
+
+    String BANNER_TITLE = "BANNER_TITLE";
+    int BANNER_VIDEO = 1;
+    int BANNER_PICTURE = 2;
+    int BANNER_APP = 3;
+    int BANNER_WAP = 4;
 
 }

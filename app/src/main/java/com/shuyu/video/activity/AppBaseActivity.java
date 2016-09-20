@@ -8,5 +8,8 @@ import com.shuyu.core.BaseActivity;
 
 public abstract class AppBaseActivity extends BaseActivity {
 
-
+    @Override
+    protected boolean hasToolbar() {
+        return true;
+    }
 }

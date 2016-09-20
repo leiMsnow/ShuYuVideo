@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/in_toolbar"
-        layout="@layout/include_toolbar"/>
-
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="72dp"

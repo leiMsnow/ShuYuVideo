@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar"/>
-<android.support.v4.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="wrap_content">
-    <EditText
-        android:id="@+id/et_feedback"
-        android:layout_width="match_parent"
-        android:hint="请输入您的意见和建议......"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:layout_margin="8dp"
-        android:background="@drawable/shape_border"
-        android:minLines="6"
-        android:padding="8dp"
-        android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/et_tel"
-        android:layout_width="match_parent"
-        android:hint="请输入您的联系方式......"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:background="@drawable/shape_border"
-        android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:text="提交"
-        android:background="@drawable/selector_btn"
-        android:layout_margin="16dp"
-        android:layout_width="match_parent"
-        android:maxLines="1"
-        android:layout_height="48dp"/>
-</LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+            <EditText
+                android:id="@+id/et_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/shape_border"
+                android:gravity="top"
+                android:hint="请输入您的意见和建议......"
+                android:inputType="textMultiLine"
+                android:minLines="6"
+                android:padding="8dp"/>
+
+            <EditText
+                android:id="@+id/et_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/shape_border"
+                android:hint="请输入您的联系方式......"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/selector_btn"
+                android:maxLines="1"
+                android:text="提交"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

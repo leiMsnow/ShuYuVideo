@@ -48,6 +48,11 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     @Override
+    protected boolean hasToolbar() {
+        return false;
+    }
+
+    @Override
     protected void initData() {
         mMyHandler = new MyHandler(this);
         Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, "")).into(ivLauncherUrl);

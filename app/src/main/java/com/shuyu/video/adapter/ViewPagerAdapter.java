@@ -34,7 +34,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mFragments.get(position).getArguments().getString(Constants.BANNEL_TITLE);
+        return mFragments.get(position).getArguments().getString(Constants.BANNER_TITLE);
     }
 
     @Override

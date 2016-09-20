@@ -10,10 +10,12 @@ import android.view.View;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
-import com.shuyu.video.activity.AboutActivity;
 import com.shuyu.video.activity.FeedbackActivity;
+import com.shuyu.video.activity.ServiceActivity;
+import com.shuyu.video.activity.WebViewActivity;
 import com.shuyu.video.adapter.SettingAdapter;
 import com.shuyu.video.model.SettingEntity;
+import com.shuyu.video.utils.Constants;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -54,23 +56,30 @@ public class UserCenterFragment extends BaseFragment {
         mSettingAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
+                Intent intent;
                 switch (mSettingAdapter.getItem(position).getSetId()) {
                     case SettingEntity.RECOMMEND:
-                        if (mRecommendListener!=null){
+                        if (mRecommendListener != null)
                             mRecommendListener.recommendTab();
-                        }
                         break;
                     case SettingEntity.CLEAR:
                         ToastUtils.getInstance().showToast("清除完成");
                         break;
                     case SettingEntity.FEEDBACK:
-                        startActivity(new Intent(mContext, FeedbackActivity.class));
+                        intent = new Intent(mContext, FeedbackActivity.class);
+                        startActivity(intent);
                         break;
                     case SettingEntity.UPDATE:
                         ToastUtils.getInstance().showToast("已经是最新版本");
                         break;
-                    case SettingEntity.ABOUT:
-                        startActivity(new Intent(mContext, AboutActivity.class));
+                    case SettingEntity.DISCLAIMER:
+                        intent = new Intent(mContext, WebViewActivity.class);
+                        intent.putExtra(Constants.DISCLAIMER, true);
+                        startActivity(intent);
+                        break;
+                    case SettingEntity.SERVICE:
+                        intent = new Intent(mContext, ServiceActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
@@ -78,18 +87,20 @@ public class UserCenterFragment extends BaseFragment {
     }
 
     private List<SettingEntity> initSettingData() {
-        List<SettingEntity> settingEntityList = new ArrayList<>();
+        List<SettingEntity> settings = new ArrayList<>();
 
-        settingEntityList.add(new SettingEntity(SettingEntity.RECOMMEND,R.mipmap.ic_protocol, "精品推荐"));
-        settingEntityList.add(new SettingEntity(SettingEntity.CLEAR,R.mipmap.ic_clean_cache, "清除缓存"));
-        settingEntityList.add(new SettingEntity(SettingEntity.FEEDBACK,R.mipmap.ic_feedback, getString(R.string.feedback)));
-        settingEntityList.add(new SettingEntity(SettingEntity.UPDATE,R.mipmap.ic_update, "版本更新"));
-        settingEntityList.add(new SettingEntity(SettingEntity.ABOUT,R.mipmap.ic_about, getString(R.string.about)));
+        settings.add(new SettingEntity(SettingEntity.RECOMMEND, R.mipmap.ic_protocol, getString(R.string.recommend)));
+        settings.add(new SettingEntity(SettingEntity.CLEAR, R.mipmap.ic_clean_cache, getString(R.string.clean_cache)));
+        settings.add(new SettingEntity(SettingEntity.SERVICE, R.mipmap.ic_service, getString(R.string.service)));
+        settings.add(new SettingEntity(SettingEntity.FEEDBACK, R.mipmap.ic_feedback, getString(R.string.feedback)));
+        settings.add(new SettingEntity(SettingEntity.UPDATE, R.mipmap.ic_update, getString(R.string.update)));
+        settings.add(new SettingEntity(SettingEntity.DISCLAIMER, R.mipmap.ic_disclaimer, getString(R.string.disclaimer)));
+        settings.add(new SettingEntity(SettingEntity.ABOUT, R.mipmap.ic_about, getString(R.string.about)));
 
-        return settingEntityList;
+        return settings;
     }
 
-    public interface IRecommendListener{
+    public interface IRecommendListener {
         void recommendTab();
     }
 }

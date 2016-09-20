@@ -84,9 +84,9 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
         if (i == 0) {
             holder.ivTags.setImageResource(R.mipmap.ic_channel_hot_tags);
         } else {
-            if (content.getChannelContentList().get(0).getContentType() == Constants.BANNEL_VIDEO) {
+            if (content.getChannelContentList().get(0).getContentType() == Constants.BANNER_VIDEO) {
                 holder.ivTags.setImageResource(R.mipmap.ic_channel_tv_tags);
-            } else if (content.getChannelContentList().get(0).getContentType() == Constants.BANNEL_PICTURE) {
+            } else if (content.getChannelContentList().get(0).getContentType() == Constants.BANNER_PICTURE) {
                 holder.ivTags.setImageResource(R.mipmap.ic_channel_img_tags);
             }
         }

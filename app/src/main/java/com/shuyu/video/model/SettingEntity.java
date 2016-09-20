@@ -16,9 +16,11 @@ public class SettingEntity {
     public static final int FEEDBACK = 2;
     public static final int UPDATE = 3;
     public static final int ABOUT = 4;
+    public static final int DISCLAIMER = 5;
+    public static final int SERVICE = 6;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({RECOMMEND,CLEAR,FEEDBACK,UPDATE,ABOUT})
+    @IntDef({RECOMMEND,CLEAR,FEEDBACK,UPDATE,ABOUT,DISCLAIMER,SERVICE})
     public @interface SettingType{}
 
     private  int setId;

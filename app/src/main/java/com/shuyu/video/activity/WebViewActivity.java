@@ -1,10 +1,13 @@
 package com.shuyu.video.activity;
 
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
+import com.shuyu.video.utils.Constants;
 
 import butterknife.Bind;
 
@@ -16,8 +19,6 @@ public class WebViewActivity extends AppBaseActivity {
     @Bind(R.id.web_view)
     WebView webView;
 
-    private VideoPicDetails mContentListBean;
-
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_web_view;
@@ -25,16 +26,22 @@ public class WebViewActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-        mContentListBean = (VideoPicDetails)
-                getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
 
-        if (mContentListBean == null)
-            return;
+        if (getIntent().getBooleanExtra(Constants.DISCLAIMER, false)) {
+            setTitle("免责声明");
+            webView.loadUrl("file:///android_asset/disclaimer.html");
+            webView.getSettings().setSupportZoom(false);
+        } else {
+            VideoPicDetails contentListBean = (VideoPicDetails)
+                    getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
 
-        setTitle(mContentListBean.getTitle());
-        webView.loadUrl(mContentListBean.getVideoPageUrl());
-
-        webView.setWebViewClient(new WebViewClient(){
+            if (contentListBean == null)
+                return;
+            mToolbar.setVisibility(View.GONE);
+            webView.loadUrl(contentListBean.getVideoPageUrl());
+        }
+        setView();
+        webView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -42,5 +49,13 @@ public class WebViewActivity extends AppBaseActivity {
                 return true;
             }
         });
+    }
+
+    private void setView() {
+
+        webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setUseWideViewPort(true);
+        webSettings.setBuiltInZoomControls(false);
     }
 }

@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.shuyu.core.uils.DensityUtils;
 import com.shuyu.core.uils.KeyBoardUtils;
@@ -53,6 +57,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData();
 
+    protected abstract boolean hasToolbar();
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -60,15 +66,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.tb_toolbar);
-        if (mToolbar == null) {
-            return;
-        }
+        if (!hasToolbar()) return;
+
+        View view = View.inflate(mContext, R.layout.include_toolbar, null);
+        mToolbar = (Toolbar) view.findViewById(R.id.tb_toolbar);
+        if (mToolbar == null) return;
+
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             setOverflowShowingAlways();
         }
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        addContentView(view, layoutParams);
+        FrameLayout.LayoutParams rootParams = (FrameLayout.LayoutParams) getRootView().getLayoutParams();
+        rootParams.topMargin = getToolBarHeight();
+        getRootView().setLayoutParams(rootParams);
+    }
+
+    private View getRootView() {
+        return ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
     }
 
     @Override
@@ -80,9 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected int getToolBarHeight() {
-        if (mToolbar == null)
-            return 0;
-        return DensityUtils.dp2px(mContext, 56);
+        return DensityUtils.dp2px(mContext,40);
     }
 
     @Override

@@ -5,10 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/in_toolbar"
-        layout="@layout/include_toolbar"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_hot_word"
         android:layout_width="match_parent"

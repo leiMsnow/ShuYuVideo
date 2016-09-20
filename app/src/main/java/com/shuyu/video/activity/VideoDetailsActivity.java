@@ -61,6 +61,11 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     @Override
+    protected boolean hasToolbar() {
+        return false;
+    }
+
+    @Override
     protected void initData() {
         if (getIntent() == null) return;
         int videoId = getIntent().getIntExtra(Constants.VIDEO_DETAIL_ID, 0);

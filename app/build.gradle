@@ -127,4 +127,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':corelibrary')
     compile project(':universalvideoview')
+    compile 'com.android.support:appcompat-v7:24.2.0'
 }

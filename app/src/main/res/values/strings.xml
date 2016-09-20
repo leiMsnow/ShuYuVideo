@@ -6,10 +6,13 @@
     <string name="nav_recommend">推荐</string>
     <string name="nav_me">我的</string>
 
-    <string name="about">关于我们</string>
     <string name="details">详情</string>
+    <string name="about">关于我们</string>
     <string name="feedback">意见反馈</string>
-
-    <string name="recommend">@string/nav_recommend</string>
+    <string name="service">联系客服</string>
+    <string name="update">版本更新</string>
+    <string name="clean_cache">清除缓存</string>
+    <string name="recommend">精品推荐</string>
+    <string name="disclaimer">免责声明</string>
 
 </resources>

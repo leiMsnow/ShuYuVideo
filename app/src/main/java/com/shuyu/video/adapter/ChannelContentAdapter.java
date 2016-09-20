@@ -75,11 +75,11 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
         }
         holder.setText(R.id.tv_content_title, item.getTitle());
         holder.setText(R.id.tv_subtitle, item.getSubTitle());
-        if (item.getContentType() == Constants.BANNEL_VIDEO) {
+        if (item.getContentType() == Constants.BANNER_VIDEO) {
 //            holder.setVisibility(R.id.iv_play, View.VISIBLE);
             holder.setVisibility(R.id.tv_view_number, View.VISIBLE);
             holder.setText(R.id.tv_view_number, item.getViewNumber());
-        } else if (item.getContentType() == Constants.BANNEL_PICTURE) {
+        } else if (item.getContentType() == Constants.BANNER_PICTURE) {
 //            holder.setVisibility(R.id.iv_play, View.GONE);
             holder.setVisibility(R.id.tv_view_number, View.GONE);
         }
@@ -103,11 +103,11 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
 
         @Override
         public void onClick(View view) {
-            if (child.getContentType() == Constants.BANNEL_VIDEO) {
+            if (child.getContentType() == Constants.BANNER_VIDEO) {
                 Intent intent = new Intent(mContext, VideoDetailsActivity.class);
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
                 mContext.startActivity(intent);
-            } else if (child.getContentType() == Constants.BANNEL_PICTURE) {
+            } else if (child.getContentType() == Constants.BANNER_PICTURE) {
                 Intent intent = new Intent(mContext, PictureDetailsActivity.class);
                 intent.putExtra(Constants.PICTURE_DETAIL_ID, child.getId());
                 mContext.startActivity(intent);

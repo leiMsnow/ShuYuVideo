@@ -1,7 +1,6 @@
 package com.shuyu.video.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
@@ -32,11 +31,9 @@ public class MainActivity extends AppBaseActivity {
     @Bind(R.id.ccv_user)
     ChangeColorView mCcvUser;
 
-    private List<ChangeColorView> changeColorViews = null;
-    private List<Fragment> fragments = null;
-    private Fragment mContent;
-    private String[] tags = {"main", "vip", "recommend", "me"};
-    private int[] titles = {R.string.nav_main, R.string.nav_vip, R.string.nav_recommend, R.string.nav_me};
+    private List<Fragment> mFragments = null;
+    private List<ChangeColorView> mChangeColorViews = null;
+    private int[] mTitles = {R.string.nav_main, R.string.nav_vip, R.string.nav_recommend, R.string.nav_me};
 
     @Override
     protected int getLayoutRes() {
@@ -47,14 +44,10 @@ public class MainActivity extends AppBaseActivity {
     protected void initData() {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        initMenuFragment();
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         initDefaultFragment();
-        setTitle(titles[0]);
+        setTitle(mTitles[0]);
+        initBottomMenu();
     }
 
     @Override
@@ -69,58 +62,47 @@ public class MainActivity extends AppBaseActivity {
             Intent intent = new Intent(mContext, SearchActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.menu_gift) {
-            setMenuFragment(2);
+            setBottomMenu(2);
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void initDefaultFragment() {
-        fragments = new ArrayList<>();
+        mFragments = new ArrayList<>();
+        UserCenterFragment userCenterFragment = UserCenterFragment.newInstance();
+        mFragments.add(MainFragment.newInstance());
+        mFragments.add(VipFragment.newInstance());
+        mFragments.add(RecommendFragment.newInstance());
+        mFragments.add(userCenterFragment);
 
-        FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-        MainFragment mainFragment = MainFragment.newInstance();
-        VipFragment vipFragment = VipFragment.newInstance();
-        RecommendFragment privateFragment = RecommendFragment.newInstance();
-        UserCenterFragment myFragment = UserCenterFragment.newInstance();
-
-        mContent = mainFragment;
-        fts.add(R.id.fl_container, mainFragment, tags[0]);
-        fts.add(R.id.fl_container, vipFragment, tags[1]);
-        fts.add(R.id.fl_container, privateFragment, tags[2]);
-        fts.add(R.id.fl_container, myFragment, tags[3]);
-
-        fts.show(mainFragment).hide(vipFragment).hide(privateFragment)
-                .hide(myFragment).commitAllowingStateLoss();
-
-        fragments.add(mainFragment);
-        fragments.add(vipFragment);
-        fragments.add(privateFragment);
-        fragments.add(myFragment);
-        myFragment.setRecommendListener(new UserCenterFragment.IRecommendListener() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        for (int i = 0; i < mFragments.size(); i++) {
+            ft.add(R.id.fl_container, mFragments.get(i));
+            if (i > 0) ft.hide(mFragments.get(i));
+        }
+        ft.commit();
+        userCenterFragment.setRecommendListener(new UserCenterFragment.IRecommendListener() {
             @Override
             public void recommendTab() {
-                setMenuFragment(2);
+                setBottomMenu(2);
             }
         });
     }
 
-    private void initMenuFragment() {
-        changeColorViews = new ArrayList<>();
-        changeColorViews.add(mCcvMain);
-        changeColorViews.add(mCcvVip);
-        changeColorViews.add(mCcvPrivate);
-        changeColorViews.add(mCcvUser);
-
-        for (int i = 0; i < changeColorViews.size(); i++) {
-            changeColorViews.get(i).setOnClickListener(new OnButtonMenuClickListener(i));
+    private void initBottomMenu() {
+        mChangeColorViews = new ArrayList<>();
+        mChangeColorViews.add(mCcvMain);
+        mChangeColorViews.add(mCcvVip);
+        mChangeColorViews.add(mCcvPrivate);
+        mChangeColorViews.add(mCcvUser);
+        for (int i = 0; i < mChangeColorViews.size(); i++) {
+            mChangeColorViews.get(i).setOnClickListener(new OnButtonMenuClickListener(i));
         }
-        // 首页高亮显示
-        changeColorViews.get(0).setIconAlpha(1.0f);
+        mChangeColorViews.get(0).setIconAlpha(1.0f);
     }
 
     class OnButtonMenuClickListener implements View.OnClickListener {
-
-        int position = -1;
+        int position;
 
         OnButtonMenuClickListener(int position) {
             this.position = position;
@@ -128,40 +110,27 @@ public class MainActivity extends AppBaseActivity {
 
         @Override
         public void onClick(View v) {
-            if (position == -1)
-                return;
-            setMenuFragment(position);
+            setBottomMenu(position);
         }
     }
 
-    private void setMenuFragment(int position) {
-        if (changeColorViews != null) {
-            for (int i = 0; i < changeColorViews.size(); i++) {
-                changeColorViews.get(i).setIconAlpha(0);
+    private void setBottomMenu(int position) {
+        if (mChangeColorViews != null) {
+            for (int i = 0; i < mChangeColorViews.size(); i++) {
+                mChangeColorViews.get(i).setIconAlpha(0);
             }
-            changeColorViews.get(position).setIconAlpha(1.0f);
-            if (fragments != null)
-                switchContent(mContent, fragments.get(position), position);
+            setTitle(mTitles[position]);
+            mChangeColorViews.get(position).setIconAlpha(1.0f);
+            switchContent(position);
         }
     }
 
-    /**
-     * fragment 切换
-     *
-     * @param from
-     * @param to
-     */
-    public void switchContent(Fragment from, Fragment to, int position) {
-        if (mContent != to) {
-            mContent = to;
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            if (!to.isAdded()) {
-                transaction.hide(from)
-                        .add(R.id.fl_container, to, tags[position]).commitAllowingStateLoss();
-            } else {
-                transaction.hide(from).show(to).commitAllowingStateLoss();
-            }
-            setTitle(titles[position]);
+    public void switchContent(int position) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        for (int i = 0; i < mFragments.size(); i++) {
+            ft.hide(mFragments.get(i));
         }
+        ft.show(mFragments.get(position));
+        ft.commit();
     }
 }

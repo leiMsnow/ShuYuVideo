@@ -67,7 +67,7 @@ public class ChannelFragment extends BaseFragment {
         ChannelFragment fragment = new ChannelFragment();
         Bundle args = new Bundle();
         args.putSerializable(Constants.CHANNEL_DETAILS, channelTitle);
-        args.putString(Constants.BANNEL_TITLE, channelTitle.getTitle());
+        args.putString(Constants.BANNER_TITLE, channelTitle.getTitle());
         fragment.setArguments(args);
         return fragment;
     }
@@ -136,17 +136,17 @@ public class ChannelFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ChannelBanner channelBanner = (ChannelBanner) v.getTag();
-                if (channelBanner.getBannerType() == Constants.BANNEL_VIDEO) {
+                if (channelBanner.getBannerType() == Constants.BANNER_VIDEO) {
                     Intent intent = new Intent(mContext, VideoDetailsActivity.class);
                     intent.putExtra(Constants.VIDEO_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
-                } else if (channelBanner.getBannerType() == Constants.BANNEL_PICTURE) {
+                } else if (channelBanner.getBannerType() == Constants.BANNER_PICTURE) {
                     Intent intent = new Intent(mContext, PictureDetailsActivity.class);
                     intent.putExtra(Constants.PICTURE_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
-                } else if (channelBanner.getBannerType() == Constants.BANNEL_APP) {
+                } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
                     CommonUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();
-                } else if (channelBanner.getBannerType() == Constants.BANNEL_WAP) {
+                } else if (channelBanner.getBannerType() == Constants.BANNER_WAP) {
                     AppUtils.openBrowser(mContext, channelBanner.getTargetUrl());
                 }
             }
@@ -161,9 +161,9 @@ public class ChannelFragment extends BaseFragment {
 
     private void getChannelData(ChannelTitle channelTitle) {
         getChannelBanner(channelTitle.getId());
-        if (channelTitle.getChannelType() == Constants.BANNEL_VIDEO) {
+        if (channelTitle.getChannelType() == Constants.BANNER_VIDEO) {
             getVideoList(channelTitle.getId(), 1);
-        } else if (channelTitle.getChannelType() == Constants.BANNEL_PICTURE) {
+        } else if (channelTitle.getChannelType() == Constants.BANNER_PICTURE) {
             getPictureList(channelTitle.getId(), 1);
         }
     }

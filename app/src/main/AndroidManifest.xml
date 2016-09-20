@@ -44,9 +44,13 @@
             android:name=".activity.AboutActivity"
             android:label="@string/about">
         </activity>
-        <activity android:name=".activity.FeedbackActivity"
-                  android:windowSoftInputMode="adjustResize"
-                  android:label="@string/feedback">
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:label="@string/feedback"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity android:name=".activity.ServiceActivity"
+            android:label="@string/service">
         </activity>
     </application>
 
