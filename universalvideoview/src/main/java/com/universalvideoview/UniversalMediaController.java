@@ -99,7 +99,7 @@ public class UniversalMediaController extends FrameLayout {
     private OnClickListener mOnBackClickListener;
 
     public void setBackListener(OnClickListener mOnBackClickListener) {
-       this.mOnBackClickListener = mOnBackClickListener;
+        this.mOnBackClickListener = mOnBackClickListener;
     }
 
     public UniversalMediaController(Context context, AttributeSet attrs) {
@@ -248,6 +248,8 @@ public class UniversalMediaController extends FrameLayout {
             mControlLayout.setVisibility(VISIBLE);
         }
 
+        mTitle.setVisibility(VISIBLE);
+
         // cause the progress bar to be updated even if mShowing
         // was already true. This happens, for example, if we're
         // paused with the progress bar showing the user hits play.
@@ -270,7 +272,11 @@ public class UniversalMediaController extends FrameLayout {
             mHandler.removeMessages(SHOW_PROGRESS);
             mTitleLayout.setVisibility(GONE);
             mControlLayout.setVisibility(GONE);
+            mTitle.setVisibility(GONE);
             mShowing = false;
+        }
+        if (!mIsFullScreen) {
+            mTitleLayout.setVisibility(VISIBLE);
         }
     }
 
@@ -526,8 +532,8 @@ public class UniversalMediaController extends FrameLayout {
                 updateScaleButton();
                 updateBackButton();
                 mPlayer.setFullscreen(false);
-            }else{
-                if (mOnBackClickListener!=null)
+            } else {
+                if (mOnBackClickListener != null)
                     mOnBackClickListener.onClick(v);
             }
 
@@ -582,6 +588,7 @@ public class UniversalMediaController extends FrameLayout {
     private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         int newPosition = 0;
         boolean change = false;
+
         public void onStartTrackingTouch(SeekBar bar) {
             if (mPlayer == null) {
                 return;

@@ -53,7 +53,7 @@ public class MainActivity extends AppBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDefaultFragment(savedInstanceState);
+        initDefaultFragment();
         setTitle(titles[0]);
     }
 
@@ -68,48 +68,34 @@ public class MainActivity extends AppBaseActivity {
         if (item.getItemId() == R.id.menu_search) {
             Intent intent = new Intent(mContext, SearchActivity.class);
             startActivity(intent);
-        }else  if (item.getItemId() == R.id.menu_gift){
+        } else if (item.getItemId() == R.id.menu_gift) {
             setMenuFragment(2);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void initDefaultFragment(Bundle savedInstanceState) {
-        MainFragment mainFragment = (MainFragment) getSupportFragmentManager()
-                .findFragmentByTag(tags[0]);
-        VipFragment vipFragment = (VipFragment) getSupportFragmentManager()
-                .findFragmentByTag(tags[1]);
-        RecommendFragment privateFragment = (RecommendFragment) getSupportFragmentManager()
-                .findFragmentByTag(tags[2]);
-        UserCenterFragment myFragment = (UserCenterFragment) getSupportFragmentManager()
-                .findFragmentByTag(tags[3]);
-        if (savedInstanceState == null) {
-            fragments = new ArrayList<>();
-            FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-            mainFragment = MainFragment.newInstance();
-            vipFragment = VipFragment.newInstance();
-            privateFragment = RecommendFragment.newInstance();
-            myFragment = UserCenterFragment.newInstance();
+    private void initDefaultFragment() {
+        fragments = new ArrayList<>();
 
-            mContent = mainFragment;
-            fts.add(R.id.fl_container, mainFragment, tags[0]);
-            fts.add(R.id.fl_container, vipFragment, tags[1]);
-            fts.add(R.id.fl_container, privateFragment, tags[2]);
-            fts.add(R.id.fl_container, myFragment, tags[3]);
+        FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
+        MainFragment mainFragment = MainFragment.newInstance();
+        VipFragment vipFragment = VipFragment.newInstance();
+        RecommendFragment privateFragment = RecommendFragment.newInstance();
+        UserCenterFragment myFragment = UserCenterFragment.newInstance();
 
-            fts.show(mainFragment).hide(vipFragment).hide(privateFragment)
-                    .hide(myFragment).commitAllowingStateLoss();
+        mContent = mainFragment;
+        fts.add(R.id.fl_container, mainFragment, tags[0]);
+        fts.add(R.id.fl_container, vipFragment, tags[1]);
+        fts.add(R.id.fl_container, privateFragment, tags[2]);
+        fts.add(R.id.fl_container, myFragment, tags[3]);
 
-            fragments.add(mainFragment);
-            fragments.add(vipFragment);
-            fragments.add(privateFragment);
-            fragments.add(myFragment);
-        } else {
-            getSupportFragmentManager().beginTransaction() .show(mainFragment)
-                    .hide(vipFragment) .hide(privateFragment)
-                    .hide(myFragment)
-                    .commitAllowingStateLoss();
-        }
+        fts.show(mainFragment).hide(vipFragment).hide(privateFragment)
+                .hide(myFragment).commitAllowingStateLoss();
+
+        fragments.add(mainFragment);
+        fragments.add(vipFragment);
+        fragments.add(privateFragment);
+        fragments.add(myFragment);
         myFragment.setRecommendListener(new UserCenterFragment.IRecommendListener() {
             @Override
             public void recommendTab() {

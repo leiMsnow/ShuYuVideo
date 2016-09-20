@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
-import com.shuyu.core.widget.transformer.ZoomOutPageTransformer;
+import com.shuyu.core.widget.transformer.ZoomInPageTransformer;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
@@ -46,7 +46,7 @@ public class VipFragment extends BaseFragment {
     protected void initData() {
         mPageAdapter = new VipPageAdapter(mContext);
         vpContainer.setAdapter(mPageAdapter);
-        vpContainer.setPageTransformer(true, new ZoomOutPageTransformer());
+        vpContainer.setPageTransformer(true, new ZoomInPageTransformer());
         mPageAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
