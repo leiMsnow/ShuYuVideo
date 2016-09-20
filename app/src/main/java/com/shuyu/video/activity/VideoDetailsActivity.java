@@ -47,6 +47,8 @@ public class VideoDetailsActivity extends AppBaseActivity {
     FrameLayout mVideoLayout;
     @Bind(R.id.tv_comment)
     TextView tvComment;
+    @Bind(R.id.video_bg)
+    View videoBG;
 
     private VideoPicDetails mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
@@ -73,6 +75,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
         mIsVIP = getIntent().getBooleanExtra(Constants.IS_VIP_VIDEO, false);
         getVideoDetails(videoId);
         if (!mIsVIP) {
+            videoBG.setVisibility(View.GONE);
             mCommentAdapter = new VideoCommentAdapter(mContext, null, R.layout.item_video_comment);
             lrvView.setLayoutManager(new LinearLayoutManager(mContext));
             lrvView.setAdapter(mCommentAdapter);
@@ -141,6 +144,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<VideoPicDetails>() {
                     @Override
                     public void onSuccess(VideoPicDetails data) {
+                        videoBG.setVisibility(View.GONE);
                         Glide.with(mContext).load(data.getImgUrl()).into(mIvUrl);
                         setTitle(data.getTitle());
                         mVideoDetails = data;
@@ -149,6 +153,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
 
                     @Override
                     public void onFail() {
+                        videoBG.setVisibility(View.GONE);
                         mIvUrl.setImageResource(R.mipmap.ic_default_image);
                     }
                 });

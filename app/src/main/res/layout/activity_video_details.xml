@@ -81,4 +81,9 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_comment"/>
 
+    <View
+        android:id="@+id/video_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
 </RelativeLayout>

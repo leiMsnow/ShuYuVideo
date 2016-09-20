@@ -27,12 +27,12 @@ public class SearchActivity extends AppBaseActivity {
     RecyclerView rvHotWord;
     @Bind(R.id.rv_hot_video)
     RecyclerView rvHotVideo;
-    @Bind(R.id.ll_hot_video)
-    View tvHotVideo;
+    @Bind(R.id.in_hot_tags)
+    View hotTags;
+    @Bind(R.id.in_hot_video)
+    View hotVideo;
     @Bind(R.id.fl_container)
     View mContainer;
-
-    private ImageView ivTags;
 
     private HotWordAdapter mHotWordAdapter;
     private ChannelContentAdapter mSearchContentAdapter;
@@ -49,18 +49,16 @@ public class SearchActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-        View tagHeader = View.inflate(mContext,R.layout.include_title_tags,null);
-        ((TextView)tagHeader.findViewById(R.id.tv_title)).setText("热搜标签");
 
-        ivTags = (ImageView) findViewById(R.id.ll_hot_video).findViewById(R.id.iv_channel_tags);
-        ivTags .setImageResource(R.mipmap.ic_channel_tv_tags);
+        ((TextView) hotTags.findViewById(R.id.tv_title)).setText("热搜标签");
+        ImageView ivTags = (ImageView) hotVideo.findViewById(R.id.iv_channel_tags);
+        ivTags.setImageResource(R.mipmap.ic_channel_tv_tags);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_container, SearchFragment.newInstance())
                 .commit();
 
         mHotWordAdapter = new HotWordAdapter(mContext, null, R.layout.item_hot_word);
-        mHotWordAdapter.addHeaderView(tagHeader);
         rvHotWord.setLayoutManager(new GridLayoutManager(mContext, 4));
         rvHotWord.setAdapter(mHotWordAdapter);
         mHotWordAdapter.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +77,8 @@ public class SearchActivity extends AppBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         initSearchView(searchView);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -126,6 +122,7 @@ public class SearchActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<HotWord>() {
                     @Override
                     public void onSuccess(HotWord data) {
+                        hotTags.setVisibility(View.VISIBLE);
                         mHotWordAdapter.replaceAll(data.getWords());
                         searchVideo(data.getWords().get(0));
                     }
@@ -142,7 +139,7 @@ public class SearchActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<SearchVideoData>() {
                     @Override
                     public void onSuccess(SearchVideoData data) {
-                        tvHotVideo.setVisibility(View.VISIBLE);
+                        hotVideo.setVisibility(View.VISIBLE);
                         mSearchContentAdapter.replaceAllData(data.getChannelContentList());
                     }
 

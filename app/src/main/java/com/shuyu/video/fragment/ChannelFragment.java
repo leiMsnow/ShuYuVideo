@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.PictureDetailsActivity;
@@ -145,6 +146,7 @@ public class ChannelFragment extends BaseFragment {
                     intent.putExtra(Constants.PICTURE_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
                 } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
+                    ToastUtils.getInstance().showToast("正在下载...");
                     CommonUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();
                 } else if (channelBanner.getBannerType() == Constants.BANNER_WAP) {
                     AppUtils.openBrowser(mContext, channelBanner.getTargetUrl());

@@ -5,18 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/in_hot_tags"
+        layout="@layout/include_title_tags"
+        android:visibility="gone"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_hot_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/in_toolbar"
+        android:layout_below="@+id/in_hot_tags"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"/>
 
     <include
-        android:id="@+id/ll_hot_video"
+        android:id="@+id/in_hot_video"
         layout="@layout/include_title_tags"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv_hot_word"
         android:visibility="gone"/>
@@ -25,14 +30,13 @@
         android:id="@+id/rv_hot_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_hot_video"
+        android:layout_below="@+id/in_hot_video"
         android:padding="4dp"/>
 
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/in_toolbar"
         android:background="@color/weak_light_grey"
         android:visibility="gone"/>
 
