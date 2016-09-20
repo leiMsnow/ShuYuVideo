@@ -127,8 +127,9 @@ public class ChannelFragment extends BaseFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                mSwipeContainer.setEnabled(state == ViewPager.SCROLL_STATE_IDLE);
             }
+
         });
 
         mBannerAdapter.setOnClickListener(new View.OnClickListener() {
@@ -283,7 +284,7 @@ public class ChannelFragment extends BaseFragment {
         cancelTimer();
     }
 
-    private void cancelTimer(){
+    private void cancelTimer() {
         if (timer != null) {
             timer.cancel();
             timer = null;
