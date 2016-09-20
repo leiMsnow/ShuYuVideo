@@ -39,27 +39,16 @@ import java.util.Locale;
 
 public class UniversalMediaController extends FrameLayout {
 
-
     private UniversalMediaController.MediaPlayerControl mPlayer;
-
     private Context mContext;
-
     private ProgressBar mProgress;
-
     private TextView mEndTime, mCurrentTime;
-
     private TextView mTitle;
-
     private boolean mShowing = true;
-
     private boolean mDragging;
-
     private boolean mScalable = false;
     private boolean mIsFullScreen = false;
-//    private boolean mFullscreenEnabled = false;
-
     private static final int sDefaultTimeout = 3000;
-
     private static final int STATE_PLAYING = 1;
     private static final int STATE_PAUSE = 2;
     private static final int STATE_LOADING = 3;
@@ -67,7 +56,6 @@ public class UniversalMediaController extends FrameLayout {
     private static final int STATE_COMPLETE = 5;
 
     private int mState = STATE_LOADING;
-
 
     private static final int FADE_OUT = 1;
     private static final int SHOW_PROGRESS = 2;
@@ -167,7 +155,7 @@ public class UniversalMediaController extends FrameLayout {
             mCenterPlayButton.setOnClickListener(mCenterPlayListener);
         }
 
-        if (mBackButton != null) {//返回按钮仅在全屏状态下可见
+        if (mBackButton != null) {
             mBackButton.setOnClickListener(mBackListener);
         }
 

@@ -127,18 +127,13 @@
 
             <SeekBar
                 android:id="@+id/seekbar"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:indeterminateDrawable="@drawable/uvv_star_play_progress_seek"
                 android:maxHeight="2dp"
                 android:minHeight="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:progressDrawable="@drawable/uvv_star_play_progress_seek"
-                android:thumb="@drawable/uvv_seek_dot"
-                android:thumbOffset="10dip"/>
+                android:progressDrawable="@drawable/uvv_star_play_progress_seek"/>
 
             <TextView
                 android:id="@+id/duration"

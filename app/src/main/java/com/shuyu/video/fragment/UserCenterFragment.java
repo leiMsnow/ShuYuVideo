@@ -10,6 +10,7 @@ import android.view.View;
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
+import com.shuyu.video.activity.AboutActivity;
 import com.shuyu.video.activity.FeedbackActivity;
 import com.shuyu.video.activity.ServiceActivity;
 import com.shuyu.video.activity.WebViewActivity;
@@ -79,6 +80,10 @@ public class UserCenterFragment extends BaseFragment {
                         break;
                     case SettingEntity.SERVICE:
                         intent = new Intent(mContext, ServiceActivity.class);
+                        startActivity(intent);
+                        break;
+                    case SettingEntity.ABOUT:
+                        intent = new Intent(mContext, AboutActivity.class);
                         startActivity(intent);
                         break;
                 }

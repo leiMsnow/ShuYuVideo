@@ -56,6 +56,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     private int mCachedHeight;
     private int mCurrentPosition;
     private boolean mIsPlaying;
+    private boolean mIsFullscreen;
 
     @Override
     protected int getLayoutRes() {
@@ -189,12 +190,22 @@ public class VideoDetailsActivity extends AppBaseActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mIsFullscreen) {
+            mVideoView.setFullscreen(false);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initVideoView() {
         setVideoAreaSize();
         mVideoView.setVideoViewCallback(new UniversalVideoView.VideoViewCallback() {
             @Override
             public void onScaleChange(boolean isFullscreen) {
-                if (isFullscreen) {
+                mIsFullscreen = isFullscreen;
+                if (mIsFullscreen) {
                     ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -209,8 +220,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = mCachedHeight;
                     mVideoLayout.setLayoutParams(layoutParams);
-                    lrvView.setVisibility(View.VISIBLE);
-                }
+                    lrvView.setVisibility(View.VISIBLE);                }
             }
 
             @Override

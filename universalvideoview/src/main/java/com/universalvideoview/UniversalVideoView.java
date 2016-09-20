@@ -41,58 +41,49 @@ import java.util.Map;
 
 
 public class UniversalVideoView extends SurfaceView
-        implements UniversalMediaController.MediaPlayerControl,OrientationDetector.OrientationChangeListener{
+        implements UniversalMediaController.MediaPlayerControl, OrientationDetector.OrientationChangeListener {
     private String TAG = "UniversalVideoView";
-    // settable by the client
     private Uri mUri;
-
-    // all possible internal states
-    private static final int STATE_ERROR              = -1;
-    private static final int STATE_IDLE               = 0;
-    private static final int STATE_PREPARING          = 1;
-    private static final int STATE_PREPARED           = 2;
-    private static final int STATE_PLAYING            = 3;
-    private static final int STATE_PAUSED             = 4;
+    private static final int STATE_ERROR = -1;
+    private static final int STATE_IDLE = 0;
+    private static final int STATE_PREPARING = 1;
+    private static final int STATE_PREPARED = 2;
+    private static final int STATE_PLAYING = 3;
+    private static final int STATE_PAUSED = 4;
     private static final int STATE_PLAYBACK_COMPLETED = 5;
 
-    // mCurrentState is a VideoView object's current state.
-    // mTargetState is the state that a method caller intends to reach.
-    // For instance, regardless the VideoView object's current state,
-    // calling pause() intends to bring the object to a target state
-    // of STATE_PAUSED.
     private int mCurrentState = STATE_IDLE;
-    private int mTargetState  = STATE_IDLE;
+    private int mTargetState = STATE_IDLE;
 
-    // All the stuff we need for playing and showing a video
     private SurfaceHolder mSurfaceHolder = null;
     private MediaPlayer mMediaPlayer = null;
-    private int         mAudioSession;
-    private int         mVideoWidth;
-    private int         mVideoHeight;
-    private int         mSurfaceWidth;
-    private int         mSurfaceHeight;
+    private int mAudioSession;
+    private int mVideoWidth;
+    private int mVideoHeight;
+    private int mSurfaceWidth;
+    private int mSurfaceHeight;
     private UniversalMediaController mMediaController;
     private MediaPlayer.OnCompletionListener mOnCompletionListener;
     private MediaPlayer.OnPreparedListener mOnPreparedListener;
-    private int         mCurrentBufferPercentage;
+    private int mCurrentBufferPercentage;
     private MediaPlayer.OnErrorListener mOnErrorListener;
     private MediaPlayer.OnInfoListener mOnInfoListener;
-    private int         mSeekWhenPrepared;  // recording the seek position while preparing
-    private boolean     mCanPause;
-    private boolean     mCanSeekBack;
-    private boolean     mCanSeekForward;
-    private boolean     mPreparedBeforeStart;
+    private int mSeekWhenPrepared;
+    private boolean mCanPause;
+    private boolean mCanSeekBack;
+    private boolean mCanSeekForward;
+    private boolean mPreparedBeforeStart;
     private Context mContext;
-    private boolean     mFitXY = false;
-    private boolean     mAutoRotation = false;
-    private int  mVideoViewLayoutWidth = 0;
-    private int  mVideoViewLayoutHeight = 0;
+    private boolean mFitXY = false;
+    private boolean mAutoRotation = false;
+    private int mVideoViewLayoutWidth = 0;
+    private int mVideoViewLayoutHeight = 0;
 
     private OrientationDetector mOrientationDetector;
     private VideoViewCallback videoViewCallback;
 
     public UniversalVideoView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public UniversalVideoView(Context context, AttributeSet attrs) {
@@ -102,7 +93,7 @@ public class UniversalVideoView extends SurfaceView
     public UniversalVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.UniversalVideoView,0,0);
+        TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.UniversalVideoView, 0, 0);
         mFitXY = a.getBoolean(R.styleable.UniversalVideoView_uvv_fitXY, false);
         mAutoRotation = a.getBoolean(R.styleable.UniversalVideoView_uvv_autoRotation, false);
         a.recycle();
@@ -126,8 +117,6 @@ public class UniversalVideoView extends SurfaceView
     }
 
     private void onMeasureKeepAspectRatio(int widthMeasureSpec, int heightMeasureSpec) {
-        //Log.i("@@@@", "onMeasure(" + MeasureSpec.toString(widthMeasureSpec) + ", "
-        //        + MeasureSpec.toString(heightMeasureSpec) + ")");
 
         int width = getDefaultSize(mVideoWidth, widthMeasureSpec);
         int height = getDefaultSize(mVideoHeight, heightMeasureSpec);
@@ -144,10 +133,10 @@ public class UniversalVideoView extends SurfaceView
                 height = heightSpecSize;
 
                 // for compatibility, we adjust size based on aspect ratio
-                if ( mVideoWidth * height  < width * mVideoHeight ) {
+                if (mVideoWidth * height < width * mVideoHeight) {
                     //Log.i("@@@", "image too wide, correcting");
                     width = height * mVideoWidth / mVideoHeight;
-                } else if ( mVideoWidth * height  > width * mVideoHeight ) {
+                } else if (mVideoWidth * height > width * mVideoHeight) {
                     //Log.i("@@@", "image too tall, correcting");
                     height = width * mVideoHeight / mVideoWidth;
                 }
@@ -215,7 +204,7 @@ public class UniversalVideoView extends SurfaceView
         setFocusableInTouchMode(true);
         requestFocus();
         mCurrentState = STATE_IDLE;
-        mTargetState  = STATE_IDLE;
+        mTargetState = STATE_IDLE;
     }
 
     @Override
@@ -286,7 +275,7 @@ public class UniversalVideoView extends SurfaceView
             mMediaPlayer.release();
             mMediaPlayer = null;
             mCurrentState = STATE_IDLE;
-            mTargetState  = STATE_IDLE;
+            mTargetState = STATE_IDLE;
         }
     }
 
@@ -439,7 +428,7 @@ public class UniversalVideoView extends SurfaceView
 
     private MediaPlayer.OnInfoListener mInfoListener =
             new MediaPlayer.OnInfoListener() {
-                public  boolean onInfo(MediaPlayer mp, int what, int extra){
+                public boolean onInfo(MediaPlayer mp, int what, int extra) {
                     boolean handled = false;
                     switch (what) {
                         case MediaPlayer.MEDIA_INFO_BUFFERING_START:
@@ -535,8 +524,7 @@ public class UniversalVideoView extends SurfaceView
      *
      * @param l The callback that will be run
      */
-    public void setOnPreparedListener(MediaPlayer.OnPreparedListener l)
-    {
+    public void setOnPreparedListener(MediaPlayer.OnPreparedListener l) {
         mOnPreparedListener = l;
     }
 
@@ -546,8 +534,7 @@ public class UniversalVideoView extends SurfaceView
      *
      * @param l The callback that will be run
      */
-    public void setOnCompletionListener(MediaPlayer.OnCompletionListener l)
-    {
+    public void setOnCompletionListener(MediaPlayer.OnCompletionListener l) {
         mOnCompletionListener = l;
     }
 
@@ -559,8 +546,7 @@ public class UniversalVideoView extends SurfaceView
      *
      * @param l The callback that will be run
      */
-    public void setOnErrorListener(MediaPlayer.OnErrorListener l)
-    {
+    public void setOnErrorListener(MediaPlayer.OnErrorListener l) {
         mOnErrorListener = l;
     }
 
@@ -574,14 +560,12 @@ public class UniversalVideoView extends SurfaceView
         mOnInfoListener = l;
     }
 
-    SurfaceHolder.Callback mSHCallback = new SurfaceHolder.Callback()
-    {
+    SurfaceHolder.Callback mSHCallback = new SurfaceHolder.Callback() {
         public void surfaceChanged(SurfaceHolder holder, int format,
-                                   int w, int h)
-        {
+                                   int w, int h) {
             mSurfaceWidth = w;
             mSurfaceHeight = h;
-            boolean isValidState =  (mTargetState == STATE_PLAYING);
+            boolean isValidState = (mTargetState == STATE_PLAYING);
             boolean hasValidSize = (mVideoWidth == w && mVideoHeight == h);
             if (mMediaPlayer != null && isValidState && hasValidSize) {
                 if (mSeekWhenPrepared != 0) {
@@ -591,15 +575,13 @@ public class UniversalVideoView extends SurfaceView
             }
         }
 
-        public void surfaceCreated(SurfaceHolder holder)
-        {
+        public void surfaceCreated(SurfaceHolder holder) {
             mSurfaceHolder = holder;
             openVideo();
             enableOrientationDetect();
         }
 
-        public void surfaceDestroyed(SurfaceHolder holder)
-        {
+        public void surfaceDestroyed(SurfaceHolder holder) {
             // after we return from this we can't use the surface any more
             mSurfaceHolder = null;
             if (mMediaController != null) mMediaController.hide();
@@ -632,7 +614,7 @@ public class UniversalVideoView extends SurfaceView
             mMediaPlayer = null;
             mCurrentState = STATE_IDLE;
             if (cleartargetstate) {
-                mTargetState  = STATE_IDLE;
+                mTargetState = STATE_IDLE;
             }
         }
     }
@@ -654,8 +636,7 @@ public class UniversalVideoView extends SurfaceView
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean isKeyCodeSupported = keyCode != KeyEvent.KEYCODE_BACK &&
                 keyCode != KeyEvent.KEYCODE_VOLUME_UP &&
                 keyCode != KeyEvent.KEYCODE_VOLUME_DOWN &&
@@ -844,38 +825,15 @@ public class UniversalVideoView extends SurfaceView
         }
     }
 
-/*
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void switchTitleBar(boolean show) {
-        if (mContext instanceof AppCompatActivity) {
-            AppCompatActivity activity = (AppCompatActivity)mContext;
-            android.support.v7.app.ActionBar supportActionBar = activity.getSupportActionBar();
-            if (supportActionBar != null) {
-                if (show) {
-                    supportActionBar.show();
-                } else {
-                    supportActionBar.hide();
-                }
-            }
-        }else if (mContext instanceof Activity) {
-            Activity activity = (Activity)mContext;
-            if(activity.getActionBar() != null) {
-                if (show) {
-                    activity.getActionBar().show();
-                } else {
-                    activity.getActionBar().hide();
-                }
-            }
-        }
-    }
-*/
-
-
     public interface VideoViewCallback {
         void onScaleChange(boolean isFullscreen);
+
         void onPause(final MediaPlayer mediaPlayer);
+
         void onStart(final MediaPlayer mediaPlayer);
+
         void onBufferingStart(final MediaPlayer mediaPlayer);
+
         void onBufferingEnd(final MediaPlayer mediaPlayer);
     }
 
