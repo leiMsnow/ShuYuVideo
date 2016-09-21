@@ -13,7 +13,7 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.SearchActivity;
 import com.shuyu.video.adapter.ChannelContentAdapter;
-import com.shuyu.video.api.IServiceApi;
+import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.SearchVideoData;
 
 import butterknife.Bind;
@@ -67,7 +67,7 @@ public class SearchFragment extends BaseFragment {
     private void searchVideo(final String keyword) {
         tvTotal.setVisibility(View.GONE);
         tvEmpty.setVisibility(View.GONE);
-        BaseApi.request(BaseApi.createApi(IServiceApi.class).searchVideo(keyword, 1, 6),
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).searchVideo(keyword, 1, 6),
                 new BaseApi.IResponseListener<SearchVideoData>() {
                     @Override
                     public void onSuccess(SearchVideoData data) {

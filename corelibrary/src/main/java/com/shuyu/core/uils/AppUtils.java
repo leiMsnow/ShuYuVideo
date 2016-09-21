@@ -20,20 +20,18 @@ import java.util.UUID;
 public class AppUtils {
 
     private AppUtils() {
-        /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
     /**
      * 获取系统版本号
      *
-     * @param context context
      * @return 获取系统版本号
      */
-    public static int getAppVersion(Context context) {
+    public static int getAppVersion() {
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), 0);
+            PackageInfo info = CoreApplication.getApplication().getPackageManager().getPackageInfo(
+                    CoreApplication.getApplication().getPackageName(), 0);
             return info.versionCode;
         } catch (NameNotFoundException e) {
             e.printStackTrace();
@@ -44,16 +42,15 @@ public class AppUtils {
     /**
      * 获取应用程序名称
      *
-     * @param context context
      * @return 应用程序名称
      */
-    public static String getAppName(Context context) {
+    public static String getAppName() {
         try {
-            PackageManager packageManager = context.getPackageManager();
+            PackageManager packageManager = CoreApplication.getApplication().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(
-                    context.getPackageName(), 0);
+                    CoreApplication.getApplication().getPackageName(), 0);
             int labelRes = packageInfo.applicationInfo.labelRes;
-            return context.getResources().getString(labelRes);
+            return CoreApplication.getApplication().getResources().getString(labelRes);
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -90,35 +87,35 @@ public class AppUtils {
         return null;
     }
 
-    public static String getIMSI(Context context) {
+    public static String getIMSI() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
-                context.getSystemService(Context.TELEPHONY_SERVICE);
+                CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyMgr.getSubscriberId() == null ? "" : mTelephonyMgr.getSubscriberId();
     }
 
-    public static String getIMEI(Context context) {
+    public static String getIMEI() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
-                context.getSystemService(Context.TELEPHONY_SERVICE);
+                CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyMgr.getDeviceId() == null ? "" : mTelephonyMgr.getDeviceId();
     }
 
-    public static String getTelNumber(Context context) {
+    public static String getTelNumber() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
-                context.getSystemService(Context.TELEPHONY_SERVICE);
+                CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyMgr.getLine1Number() == null ? "" : mTelephonyMgr.getLine1Number();
     }
 
-    public static String getSerialNumber(Context context) {
+    public static String getSerialNumber() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
-                context.getSystemService(Context.TELEPHONY_SERVICE);
+                CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyMgr.getSimSerialNumber() == null ? "" : mTelephonyMgr.getSimSerialNumber();
     }
 
-    public static String getUUID(Context context) {
-        String androidId = Settings.Secure.getString(context.getContentResolver(),
+    public static String getUUID() {
+        String androidId = Settings.Secure.getString(CoreApplication.getApplication().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        UUID deiceUUID = new UUID(androidId.hashCode(), ((long) getIMEI(context).hashCode() << 32) |
-                getSerialNumber(context).hashCode());
+        UUID deiceUUID = new UUID(androidId.hashCode(), ((long) getIMEI().hashCode() << 32) |
+                getSerialNumber().hashCode());
         return "client_" + deiceUUID.toString();
     }
 
@@ -145,13 +142,11 @@ public class AppUtils {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        File file = new File(filePath);
-//        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
         intent.setDataAndType(Uri.parse("file://"+filePath), "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
 
-    public static void chmod(String permission, String path) {
+    private static void chmod(String permission, String path) {
         try {
             String command = "chmod " + permission + " " + path;
             Runtime runtime = Runtime.getRuntime();

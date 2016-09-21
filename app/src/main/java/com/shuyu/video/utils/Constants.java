@@ -31,4 +31,5 @@ public interface Constants {
     int BANNER_APP = 3;
     int BANNER_WAP = 4;
 
+    String STAY_TIME_ON = "STAY_TIME_ON";
 }

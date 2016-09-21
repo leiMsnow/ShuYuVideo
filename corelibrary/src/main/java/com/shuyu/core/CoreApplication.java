@@ -50,17 +50,17 @@ public class CoreApplication extends Application {
 
         Map<String, String> queryParams = new HashMap<>();
 
-        queryParams.put("imsi", AppUtils.getIMEI(CoreApplication.getApplication()));
-        queryParams.put("imei", AppUtils.getIMSI(CoreApplication.getApplication()));
+        queryParams.put("imsi", AppUtils.getIMSI());
+        queryParams.put("imei", AppUtils.getIMEI());
         queryParams.put("manufacturer", Build.BRAND);
         queryParams.put("model", Build.MODEL);
-//        queryParams.put("versionCode", String.valueOf(AppUtils.getAppVersion(CoreApplication.getApplication())));
+//        queryParams.put("versionCode", String.valueOf(AppUtils.getAppVersion()));
         queryParams.put("versionCode", "10101");
-        queryParams.put("dcVersion", "000002");
 //        queryParams.put("appId", AppUtils.getPackageName());
         queryParams.put("appId", "1001");
+        queryParams.put("dcVersion", "000002");
         queryParams.put("ditchNo", "0");
-        queryParams.put("uuid", AppUtils.getUUID(CoreApplication.getApplication()));
+        queryParams.put("uuid", AppUtils.getUUID());
 
         List<String> headerParams = new ArrayList<>();
         headerParams.add("Host:mmys-cps.ywpod.com");
@@ -75,14 +75,7 @@ public class CoreApplication extends Application {
                 .addHeaderLinesList(headerParams)
                 .build();
 
-        // 设置具体的证书HttpsUtils.getSslSocketFactory(
-        // 证书的inputstream,
-        // 本地证书的inputstream,
-        // 本地证书的密码)
-//        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
-
         File cacheFile = new File(CoreApplication.getApplication().getCacheDir(), "retrofit_cache");
-        // 100Mb
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);
 
         return mOkHttpClient = new OkHttpClient.Builder()
@@ -90,7 +83,6 @@ public class CoreApplication extends Application {
                 .retryOnConnectionFailure(true)
                 .addInterceptor(logInterceptor)
                 .addNetworkInterceptor(new CacheInterceptor())
-//                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 .addInterceptor(basicParamsInterceptor)
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
@@ -98,21 +90,12 @@ public class CoreApplication extends Application {
     }
 
     private static String getPayKey(Map<String, String> headerParams) {
+
         StringBuilder encodeString = new StringBuilder();
-        encodeString
-                .append("appId=")
-                .append(headerParams.get("appId"))
-                .append("&")
-                .append("imei=")
-                .append(headerParams.get("imei"))
-                .append("&")
-                .append("imsi=")
-                .append(headerParams.get("imsi"))
-                .append("&")
-                .append("channelNo=")
-                .append(headerParams.get("channelNo"))
-                .append("&")
-                .append("payVersion=132");
+        for (Map.Entry entry : headerParams.entrySet()) {
+            encodeString.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+        }
+        encodeString.append("payVersion=132");
         byte[] bytes = encodeString.toString().getBytes();
         return new String((Base64.encode(bytes, Base64.DEFAULT))).replace("\n", "");
     }

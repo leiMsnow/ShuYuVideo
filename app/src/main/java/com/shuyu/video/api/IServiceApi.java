@@ -1,24 +1,17 @@
 package com.shuyu.video.api;
 
-import com.shuyu.core.api.BaseApi;
-import com.shuyu.video.model.AppStoreEntity;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelPictureEntity;
 import com.shuyu.video.model.ChannelTitle;
 import com.shuyu.video.model.ChannelVideoEntity;
-import com.shuyu.video.model.FeedbackEntity;
-import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.LiveVideoEntity;
 import com.shuyu.video.model.PictureDetails;
-import com.shuyu.video.model.RunInfo;
-import com.shuyu.video.model.SearchVideoData;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
 
 import java.util.List;
 
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -28,14 +21,6 @@ import rx.Observable;
  */
 
 public interface IServiceApi {
-
-    /**
-     * 应用启动画面接口
-     *
-     * @return
-     */
-    @GET(BaseApi.LOCAL_SERVER_URL + "runInfo.service")
-    Observable<List<RunInfo>> getRunInfo();
 
     /**
      * 顶部（导航）频道列表
@@ -67,7 +52,6 @@ public interface IServiceApi {
                                                            @Query("pageNo") int pageNo,
                                                            @Query("pageSize") int pageSize);
 
-
     /**
      * 视频详情
      *
@@ -76,7 +60,6 @@ public interface IServiceApi {
      */
     @GET("videoDtl.service")
     Observable<VideoPicDetails> getVideoDetails(@Query("id") int id);
-
 
     /**
      * 图库频道内容列表
@@ -100,7 +83,6 @@ public interface IServiceApi {
     @GET("pictureList.service")
     Observable<List<PictureDetails>> getPictureDetails(@Query("groupId") int groupId);
 
-
     /**
      * vip专区视频列表
      *
@@ -110,14 +92,14 @@ public interface IServiceApi {
     @GET("liveVideoList.service?rv=2")
     Observable<LiveVideoEntity> getLiveVideoList(@Query("pageNo") int pageNo);
 
-
     /**
-     * 应用商店（应用推广）
-     * @param pageNo
-     * @return
+     * 私密专区试播视频
      */
-    @GET("appstore.service")
-    Observable<AppStoreEntity> getAppStoreList(@Query("pageNo") int pageNo);
+    // TODO: 9/21/16  私密专区试播视频
+    /**
+     * 私密专区视频列表
+     */
+    // TODO: 9/21/16  私密专区视频列表
 
     /**
      * 视频下方评论
@@ -126,33 +108,5 @@ public interface IServiceApi {
      */
     @GET("videoComment.service")
     Observable<List<VideoComment>> getVideoCommentList();
-
-    /**
-     * 热搜词（搜索标签）
-     *
-     * @return
-     */
-    @GET("hotword.service")
-    Observable<HotWord> getHotWordList(@Query("pageNo") int pageNo,
-                                       @Query("pageSize") int pageSize);
-
-
-    /**
-     * 搜索
-     *
-     * @param word
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
-    @GET("searchVideo.service?rv=2")
-    Observable<SearchVideoData> searchVideo(@Query("word") String word,
-                                            @Query("pageNo") int pageNo,
-                                            @Query("pageSize") int pageSize);
-
-
-    @POST("userFeedback.service?qType=1")
-    Observable<FeedbackEntity> feedback(@Query("content") String content,
-                                        @Query("contactWay") String contact);
 
 }
