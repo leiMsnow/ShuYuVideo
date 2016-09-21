@@ -16,10 +16,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
+import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.api.IServiceApi;
+import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -57,6 +60,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     private int mCurrentPosition;
     private boolean mIsPlaying;
     private boolean mIsFullscreen;
+    private boolean mIsLook;
 
     @Override
     protected int getLayoutRes() {
@@ -220,16 +224,23 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = mCachedHeight;
                     mVideoLayout.setLayoutParams(layoutParams);
-                    lrvView.setVisibility(View.VISIBLE);                }
+                    lrvView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onPause(MediaPlayer mediaPlayer) {
             }
 
-            // 视频开始播放或恢复播放
             @Override
             public void onStart(MediaPlayer mediaPlayer) {
+
+                LogUtils.d("mediaPlayer","onStart");
+                if (mIsLook)
+                    return;
+
+                mIsLook = true;
+//                lookVideoState();
             }
 
             @Override
@@ -271,4 +282,20 @@ public class VideoDetailsActivity extends AppBaseActivity {
         ivVideoPlayer.setVisibility(View.GONE);
         mVideoView.start();
     }
+
+    private void lookVideoState() {
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).lookVideoState(mVideoDetails.getId(),
+                0), new BaseApi.IResponseListener<ResultEntity>() {
+            @Override
+            public void onSuccess(ResultEntity data) {
+
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+    }
+
 }

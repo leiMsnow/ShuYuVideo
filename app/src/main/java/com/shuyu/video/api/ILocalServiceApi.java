@@ -2,10 +2,12 @@ package com.shuyu.video.api;
 
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.AppStoreEntity;
+import com.shuyu.video.model.Feedback;
 import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoData;
+import com.shuyu.video.model.StayTime;
 import com.shuyu.video.model.UserActivation;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public interface ILocalServiceApi {
 
     /**
      * 应用商店（应用推广）
+     *
      * @param pageNo
      * @return
      */
@@ -66,10 +69,7 @@ public interface ILocalServiceApi {
      * @return
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "userFeedback.service")
-    Observable<ResultEntity> feedback(
-            @Query("qType") int qType,
-            @Query("content") String content,
-            @Query("contactWay") String contact);
+    Observable<ResultEntity> feedback(@Body Feedback feedback);
 
     /**
      * 在线时长统计
@@ -77,15 +77,23 @@ public interface ILocalServiceApi {
      * @return
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "suos.service")
-    Observable<ResultEntity> stayTime(@Query("onTime") long onTime,
-                                      @Query("offTime") long offTime,
-                                      @Query("thirdChannleId") String thirdChannleId);
+    Observable<ResultEntity> stayTime(@Body StayTime stayTime);
 
     /**
      * 用户激活应用
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "userActivation.service")
     Observable<ResultEntity> userActivation(@Body UserActivation userActivation);
+
+    /**
+     * 视频观看统计
+     *
+     * @return
+     */
+    @POST(BaseApi.LOCAL_SERVER_URL + "lookVideoStat.service")
+    Observable<ResultEntity> lookVideoState(@Query("videoId") int video,
+                                            @Query("isRmd") int isRmd);
+
 
 }
 

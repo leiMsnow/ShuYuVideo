@@ -43,7 +43,7 @@ public class CoreApplication extends Application {
 
     public OkHttpClient genericClient() {
 
-//        if (mOkHttpClient != null) return mOkHttpClient;
+        if (mOkHttpClient != null) return mOkHttpClient;
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -54,9 +54,7 @@ public class CoreApplication extends Application {
         queryParams.put("imei", AppUtils.getIMEI());
         queryParams.put("manufacturer", Build.BRAND);
         queryParams.put("model", Build.MODEL);
-//        queryParams.put("versionCode", String.valueOf(AppUtils.getAppVersion()));
         queryParams.put("versionCode", "10101");
-//        queryParams.put("appId", AppUtils.getPackageName());
         queryParams.put("appId", "1001");
         queryParams.put("dcVersion", "000002");
         queryParams.put("ditchNo", "0");

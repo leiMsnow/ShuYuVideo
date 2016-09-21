@@ -9,6 +9,7 @@ import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.ResultEntity;
+import com.shuyu.video.model.StayTime;
 import com.shuyu.video.utils.Constants;
 
 import java.util.List;
@@ -50,7 +51,9 @@ public abstract class AppBaseActivity extends BaseActivity {
     private void stayTime() {
         long onTime = (long) SPUtils.get(mContext, Constants.STAY_TIME_ON, System.currentTimeMillis());
         long offTime = System.currentTimeMillis();
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).stayTime(onTime, offTime, "tg1001"),
+
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
+                .stayTime(new StayTime(onTime, offTime, "tg1001")),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {
