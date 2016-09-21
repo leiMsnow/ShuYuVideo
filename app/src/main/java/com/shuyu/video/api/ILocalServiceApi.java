@@ -2,12 +2,10 @@ package com.shuyu.video.api;
 
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.AppStoreEntity;
-import com.shuyu.video.model.Feedback;
 import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoData;
-import com.shuyu.video.model.StayTime;
 import com.shuyu.video.model.UserActivation;
 
 import java.util.List;
@@ -69,7 +67,10 @@ public interface ILocalServiceApi {
      * @return
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "userFeedback.service")
-    Observable<ResultEntity> feedback(@Body Feedback feedback);
+    Observable<ResultEntity> feedback(
+            @Query("qType") int qType,
+            @Query("content") String content,
+            @Query("contactWay") String contact);
 
     /**
      * 在线时长统计
@@ -77,7 +78,9 @@ public interface ILocalServiceApi {
      * @return
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "suos.service")
-    Observable<ResultEntity> stayTime(@Body StayTime stayTime);
+    Observable<ResultEntity> stayTime(@Query("onTime") long onTime,
+                                      @Query("offTime") long offTime,
+                                      @Query("thirdChannelId") String thirdChannelId);
 
     /**
      * 用户激活应用
@@ -91,9 +94,8 @@ public interface ILocalServiceApi {
      * @return
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "lookVideoStat.service")
-    Observable<ResultEntity> lookVideoState(@Query("videoId") int video,
-                                            @Query("isRmd") int isRmd);
-
+    Observable<ResultEntity> lookVideoState(@Query("videoId") int videoId,
+                                            @Query("isRmd") int isRmd );
 
 }
 

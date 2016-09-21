@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class ResultEntity {
 
-
     private static final Map<String, String> resultMessage = new HashMap<>();
 
     {

@@ -9,7 +9,6 @@ import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.api.ILocalServiceApi;
-import com.shuyu.video.model.Feedback;
 import com.shuyu.video.model.ResultEntity;
 
 import butterknife.Bind;
@@ -48,11 +47,11 @@ public class FeedbackActivity extends AppBaseActivity {
 
     private void submitFeedback(String content, String contact) {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
-                        .feedback(new Feedback(1, content, contact)),
+                        .feedback(1, content, contact),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {
-                        ToastUtils.getInstance().showToast("感谢您的反馈:" + data.getResultCode());
+                        ToastUtils.getInstance().showToast("感谢您的反馈");
                         finish();
                     }
 

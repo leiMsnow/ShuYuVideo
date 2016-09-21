@@ -234,13 +234,9 @@ public class VideoDetailsActivity extends AppBaseActivity {
 
             @Override
             public void onStart(MediaPlayer mediaPlayer) {
-
-                LogUtils.d("mediaPlayer","onStart");
-                if (mIsLook)
-                    return;
-
+                if (mIsLook) return;
                 mIsLook = true;
-//                lookVideoState();
+                lookVideoState();
             }
 
             @Override
@@ -284,18 +280,19 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void lookVideoState() {
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).lookVideoState(mVideoDetails.getId(),
-                0), new BaseApi.IResponseListener<ResultEntity>() {
-            @Override
-            public void onSuccess(ResultEntity data) {
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
+                        .lookVideoState(mVideoDetails.getId(), 0)
+                , new BaseApi.IResponseListener<ResultEntity>() {
+                    @Override
+                    public void onSuccess(ResultEntity data) {
+                        LogUtils.d(VideoDetailsActivity.class.getName(), data.getResultCode());
+                    }
 
-            }
+                    @Override
+                    public void onFail() {
 
-            @Override
-            public void onFail() {
-
-            }
-        });
+                    }
+                });
     }
 
 }

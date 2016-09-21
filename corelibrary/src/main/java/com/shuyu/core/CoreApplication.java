@@ -1,13 +1,12 @@
 package com.shuyu.core;
 
 import android.app.Application;
-import android.os.Build;
 import android.util.Base64;
 
 import com.liulishuo.filedownloader.FileDownloader;
 import com.shuyu.core.api.BasicParamsInterceptor;
 import com.shuyu.core.api.CacheInterceptor;
-import com.shuyu.core.uils.AppUtils;
+import com.shuyu.core.model.CommParams;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class CoreApplication extends Application {
     private static CoreApplication mApplication;
     private static final int TIMEOUT_READ = 15;
     private static final int TIMEOUT_CONNECTION = 15;
-    private OkHttpClient mOkHttpClient;
 
     @Override
     public void onCreate() {
@@ -43,22 +41,19 @@ public class CoreApplication extends Application {
 
     public OkHttpClient genericClient() {
 
-        if (mOkHttpClient != null) return mOkHttpClient;
-
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         Map<String, String> queryParams = new HashMap<>();
-
-        queryParams.put("imsi", AppUtils.getIMSI());
-        queryParams.put("imei", AppUtils.getIMEI());
-        queryParams.put("manufacturer", Build.BRAND);
-        queryParams.put("model", Build.MODEL);
-        queryParams.put("versionCode", "10101");
-        queryParams.put("appId", "1001");
-        queryParams.put("dcVersion", "000002");
-        queryParams.put("ditchNo", "0");
-        queryParams.put("uuid", AppUtils.getUUID());
+        CommParams commParams = new CommParams();
+        queryParams.put("imsi", commParams.getImsi());
+        queryParams.put("imei", commParams.getImei());
+        queryParams.put("manufacturer", commParams.getManufacturer());
+        queryParams.put("model", commParams.getModel());
+        queryParams.put("versionCode", commParams.getVersionCode());
+        queryParams.put("appId", String.valueOf(commParams.getAppId()));
+        queryParams.put("dcVersion", commParams.getDcVersion());
+        queryParams.put("ditchNo", commParams.getDitchNo());
+        queryParams.put("uuid", commParams.getUuid());
 
         List<String> headerParams = new ArrayList<>();
         headerParams.add("Host:mmys-cps.ywpod.com");
@@ -76,7 +71,7 @@ public class CoreApplication extends Application {
         File cacheFile = new File(CoreApplication.getApplication().getCacheDir(), "retrofit_cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);
 
-        return mOkHttpClient = new OkHttpClient.Builder()
+        return  new OkHttpClient.Builder()
                 .cache(cache)
                 .retryOnConnectionFailure(true)
                 .addInterceptor(logInterceptor)

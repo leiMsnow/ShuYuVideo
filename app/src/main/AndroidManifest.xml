@@ -46,8 +46,7 @@
         </activity>
         <activity
             android:name=".activity.FeedbackActivity"
-            android:label="@string/feedback"
-            android:windowSoftInputMode="adjustResize">
+            android:label="@string/feedback">
         </activity>
         <activity android:name=".activity.ServiceActivity"
             android:label="@string/service">
