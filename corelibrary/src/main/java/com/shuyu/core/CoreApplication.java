@@ -43,7 +43,7 @@ public class CoreApplication extends Application {
 
     public OkHttpClient genericClient() {
 
-        if (mOkHttpClient != null) return mOkHttpClient;
+//        if (mOkHttpClient != null) return mOkHttpClient;
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

@@ -8,6 +8,8 @@ import com.shuyu.video.BuildConfig;
 
 public interface Constants {
 
+
+
     String ENVIRONMENT = BuildConfig.ENVIRONMENT;
     boolean IS_DEBUG = BuildConfig.IS_DEBUG;
 
