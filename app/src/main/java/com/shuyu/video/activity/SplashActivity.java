@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.api.ILocalServiceApi;
@@ -23,7 +24,9 @@ import com.shuyu.video.model.UserActivation;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -159,14 +162,23 @@ public class SplashActivity extends AppBaseActivity {
         UserActivation userActivation = new UserActivation();
         userActivation.setSign(DataSignUtils.getSign());
 
-        String dataJson = new Gson().toJson(userActivation);
-        String data = DataSignUtils.encryptData(dataJson);
+        String data = null;
+        try {
+            String dataJson = new Gson().toJson(userActivation);
+            LogUtils.d(SplashActivity.class.getName(), dataJson);
+            data = DataSignUtils.encryptData(dataJson);
+            data = URLEncoder.encode(data, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         if (TextUtils.isEmpty(data)) return;
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
                         .userActivation(data, userActivation.getDcVersion()),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {
+                        LogUtils.d(SplashActivity.class.getName(), data.getResultMessage());
                         if (data.getResultCode().equals("0000")) {
                             SPUtils.put(mContext, Constants.IS_ACTIVATION, true);
                         }

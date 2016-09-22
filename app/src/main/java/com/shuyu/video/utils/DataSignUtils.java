@@ -25,7 +25,7 @@ public class DataSignUtils {
     // 解密
     public static String decryptData(String decodeData) {
         try {
-            return AESUtils.getInstance().decryptFromBase64Str(decodeData);
+            return AESUtils.getInstance(AES_KEY).decryptFromBase64Str(decodeData);
         } catch (Exception e) {
             e.printStackTrace();
         }
