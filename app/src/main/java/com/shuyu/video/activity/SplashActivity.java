@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
@@ -16,8 +17,11 @@ import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.db.helper.AppInfoHelper;
 import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.AppStoreEntity;
+import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
+import com.shuyu.video.model.UserActivation;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.DataSignUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -56,6 +60,7 @@ public class SplashActivity extends AppBaseActivity {
     protected void initData() {
         mMyHandler = new MyHandler(this);
         Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, "")).into(ivLauncherUrl);
+        userActivation();
         getRunInfo();
         getAppStoreInfo();
     }
@@ -138,6 +143,32 @@ public class SplashActivity extends AppBaseActivity {
                         AppInfoHelper.getHelper().deleteAll();
                         for (AppInfoListEntity entity : data.getAppInfoList()) {
                             AppInfoHelper.getHelper().addData(entity);
+                        }
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
+    }
+
+    private void userActivation() {
+        if ((Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false)) return;
+
+        UserActivation userActivation = new UserActivation();
+        userActivation.setSign(DataSignUtils.getSign());
+
+        String dataJson = new Gson().toJson(userActivation);
+        String data = DataSignUtils.encryptData(dataJson);
+        if (TextUtils.isEmpty(data)) return;
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
+                        .userActivation(data, userActivation.getDcVersion()),
+                new BaseApi.IResponseListener<ResultEntity>() {
+                    @Override
+                    public void onSuccess(ResultEntity data) {
+                        if (data.getResultCode().equals("0000")) {
+                            SPUtils.put(mContext, Constants.IS_ACTIVATION, true);
                         }
                     }
 

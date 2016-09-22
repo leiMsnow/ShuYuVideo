@@ -6,11 +6,9 @@ import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoData;
-import com.shuyu.video.model.UserActivation;
 
 import java.util.List;
 
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -19,7 +17,6 @@ import rx.Observable;
 /**
  * Created by zhangleilei on 9/21/16.
  */
-
 public interface ILocalServiceApi {
 
     /**
@@ -67,10 +64,9 @@ public interface ILocalServiceApi {
      * @return
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "userFeedback.service")
-    Observable<ResultEntity> feedback(
-            @Query("qType") int qType,
-            @Query("content") String content,
-            @Query("contactWay") String contact);
+    Observable<ResultEntity> feedback(@Query("qType") int qType,
+                                      @Query("content") String content,
+                                      @Query("contactWay") String contact);
 
     /**
      * 在线时长统计
@@ -82,11 +78,6 @@ public interface ILocalServiceApi {
                                       @Query("offTime") long offTime,
                                       @Query("thirdChannelId") String thirdChannelId);
 
-    /**
-     * 用户激活应用
-     */
-    @POST(BaseApi.LOCAL_SERVER_URL + "userActivation.service")
-    Observable<ResultEntity> userActivation(@Body UserActivation userActivation);
 
     /**
      * 视频观看统计
@@ -95,7 +86,14 @@ public interface ILocalServiceApi {
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "lookVideoStat.service")
     Observable<ResultEntity> lookVideoState(@Query("videoId") int videoId,
-                                            @Query("isRmd") int isRmd );
+                                            @Query("isRmd") int isRmd);
 
+    /**
+     * 用户激活应用
+     */
+    @POST(BaseApi.LOCAL_SERVER_URL + "userActivation.service")
+    Observable<ResultEntity> userActivation(@Query("data") String data,
+                                            @Query("dcVersion") String dcVersion
+    );
 }
 

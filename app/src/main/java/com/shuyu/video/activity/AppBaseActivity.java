@@ -56,7 +56,7 @@ public abstract class AppBaseActivity extends BaseActivity {
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {
-                        LogUtils.d(AppBaseActivity.class.getName(), "resultCode: " + data.getResultCode());
+                        LogUtils.d(AppBaseActivity.class.getName(), "resultCode: " + data.getResultMessage());
                     }
 
                     @Override

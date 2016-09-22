@@ -3,6 +3,8 @@ package com.shuyu.video.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.app.job.JobScheduler.RESULT_SUCCESS;
+
 /**
  * Created by Azure on 2016/9/17.
  */
@@ -11,7 +13,7 @@ public class ResultEntity {
 
     private static final Map<String, String> resultMessage = new HashMap<>();
 
-    {
+    static {
         resultMessage.put("0000", "操作成功");
         resultMessage.put("0001", "业务错误");
         resultMessage.put("0002", "参数错误");
@@ -24,7 +26,12 @@ public class ResultEntity {
     }
 
     private String resultCode;
+
     public String getResultCode() {
+        return getResultMessage(resultCode);
+    }
+
+    public String getResultMessage() {
         return getResultMessage(resultCode);
     }
 

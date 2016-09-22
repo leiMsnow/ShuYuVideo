@@ -285,7 +285,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 , new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {
-                        LogUtils.d(VideoDetailsActivity.class.getName(), data.getResultCode());
+                        LogUtils.d(VideoDetailsActivity.class.getName(), data.getResultMessage());
                     }
 
                     @Override

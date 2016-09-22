@@ -9,6 +9,8 @@ import com.shuyu.video.BuildConfig;
 public interface Constants {
 
 
+    String IS_ACTIVATION = "IS_ACTIVATION";
+
 
     String ENVIRONMENT = BuildConfig.ENVIRONMENT;
     boolean IS_DEBUG = BuildConfig.IS_DEBUG;

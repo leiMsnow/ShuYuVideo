@@ -11,6 +11,8 @@ import android.telephony.TelephonyManager;
 
 import com.shuyu.core.CoreApplication;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -120,6 +122,31 @@ public class AppUtils {
     }
 
 
+    public static String getCPUInfo() {
+        String str1 = "/proc/cpuinfo";
+        String str2;
+        String cpuInfo = "";  //1-cpu型号
+        String[] arrayOfString;
+        try {
+            FileReader fr = new FileReader(str1);
+            BufferedReader localBufferedReader = new BufferedReader(fr, 8192);
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            for (int i = 2; i < arrayOfString.length; i++) {
+                cpuInfo = cpuInfo + arrayOfString[i] + " ";
+            }
+            //2-cpu频率
+//            str2 = localBufferedReader.readLine();
+//            arrayOfString = str2.split("\\s+");
+//            cpuInfo[1] += arrayOfString[2];
+            localBufferedReader.close();
+        } catch (IOException e) {
+        }
+        LogUtils.i(AppUtils.class.getName(), "cpuInfo:" + cpuInfo);
+        return cpuInfo;
+    }
+
+
     /**
      * 发送短信
      *
@@ -142,7 +169,7 @@ public class AppUtils {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.parse("file://"+filePath), "application/vnd.android.package-archive");
+        intent.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
 

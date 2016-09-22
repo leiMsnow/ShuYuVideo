@@ -8,6 +8,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.shuyu.core.CoreApplication;
+
 /**
  * 获得屏幕相关的辅助类
  */
@@ -20,11 +22,10 @@ public class ScreenUtils {
     /**
      * 获得屏幕高度
      *
-     * @param context context
      * @return  获得屏幕高度
      */
-    public static int getScreenWidth(Context context) {
-        WindowManager wm = (WindowManager) context
+    public static int getScreenWidth() {
+        WindowManager wm = (WindowManager) CoreApplication.getApplication()
                 .getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
@@ -34,11 +35,10 @@ public class ScreenUtils {
     /**
      * 获得屏幕宽度
      *
-     * @param context context
      * @return 获得屏幕宽度
      */
-    public static int getScreenHeight(Context context) {
-        WindowManager wm = (WindowManager) context
+    public static int getScreenHeight() {
+        WindowManager wm = (WindowManager) CoreApplication.getApplication()
                 .getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
@@ -47,21 +47,19 @@ public class ScreenUtils {
 
     /**
      * 获得屏幕高度，减去状态栏的高度
-     * @param context context
      * @return 获得屏幕高度，减去状态栏的高度
      */
-    public static int getScreenHeightNoStatus(Context context) {
-        return getScreenHeight(context) - getStatusHeight(context);
+    public static int getScreenHeightNoStatus() {
+        return getScreenHeight() - getStatusHeight();
     }
 
 
     /**
      * 获得状态栏的高度
      *
-     * @param context context
      * @return 获得状态栏的高度
      */
-    public static int getStatusHeight(Context context) {
+    public static int getStatusHeight() {
 
         int statusHeight = -1;
         try {
@@ -69,7 +67,8 @@ public class ScreenUtils {
             Object object = clazz.newInstance();
             int height = Integer.parseInt(clazz.getField("status_bar_height")
                     .get(object).toString());
-            statusHeight = context.getResources().getDimensionPixelSize(height);
+            statusHeight = CoreApplication.getApplication()
+                    .getResources().getDimensionPixelSize(height);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,8 +86,8 @@ public class ScreenUtils {
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
         Bitmap bmp = view.getDrawingCache();
-        int width = getScreenWidth(activity);
-        int height = getScreenHeight(activity);
+        int width = getScreenWidth();
+        int height = getScreenHeight();
         Bitmap bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
         view.destroyDrawingCache();
         return bp;
@@ -109,8 +108,8 @@ public class ScreenUtils {
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;
 
-        int width = getScreenWidth(activity);
-        int height = getScreenHeight(activity);
+        int width = getScreenWidth();
+        int height = getScreenHeight();
         Bitmap bp  = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height
                 - statusBarHeight);
         view.destroyDrawingCache();
