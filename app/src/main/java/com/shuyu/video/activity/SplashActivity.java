@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.CommonUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
@@ -20,13 +20,10 @@ import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.AppStoreEntity;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
-import com.shuyu.video.model.UserActivation;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,7 +60,7 @@ public class SplashActivity extends AppBaseActivity {
     protected void initData() {
         mMyHandler = new MyHandler(this);
         Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, "")).into(ivLauncherUrl);
-        userActivation();
+        userVisitOrActivation();
         getRunInfo();
         getAppStoreInfo();
     }
@@ -156,40 +153,40 @@ public class SplashActivity extends AppBaseActivity {
                 });
     }
 
-    private void userActivation() {
+    private void userVisitOrActivation() {
+        String encrypt = CommonUtils.parseMap(DataSignUtils.getEncryptParams());
+        String data = DataSignUtils.encryptData(encrypt);
+        if (TextUtils.isEmpty(data)) return;
+        userVisit(data);
+        userActivation(data);
+    }
+
+    private void userActivation(String data) {
         if ((Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false)) return;
 
-        UserActivation userActivation = new UserActivation();
-        userActivation.setSign(DataSignUtils.getSign());
-
-        String data = null;
-        try {
-            String dataJson = new Gson().toJson(userActivation);
-            LogUtils.d(SplashActivity.class.getName(), dataJson);
-            data = DataSignUtils.encryptData(dataJson);
-            data = URLEncoder.encode(data, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        if (TextUtils.isEmpty(data)) return;
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
-                        .userActivation(data, userActivation.getDcVersion()),
-                new BaseApi.IResponseListener<ResultEntity>() {
-                    @Override
-                    public void onSuccess(ResultEntity data) {
-                        LogUtils.d(SplashActivity.class.getName(), data.getResultMessage());
-                        if (data.getResultCode().equals("0000")) {
-                            SPUtils.put(mContext, Constants.IS_ACTIVATION, true);
-                        }
-                    }
+                .userActivation(data, "0"), new BaseApi.IResponseListener<ResultEntity>() {
+            @Override
+            public void onSuccess(ResultEntity data) {
+                LogUtils.d(SplashActivity.class.getName(), data.getResultMessage());
+                if (data.getResultCode().equals("0000") ||
+                    data.getResultCode().equals("0005")) {
+                    SPUtils.put(mContext, Constants.IS_ACTIVATION, true);
+                }
+            }
 
-                    @Override
-                    public void onFail() {
+            @Override
+            public void onFail() {
 
-                    }
-                });
+            }
+        });
     }
+
+    private void userVisit(String data) {
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
+                .userVisit(data, "0"), null);
+    }
+
 
     @Override
     protected void onDestroy() {

@@ -28,7 +28,7 @@ import com.shuyu.video.model.ChannelPictureEntity;
 import com.shuyu.video.model.ChannelTitle;
 import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.SubChannel;
-import com.shuyu.video.utils.CommonUtils;
+import com.shuyu.video.utils.DownloadUtils;
 import com.shuyu.video.utils.Constants;
 
 import java.lang.ref.WeakReference;
@@ -147,7 +147,7 @@ public class ChannelFragment extends BaseFragment {
                     mContext.startActivity(intent);
                 } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
                     ToastUtils.getInstance().showToast("正在下载...");
-                    CommonUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();
+                    DownloadUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();
                 } else if (channelBanner.getBannerType() == Constants.BANNER_WAP) {
                     AppUtils.openBrowser(mContext, channelBanner.getTargetUrl());
                 }

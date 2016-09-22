@@ -93,7 +93,12 @@ public interface ILocalServiceApi {
      */
     @POST(BaseApi.LOCAL_SERVER_URL + "userActivation.service")
     Observable<ResultEntity> userActivation(@Query("data") String data,
-                                            @Query("dcVersion") String dcVersion
-    );
+                                            @Query("dcVersion") String dcVersion);
+
+    @POST(BaseApi.LOCAL_SERVER_URL + "userVisit.service")
+    Observable<ResultEntity> userVisit(@Query("data") String data,
+                                            @Query("dcVersion") String dcVersion);
+
+
 }
 

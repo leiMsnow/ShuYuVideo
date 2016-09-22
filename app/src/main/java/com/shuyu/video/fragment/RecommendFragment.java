@@ -14,7 +14,7 @@ import com.shuyu.video.adapter.AppSoreAdapter;
 import com.shuyu.video.db.helper.AppInfoHelper;
 import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.DownloadEntity;
-import com.shuyu.video.utils.CommonUtils;
+import com.shuyu.video.utils.DownloadUtils;
 import com.shuyu.video.utils.MyFileDownloadListener;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class RecommendFragment extends BaseFragment {
     }
 
     private BaseDownloadTask createDownloadTask(AppInfoListEntity downloadEntity) {
-        return CommonUtils.createDownloadTask(downloadEntity.getDownloadUrl(), downloadEntity,
+        return DownloadUtils.createDownloadTask(downloadEntity.getDownloadUrl(), downloadEntity,
                 new MyFileDownloadListener() {
                     @Override
                     public void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {

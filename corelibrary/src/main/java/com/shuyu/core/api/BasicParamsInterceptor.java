@@ -48,7 +48,7 @@ public class BasicParamsInterceptor implements Interceptor {
         requestBuilder.headers(headerBuilder.build());
         // process header params end
 
-//        if (!TextUtils.equals(request.method(), "POST")) {
+//        if (!CommonUtils.equals(request.method(), "POST")) {
             if (queryParamsMap.size() > 0) {
                 injectParamsIntoUrl(request, requestBuilder, queryParamsMap);
             }

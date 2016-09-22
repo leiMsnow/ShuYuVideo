@@ -4,70 +4,82 @@ import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
+import com.shuyu.core.CoreApplication;
+import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.LogUtils;
 
 import java.io.File;
 
 /**
- * Created by Azure on 2016/9/14.
+ * Created by zhangleilei on 9/10/16.
  */
+
 public class DownloadUtils {
 
-    public static <T> BaseDownloadTask createDownloadTask(String url,T tag) {
+    public static <T> BaseDownloadTask createDownloadTask(String url, T tag
+            , final MyFileDownloadListener fileDownloadSampleListener) {
 
-        final String fileName = url.substring(url.lastIndexOf("/") + 1);
-        final String downloadPath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator
+        String fileName = url.substring(url.lastIndexOf("/") + 1);
+        String savePath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator
                 + "downloadApk" + File.separator + fileName;
-
-        return FileDownloader.getImpl().create(url)
-                .setPath(downloadPath + fileName, false)
-                .setCallbackProgressTimes(300)
-                .setMinIntervalUpdateSpeed(400)
-                .setTag(tag)
-                .setListener(new FileDownloadSampleListener() {
-
+        return FileDownloader.getImpl().create(url) .setPath(savePath, false)
+                .setCallbackProgressTimes(300) .setMinIntervalUpdateSpeed(400)
+                .setTag(tag) .setListener(new FileDownloadSampleListener() {
                     @Override
-                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.pending(task, soFarBytes, totalBytes);
-                        LogUtils.d("download","PENDING"+"task:------------"+task.getTag().getClass().getName());
+                    public void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        LogUtils.d("download", "PENDING");
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.pending(task, soFarBytes, totalBytes);
+
                     }
 
                     @Override
-                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.progress(task, soFarBytes, totalBytes);
-                        LogUtils.d("download","PROGRESS"+"task:------------"+task.getTag().getClass().getName());
+                    public void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        LogUtils.d("download", "soFarBytes：" + soFarBytes + "   totalBytes: " + totalBytes);
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.progress(task, soFarBytes, totalBytes);
+
                     }
 
                     @Override
-                    protected void error(BaseDownloadTask task, Throwable e) {
-                        super.error(task, e);
-                        LogUtils.d("download","ERROR");
+                    public void error(BaseDownloadTask task, Throwable e) {
+                        LogUtils.d("download", "ERROR");
                         e.printStackTrace();
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.error(task, e);
+
                     }
 
                     @Override
-                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue,
-                                             int soFarBytes, int totalBytes) {
-                        super.connected(task, etag, isContinue, soFarBytes, totalBytes);
-                        LogUtils.d("download","CONNECTED");
+                    public void connected(BaseDownloadTask task, String etag, boolean isContinue,
+                                          int soFarBytes, int totalBytes) {
+                        LogUtils.d("download", "CONNECTED");
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.connected(task, etag, isContinue, soFarBytes, totalBytes);
+
                     }
 
                     @Override
-                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.paused(task, soFarBytes, totalBytes);
-                        LogUtils.d("download","PAUSED");
+                    public void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        LogUtils.d("download", "PAUSED");
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.paused(task, soFarBytes, totalBytes);
                     }
 
                     @Override
-                    protected void completed(BaseDownloadTask task) {
-                        super.completed(task);
-                        LogUtils.d("download","COMPLETED");
+                    public void completed(BaseDownloadTask task) {
+                        LogUtils.d("download", "COMPLETED: " + task.getPath());
+                        AppUtils.install(CoreApplication.getApplication().getApplicationContext(),
+                                task.getPath());
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.completed(task);
                     }
 
                     @Override
-                    protected void warn(BaseDownloadTask task) {
-                        super.warn(task);
-                        LogUtils.d("download","WARN");
+                    public void warn(BaseDownloadTask task) {
+                        LogUtils.d("download", "WARN");
+                        if (fileDownloadSampleListener != null)
+                            fileDownloadSampleListener.warn(task);
                     }
                 });
     }
