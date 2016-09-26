@@ -28,8 +28,8 @@ import com.shuyu.video.model.ChannelPictureEntity;
 import com.shuyu.video.model.ChannelTitle;
 import com.shuyu.video.model.ChannelVideoEntity;
 import com.shuyu.video.model.SubChannel;
-import com.shuyu.video.utils.DownloadUtils;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.DownloadUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -199,8 +199,7 @@ public class ChannelFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(ChannelVideoEntity data) {
-                        mChannelContents = data.getVideoChannelList();
-                        updateGroupData();
+                        updateGroupData(data.getVideoChannelList());
                     }
 
                     @Override
@@ -216,8 +215,7 @@ public class ChannelFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(ChannelPictureEntity data) {
-                        mChannelContents = data.getPicChannelList();
-                        updateGroupData();
+                        updateGroupData(data.getPicChannelList());
                     }
 
                     @Override
@@ -227,10 +225,12 @@ public class ChannelFragment extends BaseFragment {
                 });
     }
 
-    private void updateGroupData() {
-        mGroupAdapter.setChannelContents(mChannelContents);
+    private void updateGroupData(List<SubChannel> channelContents) {
+        mChannelContents = channelContents;
+//        mGroupAdapter.setChannelContents(mChannelContents);
         for (int i = 0; i < mChannelContents.size(); i++) {
-            mExpandableListView.expandGroup(i);
+            mChannelContents.get(i).updateContentList();
+//            mExpandableListView.expandGroup(i);
         }
     }
 

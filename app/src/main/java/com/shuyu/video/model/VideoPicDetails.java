@@ -11,6 +11,9 @@ import java.util.List;
 
 public class VideoPicDetails implements Serializable {
 
+    private int groupIdd;
+    private String groupTitle;
+
     private int id;
     private String title;
     private int contentType;
@@ -31,6 +34,22 @@ public class VideoPicDetails implements Serializable {
     private List<?> clipUrlList;
     private int[] tagColor;
     private int viewNumber;
+
+    public int getGroupIdd() {
+        return groupIdd;
+    }
+
+    public void setGroupIdd(int groupIdd) {
+        this.groupIdd = groupIdd;
+    }
+
+    public String getGroupTitle() {
+        return groupTitle;
+    }
+
+    public void setGroupTitle(String groupTitle) {
+        this.groupTitle = groupTitle;
+    }
 
     public String getViewNumber() {
         return String.format("%,d%n", viewNumber);

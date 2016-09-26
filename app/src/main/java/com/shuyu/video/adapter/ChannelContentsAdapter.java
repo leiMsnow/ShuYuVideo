@@ -22,8 +22,7 @@ import java.util.Random;
 /**
  * Created by Azure on 2016/8/31.
  */
-@Deprecated
-public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
+public class ChannelContentsAdapter extends SuperAdapter<VideoPicDetails> {
 
     private Random random = new Random();
 
@@ -41,8 +40,8 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
 
     };
 
-    public ChannelContentAdapter(Context context, List<VideoPicDetails> items,
-                                 int layoutResId) {
+    public ChannelContentsAdapter(Context context, List<VideoPicDetails> items,
+                                  int layoutResId) {
         super(context, items, layoutResId);
         addTagsColor(items);
     }
