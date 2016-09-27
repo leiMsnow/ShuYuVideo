@@ -17,6 +17,7 @@ import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.LiveVideoEntity;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.DialogUtils;
 
 import butterknife.Bind;
 import butterknife.OnPageChange;
@@ -51,15 +52,16 @@ public class VipFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 VideoPicDetails vip = (VideoPicDetails) v.getTag();
+                if (!DialogUtils.getUserRule(mContext, vip.getFeeRule())) return;
+
                 Intent intent = new Intent(mContext, VideoDetailsActivity.class);
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, vip.getId());
-                intent.putExtra(Constants.IS_VIP_VIDEO,true);
+                intent.putExtra(Constants.IS_VIP_VIDEO, true);
                 mContext.startActivity(intent);
             }
         });
         getLiveVideoList();
     }
-
 
     @OnPageChange(value = R.id.vp_container, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onPageSelected(int position) {
@@ -82,6 +84,4 @@ public class VipFragment extends BaseFragment {
                     }
                 });
     }
-
-
 }

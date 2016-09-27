@@ -25,6 +25,7 @@ import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
+import com.shuyu.video.utils.DialogUtils;
 import com.shuyu.video.utils.Constants;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
@@ -179,11 +180,9 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 mMediaController.setTitle(mVideoDetails.getTitle());
                 mVideoView.requestFocus();
                 if (mIsVIP) {
-                    mVideoView.start();
                     mVideoView.setFullscreen(true);
-                    mIvUrl.setVisibility(View.GONE);
-                    ivVideoPlayer.setVisibility(View.GONE);
                 }
+                startPlay();
                 mMediaController.setBackListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -274,9 +273,11 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void startPlay() {
-        mIvUrl.setVisibility(View.GONE);
-        ivVideoPlayer.setVisibility(View.GONE);
-        mVideoView.start();
+        if (DialogUtils.getUserRule(mContext, mVideoDetails.getFeeRule())) {
+            mIvUrl.setVisibility(View.GONE);
+            ivVideoPlayer.setVisibility(View.GONE);
+            mVideoView.start();
+        }
     }
 
     private void lookVideoState() {

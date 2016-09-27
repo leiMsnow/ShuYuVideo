@@ -36,4 +36,5 @@ public interface Constants {
     int BANNER_WAP = 4;
 
     String STAY_TIME_ON = "STAY_TIME_ON";
+    String USER_RULE = "USER_RULE";
 }
