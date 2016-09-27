@@ -11,7 +11,7 @@ import java.util.List;
 
 public class VideoPicDetails implements Serializable {
 
-    private int groupIdd;
+    private int groupId;
     private String groupTitle;
 
     private int id;
@@ -35,12 +35,12 @@ public class VideoPicDetails implements Serializable {
     private int[] tagColor;
     private int viewNumber;
 
-    public int getGroupIdd() {
-        return groupIdd;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroupIdd(int groupIdd) {
-        this.groupIdd = groupIdd;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public String getGroupTitle() {

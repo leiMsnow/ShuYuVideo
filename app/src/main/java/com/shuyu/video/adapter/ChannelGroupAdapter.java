@@ -1,12 +1,11 @@
 package com.shuyu.video.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -97,20 +96,20 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         ChildHolder holder;
-        ChannelContentAdapter mContentAdapter;
+        ChannelChildAdapter mContentAdapter;
         if (view == null) {
             holder = new ChildHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.item_channel_child, null);
-            holder.mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_container);
-            holder.mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+            holder.mRecyclerView = (GridView) view.findViewById(R.id.rv_container);
             view.setTag(holder);
         } else {
             holder = (ChildHolder) view.getTag();
         }
 
-        mContentAdapter = new ChannelContentAdapter(mContext,
-                mChannelContents.get(i).getChannelContentList(),
-                R.layout.item_channel_content);
+        mContentAdapter = new ChannelChildAdapter(mContext,
+                R.layout.item_channel_content,
+                mChannelContents.get(i).getChannelContentList());
+
         holder.mRecyclerView.setAdapter(mContentAdapter);
         return view;
     }
@@ -126,7 +125,7 @@ public class ChannelGroupAdapter extends BaseExpandableListAdapter {
     }
 
     private class ChildHolder {
-        RecyclerView mRecyclerView;
+        GridView mRecyclerView;
     }
 
 }

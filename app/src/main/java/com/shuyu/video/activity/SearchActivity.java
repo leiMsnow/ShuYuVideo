@@ -99,6 +99,8 @@ public class SearchActivity extends AppBaseActivity {
 
     private void initSearchView(SearchView searchView) {
         searchView.setQueryHint(getResources().getString(R.string.search));
+        View view = searchView.findViewById(R.id.search_src_text);
+        view.setBackgroundResource(R.drawable.shape_search_bg);
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

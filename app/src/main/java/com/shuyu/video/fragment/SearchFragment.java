@@ -36,6 +36,7 @@ public class SearchFragment extends BaseFragment {
             ((SearchActivity) context).setSearchListener(new SearchActivity.ISearchListener() {
                 @Override
                 public void onSearch(String keyword) {
+                    mSearchContentAdapter.clear();
                     searchVideo(keyword);
                 }
             });
@@ -67,7 +68,7 @@ public class SearchFragment extends BaseFragment {
     private void searchVideo(final String keyword) {
         tvTotal.setVisibility(View.GONE);
         tvEmpty.setVisibility(View.GONE);
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).searchVideo(keyword, 1, 6),
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).searchVideo(keyword, 1, 20),
                 new BaseApi.IResponseListener<SearchVideoData>() {
                     @Override
                     public void onSuccess(SearchVideoData data) {
@@ -91,5 +92,4 @@ public class SearchFragment extends BaseFragment {
         tvEmpty.setText("没有找到和" + keyword + "相关的视频,请及时关注后续更新");
         tvEmpty.setVisibility(View.VISIBLE);
     }
-
 }
