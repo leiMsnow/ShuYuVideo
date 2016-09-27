@@ -19,7 +19,6 @@ import java.util.List;
 /**
  * Created by Azure on 2016/8/31.
  */
-@Deprecated
 public class ChannelGroupAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;

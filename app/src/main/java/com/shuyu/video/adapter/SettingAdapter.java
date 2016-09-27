@@ -6,7 +6,7 @@ import com.shuyu.video.R;
 import com.shuyu.video.model.SettingEntity;
 
 import org.byteam.superadapter.SuperAdapter;
-import org.byteam.superadapter.internal.SuperViewHolder;
+import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 

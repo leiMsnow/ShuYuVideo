@@ -42,12 +42,4 @@ public class SubChannel implements Serializable {
         this.channelContentList = channelContentList;
     }
 
-    public void updateContentList() {
-        if (channelContentList == null) return;
-        for (VideoPicDetails videoPicDetails : channelContentList) {
-            videoPicDetails.setGroupIdd(id);
-            videoPicDetails.setGroupTitle(title);
-        }
-    }
-
 }

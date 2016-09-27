@@ -13,7 +13,7 @@ import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 
 import org.byteam.superadapter.SuperAdapter;
-import org.byteam.superadapter.internal.SuperViewHolder;
+import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 import java.util.Random;
@@ -22,7 +22,6 @@ import java.util.Random;
 /**
  * Created by Azure on 2016/8/31.
  */
-@Deprecated
 public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
 
     private Random random = new Random();
@@ -77,11 +76,9 @@ public class ChannelContentAdapter extends SuperAdapter<VideoPicDetails> {
         holder.setText(R.id.tv_content_title, item.getTitle());
         holder.setText(R.id.tv_subtitle, item.getSubTitle());
         if (item.getContentType() == Constants.BANNER_VIDEO) {
-//            holder.setVisibility(R.id.iv_play, View.VISIBLE);
             holder.setVisibility(R.id.tv_view_number, View.VISIBLE);
             holder.setText(R.id.tv_view_number, item.getViewNumber());
         } else if (item.getContentType() == Constants.BANNER_PICTURE) {
-//            holder.setVisibility(R.id.iv_play, View.GONE);
             holder.setVisibility(R.id.tv_view_number, View.GONE);
         }
 

@@ -63,7 +63,6 @@ public class ChannelFragment extends BaseFragment {
     private int currIndex = 0;
     private MyHandler mMyHandler;
 
-
     public static ChannelFragment newInstance(ChannelTitle channelTitle) {
         ChannelFragment fragment = new ChannelFragment();
         Bundle args = new Bundle();
@@ -227,10 +226,9 @@ public class ChannelFragment extends BaseFragment {
 
     private void updateGroupData(List<SubChannel> channelContents) {
         mChannelContents = channelContents;
-//        mGroupAdapter.setChannelContents(mChannelContents);
+        mGroupAdapter.setChannelContents(mChannelContents);
         for (int i = 0; i < mChannelContents.size(); i++) {
-            mChannelContents.get(i).updateContentList();
-//            mExpandableListView.expandGroup(i);
+            mExpandableListView.expandGroup(i);
         }
     }
 

@@ -35,7 +35,7 @@ dependencies {
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["cardview"]
 
-    compile 'org.byteam.superadapter:superadapter:3.+'
+    compile 'org.byteam.superadapter:superadapter:3.6.5'
     compile 'com.liulishuo.filedownloader:library:1.1.0'
 //    compile 'com.linsea:universalvideoview:1.1.0@aar'
 

@@ -10,7 +10,7 @@ import com.shuyu.video.model.DownloadEntity;
 import com.shuyu.video.utils.ImageUtils;
 
 import org.byteam.superadapter.SuperAdapter;
-import org.byteam.superadapter.internal.SuperViewHolder;
+import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 
