@@ -102,6 +102,8 @@ public class SearchActivity extends AppBaseActivity {
     private void initSearchView(SearchView searchView) {
         searchView.setQueryHint(getResources().getString(R.string.search));
         View view = searchView.findViewById(R.id.search_src_text);
+        ImageView searchGo = (ImageView) searchView.findViewById(R.id.search_go_btn);
+        searchGo.setImageResource(R.mipmap.ic_menu_search);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = DensityUtils.dp2px(mContext,28);
         view.setLayoutParams(layoutParams);
