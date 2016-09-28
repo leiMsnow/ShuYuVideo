@@ -7,10 +7,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.DensityUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.ChannelContentAdapter;
 import com.shuyu.video.adapter.HotWordAdapter;
@@ -100,6 +102,9 @@ public class SearchActivity extends AppBaseActivity {
     private void initSearchView(SearchView searchView) {
         searchView.setQueryHint(getResources().getString(R.string.search));
         View view = searchView.findViewById(R.id.search_src_text);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = DensityUtils.dp2px(mContext,28);
+        view.setLayoutParams(layoutParams);
         view.setBackgroundResource(R.drawable.shape_search_bg);
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
