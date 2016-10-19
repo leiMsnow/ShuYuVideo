@@ -10,7 +10,7 @@ import com.shuyu.video.R;
  * Created by Azure on 2016/9/13.
  */
 
-public class ImageUtils {
+public class ImageShowUtils {
 
     public static void showImage(Context context, String url, ImageView imageView) {
         Glide.with(context).load(url).placeholder(R.mipmap.ic_default_image).into(imageView);

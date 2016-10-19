@@ -48,7 +48,8 @@
             android:name=".activity.FeedbackActivity"
             android:label="@string/feedback">
         </activity>
-        <activity android:name=".activity.ServiceActivity"
+        <activity
+            android:name=".activity.ServiceActivity"
             android:label="@string/service">
         </activity>
     </application>

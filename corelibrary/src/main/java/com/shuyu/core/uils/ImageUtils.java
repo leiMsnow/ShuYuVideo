@@ -19,7 +19,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- *
  * 图片辅助类
  */
 public class ImageUtils {
@@ -27,8 +26,8 @@ public class ImageUtils {
      * 创建水印效果
      *
      * @param context context
-     * @param src 原图片
-     * @param res 水印路径
+     * @param src     原图片
+     * @param res     水印路径
      * @return 返回新图片
      */
     public static Bitmap createWatermarkBitmap(Context context, Bitmap src, int res) {
@@ -269,6 +268,33 @@ public class ImageUtils {
             e.printStackTrace();
         }
         return degree;
+    }
+
+    public static Bitmap getImageEffect(Bitmap bitmap, float hue, float saturation, float lum) {
+
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(newBitmap);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        ColorMatrix hueMatrix = new ColorMatrix();
+        hueMatrix.setRotate(0,hue);
+        hueMatrix.setRotate(1,hue);
+        hueMatrix.setRotate(2,hue);
+
+        ColorMatrix saturationMatrix = new ColorMatrix();
+        saturationMatrix.setSaturation(saturation);
+
+        ColorMatrix lumMatrix = new ColorMatrix();
+        lumMatrix.setScale(lum,lum,lum,1);
+
+        ColorMatrix imageMatrix = new ColorMatrix();
+        imageMatrix.postConcat(hueMatrix);
+        imageMatrix.postConcat(saturationMatrix);
+        imageMatrix.postConcat(lumMatrix);
+
+        paint.setColorFilter(new ColorMatrixColorFilter(imageMatrix));
+        canvas.drawBitmap(bitmap,0,0,paint);
+        return newBitmap;
     }
 
 }

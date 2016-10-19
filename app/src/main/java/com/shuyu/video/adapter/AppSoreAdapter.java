@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.shuyu.video.R;
 import com.shuyu.video.model.AppInfoListEntity;
 import com.shuyu.video.model.DownloadEntity;
-import com.shuyu.video.utils.ImageUtils;
+import com.shuyu.video.utils.ImageShowUtils;
 
 import org.byteam.superadapter.SuperAdapter;
 import org.byteam.superadapter.SuperViewHolder;
@@ -33,7 +33,7 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
         holder.setText(R.id.tv_app_title, item.getTitle())
                 .setText(R.id.tv_app_desc, item.getSummary());
         ImageView imageView = holder.findViewById(R.id.iv_app_icon);
-        ImageUtils.showImage(mContext, item.getIconUrl(), imageView);
+        ImageShowUtils.showImage(mContext, item.getIconUrl(), imageView);
         holder.setTag(R.id.btn_down, item);
         holder.setOnClickListener(R.id.btn_down, mOnClickListener);
 
