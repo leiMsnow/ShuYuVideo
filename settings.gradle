@@ -1,1 +1,1 @@
-include ':app', ':corelibrary','universalvideoview'
+include ':app', ':corelibrary','videoview'

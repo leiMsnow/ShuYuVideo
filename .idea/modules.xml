@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/ShuYuVideo.iml" filepath="$PROJECT_DIR$/ShuYuVideo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/corelibrary/corelibrary.iml" filepath="$PROJECT_DIR$/corelibrary/corelibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/universalvideoview/universalvideoview.iml" filepath="$PROJECT_DIR$/universalvideoview/universalvideoview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoview/videoview.iml" filepath="$PROJECT_DIR$/videoview/videoview.iml" />
     </modules>
   </component>
 </project>
