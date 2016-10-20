@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.shuyu.video.R;
 
@@ -16,66 +17,63 @@ import com.shuyu.video.R;
  *
  * @author zhangleilei
  */
-public class PayDialog extends Dialog {
+public class PayDialogView extends Dialog {
 
-    private PayDialog(Context context) {
+    private PayDialogView(Context context) {
         super(context);
     }
 
-    // 先调用构造方法在调用onCreate方法
-    private static boolean isShow = true;
-    private static boolean mCancel = false;
-
     public static class Builder {
         private Context mContext;
+        private Button btnPay;
 
         public Builder(Context context) {
             this.mContext = context;
         }
 
-        private PayDialog create() {
+        private PayDialogView create() {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.view_pay_dialog, null);
-
-            final PayDialog dialog = new PayDialog(mContext);
-            dialog.setCanceledOnTouchOutside(mCancel);
-            dialog.setCancelable(isShow);
+            btnPay = (Button) layout.findViewById(R.id.btn_pay);
+            final PayDialogView dialog = new PayDialogView(mContext);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(true);
 
             //隐藏标题栏,必须在setContentView()前调用
             dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
-            if (mCancel) {//点击透明区域是否添加取消监听
-                layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-            }
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
             dialog.setContentView(layout);
+
+            btnPay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
             return dialog;
         }
 
-        public Builder setCancelable(boolean cancelable) {
-            isShow = cancelable;
-            return this;
-        }
-
-        public Builder setCanceledOnTouchOutside(boolean cancel) {
-            mCancel = cancel;
-            return this;
-        }
-
-        public PayDialog show() {
-            PayDialog dialog = create();
+        public PayDialogView show() {
+            PayDialogView dialog = create();
             dialog.show();
             initWindow(dialog);
+            createOrderInfo();
             return dialog;
+        }
+
+        // TODO: 2016/10/20  弹窗下单
+        private void createOrderInfo() {
+
         }
 
         private void initWindow(Dialog dialog) {
-
             /*
              * 获取框的窗口对象及参数对象以修改对话框的布局设置,
              * 可以直接调用getWindow(),表示获得这个Activity的Window

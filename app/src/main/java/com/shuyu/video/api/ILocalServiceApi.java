@@ -96,5 +96,11 @@ public interface ILocalServiceApi {
      */
     @GET(BaseApi.PAY_URL+ "getAppInfo.service")
     Observable<AppPayInfo> getAppPayInfo();
+
+    /**
+     * 获取支付插件接口
+     */
+    @GET(BaseApi.PAY_URL+ "selectPayment.service")
+    Observable<ResultEntity> selectPayment();
 }
 

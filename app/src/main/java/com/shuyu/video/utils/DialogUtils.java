@@ -3,7 +3,7 @@ package com.shuyu.video.utils;
 import android.content.Context;
 
 import com.shuyu.core.uils.SPUtils;
-import com.shuyu.video.widget.PayDialog;
+import com.shuyu.video.widget.PayDialogView;
 
 /**
  *
@@ -21,7 +21,7 @@ public class DialogUtils {
         if (rule <= (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0))
             return true;
 
-        PayDialog.Builder payBuilder = new PayDialog.Builder(context);
+        PayDialogView.Builder payBuilder = new PayDialogView.Builder(context);
         payBuilder.show();
         return false;
     }
