@@ -52,13 +52,6 @@ public class PayDialog extends Dialog {
                         dialog.dismiss();
                     }
                 });
-                layout.findViewById(R.id.top_layout).setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        //防止往下传
-                    }
-                });
             }
             dialog.setContentView(layout);
             return dialog;

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_main"
+        android:checked="true"
+        android:icon="@mipmap/ic_nav_main"
+        android:title="@string/nav_main"/>
+
+    <item
+        android:id="@+id/menu_vip"
+        android:icon="@mipmap/ic_nav_vip"
+        android:title="@string/nav_vip"/>
+    <item
+        android:id="@+id/menu_private"
+        android:icon="@mipmap/ic_nav_recommend"
+        android:title="@string/nav_recommend"/>
+    <item
+        android:id="@+id/menu_user"
+        android:icon="@mipmap/ic_nav_user"
+        android:title="@string/nav_me"/>
+
+</menu>
