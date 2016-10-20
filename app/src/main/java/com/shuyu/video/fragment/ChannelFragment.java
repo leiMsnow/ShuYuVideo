@@ -24,9 +24,9 @@ import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ChannelBanner;
-import com.shuyu.video.model.ChannelPictureEntity;
+import com.shuyu.video.model.ChannelPicture;
 import com.shuyu.video.model.ChannelTitle;
-import com.shuyu.video.model.ChannelVideoEntity;
+import com.shuyu.video.model.ChannelVideo;
 import com.shuyu.video.model.SubChannel;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DownloadUtils;
@@ -193,10 +193,10 @@ public class ChannelFragment extends BaseFragment {
 
     private void getVideoList(int cid, int pageNo) {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoListByChannelId(cid, pageNo, 6)
-                , new BaseApi.IResponseListener<ChannelVideoEntity>() {
+                , new BaseApi.IResponseListener<ChannelVideo>() {
 
                     @Override
-                    public void onSuccess(ChannelVideoEntity data) {
+                    public void onSuccess(ChannelVideo data) {
                         updateGroupData(data.getVideoChannelList());
                     }
 
@@ -209,10 +209,10 @@ public class ChannelFragment extends BaseFragment {
 
     private void getPictureList(int cid, int pageNo) {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getPictureListByChannelId(cid, pageNo, 6)
-                , new BaseApi.IResponseListener<ChannelPictureEntity>() {
+                , new BaseApi.IResponseListener<ChannelPicture>() {
 
                     @Override
-                    public void onSuccess(ChannelPictureEntity data) {
+                    public void onSuccess(ChannelPicture data) {
                         updateGroupData(data.getPicChannelList());
                     }
 

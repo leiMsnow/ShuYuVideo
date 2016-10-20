@@ -3,7 +3,6 @@ package com.shuyu.video.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,31 +18,13 @@ import com.shuyu.video.R;
  */
 public class PayDialog extends Dialog {
 
-    protected PayDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-    }
-
-    protected PayDialog(Context context, int theme) {
-        super(context, theme);
-    }
-
-    protected PayDialog(Context context) {
-        this(context,0);
+    private PayDialog(Context context) {
+        super(context);
     }
 
     // 先调用构造方法在调用onCreate方法
     private static boolean isShow = true;
     private static boolean mCancel = false;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void show() {
-        super.show();
-    }
 
     public static class Builder {
         private Context mContext;

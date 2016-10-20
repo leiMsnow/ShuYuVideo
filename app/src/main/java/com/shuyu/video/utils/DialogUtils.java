@@ -6,6 +6,7 @@ import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.widget.PayDialog;
 
 /**
+ *
  * Created by Azure on 2016/9/27.
  */
 public class DialogUtils {
@@ -16,8 +17,8 @@ public class DialogUtils {
      * @param rule
      * @return
      */
-    public static boolean getUserRule(Context context, int rule) {
-        if (rule <= (int) SPUtils.get(context, Constants.USER_RULE, 0))
+    public static boolean canPlayer(Context context, int rule) {
+        if (rule <= (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0))
             return true;
 
         PayDialog.Builder payBuilder = new PayDialog.Builder(context);

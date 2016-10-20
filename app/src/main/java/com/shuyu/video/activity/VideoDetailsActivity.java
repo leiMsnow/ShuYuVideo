@@ -273,7 +273,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void startPlay() {
-        if (DialogUtils.getUserRule(mContext, mVideoDetails.getFeeRule())) {
+        if (DialogUtils.canPlayer(mContext, mVideoDetails.getFeeRule())) {
             mIvUrl.setVisibility(View.GONE);
             ivVideoPlayer.setVisibility(View.GONE);
             mVideoView.start();

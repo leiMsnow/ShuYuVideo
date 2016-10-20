@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zhangleilei on 9/10/16.
  */
 
-public class SearchVideoData {
+public class SearchVideoList {
 
 
     private int totalPageCount;

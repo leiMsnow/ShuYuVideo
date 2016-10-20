@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.shuyu.video.R;
-import com.shuyu.video.model.AppInfoListEntity;
+import com.shuyu.video.model.AppStore;
 import com.shuyu.video.model.DownloadEntity;
 import com.shuyu.video.utils.ImageShowUtils;
 
@@ -17,19 +17,19 @@ import java.util.List;
 /**
  * Created by Azure on 2016/9/13.
  */
-public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
+public class AppSoreAdapter extends SuperAdapter<AppStore> {
     private View.OnClickListener mOnClickListener;
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
         mOnClickListener = onClickListener;
     }
 
-    public AppSoreAdapter(Context context, List<AppInfoListEntity> items, int layoutResId) {
+    public AppSoreAdapter(Context context, List<AppStore> items, int layoutResId) {
         super(context, items, layoutResId);
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, AppInfoListEntity item) {
+    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, AppStore item) {
         holder.setText(R.id.tv_app_title, item.getTitle())
                 .setText(R.id.tv_app_desc, item.getSummary());
         ImageView imageView = holder.findViewById(R.id.iv_app_icon);
@@ -37,13 +37,11 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
         holder.setTag(R.id.btn_down, item);
         holder.setOnClickListener(R.id.btn_down, mOnClickListener);
 
-//        ProgressBar progressBar = holder.findViewById(R.id.pb_progress);
 
         switch (item.getDownloadState()) {
             case DownloadEntity.PENDING:
                 holder.setText(R.id.btn_down, "准备中");
                 holder.setEnabled(R.id.btn_down, false);
-//                progressBar.setMax(item.getTotalSize());
                 break;
             case DownloadEntity.PAUSED:
                 holder.setText(R.id.btn_down, "继续");
@@ -52,7 +50,6 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
             case DownloadEntity.PROGRESS:
                 holder.setText(R.id.btn_down, "下载中");
                 holder.setEnabled(R.id.btn_down, false);
-//                progressBar.setProgress(item.getCurrentSize());
                 break;
             case DownloadEntity.CONNECTED:
                 holder.setText(R.id.btn_down, "开始下载");
@@ -61,8 +58,6 @@ public class AppSoreAdapter extends SuperAdapter<AppInfoListEntity> {
             case DownloadEntity.COMPLETED:
                 holder.setText(R.id.btn_down, "安装");
                 holder.setEnabled(R.id.btn_down, true);
-//                progressBar.setProgress(item.getCurrentSize());
-//                progressBar.setMax(item.getTotalSize());
                 break;
             case DownloadEntity.ERROR:
             case DownloadEntity.WARN:

@@ -14,7 +14,7 @@ import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
 import com.shuyu.video.api.IServiceApi;
-import com.shuyu.video.model.LiveVideoEntity;
+import com.shuyu.video.model.LiveVideo;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DialogUtils;
@@ -52,7 +52,7 @@ public class VipFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 VideoPicDetails vip = (VideoPicDetails) v.getTag();
-                if (!DialogUtils.getUserRule(mContext, vip.getFeeRule())) return;
+                if (!DialogUtils.canPlayer(mContext, vip.getFeeRule())) return;
 
                 Intent intent = new Intent(mContext, VideoDetailsActivity.class);
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, vip.getId());
@@ -70,9 +70,9 @@ public class VipFragment extends BaseFragment {
 
     private void getLiveVideoList() {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getLiveVideoList(1),
-                new BaseApi.IResponseListener<LiveVideoEntity>() {
+                new BaseApi.IResponseListener<LiveVideo>() {
                     @Override
-                    public void onSuccess(LiveVideoEntity data) {
+                    public void onSuccess(LiveVideo data) {
                         mPageAdapter.setLiveVideoDataList(data.getNightVideoDetailList());
                         vpContainer.setOffscreenPageLimit(mPageAdapter.getCount());
                         tvDesc.setText(data.getNightVideoDetailList().get(0).getDescription());

@@ -5,14 +5,13 @@ import java.util.List;
 /**
  * Created by Azure on 2016/8/31.
  */
-
-public class ChannelVideoEntity {
+public class ChannelPicture {
 
     private int totalPageCount;
     private int totalItemCount;
     private int pageNo;
 
-    private List<SubChannel> videoChannelList;
+    private List<SubChannel> picChannelList;
 
     public int getTotalPageCount() {
         return totalPageCount;
@@ -38,13 +37,11 @@ public class ChannelVideoEntity {
         this.pageNo = pageNo;
     }
 
-    public List<SubChannel> getVideoChannelList() {
-        return videoChannelList;
+    public List<SubChannel> getPicChannelList() {
+        return picChannelList;
     }
 
-    public void setVideoChannelList(List<SubChannel> videoChannelList) {
-        this.videoChannelList = videoChannelList;
+    public void setPicChannelList(List<SubChannel> picChannelList) {
+        this.picChannelList = picChannelList;
     }
-
-
 }

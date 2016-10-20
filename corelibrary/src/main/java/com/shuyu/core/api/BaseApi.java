@@ -1,6 +1,7 @@
 package com.shuyu.core.api;
 
 import com.shuyu.core.CoreApplication;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.core.uils.ToastUtils;
 
@@ -15,15 +16,16 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Azure on 2016/9/5.
  */
-
 public class BaseApi {
 
-    public static final String BASE_URL = "BASE_URL";
-    public static final String LOCAL_SERVER_URL = "http://121.199.21.125:7008/";
+    public static final String KEY_BASE_URL = "KEY_BASE_URL";
+    private static final String LOCAL_SERVER_URL = "http://121.199.21.125";
+    public static final String BASE_URL = LOCAL_SERVER_URL + ":7008/";
+    public static final String PAY_URL = LOCAL_SERVER_URL + ":8009/pay/";
 
     public static <T> T createApi(Class<T> service) {
         final String url = SPUtils.get(CoreApplication.getApplication()
-                , BASE_URL, LOCAL_SERVER_URL).toString() + "%20/";
+                , KEY_BASE_URL, BASE_URL).toString() + "%20/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(CoreApplication.getApplication().genericClient())

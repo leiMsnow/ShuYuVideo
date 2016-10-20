@@ -4,8 +4,8 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-@Entity(nameInDb = "AppInfo")
-public class AppInfoListEntity extends DownloadEntity {
+@Entity(nameInDb = "AppStore")
+public class AppStore extends DownloadEntity {
 
     @Id(autoincrement = true)
     private Long appId;
@@ -29,9 +29,9 @@ public class AppInfoListEntity extends DownloadEntity {
     private int notifyInterval;
     private String adImgUrl;
 
-    @Generated(hash = 1890216724)
-    public AppInfoListEntity(Long appId, int id, String title, String brief,
-            String summary, String downloadUrl, String iconUrl, String versionCode,
+    @Generated(hash = 2082018793)
+    public AppStore(Long appId, int id, String title, String brief, String summary,
+            String downloadUrl, String iconUrl, String versionCode,
             String versionName, String packageName, int softwareSize, int appType,
             String md5, int downloadCount, String imgUrl, int downloadType,
             int onlineInterval, int notifyCount, int notifyInterval, String adImgUrl) {
@@ -57,8 +57,8 @@ public class AppInfoListEntity extends DownloadEntity {
         this.adImgUrl = adImgUrl;
     }
 
-    @Generated(hash = 412036776)
-    public AppInfoListEntity() {
+    @Generated(hash = 34921394)
+    public AppStore() {
     }
 
     public Long getAppId() {

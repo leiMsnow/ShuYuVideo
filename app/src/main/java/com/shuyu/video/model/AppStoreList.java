@@ -5,12 +5,12 @@ import java.util.List;
 /**
  * Created by zhangleilei on 9/13/16.
  */
-public class AppStoreEntity {
+public class AppStoreList {
 
     private int totalPageCount;
     private int pageNo;
 
-    private List<AppInfoListEntity> appInfoList;
+    private List<AppStore> appInfoList;
 
     public int getTotalPageCount() {
         return totalPageCount;
@@ -28,11 +28,11 @@ public class AppStoreEntity {
         this.pageNo = pageNo;
     }
 
-    public List<AppInfoListEntity> getAppInfoList() {
+    public List<AppStore> getAppInfoList() {
         return appInfoList;
     }
 
-    public void setAppInfoList(List<AppInfoListEntity> appInfoList) {
+    public void setAppInfoList(List<AppStore> appInfoList) {
         this.appInfoList = appInfoList;
     }
 

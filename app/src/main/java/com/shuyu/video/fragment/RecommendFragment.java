@@ -11,8 +11,8 @@ import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.AppSoreAdapter;
-import com.shuyu.video.db.helper.AppInfoHelper;
-import com.shuyu.video.model.AppInfoListEntity;
+import com.shuyu.video.db.helper.AppStoreDaoHelper;
+import com.shuyu.video.model.AppStore;
 import com.shuyu.video.model.DownloadEntity;
 import com.shuyu.video.utils.DownloadUtils;
 import com.shuyu.video.utils.MyFileDownloadListener;
@@ -48,7 +48,7 @@ public class RecommendFragment extends BaseFragment {
         mAppSoreAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppInfoListEntity entity = (AppInfoListEntity) v.getTag();
+                AppStore entity = (AppStore) v.getTag();
                 if (entity.getDownloadState() == DownloadEntity.NORMAL) {
                     createDownloadTask(entity).start();
                 } else if (entity.getDownloadState() == DownloadEntity.COMPLETED) {
@@ -60,60 +60,60 @@ public class RecommendFragment extends BaseFragment {
     }
 
     private void getAppStoreInfo() {
-        List<AppInfoListEntity> entities = AppInfoHelper.getHelper().getDataAll();
+        List<AppStore> entities = AppStoreDaoHelper.getHelper().getDataAll();
         mAppSoreAdapter.replaceAll(entities);
     }
 
-    private BaseDownloadTask createDownloadTask(AppInfoListEntity downloadEntity) {
+    private BaseDownloadTask createDownloadTask(AppStore downloadEntity) {
         return DownloadUtils.createDownloadTask(downloadEntity.getDownloadUrl(), downloadEntity,
                 new MyFileDownloadListener() {
                     @Override
                     public void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PENDING);
-                        ((AppInfoListEntity) task.getTag()).setTotalSize(totalBytes);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.PENDING);
+                        ((AppStore) task.getTag()).setTotalSize(totalBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PROGRESS);
-                        ((AppInfoListEntity) task.getTag()).setCurrentSize(soFarBytes);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.PROGRESS);
+                        ((AppStore) task.getTag()).setCurrentSize(soFarBytes);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void error(BaseDownloadTask task, Throwable e) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.ERROR);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.ERROR);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void connected(BaseDownloadTask task, String etag, boolean isContinue,
                                           int soFarBytes, int totalBytes) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.CONNECTED);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.CONNECTED);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.PAUSED);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.PAUSED);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void completed(BaseDownloadTask task) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.COMPLETED);
-                        ((AppInfoListEntity) task.getTag()).setCurrentSize(task.getSmallFileSoFarBytes());
-                        ((AppInfoListEntity) task.getTag()).setTotalSize(task.getSmallFileTotalBytes());
-                        ((AppInfoListEntity) task.getTag()).setSavePath(task.getPath());
-                        AppInfoListEntity appInfo = ((AppInfoListEntity) task.getTag());
-                        AppInfoHelper.getHelper().update(appInfo);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.COMPLETED);
+                        ((AppStore) task.getTag()).setCurrentSize(task.getSmallFileSoFarBytes());
+                        ((AppStore) task.getTag()).setTotalSize(task.getSmallFileTotalBytes());
+                        ((AppStore) task.getTag()).setSavePath(task.getPath());
+                        AppStore appInfo = ((AppStore) task.getTag());
+                        AppStoreDaoHelper.getHelper().update(appInfo);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void warn(BaseDownloadTask task) {
-                        ((AppInfoListEntity) task.getTag()).setDownloadState(DownloadEntity.WARN);
+                        ((AppStore) task.getTag()).setDownloadState(DownloadEntity.WARN);
                         mAppSoreAdapter.notifyDataSetChanged();
                     }
                 });

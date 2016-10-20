@@ -19,7 +19,7 @@ import com.shuyu.video.adapter.HotWordAdapter;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.fragment.SearchFragment;
 import com.shuyu.video.model.HotWord;
-import com.shuyu.video.model.SearchVideoData;
+import com.shuyu.video.model.SearchVideoList;
 
 import butterknife.Bind;
 
@@ -144,9 +144,9 @@ public class SearchActivity extends AppBaseActivity {
 
     private void searchVideo(String keyword) {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).searchVideo(keyword, 1, 4),
-                new BaseApi.IResponseListener<SearchVideoData>() {
+                new BaseApi.IResponseListener<SearchVideoList>() {
                     @Override
-                    public void onSuccess(SearchVideoData data) {
+                    public void onSuccess(SearchVideoList data) {
                         hotVideo.setVisibility(View.VISIBLE);
                         mSearchContentAdapter.replaceAllData(data.getChannelContentList());
                     }

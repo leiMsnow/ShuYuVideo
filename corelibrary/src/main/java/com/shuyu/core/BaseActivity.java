@@ -68,8 +68,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initToolbar() {
         if (!hasToolbar()) return;
 
-        View view = View.inflate(mContext, R.layout.include_toolbar, null);
-        mToolbar = (Toolbar) view.findViewById(R.id.tb_toolbar);
+        View toolbarView = View.inflate(mContext, R.layout.include_toolbar, null);
+        mToolbar = (Toolbar) toolbarView.findViewById(R.id.tb_toolbar);
         if (mToolbar == null) return;
 
         setSupportActionBar(mToolbar);
@@ -80,8 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+        addContentView(toolbarView, layoutParams);
 
-        addContentView(view, layoutParams);
         FrameLayout.LayoutParams rootParams = (FrameLayout.LayoutParams) getRootView().getLayoutParams();
         rootParams.topMargin = getToolBarHeight();
         getRootView().setLayoutParams(rootParams);

@@ -8,9 +8,7 @@ import com.shuyu.video.BuildConfig;
 
 public interface Constants {
 
-
     String IS_ACTIVATION = "IS_ACTIVATION";
-
 
     String ENVIRONMENT = BuildConfig.ENVIRONMENT;
     boolean IS_DEBUG = BuildConfig.IS_DEBUG;
@@ -28,7 +26,6 @@ public interface Constants {
 
     String DISCLAIMER = "DISCLAIMER";
 
-
     String BANNER_TITLE = "BANNER_TITLE";
     int BANNER_VIDEO = 1;
     int BANNER_PICTURE = 2;
@@ -36,5 +33,6 @@ public interface Constants {
     int BANNER_WAP = 4;
 
     String STAY_TIME_ON = "STAY_TIME_ON";
-    String USER_RULE = "USER_RULE";
+    String KEY_USER_RULE = "KEY_USER_RULE";
+
 }

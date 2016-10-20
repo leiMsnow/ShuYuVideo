@@ -2,7 +2,6 @@ package com.shuyu.video.utils;
 
 import android.os.Build;
 
-import com.shuyu.core.model.CommParams;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.CommonUtils;
 import com.shuyu.core.uils.ScreenUtils;
@@ -41,18 +40,16 @@ public class DataSignUtils {
     }
 
     //验证签名
-    private static String getSign() {
-        CommParams commParams = new CommParams();
-        StringBuilder sign = new StringBuilder()
-                .append(commParams.getUuid())
-                .append(commParams.getImei())
-                .append(commParams.getImsi())
-                .append(commParams.getDitchNo())
-                .append(commParams.getAppId())
-                .append(commParams.getVersionCode())
-                .append(MD5Utils.MD5KEY);
+    public static String getSign() {
+        String sign = CommonUtils.getUuid() +
+                CommonUtils.getImei() +
+                CommonUtils.getImsi() +
+                CommonUtils.getDitchNo() +
+                CommonUtils.getAppId() +
+                CommonUtils.getVersionCode() +
+                MD5Utils.MD5KEY;
 
-        return MD5Utils.md5(sign.toString());
+        return MD5Utils.md5(sign);
     }
 
     public static Map<String, String> getEncryptParams() {
