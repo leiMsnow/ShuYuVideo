@@ -9,3 +9,4 @@
 .externalNativeBuild
 /app/*.apk
 /*.apk
+/.idea/*.xml
