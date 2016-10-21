@@ -1,7 +1,6 @@
 package com.shuyu.core.api;
 
 import com.shuyu.core.CoreApplication;
-import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.core.uils.ToastUtils;
 
@@ -22,6 +21,8 @@ public class BaseApi {
     private static final String LOCAL_SERVER_URL = "http://121.199.21.125";
     public static final String BASE_URL = LOCAL_SERVER_URL + ":7008/";
     public static final String PAY_URL = LOCAL_SERVER_URL + ":8009/pay/";
+    public static final String ORDER_URL = LOCAL_SERVER_URL + ":8009/order/";
+    public static final String NOTICE_URL = LOCAL_SERVER_URL + ":8009/notice/";
 
     public static <T> T createApi(Class<T> service) {
         final String url = SPUtils.get(CoreApplication.getApplication()

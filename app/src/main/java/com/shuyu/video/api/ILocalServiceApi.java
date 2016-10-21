@@ -3,11 +3,9 @@ package com.shuyu.video.api;
 import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.AppStoreList;
 import com.shuyu.video.model.HotWord;
-import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoList;
-import com.shuyu.video.model.UserInfo;
 
 import java.util.List;
 
@@ -85,22 +83,5 @@ public interface ILocalServiceApi {
     Observable<ResultEntity> userVisit(@Query("data") String data,
                                        @Query("dcVersion") String dcVersion);
 
-    /**
-     * 用户信息接口
-     */
-    @GET(BaseApi.PAY_URL + "getUserInfo.service")
-    Observable<UserInfo> getUserInfo(@Query("sign") String sign);
-
-    /**
-     * 获取支付金额
-     */
-    @GET(BaseApi.PAY_URL+ "getAppInfo.service")
-    Observable<AppPayInfo> getAppPayInfo();
-
-    /**
-     * 获取支付插件接口
-     */
-    @GET(BaseApi.PAY_URL+ "selectPayment.service")
-    Observable<ResultEntity> selectPayment();
 }
 

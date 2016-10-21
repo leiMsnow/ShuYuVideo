@@ -15,6 +15,7 @@ import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.api.ILocalServiceApi;
+import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
 import com.shuyu.video.db.helper.AppStoreDaoHelper;
 import com.shuyu.video.model.AppPayInfo;
@@ -191,7 +192,7 @@ public class SplashActivity extends AppBaseActivity {
 
     private void getUserInfo() {
         String sign = DataSignUtils.getSign();
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).getUserInfo(sign),
+        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getUserInfo(sign),
                 new BaseApi.IResponseListener<UserInfo>() {
                     @Override
                     public void onSuccess(UserInfo data) {
@@ -211,7 +212,7 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void getAppInfo() {
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).getAppPayInfo(),
+        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getAppPayInfo(),
                 new BaseApi.IResponseListener<AppPayInfo>() {
                     @Override
                     public void onSuccess(AppPayInfo data) {
