@@ -9,18 +9,22 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.LogUtils;
+import com.shuyu.core.uils.NetUtils;
 import com.shuyu.video.R;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.PaymentDaoHelper;
 import com.shuyu.video.model.CreateOrderResult;
 import com.shuyu.video.model.Payment;
+import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.DialogUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 支付dialog
@@ -36,8 +40,10 @@ public class PayDialogView extends Dialog {
     public static class Builder {
         private Context mContext;
         private Button btnPay;
+        private TextView tvPrice;
         private int payCodeIndex = 0;
         private List<Payment> mPayments;
+        private int money = 50;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -48,6 +54,7 @@ public class PayDialogView extends Dialog {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.view_pay_dialog, null);
             btnPay = (Button) layout.findViewById(R.id.btn_pay);
+            tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
             final PayDialogView dialog = new PayDialogView(mContext);
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(true);
@@ -70,7 +77,8 @@ public class PayDialogView extends Dialog {
             });
 
             mPayments = PaymentDaoHelper.getHelper().getDataAll();
-
+            money = DialogUtils.getPayMoney(mContext);
+            tvPrice.setText(money + "元");
             return dialog;
         }
 
@@ -82,14 +90,27 @@ public class PayDialogView extends Dialog {
             return dialog;
         }
 
-        // TODO: 2016/10/20  弹窗下单
         private void createOrderInfo() {
 
-            String orderNo = DialogUtils.createOrderNo();
-            String payCode = getPayCode();
-            String sign = DataSignUtils.getSign();
+            Payment payment = getPayment();
+            if (payment == null) return;
+
             BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
-                            .createOrder(orderNo, payCode, sign),
+                            .createOrder(payment.getTitle(),
+                                    1,
+                                    UUID.randomUUID().toString(),
+                                    DialogUtils.createOrderNo(),
+                                    money,
+                                    money,
+                                    DialogUtils.getPayPoint(mContext),
+                                    payment.getPayType(),
+                                    payment.getPayCompanyCode(),
+                                    payment.getPayCode(),
+                                    0,
+                                    CommonUtils.getManufacturer(),
+                                    NetUtils.getHostIP(),
+                                    CommonUtils.getChannelNo(),
+                                    DataSignUtils.getSign()),
                     new BaseApi.IResponseListener<CreateOrderResult>() {
                         @Override
                         public void onSuccess(CreateOrderResult data) {
@@ -103,13 +124,13 @@ public class PayDialogView extends Dialog {
                     });
         }
 
-        private String getPayCode() {
+        private Payment getPayment() {
             if (mPayments != null && mPayments.size() > payCodeIndex) {
-                String payCode = mPayments.get(payCodeIndex).getPayCode();
+                Payment payCode = mPayments.get(payCodeIndex);
                 payCodeIndex++;
                 return payCode;
             }
-            return "";
+            return null;
         }
 
         private void initWindow(Dialog dialog) {

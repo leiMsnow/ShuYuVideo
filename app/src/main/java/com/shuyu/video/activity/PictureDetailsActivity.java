@@ -5,9 +5,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.PictureAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.PictureDetails;
 import com.shuyu.video.utils.Constants;

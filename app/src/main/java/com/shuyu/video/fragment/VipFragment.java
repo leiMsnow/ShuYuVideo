@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.transformer.ZoomOutPageTransformer;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.VipPageAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.LiveVideo;
 import com.shuyu.video.model.VideoPicDetails;

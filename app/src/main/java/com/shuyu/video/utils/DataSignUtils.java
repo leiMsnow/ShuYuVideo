@@ -3,7 +3,6 @@ package com.shuyu.video.utils;
 import android.os.Build;
 
 import com.shuyu.core.uils.AppUtils;
-import com.shuyu.core.uils.CommonUtils;
 import com.shuyu.core.uils.ScreenUtils;
 import com.sooying.utils.AESUtils;
 
@@ -62,7 +61,7 @@ public class DataSignUtils {
         queryParams.put("sdkVersion", String.valueOf(Build.VERSION.SDK_INT));
         queryParams.put("cpuVersion", AppUtils.getCPUInfo());
         queryParams.put("appVersion", String.valueOf(AppUtils.getAppVersion()));
-        queryParams.put("thirdChannelId", "0");
+        queryParams.put("thirdChannelId", CommonUtils.getChannelNo());
         queryParams.put("activateFlag", "0");
         return queryParams;
     }

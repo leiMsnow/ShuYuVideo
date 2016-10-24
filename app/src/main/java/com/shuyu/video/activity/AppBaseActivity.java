@@ -4,9 +4,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 
 import com.shuyu.core.BaseActivity;
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.utils.Constants;

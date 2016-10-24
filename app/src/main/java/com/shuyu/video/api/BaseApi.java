@@ -1,8 +1,9 @@
-package com.shuyu.core.api;
+package com.shuyu.video.api;
 
 import com.shuyu.core.CoreApplication;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.core.uils.ToastUtils;
+import com.shuyu.video.MyApplication;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -29,7 +30,7 @@ public class BaseApi {
                 , KEY_BASE_URL, BASE_URL).toString() + "%20/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
-                .client(CoreApplication.getApplication().genericClient())
+                .client(MyApplication.getApplication().genericClient())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

@@ -13,7 +13,6 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.CirclePageIndicator;
@@ -22,6 +21,7 @@ import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ChannelBanner;
 import com.shuyu.video.model.ChannelPicture;

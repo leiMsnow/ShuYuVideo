@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.ResultEntity;
 

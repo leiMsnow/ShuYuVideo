@@ -14,19 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.VideoCommentAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
-import com.shuyu.video.utils.DialogUtils;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.DialogUtils;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 

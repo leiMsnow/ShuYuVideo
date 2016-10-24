@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.shuyu.core.BaseFragment;
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.widget.HorizontalIndicatorView;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.ViewPagerAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ChannelTitle;
 

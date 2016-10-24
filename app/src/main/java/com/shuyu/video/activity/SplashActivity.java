@@ -9,11 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.shuyu.core.api.BaseApi;
-import com.shuyu.core.uils.CommonUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
@@ -26,6 +25,7 @@ import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.UserInfo;
+import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 
@@ -36,7 +36,7 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 
-import static com.shuyu.core.api.BaseApi.createApi;
+import static com.shuyu.video.api.BaseApi.createApi;
 
 public class SplashActivity extends AppBaseActivity {
 
@@ -72,7 +72,7 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void getRunInfo() {
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).getRunInfo(),
+        BaseApi.request(createApi(ILocalServiceApi.class).getRunInfo(),
                 new BaseApi.IResponseListener<List<RunInfo>>() {
                     @Override
                     public void onSuccess(List<RunInfo> data) {
@@ -142,7 +142,7 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void getAppStoreInfo() {
-        BaseApi.request(createApi(ILocalServiceApi.class).getAppStoreList(1),
+        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).getAppStoreList(1),
                 new BaseApi.IResponseListener<AppStoreList>() {
                     @Override
                     public void onSuccess(final AppStoreList data) {
@@ -176,7 +176,7 @@ public class SplashActivity extends AppBaseActivity {
     private void userActivation(String data) {
         if ((Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false)) return;
 
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
+        BaseApi.request(createApi(ILocalServiceApi.class)
                 .userActivation(data, "0"), new BaseApi.IResponseListener<ResultEntity>() {
             @Override
             public void onSuccess(ResultEntity data) {
@@ -196,7 +196,7 @@ public class SplashActivity extends AppBaseActivity {
 
     private void getUserInfo() {
         String sign = DataSignUtils.getSign();
-        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getUserInfo(sign),
+        BaseApi.request(createApi(IPayServiceApi.class).getUserInfo(sign),
                 new BaseApi.IResponseListener<UserInfo>() {
                     @Override
                     public void onSuccess(UserInfo data) {
@@ -211,12 +211,12 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void userVisit(String data) {
-        BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
+        BaseApi.request(createApi(ILocalServiceApi.class)
                 .userVisit(data, "0"), null);
     }
 
     private void getAppInfo() {
-        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getAppPayInfo(),
+        BaseApi.request(createApi(IPayServiceApi.class).getAppPayInfo(),
                 new BaseApi.IResponseListener<AppPayInfo>() {
                     @Override
                     public void onSuccess(AppPayInfo data) {
@@ -232,7 +232,7 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void selectPayment() {
-        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).selectPayment(),
+        BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                 new BaseApi.IResponseListener<List<Payment>>() {
                     @Override
                     public void onSuccess(List<Payment> data) {

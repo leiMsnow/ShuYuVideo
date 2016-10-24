@@ -1,6 +1,9 @@
-package com.shuyu.core.uils;
+package com.shuyu.video.utils;
 
 import android.os.Build;
+
+import com.shuyu.core.uils.AppUtils;
+import com.shuyu.video.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +44,11 @@ public class CommonUtils {
     }
 
     public static String getDitchNo() {
-        return "0";
+        return BuildConfig.ditchNo;
+    }
+
+    public static String getChannelNo() {
+        return BuildConfig.ChannelNo;
     }
 
     public static String getUuid() {
@@ -69,4 +76,6 @@ public class CommonUtils {
         }
         return encodeString.toString().substring(0, encodeString.toString().lastIndexOf("&"));
     }
+
+
 }

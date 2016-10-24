@@ -1,6 +1,5 @@
 package com.shuyu.video.api;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.AppStoreList;
 import com.shuyu.video.model.HotWord;
 import com.shuyu.video.model.ResultEntity;

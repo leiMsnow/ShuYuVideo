@@ -1,6 +1,5 @@
 package com.shuyu.video.api;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.CreateOrderResult;
 import com.shuyu.video.model.Payment;
@@ -53,16 +52,30 @@ public interface IPayServiceApi {
      * 创建订单
      */
     @POST(BaseApi.ORDER_URL + "createOrder.service")
-    Observable<CreateOrderResult> createOrder(@Query("orderNo") String orderNo,
-                                              @Query("payCode") String payCode,
-                                              @Query("sign") String sign);
+    Observable<CreateOrderResult> createOrder(
+                                    @Query("payName") String payName,
+                                    @Query("number") int number,
+                                    @Query("userName") String userName,
+                                    @Query("orderNo") String orderNo,
+                                    @Query("payMoney") int payMoney,
+                                    @Query("userPayMoney") int userPayMoney,
+                                    @Query("payPoint") String payPoint,
+                                    @Query("payType") int payType,
+                                    @Query("payCompanyCode") String payCompanyCode,
+                                    @Query("payCode") String payCode,
+                                    //订单状态 0-未支付 1-支付成功 2-支付失败 3-已取消 4-已退款 5-其他
+                                    @Query("payState") int payState,
+                                    @Query("userOs") String userOs,
+                                    @Query("userIp") String userIp,
+                                    @Query("channelNo") String channelNo,
+                                    @Query("sign") String sign);
 
     /**
      * app标准通知
      */
     @GET(BaseApi.NOTICE_URL + "normalNotice.service")
     Observable<String> normalNotice(@Query("orderNo") String orderNo,
-                                     @Query("payState") String payState,
-                                     @Query("sign") String sign);
+                                    @Query("payState") String payState,
+                                    @Query("sign") String sign);
 
 }

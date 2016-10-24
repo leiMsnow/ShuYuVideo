@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shuyu.core.api.BaseApi;
 import com.shuyu.core.uils.DensityUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.adapter.ChannelContentAdapter;
 import com.shuyu.video.adapter.HotWordAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.fragment.SearchFragment;
 import com.shuyu.video.model.HotWord;
