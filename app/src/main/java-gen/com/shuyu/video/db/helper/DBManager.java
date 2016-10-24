@@ -12,7 +12,7 @@ public class DBManager {
     private static DBManager instance;
     private DaoMaster daoMaster;
     private DaoSession daoSession;
-    private static final String DATABASE_NAME = "XGT-db";
+    private static final String DATABASE_NAME = "DATABASE_NAME-DB";
 
     public static DBManager getInstance() {
         if (instance == null) {

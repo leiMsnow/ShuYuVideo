@@ -9,7 +9,7 @@ buildscript {
     }
 }
 greendao {
-    schemaVersion 1
+    schemaVersion 2
     daoPackage 'com.shuyu.video.db.dao'
     targetGenDir 'src/main/java-gen'
 }

@@ -10,7 +10,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.shuyu.core.api.BaseApi;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.R;
+import com.shuyu.video.api.IPayServiceApi;
+import com.shuyu.video.db.helper.PaymentDaoHelper;
+import com.shuyu.video.model.CreateOrderResult;
+import com.shuyu.video.model.Payment;
+import com.shuyu.video.utils.DataSignUtils;
+import com.shuyu.video.utils.DialogUtils;
+
+import java.util.List;
 
 /**
  * 支付dialog
@@ -26,6 +36,8 @@ public class PayDialogView extends Dialog {
     public static class Builder {
         private Context mContext;
         private Button btnPay;
+        private int payCodeIndex = 0;
+        private List<Payment> mPayments;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -57,6 +69,8 @@ public class PayDialogView extends Dialog {
                 }
             });
 
+            mPayments = PaymentDaoHelper.getHelper().getDataAll();
+
             return dialog;
         }
 
@@ -71,6 +85,31 @@ public class PayDialogView extends Dialog {
         // TODO: 2016/10/20  弹窗下单
         private void createOrderInfo() {
 
+            String orderNo = DialogUtils.createOrderNo();
+            String payCode = getPayCode();
+            String sign = DataSignUtils.getSign();
+            BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
+                            .createOrder(orderNo, payCode, sign),
+                    new BaseApi.IResponseListener<CreateOrderResult>() {
+                        @Override
+                        public void onSuccess(CreateOrderResult data) {
+                            LogUtils.d(PayDialogView.class.getName(), data.getResultMsg());
+                        }
+
+                        @Override
+                        public void onFail() {
+
+                        }
+                    });
+        }
+
+        private String getPayCode() {
+            if (mPayments != null && mPayments.size() > payCodeIndex) {
+                String payCode = mPayments.get(payCodeIndex).getPayCode();
+                payCodeIndex++;
+                return payCode;
+            }
+            return "";
         }
 
         private void initWindow(Dialog dialog) {

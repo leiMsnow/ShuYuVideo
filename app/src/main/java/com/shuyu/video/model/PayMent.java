@@ -1,10 +1,18 @@
 package com.shuyu.video.model;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * Created by zhangleilei on 10/21/16.
  */
 
-public class PayMent {
+@Entity
+public class Payment {
+
+    @Id(autoincrement = true)
+    private Long id;
 
     private String title;
     private int payType;
@@ -16,6 +24,27 @@ public class PayMent {
     private String notifyUrl1;
     private String notifyUrl2;
     private String remark;
+
+    @Generated(hash = 2053769742)
+    public Payment(Long id, String title, int payType, String payCompanyCode,
+            String payCode, String payBean, String partnerId, String md5Key,
+            String notifyUrl1, String notifyUrl2, String remark) {
+        this.id = id;
+        this.title = title;
+        this.payType = payType;
+        this.payCompanyCode = payCompanyCode;
+        this.payCode = payCode;
+        this.payBean = payBean;
+        this.partnerId = partnerId;
+        this.md5Key = md5Key;
+        this.notifyUrl1 = notifyUrl1;
+        this.notifyUrl2 = notifyUrl2;
+        this.remark = remark;
+    }
+
+    @Generated(hash = 1565471489)
+    public Payment() {
+    }
 
     public String getTitle() {
         return title;
@@ -95,5 +124,13 @@ public class PayMent {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

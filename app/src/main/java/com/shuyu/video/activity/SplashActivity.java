@@ -18,9 +18,11 @@ import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
 import com.shuyu.video.db.helper.AppStoreDaoHelper;
+import com.shuyu.video.db.helper.PaymentDaoHelper;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.AppStore;
 import com.shuyu.video.model.AppStoreList;
+import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.UserInfo;
@@ -161,12 +163,14 @@ public class SplashActivity extends AppBaseActivity {
         String encrypt = CommonUtils.parseMap(DataSignUtils.getEncryptParams());
         String data = DataSignUtils.encryptData(encrypt);
         if (!TextUtils.isEmpty(data)) {
-            if (!(Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false))
+            if (!(Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false)) {
                 userActivation(data);
+            }
             userVisit(data);
         }
         getUserInfo();
         getAppInfo();
+        selectPayment();
     }
 
     private void userActivation(String data) {
@@ -218,6 +222,21 @@ public class SplashActivity extends AppBaseActivity {
                     public void onSuccess(AppPayInfo data) {
                         AppPayInfoDaoHelper.getHelper().deleteAll();
                         AppPayInfoDaoHelper.getHelper().addData(data);
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
+    }
+
+    private void selectPayment() {
+        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).selectPayment(),
+                new BaseApi.IResponseListener<List<Payment>>() {
+                    @Override
+                    public void onSuccess(List<Payment> data) {
+                        PaymentDaoHelper.getHelper().addDataAll(data);
                     }
 
                     @Override

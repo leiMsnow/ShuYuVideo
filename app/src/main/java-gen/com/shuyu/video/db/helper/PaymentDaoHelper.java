@@ -3,26 +3,27 @@ package com.shuyu.video.db.helper;
 import android.text.TextUtils;
 
 import com.shuyu.core.db.BaseDaoHelper;
-import com.shuyu.video.db.dao.AppStoreDao;
-import com.shuyu.video.model.AppStore;
+import com.shuyu.video.db.dao.AppPayInfoDao;
+import com.shuyu.video.db.dao.PaymentDao;
+import com.shuyu.video.model.Payment;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
 /**
  * Created by Azure on 2016/9/15.
  */
-public class AppStoreDaoHelper extends BaseDaoHelper<AppStoreDao, AppStore> {
+public class PaymentDaoHelper extends BaseDaoHelper<PaymentDao, Payment> {
 
-    private static AppStoreDaoHelper helper;
-    private AppStoreDaoHelper() {
-        super(DBManager.getInstance().getDaoSession().getAppStoreDao());
+    private static PaymentDaoHelper helper;
+    private PaymentDaoHelper() {
+        super(DBManager.getInstance().getDaoSession().getPaymentDao());
     }
 
-    public static AppStoreDaoHelper getHelper() {
+    public static PaymentDaoHelper getHelper() {
         if (helper == null) {
-            synchronized (AppStoreDaoHelper.class) {
+            synchronized (PaymentDaoHelper.class) {
                 if (helper == null) {
-                    helper = new AppStoreDaoHelper();
+                    helper = new PaymentDaoHelper();
                 }
             }
         }
@@ -30,7 +31,7 @@ public class AppStoreDaoHelper extends BaseDaoHelper<AppStoreDao, AppStore> {
     }
 
     @Override
-    protected AppStore getDataInfoById(String id) {
+    protected Payment getDataInfoById(String id) {
         if (checkDaoNotNull() && !TextUtils.isEmpty(id)) {
             return tableDao.load(Long.parseLong(id));
         }
@@ -40,8 +41,8 @@ public class AppStoreDaoHelper extends BaseDaoHelper<AppStoreDao, AppStore> {
     @Override
     protected boolean hasKeyById(String id) {
         if (checkDaoNotNull() && !TextUtils.isEmpty(id)) {
-            QueryBuilder<AppStore> qb = tableDao.queryBuilder();
-            qb.where(AppStoreDao.Properties.AppId.eq(id));
+            QueryBuilder<Payment> qb = tableDao.queryBuilder();
+            qb.where(AppPayInfoDao.Properties.Id.eq(id));
             long count = qb.buildCount().count();
             return count > 0;
         }
