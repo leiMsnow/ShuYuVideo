@@ -2,6 +2,7 @@ package com.shuyu.video.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,10 +41,11 @@ public class PayDialogView extends Dialog {
         private Context mContext;
         private Button btnPay;
         private TextView tvPrice;
+        private TextView tvNewPrice;
         private TextView tvPriceTips;
         private int payCodeIndex = 0;
         private List<Payment> mPayments;
-        private int money = 30;
+        private double[] mMoneys;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -55,7 +57,11 @@ public class PayDialogView extends Dialog {
             View layout = inflater.inflate(R.layout.view_pay_dialog, null);
             btnPay = (Button) layout.findViewById(R.id.btn_pay);
             tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
+            tvNewPrice = (TextView) layout.findViewById(R.id.tv_pay_new_price);
             tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
+
+            tvPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
             final PayDialogView dialog = new PayDialogView(mContext);
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(true);
@@ -78,8 +84,9 @@ public class PayDialogView extends Dialog {
             });
 
             mPayments = PaymentDaoHelper.getHelper().getDataAll();
-            money = DialogUtils.getPayMoney(mContext);
-            tvPrice.setText(String.format("%d元", money));
+            mMoneys = DialogUtils.getPayMoney(mContext);
+            tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
+            tvNewPrice.setText(String.format("特价：%.2f元", mMoneys[1]));
             tvPriceTips.setText(DialogUtils.getPayMoneyTips(mContext));
             return dialog;
         }
@@ -102,8 +109,8 @@ public class PayDialogView extends Dialog {
                                     1,
                                     CommonUtils.getUUID(),
                                     DialogUtils.createOrderNo(),
-                                    money,
-                                    money,
+                                    mMoneys[1],
+                                    mMoneys[1],
                                     DialogUtils.getPayPoint(mContext),
                                     payment.getPayType(),
                                     payment.getPayCompanyCode(),

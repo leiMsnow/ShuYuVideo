@@ -68,6 +68,9 @@ public class SplashActivity extends AppBaseActivity {
         Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, "")).into(ivLauncherUrl);
         getAppStoreInfo();
         userVisitOrActivation();
+        getUserInfo();
+        getAppInfo();
+        selectPayment();
         getRunInfo();
     }
 
@@ -168,9 +171,6 @@ public class SplashActivity extends AppBaseActivity {
             }
             userVisit(data);
         }
-        getUserInfo();
-        getAppInfo();
-        selectPayment();
     }
 
     private void userActivation(String data) {
@@ -220,13 +220,12 @@ public class SplashActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<AppPayInfo>() {
                     @Override
                     public void onSuccess(AppPayInfo data) {
-                        AppPayInfoDaoHelper.getHelper().deleteAll();
                         AppPayInfoDaoHelper.getHelper().addData(data);
                     }
 
                     @Override
                     public void onFail() {
-
+                        LogUtils.e("SplashActivity","getAppInfo-Error");
                     }
                 });
     }

@@ -32,7 +32,7 @@ public class AppPayInfoDaoHelper extends BaseDaoHelper<AppPayInfoDao, AppPayInfo
     @Override
     protected AppPayInfo getDataInfoById(String id) {
         if (checkDaoNotNull() && !TextUtils.isEmpty(id)) {
-            return tableDao.load(Long.parseLong(id));
+            return tableDao.load(id);
         }
         return null;
     }
@@ -41,7 +41,7 @@ public class AppPayInfoDaoHelper extends BaseDaoHelper<AppPayInfoDao, AppPayInfo
     protected boolean hasKeyById(String id) {
         if (checkDaoNotNull() && !TextUtils.isEmpty(id)) {
             QueryBuilder<AppPayInfo> qb = tableDao.queryBuilder();
-            qb.where(AppPayInfoDao.Properties.Id.eq(id));
+            qb.where(AppPayInfoDao.Properties.AppId.eq(id));
             long count = qb.buildCount().count();
             return count > 0;
         }

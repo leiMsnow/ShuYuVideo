@@ -3,7 +3,6 @@ package com.shuyu.video.db.helper;
 import android.text.TextUtils;
 
 import com.shuyu.core.db.BaseDaoHelper;
-import com.shuyu.video.db.dao.AppPayInfoDao;
 import com.shuyu.video.db.dao.PaymentDao;
 import com.shuyu.video.model.Payment;
 
@@ -42,7 +41,7 @@ public class PaymentDaoHelper extends BaseDaoHelper<PaymentDao, Payment> {
     protected boolean hasKeyById(String id) {
         if (checkDaoNotNull() && !TextUtils.isEmpty(id)) {
             QueryBuilder<Payment> qb = tableDao.queryBuilder();
-            qb.where(AppPayInfoDao.Properties.Id.eq(id));
+            qb.where(PaymentDao.Properties.Id.eq(id));
             long count = qb.buildCount().count();
             return count > 0;
         }

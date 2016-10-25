@@ -15,7 +15,7 @@ import com.shuyu.video.model.AppPayInfo;
 /** 
  * DAO for table "APP_PAY_INFO".
 */
-public class AppPayInfoDao extends AbstractDao<AppPayInfo, Long> {
+public class AppPayInfoDao extends AbstractDao<AppPayInfo, String> {
 
     public static final String TABLENAME = "APP_PAY_INFO";
 
@@ -24,12 +24,16 @@ public class AppPayInfoDao extends AbstractDao<AppPayInfo, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property SpreePrice = new Property(1, int.class, "spreePrice", false, "SPREE_PRICE");
-        public final static Property MemberPrice = new Property(2, int.class, "memberPrice", false, "MEMBER_PRICE");
-        public final static Property VipPrice = new Property(3, int.class, "vipPrice", false, "VIP_PRICE");
-        public final static Property SvipPrice = new Property(4, int.class, "svipPrice", false, "SVIP_PRICE");
-        public final static Property Rebate = new Property(5, int.class, "rebate", false, "REBATE");
+        public final static Property AppId = new Property(0, String.class, "appId", true, "APP_ID");
+        public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
+        public final static Property SpreePrice = new Property(2, float.class, "spreePrice", false, "SPREE_PRICE");
+        public final static Property MemberPrice = new Property(3, float.class, "memberPrice", false, "MEMBER_PRICE");
+        public final static Property VipPrice = new Property(4, float.class, "vipPrice", false, "VIP_PRICE");
+        public final static Property SvipPrice = new Property(5, float.class, "svipPrice", false, "SVIP_PRICE");
+        public final static Property Rebate = new Property(6, double.class, "rebate", false, "REBATE");
+        public final static Property PackageName = new Property(7, String.class, "packageName", false, "PACKAGE_NAME");
+        public final static Property VersionName = new Property(8, String.class, "versionName", false, "VERSION_NAME");
+        public final static Property VersionNo = new Property(9, String.class, "versionNo", false, "VERSION_NO");
     };
 
 
@@ -45,12 +49,16 @@ public class AppPayInfoDao extends AbstractDao<AppPayInfo, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"APP_PAY_INFO\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"SPREE_PRICE\" INTEGER NOT NULL ," + // 1: spreePrice
-                "\"MEMBER_PRICE\" INTEGER NOT NULL ," + // 2: memberPrice
-                "\"VIP_PRICE\" INTEGER NOT NULL ," + // 3: vipPrice
-                "\"SVIP_PRICE\" INTEGER NOT NULL ," + // 4: svipPrice
-                "\"REBATE\" INTEGER NOT NULL );"); // 5: rebate
+                "\"APP_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: appId
+                "\"TITLE\" TEXT," + // 1: title
+                "\"SPREE_PRICE\" REAL NOT NULL ," + // 2: spreePrice
+                "\"MEMBER_PRICE\" REAL NOT NULL ," + // 3: memberPrice
+                "\"VIP_PRICE\" REAL NOT NULL ," + // 4: vipPrice
+                "\"SVIP_PRICE\" REAL NOT NULL ," + // 5: svipPrice
+                "\"REBATE\" REAL NOT NULL ," + // 6: rebate
+                "\"PACKAGE_NAME\" TEXT," + // 7: packageName
+                "\"VERSION_NAME\" TEXT," + // 8: versionName
+                "\"VERSION_NO\" TEXT);"); // 9: versionNo
     }
 
     /** Drops the underlying database table. */
@@ -63,70 +71,117 @@ public class AppPayInfoDao extends AbstractDao<AppPayInfo, Long> {
     protected final void bindValues(DatabaseStatement stmt, AppPayInfo entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        String appId = entity.getAppId();
+        if (appId != null) {
+            stmt.bindString(1, appId);
         }
-        stmt.bindLong(2, entity.getSpreePrice());
-        stmt.bindLong(3, entity.getMemberPrice());
-        stmt.bindLong(4, entity.getVipPrice());
-        stmt.bindLong(5, entity.getSvipPrice());
-        stmt.bindLong(6, entity.getRebate());
+ 
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(2, title);
+        }
+        stmt.bindDouble(3, entity.getSpreePrice());
+        stmt.bindDouble(4, entity.getMemberPrice());
+        stmt.bindDouble(5, entity.getVipPrice());
+        stmt.bindDouble(6, entity.getSvipPrice());
+        stmt.bindDouble(7, entity.getRebate());
+ 
+        String packageName = entity.getPackageName();
+        if (packageName != null) {
+            stmt.bindString(8, packageName);
+        }
+ 
+        String versionName = entity.getVersionName();
+        if (versionName != null) {
+            stmt.bindString(9, versionName);
+        }
+ 
+        String versionNo = entity.getVersionNo();
+        if (versionNo != null) {
+            stmt.bindString(10, versionNo);
+        }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, AppPayInfo entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        String appId = entity.getAppId();
+        if (appId != null) {
+            stmt.bindString(1, appId);
         }
-        stmt.bindLong(2, entity.getSpreePrice());
-        stmt.bindLong(3, entity.getMemberPrice());
-        stmt.bindLong(4, entity.getVipPrice());
-        stmt.bindLong(5, entity.getSvipPrice());
-        stmt.bindLong(6, entity.getRebate());
+ 
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(2, title);
+        }
+        stmt.bindDouble(3, entity.getSpreePrice());
+        stmt.bindDouble(4, entity.getMemberPrice());
+        stmt.bindDouble(5, entity.getVipPrice());
+        stmt.bindDouble(6, entity.getSvipPrice());
+        stmt.bindDouble(7, entity.getRebate());
+ 
+        String packageName = entity.getPackageName();
+        if (packageName != null) {
+            stmt.bindString(8, packageName);
+        }
+ 
+        String versionName = entity.getVersionName();
+        if (versionName != null) {
+            stmt.bindString(9, versionName);
+        }
+ 
+        String versionNo = entity.getVersionNo();
+        if (versionNo != null) {
+            stmt.bindString(10, versionNo);
+        }
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
 
     @Override
     public AppPayInfo readEntity(Cursor cursor, int offset) {
         AppPayInfo entity = new AppPayInfo( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getInt(offset + 1), // spreePrice
-            cursor.getInt(offset + 2), // memberPrice
-            cursor.getInt(offset + 3), // vipPrice
-            cursor.getInt(offset + 4), // svipPrice
-            cursor.getInt(offset + 5) // rebate
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // appId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // title
+            cursor.getFloat(offset + 2), // spreePrice
+            cursor.getFloat(offset + 3), // memberPrice
+            cursor.getFloat(offset + 4), // vipPrice
+            cursor.getFloat(offset + 5), // svipPrice
+            cursor.getDouble(offset + 6), // rebate
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // packageName
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // versionName
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // versionNo
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, AppPayInfo entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setSpreePrice(cursor.getInt(offset + 1));
-        entity.setMemberPrice(cursor.getInt(offset + 2));
-        entity.setVipPrice(cursor.getInt(offset + 3));
-        entity.setSvipPrice(cursor.getInt(offset + 4));
-        entity.setRebate(cursor.getInt(offset + 5));
+        entity.setAppId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setTitle(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setSpreePrice(cursor.getFloat(offset + 2));
+        entity.setMemberPrice(cursor.getFloat(offset + 3));
+        entity.setVipPrice(cursor.getFloat(offset + 4));
+        entity.setSvipPrice(cursor.getFloat(offset + 5));
+        entity.setRebate(cursor.getDouble(offset + 6));
+        entity.setPackageName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setVersionName(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setVersionNo(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(AppPayInfo entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final String updateKeyAfterInsert(AppPayInfo entity, long rowId) {
+        return entity.getAppId();
     }
     
     @Override
-    public Long getKey(AppPayInfo entity) {
+    public String getKey(AppPayInfo entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getAppId();
         } else {
             return null;
         }

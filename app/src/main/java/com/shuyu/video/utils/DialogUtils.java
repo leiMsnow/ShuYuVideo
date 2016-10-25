@@ -37,18 +37,32 @@ public class DialogUtils {
                 (int) ((Math.random() * 9 + 1) * 1000000);
     }
 
-    public static int getPayMoney(Context context) {
-        int payMoney = 30;
+    public static AppPayInfo getPayInfo() {
         List<AppPayInfo> appPayInfoList = AppPayInfoDaoHelper.getHelper().getDataAll();
         if (appPayInfoList != null && appPayInfoList.size() > 0) {
-            AppPayInfo appPayInfo = appPayInfoList.get(0);
-            int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
-            int[] moneys = new int[]{appPayInfo.getMemberPrice(),
-                    appPayInfo.getVipPrice(),
-                    appPayInfo.getSvipPrice()};
-            return moneys[userRule];
+            return appPayInfoList.get(0);
         }
-        return payMoney;
+        return null;
+    }
+
+    public static double[] getPayMoney(Context context) {
+        AppPayInfo appPayInfo = getPayInfo();
+        if (appPayInfo == null) {
+            return new double[]{30, 25};
+        }
+        int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
+        double[][] moneys = new double[][]{
+
+                new double[]{appPayInfo.getMemberPrice(),
+                        appPayInfo.getMemberPrice() * appPayInfo.getRebate()},
+
+                new double[]{appPayInfo.getVipPrice(),
+                        appPayInfo.getVipPrice() * appPayInfo.getRebate()},
+
+                new double[]{appPayInfo.getSvipPrice(),
+                        appPayInfo.getSvipPrice() * appPayInfo.getRebate()}
+        };
+        return moneys[userRule];
     }
 
     public static String getPayMoneyTips(Context context) {
