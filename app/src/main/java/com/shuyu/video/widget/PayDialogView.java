@@ -2,6 +2,7 @@ package com.shuyu.video.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
 import com.shuyu.video.R;
+import com.shuyu.video.activity.PayMainActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.PaymentDaoHelper;
@@ -79,13 +81,17 @@ public class PayDialogView extends Dialog {
             btnPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(mContext, PayMainActivity.class);
+                    mContext.startActivity(intent);
+                    dialog.dismiss();
                 }
             });
 
             mPayments = PaymentDaoHelper.getHelper().getDataAll();
             mMoneys = DialogUtils.getPayMoney(mContext);
-            tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
+            if (mMoneys[0] > mMoneys[1]) {
+                tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
+            }
             tvNewPrice.setText(String.format("特价：%.2f元", mMoneys[1]));
             tvPriceTips.setText(DialogUtils.getPayMoneyTips(mContext));
             return dialog;

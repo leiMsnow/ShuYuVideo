@@ -52,6 +52,44 @@
             android:name=".activity.ServiceActivity"
             android:label="@string/service">
         </activity>
+
+        <activity android:name=".activity.PayMainActivity"/>
+
+        <!-- 现在支付 -->
+        <activity
+            android:name="com.ipaynow.plugin.presenter.PayMethodActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <!-- 支付宝支付 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+
+        <!-- 微信插件版支付 -->
+        <activity
+            android:name="com.ipaynow.plugin.inner_plugin.wechatpg.activity.WXPayActivity"
+            android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Dialog"/>
+
+        <activity-alias
+            android:name="${WXPAY_PACKAGE_PATH}.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.ipaynow.plugin.inner_plugin.wechatpg.activity.WXPayActivity"/>
+
     </application>
 
 </manifest>

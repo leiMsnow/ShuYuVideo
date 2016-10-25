@@ -24,8 +24,8 @@ public class AppPayInfo {
 
     @Generated(hash = 1545061232)
     public AppPayInfo(String appId, String title, float spreePrice,
-            float memberPrice, float vipPrice, float svipPrice, double rebate,
-            String packageName, String versionName, String versionNo) {
+                      float memberPrice, float vipPrice, float svipPrice, double rebate,
+                      String packageName, String versionName, String versionNo) {
         this.appId = appId;
         this.title = title;
         this.spreePrice = spreePrice;
@@ -91,6 +91,8 @@ public class AppPayInfo {
     }
 
     public double getRebate() {
+        if (rebate <= 0 || rebate >= 1)
+            rebate = 1;
         return rebate;
     }
 
