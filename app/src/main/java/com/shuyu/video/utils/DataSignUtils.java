@@ -40,7 +40,7 @@ public class DataSignUtils {
 
     //验证签名
     public static String getSign() {
-        String sign = CommonUtils.getUuid() +
+        String sign = CommonUtils.getUUID() +
                 CommonUtils.getImei() +
                 CommonUtils.getImsi() +
                 CommonUtils.getDitchNo() +

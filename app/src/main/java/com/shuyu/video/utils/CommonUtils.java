@@ -51,7 +51,7 @@ public class CommonUtils {
         return BuildConfig.ChannelNo;
     }
 
-    public static String getUuid() {
+    public static String getUUID() {
         return AppUtils.getUUID();
     }
 
@@ -65,7 +65,7 @@ public class CommonUtils {
         queryParams.put("appId", String.valueOf(getAppId()));
         queryParams.put("dcVersion", getDcVersion());
         queryParams.put("ditchNo", getDitchNo());
-        queryParams.put("uuid", getUuid());
+        queryParams.put("uuid", getUUID());
         return queryParams;
     }
 

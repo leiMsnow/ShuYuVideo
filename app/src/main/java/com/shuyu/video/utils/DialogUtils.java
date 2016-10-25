@@ -14,10 +14,6 @@ import java.util.List;
  */
 public class DialogUtils {
 
-    public static final String MEMBER = "member";
-    public static final String VIP = "vip";
-    public static final String SVIP = "svip";
-
     /**
      * 是否拥有播放权限
      *
@@ -47,32 +43,23 @@ public class DialogUtils {
         if (appPayInfoList != null && appPayInfoList.size() > 0) {
             AppPayInfo appPayInfo = appPayInfoList.get(0);
             int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
-
-            if (userRule == 0) {
-                payMoney = appPayInfo.getMemberPrice();
-            }
-            if (userRule == 1) {
-                payMoney = appPayInfo.getVipPrice();
-            }
-            if (userRule == 2) {
-                payMoney = appPayInfo.getSvipPrice();
-            }
+            int[] moneys = new int[]{appPayInfo.getMemberPrice(),
+                    appPayInfo.getVipPrice(),
+                    appPayInfo.getSvipPrice()};
+            return moneys[userRule];
         }
         return payMoney;
     }
 
-    public static String getPayPoint(Context context) {
-        String payPoint = MEMBER;
+    public static String getPayMoneyTips(Context context) {
+        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip"};
         int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
-        if (userRule == 0) {
-            payPoint = MEMBER;
-        }
-        if (userRule == 1) {
-            payPoint = VIP;
-        }
-        if (userRule == 2) {
-            payPoint = SVIP;
-        }
-        return payPoint;
+        return tips[userRule];
+    }
+
+    public static String getPayPoint(Context context) {
+        int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
+        String[] payPoints = new String[]{"member", "vip", "svip"};
+        return payPoints[userRule];
     }
 }

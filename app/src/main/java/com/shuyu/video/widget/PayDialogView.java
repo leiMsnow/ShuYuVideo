@@ -24,7 +24,6 @@ import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.DialogUtils;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 支付dialog
@@ -41,9 +40,10 @@ public class PayDialogView extends Dialog {
         private Context mContext;
         private Button btnPay;
         private TextView tvPrice;
+        private TextView tvPriceTips;
         private int payCodeIndex = 0;
         private List<Payment> mPayments;
-        private int money = 50;
+        private int money = 30;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -55,6 +55,7 @@ public class PayDialogView extends Dialog {
             View layout = inflater.inflate(R.layout.view_pay_dialog, null);
             btnPay = (Button) layout.findViewById(R.id.btn_pay);
             tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
+            tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
             final PayDialogView dialog = new PayDialogView(mContext);
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(true);
@@ -78,7 +79,8 @@ public class PayDialogView extends Dialog {
 
             mPayments = PaymentDaoHelper.getHelper().getDataAll();
             money = DialogUtils.getPayMoney(mContext);
-            tvPrice.setText(money + "元");
+            tvPrice.setText(String.format("%d元", money));
+            tvPriceTips.setText(DialogUtils.getPayMoneyTips(mContext));
             return dialog;
         }
 
@@ -98,7 +100,7 @@ public class PayDialogView extends Dialog {
             BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                             .createOrder(payment.getTitle(),
                                     1,
-                                    UUID.randomUUID().toString(),
+                                    CommonUtils.getUUID(),
                                     DialogUtils.createOrderNo(),
                                     money,
                                     money,
