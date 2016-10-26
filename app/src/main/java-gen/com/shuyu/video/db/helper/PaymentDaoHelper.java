@@ -47,4 +47,13 @@ public class PaymentDaoHelper extends BaseDaoHelper<PaymentDao, Payment> {
         }
         return false;
     }
+
+    public Payment getPaymentByPayType(String payType){
+        if (checkDaoNotNull()&&!TextUtils.isEmpty(payType)){
+            QueryBuilder<Payment> qb = tableDao.queryBuilder();
+            qb.where(PaymentDao.Properties.PayType.eq(payType));
+            Payment payment = qb.build().unique();
+        }
+        return null;
+    }
 }

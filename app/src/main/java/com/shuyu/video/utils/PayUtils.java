@@ -1,5 +1,6 @@
 package com.shuyu.video.utils;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.shuyu.core.uils.SPUtils;
@@ -12,7 +13,10 @@ import java.util.List;
 /**
  * Created by Azure on 2016/9/27.
  */
-public class DialogUtils {
+public class PayUtils {
+
+    public static final int WE_CHAT_PAY = 1;
+    public static final int ALI_PAY = 2;
 
     /**
      * 是否拥有播放权限
@@ -21,7 +25,7 @@ public class DialogUtils {
      * @param rule
      * @return
      */
-    public static boolean canPlayer(Context context, int rule) {
+    public static boolean canPlayer(Activity context, int rule) {
         if (rule <= (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0))
             return true;
 

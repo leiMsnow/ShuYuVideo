@@ -13,6 +13,7 @@ public class OrderInfo implements Parcelable{
     private String orderName;
     private double price;
     private String partnerId;
+    private String key;
 
     public OrderInfo() {
     }
@@ -22,6 +23,7 @@ public class OrderInfo implements Parcelable{
         orderName = in.readString();
         price = in.readDouble();
         partnerId = in.readString();
+        key = in.readString();
     }
 
     public static final Creator<OrderInfo> CREATOR = new Creator<OrderInfo>() {
@@ -68,6 +70,14 @@ public class OrderInfo implements Parcelable{
         this.partnerId = partnerId;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,5 +89,6 @@ public class OrderInfo implements Parcelable{
         dest.writeString(orderName);
         dest.writeDouble(price);
         dest.writeString(partnerId);
+        dest.writeString(key);
     }
 }

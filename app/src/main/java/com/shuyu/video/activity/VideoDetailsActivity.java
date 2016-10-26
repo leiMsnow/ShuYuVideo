@@ -26,7 +26,7 @@ import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
-import com.shuyu.video.utils.DialogUtils;
+import com.shuyu.video.utils.PayUtils;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
@@ -273,7 +273,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void startPlay() {
-        if (DialogUtils.canPlayer(mContext, mVideoDetails.getFeeRule())) {
+        if (PayUtils.canPlayer(this, mVideoDetails.getFeeRule())) {
             mIvUrl.setVisibility(View.GONE);
             ivVideoPlayer.setVisibility(View.GONE);
             mVideoView.start();

@@ -17,7 +17,7 @@ import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.LiveVideo;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
-import com.shuyu.video.utils.DialogUtils;
+import com.shuyu.video.utils.PayUtils;
 
 import butterknife.Bind;
 import butterknife.OnPageChange;
@@ -52,7 +52,7 @@ public class VipFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 VideoPicDetails vip = (VideoPicDetails) v.getTag();
-                if (!DialogUtils.canPlayer(mContext, vip.getFeeRule())) return;
+                if (!PayUtils.canPlayer(getActivity(), vip.getFeeRule())) return;
 
                 Intent intent = new Intent(mContext, VideoDetailsActivity.class);
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, vip.getId());
