@@ -21,8 +21,10 @@ import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.PaymentDaoHelper;
 import com.shuyu.video.model.CreateOrderResult;
+import com.shuyu.video.model.OrderInfo;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.utils.CommonUtils;
+import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.DialogUtils;
 
@@ -47,6 +49,8 @@ public class PayDialogView extends Dialog {
         private TextView tvPriceTips;
         private int payCodeIndex = 0;
         private List<Payment> mPayments;
+        private Payment mPayment;
+        private OrderInfo orderInfo;
         private double[] mMoneys;
 
         public Builder(Context context) {
@@ -78,16 +82,16 @@ public class PayDialogView extends Dialog {
             });
             dialog.setContentView(layout);
 
+            mPayments = PaymentDaoHelper.getHelper().getDataAll();
             btnPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PayMainActivity.class);
+                    intent.putExtra(Constants.KEY_ORDER_INFO, orderInfo);
                     mContext.startActivity(intent);
                     dialog.dismiss();
                 }
             });
-
-            mPayments = PaymentDaoHelper.getHelper().getDataAll();
             mMoneys = DialogUtils.getPayMoney(mContext);
             if (mMoneys[0] > mMoneys[1]) {
                 tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
@@ -107,20 +111,26 @@ public class PayDialogView extends Dialog {
 
         private void createOrderInfo() {
 
-            Payment payment = getPayment();
-            if (payment == null) return;
+            mPayment = getPayment();
+            if (mPayment == null) return;
+
+            orderInfo = new OrderInfo();
+            orderInfo.setOrderId(DialogUtils.createOrderNo());
+            orderInfo.setOrderName(tvPriceTips.getText().toString());
+            orderInfo.setPartnerId(mPayment.getPartnerId());
+            orderInfo.setPrice(0.01);
 
             BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
-                            .createOrder(payment.getTitle(),
+                            .createOrder(mPayment.getTitle(),
                                     1,
                                     CommonUtils.getUUID(),
                                     DialogUtils.createOrderNo(),
                                     mMoneys[1],
                                     mMoneys[1],
                                     DialogUtils.getPayPoint(mContext),
-                                    payment.getPayType(),
-                                    payment.getPayCompanyCode(),
-                                    payment.getPayCode(),
+                                    mPayment.getPayType(),
+                                    mPayment.getPayCompanyCode(),
+                                    mPayment.getPayCode(),
                                     0,
                                     CommonUtils.getManufacturer(),
                                     NetUtils.getHostIP(),
@@ -141,9 +151,9 @@ public class PayDialogView extends Dialog {
 
         private Payment getPayment() {
             if (mPayments != null && mPayments.size() > payCodeIndex) {
-                Payment payCode = mPayments.get(payCodeIndex);
+                mPayment = mPayments.get(payCodeIndex);
                 payCodeIndex++;
-                return payCode;
+                return mPayment;
             }
             return null;
         }

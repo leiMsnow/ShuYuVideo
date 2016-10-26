@@ -1,36 +1,41 @@
 package com.shuyu.video.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.ipaynow.plugin.api.IpaynowPlugin;
-import com.ipaynow.plugin.manager.route.dto.ResponseParams;
-import com.ipaynow.plugin.manager.route.impl.ReceivePayResult;
-import com.ipaynow.plugin.utils.MerchantTools;
-import com.ipaynow.plugin.utils.PreSignMessageUtil;
+import com.example.jokers.payplatform.MyTask;
 import com.shuyu.video.R;
-import com.shuyu.video.utils.HttpUtil;
+import com.shuyu.video.model.OrderInfo;
+import com.shuyu.video.utils.Constants;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
-public class PayMainActivity extends AppBaseActivity implements ReceivePayResult {
+import c.b.BP;
+import c.b.PListener;
 
+public class PayMainActivity extends AppBaseActivity {
+
+    // 此为测试Appid,请将Appid改成你自己的Bmob AppId
+    String APP_ID = "8d66ae9795a9059df665a8c7f2f2e0ee";
+    // 此为支付插件的官方最新版本号,请在更新时留意更新说明
+    int PLUGINVERSION = 7;
     private Button btnWeChatPay;
+    private Button btnAliPay;
 
-    private PreSignMessageUtil preSign = new PreSignMessageUtil();
-    //TODO 签名接口，仅供测试时使用，结束请替换成自己的签名生成接口地址
-    private static final String GET_ORDER_MESSAGE_URL = "http://posp.ipaynow.cn/ZyPluginPaymentTest_PAY/api/pay2.php";
-    //TODO 测试账号仅供开发者测试时使用
-    private static final String appID = "1408709961320306";
-    private static ProgressDialog progressDialog = null;
+    private String url = "http://app.6lyy.com/appCharge.aspx";
+    private String callbackurl = "http://rt.23idc.net/Receive.aspx";
+    private String key = "cf5dd7338bf44c62b45f1326aa7eff01";
+
+    ProgressDialog dialog;
+
+    private OrderInfo mOrderInfo;
 
     @Override
     protected int getLayoutRes() {
@@ -39,108 +44,141 @@ public class PayMainActivity extends AppBaseActivity implements ReceivePayResult
 
     @Override
     protected void initData() {
-        // 初始化支付插件,传入 context 对象
-        IpaynowPlugin.getInstance().init(this);
-        //无论微信、qq 安装与否,网关页面都显示渠道按钮。
-        IpaynowPlugin.getInstance().unCkeckEnvironment();
+        // 必须先初始化
+        BP.init(this, APP_ID);
+        mOrderInfo = getIntent().getExtras().getParcelable(Constants.KEY_ORDER_INFO);
         btnWeChatPay = (Button) findViewById(R.id.btn_wechat_pay);
+        btnAliPay = (Button) findViewById(R.id.btn_ali_pay);
         btnWeChatPay.setOnClickListener(OnPayClick);
+        btnAliPay.setOnClickListener(OnPayClick);
+
+        int pluginVersion = BP.getPluginVersion();
+        if (pluginVersion < PLUGINVERSION) {// 为0说明未安装支付插件, 否则就是支付插件的版本低于官方最新版
+            Toast.makeText(
+                    mContext,
+                    pluginVersion == 0 ? "监测到本机尚未安装支付插件,无法进行支付,请先安装插件(无流量消耗)"
+                            : "监测到本机的支付插件不是最新版,最好进行更新,请先更新插件(无流量消耗)",
+                    Toast.LENGTH_LONG).show();
+            installBmobPayPlugin("bp.db");
+        }
     }
 
     private View.OnClickListener OnPayClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!checkNetInfo()) return;
-
-            showProgressDialog();
-            createPayMessage();
-
             if (v == btnWeChatPay) {
-                preSign.payChannelType = "1310";// 微信插件支付
+                weChatPay();
+            } else if (v == btnAliPay) {
+                payAliPay();
             }
-            //获取请求参数并调起支付
-            GetMessage gm = new GetMessage();
-            gm.execute(preSign.generatePreSignMessage());
         }
     };
 
-    private boolean checkNetInfo() {
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = manager.getActiveNetworkInfo();
-        if (info == null || !info.isConnected()) {
-            Toast.makeText(this, "请检查网络连接状态", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
+    private void payAliPay() {
+        MyTask task = new MyTask(this,
+                mOrderInfo.getPartnerId(),
+                callbackurl, key, mOrderInfo.getOrderId(),
+                String.valueOf(mOrderInfo.getPrice()),
+                url, mOrderInfo.getOrderName());
+        task.execute(url);
     }
 
-    private void showProgressDialog() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("进度提示");
-        progressDialog.setMessage("支付安全环境扫描");
-        progressDialog.setCancelable(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.show();
-    }
 
     /**
-     * 本地生成订单信息
-     *
+     * 调用支付
      */
-    private void createPayMessage() {
+    void weChatPay() {
+        showDialog("正在获取订单...");
+        BP.pay(mOrderInfo.getOrderName(), "", mOrderInfo.getPrice(), false, new PListener() {
+            // 因为网络等原因,支付结果未知(小概率事件),出于保险起见稍后手动查询
+            @Override
+            public void unknow() {
+                Toast.makeText(mContext, "支付结果未知,请稍后手动查询", Toast.LENGTH_SHORT)
+                        .show();
+                hideDialog();
+            }
 
-        preSign.appId = appID;
-        preSign.mhtOrderStartTime = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
-        preSign.mhtOrderNo = preSign.mhtOrderStartTime;
-        preSign.mhtOrderName = "鼠标";
-        preSign.mhtOrderType = "01";
-        preSign.mhtCurrencyType = "156";
-        preSign.mhtOrderAmt = "10";
-        preSign.mhtOrderDetail = "关于支付的演示";
-        preSign.mhtOrderTimeOut = "3600";
-        preSign.notifyUrl = "http://localhost:10802/";
-        preSign.mhtCharset = "UTF-8";
-        preSign.mhtReserved = "test";
-        preSign.consumerId = "456123";
-        preSign.consumerName = "yuyang";
+            // 支付成功,如果金额较大请手动查询确认
+            @Override
+            public void succeed() {
+                Toast.makeText(mContext, "支付成功!", Toast.LENGTH_SHORT).show();
+                hideDialog();
+            }
+
+            // 无论成功与否,返回订单号
+            @Override
+            public void orderId(String orderId) {
+                // 此处应该保存订单号,比如保存进数据库等,以便以后查询
+                showDialog("获取订单成功!请等待跳转到支付页面~");
+            }
+
+            // 支付失败,原因可能是用户中断支付操作,也可能是网络原因
+            @Override
+            public void fail(int code, String reason) {
+
+                // 当code为-2,意味着用户中断了操作
+                // code为-3意味着没有安装BmobPlugin插件
+                if (code == -3) {
+                    Toast.makeText(
+                            mContext,
+                            "监测到你尚未安装支付插件,无法进行支付,请先安装插件(已打包在本地,无流量消耗),安装结束后重新支付",
+                            Toast.LENGTH_SHORT).show();
+                    installBmobPayPlugin("bp.db");
+                } else {
+                    Toast.makeText(mContext, "支付中断!", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                hideDialog();
+            }
+        });
     }
 
-    public class GetMessage extends AsyncTask<String, Integer, String> {
-        protected String doInBackground(String... params) {
-            //将订单内容进行拼接生成待签名串
-            String preSignStr = preSign.generatePreSignMessage();
-            //生成签名串；请在自己服务器进行生成签名，具体请看服务器签名文档
-            String signStr = HttpUtil.post(GET_ORDER_MESSAGE_URL,
-                    "paydata=" + MerchantTools.urlEncode(preSignStr));
-            //支付接口请求参数格式：
-            String requestMessage = preSignStr + "&" + signStr;
-            return requestMessage;
-        }
-
-        protected void onPostExecute(String requestMessage) {
-            progressDialog.dismiss();
-            //设置支付结果回调接口，同时调起支付请求
-            IpaynowPlugin.getInstance().setCallResultReceiver(PayMainActivity.this).pay(requestMessage);
+    void showDialog(String message) {
+        try {
+            if (dialog == null) {
+                dialog = new ProgressDialog(this);
+                dialog.setCancelable(true);
+            }
+            dialog.setMessage(message);
+            dialog.show();
+        } catch (Exception e) {
+            // 在其他线程调用dialog会报错
         }
     }
 
-    @Override
-    public void onIpaynowTransResult(ResponseParams responseParams) {
-        String respCode = responseParams.respCode;
-        String errorCode = responseParams.errorCode;
-        String errorMsg = responseParams.respMsg;
-        StringBuilder temp = new StringBuilder();
-        if (respCode.equals("00")) {
-            temp.append("交易状态:成功");
-        } else if (respCode.equals("02")) {
-            temp.append("交易状态:取消");
-        } else if (respCode.equals("01")) {
-            temp.append("交易状态:失败").append("\n").append("错误码:").append(errorCode).append("原因:" + errorMsg);
-        } else if (respCode.equals("03")) {
-            temp.append("交易状态:未知").append("\n").append("原因:" + errorMsg);
-        } else {
-            temp.append("respCode=").append(respCode).append("\n").append("respMsg=").append(errorMsg);
-        }
-        Toast.makeText(this, "onIpaynowTransResult:" + temp.toString(), Toast.LENGTH_LONG).show();
+    void hideDialog() {
+        if (dialog != null && dialog.isShowing())
+            try {
+                dialog.dismiss();
+            } catch (Exception e) {
+            }
     }
+
+    void installBmobPayPlugin(String fileName) {
+        try {
+            InputStream is = getAssets().open(fileName);
+            File file = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + fileName + ".apk");
+            if (file.exists())
+                file.delete();
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[] temp = new byte[1024];
+            int i = 0;
+            while ((i = is.read(temp)) > 0) {
+                fos.write(temp, 0, i);
+            }
+            fos.close();
+            is.close();
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.parse("file://" + file),
+                    "application/vnd.android.package-archive");
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

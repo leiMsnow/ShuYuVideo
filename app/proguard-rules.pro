@@ -241,6 +241,7 @@ public static java.lang.String TABLENAME;
 #weixin-apy
 -dontwarn  com.tencent.**
 -keep class com.tencent.** {*;}
-#paynew
--dontwarn com.ipaynow.plugin.presenter.**
--keep class com.ipaynow.plugin.presenter.** {*;}
+#bmob
+-keepclasseswithmembers class c.b.** { *; }
+-keep interface c.b.PListener{ *; }
+-keep interface c.b.QListener{ *; }
