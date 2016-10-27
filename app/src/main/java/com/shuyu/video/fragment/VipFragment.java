@@ -4,6 +4,7 @@ package com.shuyu.video.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -48,19 +49,28 @@ public class VipFragment extends BaseFragment {
         mPageAdapter = new VipPageAdapter(mContext);
         vpContainer.setAdapter(mPageAdapter);
         vpContainer.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        getLiveVideoList();
+
         mPageAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoPicDetails vip = (VideoPicDetails) v.getTag();
-                if (!PayUtils.canPlayer(getActivity(), vip.getFeeRule())) return;
+                final VideoPicDetails vip = (VideoPicDetails) v.getTag();
+                PayUtils.canPlayer((AppCompatActivity) getActivity(), vip.getFeeRule(),
+                        new PayUtils.IPlayerListener() {
+                            @Override
+                            public void canPlayer(boolean canPlayer) {
+                                if (canPlayer) {
+                                    Intent intent = new Intent(mContext, VideoDetailsActivity.class);
+                                    intent.putExtra(Constants.VIDEO_DETAIL_ID, vip.getId());
+                                    intent.putExtra(Constants.IS_VIP_VIDEO, true);
+                                    mContext.startActivity(intent);
+                                }
+                            }
+                        });
 
-                Intent intent = new Intent(mContext, VideoDetailsActivity.class);
-                intent.putExtra(Constants.VIDEO_DETAIL_ID, vip.getId());
-                intent.putExtra(Constants.IS_VIP_VIDEO, true);
-                mContext.startActivity(intent);
             }
         });
-        getLiveVideoList();
     }
 
     @OnPageChange(value = R.id.vp_container, callback = OnPageChange.Callback.PAGE_SELECTED)

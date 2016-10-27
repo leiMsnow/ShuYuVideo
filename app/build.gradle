@@ -71,7 +71,7 @@ android {
         debug {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "true"
-            buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "String", "ditchNo", '"normal"'
             buildConfigField "String", "ChannelNo", '"tg_1001_0000001"'
             resValue "string", "app_name", "趣看视频debug"
         }
@@ -79,7 +79,7 @@ android {
         release {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "false"
-            buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "String", "ditchNo", '"normal"'
             buildConfigField "String", "ChannelNo", '"tg_1001_0000001"'
             minifyEnabled true
             zipAlignEnabled true

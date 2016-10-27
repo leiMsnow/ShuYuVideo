@@ -273,11 +273,16 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void startPlay() {
-        if (PayUtils.canPlayer(this, mVideoDetails.getFeeRule())) {
-            mIvUrl.setVisibility(View.GONE);
-            ivVideoPlayer.setVisibility(View.GONE);
-            mVideoView.start();
-        }
+        PayUtils.canPlayer(this, mVideoDetails.getFeeRule(), new PayUtils.IPlayerListener() {
+            @Override
+            public void canPlayer(boolean canPlayer) {
+                if (canPlayer) {
+                    mIvUrl.setVisibility(View.GONE);
+                    ivVideoPlayer.setVisibility(View.GONE);
+                    mVideoView.start();
+                }
+            }
+        });
     }
 
     private void lookVideoState() {

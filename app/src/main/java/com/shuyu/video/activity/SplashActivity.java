@@ -24,7 +24,6 @@ import com.shuyu.video.model.AppStoreList;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
-import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
@@ -69,7 +68,6 @@ public class SplashActivity extends AppBaseActivity {
                 .placeholder(R.mipmap.bg_splash).into(ivLauncherUrl);
         getAppStoreInfo();
         userVisitOrActivation();
-        getUserInfo();
         getAppInfo();
         selectPayment();
         getRunInfo();
@@ -195,21 +193,7 @@ public class SplashActivity extends AppBaseActivity {
         });
     }
 
-    private void getUserInfo() {
-        String sign = DataSignUtils.getSign();
-        BaseApi.request(createApi(IPayServiceApi.class).getUserInfo(sign),
-                new BaseApi.IResponseListener<UserInfo>() {
-                    @Override
-                    public void onSuccess(UserInfo data) {
-                        SPUtils.put(mContext, Constants.KEY_USER_RULE, data.getUserType());
-                    }
 
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
-    }
 
     private void userVisit(String data) {
         BaseApi.request(createApi(ILocalServiceApi.class)

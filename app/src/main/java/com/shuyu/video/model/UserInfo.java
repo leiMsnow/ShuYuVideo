@@ -8,7 +8,6 @@ public class UserInfo {
 
     private String userName;
     private int userType;
-    private int totalMoney;
     private String userTypeShow;
 
     public String getUserName() {
@@ -27,19 +26,20 @@ public class UserInfo {
         this.userType = userType;
     }
 
-    public int getTotalMoney() {
-        return totalMoney;
-    }
-
-    public void setTotalMoney(int totalMoney) {
-        this.totalMoney = totalMoney;
-    }
-
     public String getUserTypeShow() {
         return userTypeShow;
     }
 
     public void setUserTypeShow(String userTypeShow) {
         this.userTypeShow = userTypeShow;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userName='" + userName + '\'' +
+                ", userType=" + userType +
+                ", userTypeShow='" + userTypeShow + '\'' +
+                '}';
     }
 }

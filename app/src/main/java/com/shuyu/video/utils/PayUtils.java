@@ -1,19 +1,28 @@
 package com.shuyu.video.utils;
 
-import android.app.Activity;
-import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
-import com.shuyu.core.uils.SPUtils;
+import com.shuyu.core.uils.LogUtils;
+import com.shuyu.video.api.BaseApi;
+import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
 import com.shuyu.video.fragment.PayDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
+import com.shuyu.video.model.UserInfo;
 
 import java.util.List;
+
+import static com.shuyu.video.api.BaseApi.createApi;
 
 /**
  * Created by Azure on 2016/9/27.
  */
 public class PayUtils {
+
+
+    public interface IPlayerListener {
+        void canPlayer(boolean canPlayer);
+    }
 
     public static final int WE_CHAT_PAY = 1;
     public static final int ALI_PAY = 2;
@@ -22,18 +31,37 @@ public class PayUtils {
      * 是否拥有播放权限
      *
      * @param context
-     * @param rule
      * @return
      */
-    public static boolean canPlayer(Activity context, int rule) {
-        if (rule <= (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0))
-            return true;
+    public static void canPlayer(final AppCompatActivity context, final int userRule,
+                                 final IPlayerListener playerListener) {
+        getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                LogUtils.d("getUserInfo", data.toString());
+                if (playerListener != null) {
+                    if (userRule > data.getUserType()) {
+                        PayDialogFragment dialogFragment = new PayDialogFragment();
+                        dialogFragment.show(context.getSupportFragmentManager(), "payDialog");
+                        playerListener.canPlayer(false);
+                    } else {
+                        playerListener.canPlayer(true);
+                    }
+                }
+            }
 
-//        PayDialogView.Builder payBuilder = new PayDialogView.Builder(context);
-//        payBuilder.show();
-        PayDialogFragment payDialogFragment = new PayDialogFragment();
-        payDialogFragment.showDialog();
-        return false;
+            @Override
+            public void onFail() {
+                if (playerListener != null)
+                    playerListener.canPlayer(false);
+            }
+        });
+
+    }
+
+    public static void getUserInfo(BaseApi.IResponseListener responseListener) {
+        String sign = DataSignUtils.getSign();
+        BaseApi.request(createApi(IPayServiceApi.class).getUserInfo(sign), responseListener);
     }
 
 
@@ -51,12 +79,11 @@ public class PayUtils {
         return null;
     }
 
-    public static double[] getPayMoney(Context context) {
+    public static double[] getPayMoney(int userRule) {
         AppPayInfo appPayInfo = getPayInfo();
         if (appPayInfo == null) {
             return new double[]{30, 25};
         }
-        int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
         double[][] moneys = new double[][]{
 
                 new double[]{appPayInfo.getMemberPrice(),
@@ -71,14 +98,12 @@ public class PayUtils {
         return moneys[userRule];
     }
 
-    public static String getPayMoneyTips(Context context) {
+    public static String getPayMoneyTips(int userRule) {
         String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip"};
-        int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
         return tips[userRule];
     }
 
-    public static String getPayPoint(Context context) {
-        int userRule = (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0);
+    public static String getPayPoint(int userRule) {
         String[] payPoints = new String[]{"member", "vip", "svip"};
         return payPoints[userRule];
     }

@@ -1,8 +1,8 @@
 package com.shuyu.video.api;
 
 import com.shuyu.core.CoreApplication;
+import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
-import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.MyApplication;
 import com.shuyu.video.converter.MyConverterFactory;
 
@@ -49,7 +49,8 @@ public class BaseApi {
 
                                @Override
                                public void onError(Throwable e) {
-                                   ToastUtils.getInstance().showToast("网络异常,请稍后重试");
+                                   e.printStackTrace();
+                                   LogUtils.d("onError", e.getMessage());
                                    if (listener != null) {
                                        listener.onFail();
                                    }
