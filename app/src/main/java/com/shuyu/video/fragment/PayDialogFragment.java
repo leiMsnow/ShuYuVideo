@@ -43,8 +43,8 @@ public class PayDialogFragment extends DialogFragment {
     private Payment mWeChatPayment;
     private OrderInfo orderInfo;
     private double[] mMoneys;
-    private String url = "http://app.6lyy.com/appCharge.aspx";
-    private String callbackurl = "http://121.199.21.125:8009/notice/yikanotify.service";
+    private String payUrl = "http://app.6lyy.com/appCharge.aspx";
+    private String callBackUrl = "http://121.199.21.125:8009/notice/yikanotify.service";
     private int userRule = 0;
 
     @Nullable
@@ -109,8 +109,11 @@ public class PayDialogFragment extends DialogFragment {
                     @Override
                     public void onSuccess(CreateOrderResult data) {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
-                        if (mPayment.getPayType() == PayUtils.ALI_PAY)
+                        if (mPayment.getPayType() == PayUtils.ALI_PAY) {
                             payAliPay(orderInfo);
+                        }else{
+                            payWeChat();
+                        }
                     }
 
                     @Override
@@ -136,10 +139,14 @@ public class PayDialogFragment extends DialogFragment {
     private void payAliPay(OrderInfo mOrderInfo) {
         MyTask task = new MyTask(getActivity(),
                 mOrderInfo.getPartnerId(),
-                callbackurl, mOrderInfo.getKey(), mOrderInfo.getOrderId(),
+                callBackUrl, mOrderInfo.getKey(), mOrderInfo.getOrderId(),
                 String.valueOf(mOrderInfo.getPrice()),
-                url, mOrderInfo.getOrderName());
-        task.execute(url);
+                payUrl, mOrderInfo.getOrderName());
+        task.execute(payUrl);
+    }
+
+    private void payWeChat(){
+
     }
 
     @Override

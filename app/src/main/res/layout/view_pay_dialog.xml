@@ -61,7 +61,7 @@
                     android:layout_height="32dp"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_wechat_pay"
+                    android:background="@drawable/btn_we_chat_pay"
                     android:text="微信支付"/>
 
                 <Button

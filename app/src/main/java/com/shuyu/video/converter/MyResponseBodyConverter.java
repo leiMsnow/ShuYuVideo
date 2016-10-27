@@ -21,14 +21,14 @@ import retrofit2.Converter;
 final class MyResponseBodyConverter<T> implements Converter<ResponseBody, T> {
 
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
-    private final Gson mGson;
+    private final Gson gson;
     private final TypeAdapter<T> adapter;
 
     /**
      * 构造器
      */
-    public MyResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
-        this.mGson = gson;
+    MyResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+        this.gson = gson;
         this.adapter = adapter;
     }
 
@@ -41,17 +41,14 @@ final class MyResponseBodyConverter<T> implements Converter<ResponseBody, T> {
      */
     @Override
     public T convert(ResponseBody responseBody) throws IOException {
-
         String response = responseBody.string();
-
         String result = DataSignUtils.decryptData(response);//解密
-        if (!TextUtils.isEmpty(result)) {
-            LogUtils.d(MyResponseBodyConverter.class.getName(), "解密的服务器数据：" + result);
-        } else {
+        if (TextUtils.isEmpty(result)) {
             result = response;
         }
+        LogUtils.d(MyResponseBodyConverter.class.getName(), "服务器返回数据为数据：" + result);
         responseBody = ResponseBody.create(MEDIA_TYPE, result);
-        JsonReader jsonReader = mGson.newJsonReader(responseBody.charStream());
+        JsonReader jsonReader = gson.newJsonReader(responseBody.charStream());
         try {
             return adapter.read(jsonReader);
         } finally {
