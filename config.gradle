@@ -21,7 +21,7 @@ ext {
                targetSdkVersion : 22,
                versionCode      : 1,
                versionName      : "1.0.0",
-               applicationId    : "com.shuyu.video"
+               applicationId    : "com.shuyu.video.mm"
     ]
 
 }

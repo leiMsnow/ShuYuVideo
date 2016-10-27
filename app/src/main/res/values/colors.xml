@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="app_main_color">@color/main_orange</color>
-    <color name="app_main_color_pressed">@color/main_orange_pressed</color>
-
-    <!--<color name="main_pink">#ff00cc</color>-->
-    <!--<color name="main_pink_pressed">#aaff00cc</color>-->
-
-    <!--<color name="main_yellow">#fbc027</color>-->
-    <!--<color name="main_yellow_pressed">#aafbc027</color> -->
-
-
-
+    <color name="app_main_color">@color/main_pink</color>
+    <color name="app_main_color_pressed">@color/main_pink</color>
 </resources>

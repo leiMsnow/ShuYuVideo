@@ -10,7 +10,6 @@ public interface Constants {
 
     String IS_ACTIVATION = "IS_ACTIVATION";
 
-    String ENVIRONMENT = BuildConfig.ENVIRONMENT;
     boolean IS_DEBUG = BuildConfig.IS_DEBUG;
 
     String CHANNEL_DETAILS = "CHANNEL_DETAILS";
