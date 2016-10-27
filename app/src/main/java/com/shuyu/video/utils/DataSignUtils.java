@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class DataSignUtils {
 
-    private static final String AES_KEY = "sooyingsys2016@2";
+    private static final String AES_KEY = "sooyingisy2016@2";
 
     // 加密
     public static String encryptData(String dataJson) {
@@ -29,10 +29,11 @@ public class DataSignUtils {
 
     // 解密
     public static String decryptData(String decodeData) {
+
         try {
             return AESUtils.getInstance(AES_KEY).decryptFromBase64Str(decodeData);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return "";

@@ -142,7 +142,6 @@ public class AppUtils {
             localBufferedReader.close();
         } catch (IOException e) {
         }
-        LogUtils.i(AppUtils.class.getName(), "cpuInfo:" + cpuInfo);
         return cpuInfo;
     }
 

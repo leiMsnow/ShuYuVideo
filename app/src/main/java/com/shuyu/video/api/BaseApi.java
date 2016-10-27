@@ -4,10 +4,10 @@ import com.shuyu.core.CoreApplication;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.MyApplication;
+import com.shuyu.video.converter.MyConverterFactory;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,12 +32,13 @@ public class BaseApi {
                 .baseUrl(url)
                 .client(MyApplication.getApplication().genericClient())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(MyConverterFactory.create())
                 .build();
         return retrofit.create(service);
     }
 
-    public static <T> void request(Observable<T> observable, final IResponseListener<T> listener) {
+    public static <T> void request(Observable<T> observable,
+                                   final IResponseListener<T> listener) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<T>() {

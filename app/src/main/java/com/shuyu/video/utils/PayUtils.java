@@ -5,8 +5,8 @@ import android.content.Context;
 
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
+import com.shuyu.video.fragment.PayDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
-import com.shuyu.video.widget.PayDialogView;
 
 import java.util.List;
 
@@ -29,8 +29,10 @@ public class PayUtils {
         if (rule <= (int) SPUtils.get(context, Constants.KEY_USER_RULE, 0))
             return true;
 
-        PayDialogView.Builder payBuilder = new PayDialogView.Builder(context);
-        payBuilder.show();
+//        PayDialogView.Builder payBuilder = new PayDialogView.Builder(context);
+//        payBuilder.show();
+        PayDialogFragment payDialogFragment = new PayDialogFragment();
+        payDialogFragment.showDialog();
         return false;
     }
 

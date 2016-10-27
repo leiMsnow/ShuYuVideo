@@ -65,7 +65,8 @@ public class SplashActivity extends AppBaseActivity {
     @Override
     protected void initData() {
         mMyHandler = new MyHandler(this);
-        Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, "")).into(ivLauncherUrl);
+        Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, ""))
+                .placeholder(R.mipmap.bg_splash).into(ivLauncherUrl);
         getAppStoreInfo();
         userVisitOrActivation();
         getUserInfo();

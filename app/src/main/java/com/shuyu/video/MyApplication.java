@@ -37,7 +37,7 @@ public class MyApplication extends CoreApplication {
         super.onCreate();
         mApplication = this;
         LogUtils.isDebug = Constants.IS_DEBUG;
-        SPUtils.put(this,Constants.STAY_TIME_ON,System.currentTimeMillis());
+        SPUtils.put(this, Constants.STAY_TIME_ON, System.currentTimeMillis());
     }
 
     public OkHttpClient genericClient() {
@@ -46,7 +46,7 @@ public class MyApplication extends CoreApplication {
             return mOkHttpClient;
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         Map<String, String> commonParams = CommonUtils.getCommonParams();
 
@@ -78,10 +78,7 @@ public class MyApplication extends CoreApplication {
     }
 
     private static String getPayKey(Map<String, String> headerParams) {
-
-        String encodeString = CommonUtils.parseMap(headerParams);
-
-        encodeString += "&payVersion=132";
+        String encodeString = CommonUtils.parseMap(headerParams) + "&payVersion=132";
         byte[] bytes = encodeString.getBytes();
         return new String((Base64.encode(bytes, Base64.DEFAULT))).replace("\n", "");
     }
