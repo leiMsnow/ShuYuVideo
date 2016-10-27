@@ -36,6 +36,7 @@ public class PayDialogFragment extends DialogFragment {
 
     private Button btnAliPay;
     private Button btnWeChatPay;
+    private View payBackground;
     private TextView tvPrice;
     private TextView tvNewPrice;
     private TextView tvPriceTips;
@@ -55,6 +56,7 @@ public class PayDialogFragment extends DialogFragment {
         View layout = inflater.inflate(R.layout.fragment_pay_dialog, container);
         btnAliPay = (Button) layout.findViewById(R.id.btn_ali_pay);
         btnWeChatPay = (Button) layout.findViewById(R.id.btn_wechat_pay);
+        payBackground = layout.findViewById(R.id.rl_pay_bg);
         tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
         tvNewPrice = (TextView) layout.findViewById(R.id.tv_pay_new_price);
         tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
@@ -156,6 +158,11 @@ public class PayDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
+                if (userRule>0){
+                    payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_vip);
+                }else{
+                    payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_member);
+                }
                 mMoneys = PayUtils.getPayMoney(userRule);
                 if (mMoneys[0] > mMoneys[1]) {
                     tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
