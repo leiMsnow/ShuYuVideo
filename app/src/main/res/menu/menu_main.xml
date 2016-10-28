@@ -12,7 +12,6 @@
         android:id="@+id/menu_search"
         android:icon="@mipmap/ic_menu_search"
         app:showAsAction="always"
-        android:visible="false"
         android:title="@string/search"/>
 
 </menu>

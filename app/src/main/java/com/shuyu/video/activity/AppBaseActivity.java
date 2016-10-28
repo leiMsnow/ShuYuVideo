@@ -6,7 +6,6 @@ import android.content.Context;
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
-import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.ResultEntity;
@@ -25,13 +24,6 @@ public abstract class AppBaseActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    protected void initToolbar() {
-        super.initToolbar();
-        if (mToolbar != null) {
-            mToolbar.setBackgroundResource(R.color.toolbar_main_color);
-        }
-    }
 
     @Override
     protected void onStop() {
@@ -60,7 +52,7 @@ public abstract class AppBaseActivity extends BaseActivity {
         long offTime = System.currentTimeMillis();
 
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
-                        .stayTime(onTime, offTime, "tg1001"),
+                .stayTime(onTime, offTime, "tg1001"),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {
