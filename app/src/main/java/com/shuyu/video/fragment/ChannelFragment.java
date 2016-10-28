@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -140,7 +141,8 @@ public class ChannelFragment extends BaseFragment {
                     intent.putExtra(Constants.VIDEO_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
                 } else if (channelBanner.getBannerType() == Constants.BANNER_PICTURE) {
-                    PayUtils.canShowPic(mContext, channelBanner.getFeeRule(), channelBanner.getTargetId());
+                    PayUtils.canShowPic((AppCompatActivity) getActivity(), channelBanner.getFeeRule(),
+                            channelBanner.getTargetId());
                 } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
                     ToastUtils.getInstance().showToast("正在下载...");
                     DownloadUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();

@@ -2,6 +2,7 @@ package com.shuyu.video.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -98,7 +99,7 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
                 mContext.startActivity(intent);
             } else if (child.getContentType() == Constants.BANNER_PICTURE) {
-                PayUtils.canShowPic(mContext, child.getFeeRule(),child.getId());
+                PayUtils.canShowPic((AppCompatActivity) mContext, child.getFeeRule(), child.getId());
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.shuyu.video.utils;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -36,20 +35,14 @@ public class PayUtils {
      * @param context
      * @return
      */
-    public static void canPlayer(final AppCompatActivity context, final int userRule,
+    public static void canPlayer(final AppCompatActivity context, final int needRule,
                                  final IPlayerListener playerListener) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
                 LogUtils.d("getUserInfo", data.toString());
                 if (playerListener != null) {
-                    if (userRule >= data.getUserType()) {
-                        PayDialogFragment dialogFragment = new PayDialogFragment();
-                        dialogFragment.show(context.getSupportFragmentManager(), "payDialog");
-                        playerListener.canPlayer(false);
-                    } else {
-                        playerListener.canPlayer(true);
-                    }
+                    playerListener.canPlayer(!showPayDialog(context, data.getUserType(), needRule));
                 }
             }
 
@@ -62,15 +55,25 @@ public class PayUtils {
 
     }
 
-    public static void canShowPic(final Context mContext, final int userRule, final int id) {
+    private static boolean showPayDialog(AppCompatActivity context, int userRule, int needRule) {
+        if (userRule <= needRule) {
+            PayDialogFragment dialogFragment = new PayDialogFragment();
+            dialogFragment.show(context.getSupportFragmentManager(), "payDialog");
+            return true;
+        }
+        return false;
+    }
+
+    public static void canShowPic(final AppCompatActivity mContext, final int needRule, final int id) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-                if (userRule >= data.getUserType()) {
-                    Intent intent = new Intent(mContext, PictureDetailsActivity.class);
-                    intent.putExtra(Constants.PICTURE_DETAIL_ID, id);
-                    mContext.startActivity(intent);
+                if (showPayDialog(mContext, data.getUserType(), needRule)) {
+                    return;
                 }
+                Intent intent = new Intent(mContext, PictureDetailsActivity.class);
+                intent.putExtra(Constants.PICTURE_DETAIL_ID, id);
+                mContext.startActivity(intent);
             }
 
             @Override

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="app_main_color">@color/main_orange</color>
-    <color name="app_main_color_pressed">@color/main_orange_pressed</color>
-    <color name="toolbar_main_color">@color/main_orange</color>
+    <color name="app_main_color">@color/main_pink</color>
+    <color name="app_main_color_pressed">@color/main_pink_pressed</color>
+    <color name="toolbar_main_color">@color/black</color>
 </resources>

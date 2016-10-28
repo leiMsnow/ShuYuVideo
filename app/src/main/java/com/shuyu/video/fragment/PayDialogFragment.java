@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jokers.payplatform.MyTask;
@@ -40,6 +41,7 @@ public class PayDialogFragment extends DialogFragment {
     private TextView tvPrice;
     private TextView tvNewPrice;
     private TextView tvPriceTips;
+    private ImageView ivClose;
     private Payment mAliPayPayment;
     private Payment mWeChatPayment;
     private OrderInfo orderInfo;
@@ -47,6 +49,11 @@ public class PayDialogFragment extends DialogFragment {
     private String payUrl = "http://app.6lyy.com/appCharge.aspx";
     private String callBackUrl = "http://121.199.21.125:8009/notice/yikanotify.service";
     private int userRule = 0;
+
+    @Override
+    public boolean isCancelable() {
+        return false;
+    }
 
     @Nullable
     @Override
@@ -56,9 +63,11 @@ public class PayDialogFragment extends DialogFragment {
         View layout = inflater.inflate(R.layout.fragment_pay_dialog, container);
         btnAliPay = (Button) layout.findViewById(R.id.btn_ali_pay);
         btnWeChatPay = (Button) layout.findViewById(R.id.btn_wechat_pay);
+        payBackground = layout.findViewById(R.id.rl_pay_bg);
         tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
         tvNewPrice = (TextView) layout.findViewById(R.id.tv_pay_new_price);
         tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
+        ivClose = (ImageView) layout.findViewById(R.id.iv_close);
         tvPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         getPayment();
@@ -73,6 +82,13 @@ public class PayDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 createOrderInfo(mWeChatPayment);
+            }
+        });
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
 
@@ -112,7 +128,7 @@ public class PayDialogFragment extends DialogFragment {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
                         if (mPayment.getPayType() == PayUtils.ALI_PAY) {
                             payAliPay(orderInfo);
-                        }else{
+                        } else {
                             payWeChat();
                         }
                     }
@@ -146,7 +162,7 @@ public class PayDialogFragment extends DialogFragment {
         task.execute(payUrl);
     }
 
-    private void payWeChat(){
+    private void payWeChat() {
 
     }
 
@@ -157,6 +173,11 @@ public class PayDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
+                if (userRule > 0) {
+                    payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_vip);
+                } else {
+                    payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_member);
+                }
                 mMoneys = PayUtils.getPayMoney(userRule);
                 if (mMoneys[0] > mMoneys[1]) {
                     tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
