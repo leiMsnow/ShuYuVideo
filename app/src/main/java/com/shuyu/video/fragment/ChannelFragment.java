@@ -174,6 +174,7 @@ public class ChannelFragment extends BaseFragment {
                     public void onSuccess(List<ChannelBanner> data) {
                         mSwipeContainer.setRefreshing(false);
                         cancelTimer();
+                        if (data.isEmpty()) return;
                         mChannelBanners = data;
                         mBannerAdapter.setBanners(mChannelBanners);
                         mVpContainer.setAdapter(mBannerAdapter);

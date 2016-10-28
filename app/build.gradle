@@ -66,21 +66,16 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
-
     buildTypes {
         debug {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "true"
-            buildConfigField "String", "ditchNo", '"normal"'
-            buildConfigField "String", "ChannelNo", '"tg_1001_0000001"'
             resValue "string", "app_name", "趣看视频debug"
         }
 
         release {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "IS_DEBUG", "false"
-            buildConfigField "String", "ditchNo", '"normal"'
-            buildConfigField "String", "ChannelNo", '"tg_1001_0000001"'
             minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
@@ -103,21 +98,11 @@ android {
 
     // 多渠道打包
     productFlavors {
-        dev {
-            applicationIdSuffix ".dev"
-            resValue "string", "app_name", "趣看视频dev"
-            buildConfigField "String", "ENVIRONMENT", '"dev"'
-            manifestPlaceholders = [
-                    PACKAGE_PATH: rootProject.ext.android.applicationId + ".dev.wxapi"
-            ]
-        }
         online {
-            applicationIdSuffix ".online"
+            applicationIdSuffix ".mm.online"
             resValue "string", "app_name", "趣看视频"
-            buildConfigField "String", "ENVIRONMENT", '"online"'
-            manifestPlaceholders = [
-                    PACKAGE_PATH: rootProject.ext.android.applicationId + ".online.wxapi"
-            ]
+            buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "String", "ChannelNo", '"spwysb_111111031_0000114"'
         }
     }
 }

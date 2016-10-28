@@ -8,10 +8,10 @@
     </style>
 
     <style name="AppTheme.Main.Theme">
-        <item name="colorPrimary">?attr/app_main_color</item>
-        <item name="colorPrimaryDark">?attr/app_main_color</item>
-        <item name="colorAccent">?attr/app_main_color</item>
         <item name="app_main_color">@color/app_main_color</item>
+        <item name="colorPrimary">?attr/app_main_color</item>
+        <item name="colorAccent">?attr/app_main_color</item>
+        <item name="colorPrimaryDark">@color/toolbar_main_color</item>
     </style>
 
     <style name="AppTheme.Main.Dark">
