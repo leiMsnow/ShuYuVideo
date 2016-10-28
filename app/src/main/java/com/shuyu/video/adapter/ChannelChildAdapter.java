@@ -9,10 +9,10 @@ import com.bumptech.glide.Glide;
 import com.shuyu.core.adapter.BaseAdapterHelper;
 import com.shuyu.core.adapter.QuickAdapter;
 import com.shuyu.video.R;
-import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.PayUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -98,9 +98,7 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
                 mContext.startActivity(intent);
             } else if (child.getContentType() == Constants.BANNER_PICTURE) {
-                Intent intent = new Intent(mContext, PictureDetailsActivity.class);
-                intent.putExtra(Constants.PICTURE_DETAIL_ID, child.getId());
-                mContext.startActivity(intent);
+                PayUtils.canShowPic(mContext, child.getFeeRule(),child.getId());
             }
         }
     }

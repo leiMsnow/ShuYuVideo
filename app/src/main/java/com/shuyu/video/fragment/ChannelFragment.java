@@ -17,7 +17,6 @@ import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.CirclePageIndicator;
 import com.shuyu.video.R;
-import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.activity.VideoDetailsActivity;
 import com.shuyu.video.adapter.ChannelBannerAdapter;
 import com.shuyu.video.adapter.ChannelGroupAdapter;
@@ -30,6 +29,7 @@ import com.shuyu.video.model.ChannelVideo;
 import com.shuyu.video.model.SubChannel;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DownloadUtils;
+import com.shuyu.video.utils.PayUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -140,9 +140,7 @@ public class ChannelFragment extends BaseFragment {
                     intent.putExtra(Constants.VIDEO_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
                 } else if (channelBanner.getBannerType() == Constants.BANNER_PICTURE) {
-                    Intent intent = new Intent(mContext, PictureDetailsActivity.class);
-                    intent.putExtra(Constants.PICTURE_DETAIL_ID, channelBanner.getTargetId());
-                    mContext.startActivity(intent);
+                    PayUtils.canShowPic(mContext, channelBanner.getFeeRule(), channelBanner.getTargetId());
                 } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
                     ToastUtils.getInstance().showToast("正在下载...");
                     DownloadUtils.createDownloadTask(channelBanner.getTargetUrl(), null, null).start();

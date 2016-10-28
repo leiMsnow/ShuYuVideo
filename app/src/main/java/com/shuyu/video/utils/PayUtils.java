@@ -1,8 +1,11 @@
 package com.shuyu.video.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shuyu.core.uils.LogUtils;
+import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
@@ -40,7 +43,7 @@ public class PayUtils {
             public void onSuccess(UserInfo data) {
                 LogUtils.d("getUserInfo", data.toString());
                 if (playerListener != null) {
-                    if (userRule > data.getUserType()) {
+                    if (userRule >= data.getUserType()) {
                         PayDialogFragment dialogFragment = new PayDialogFragment();
                         dialogFragment.show(context.getSupportFragmentManager(), "payDialog");
                         playerListener.canPlayer(false);
@@ -59,7 +62,25 @@ public class PayUtils {
 
     }
 
-    public static void getUserInfo(BaseApi.IResponseListener responseListener) {
+    public static void canShowPic(final Context mContext, final int userRule, final int id) {
+        getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                if (userRule >= data.getUserType()) {
+                    Intent intent = new Intent(mContext, PictureDetailsActivity.class);
+                    intent.putExtra(Constants.PICTURE_DETAIL_ID, id);
+                    mContext.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+    }
+
+    public static void getUserInfo(BaseApi.IResponseListener<UserInfo> responseListener) {
         String sign = DataSignUtils.getSign();
         BaseApi.request(createApi(IPayServiceApi.class).getUserInfo(sign), responseListener);
     }
@@ -71,7 +92,7 @@ public class PayUtils {
                 (int) ((Math.random() * 9 + 1) * 1000000);
     }
 
-    public static AppPayInfo getPayInfo() {
+    private static AppPayInfo getPayInfo() {
         List<AppPayInfo> appPayInfoList = AppPayInfoDaoHelper.getHelper().getDataAll();
         if (appPayInfoList != null && appPayInfoList.size() > 0) {
             return appPayInfoList.get(0);
