@@ -176,6 +176,13 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 videoLayoutParams.height = mCachedHeight;
                 mVideoLayout.setLayoutParams(videoLayoutParams);
                 mVideoView.setMediaController(mMediaController);
+                mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if (mVideoDetails.getFeeRule() == 0)
+                            PayUtils.showPayDialog( mContext);
+                    }
+                });
                 mVideoView.setVideoPath(mVideoDetails.getVideoUrl());
                 mMediaController.setTitle(mVideoDetails.getTitle());
                 mVideoView.requestFocus();

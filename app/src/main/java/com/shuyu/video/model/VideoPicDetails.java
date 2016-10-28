@@ -33,7 +33,7 @@ public class VideoPicDetails implements Serializable {
     private int isClip;
     private List<?> clipUrlList;
     private int[] tagColor;
-    private int viewNumber;
+    private int viewNumber = 0;
 
     public int getGroupId() {
         return groupId;
@@ -52,7 +52,7 @@ public class VideoPicDetails implements Serializable {
     }
 
     public String getViewNumber() {
-        return String.format("%,d%n", viewNumber);
+        return String.format("%,d", viewNumber);
     }
 
     public void setViewNumber(int viewNumber) {

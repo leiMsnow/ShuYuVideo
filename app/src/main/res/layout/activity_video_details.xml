@@ -19,17 +19,17 @@
             app:uvv_autoRotation="false"
             app:uvv_fitXY="false"/>
 
-        <ImageView
-            android:id="@+id/iv_url"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"/>
-
         <com.universalvideoview.UniversalMediaController
             android:id="@+id/media_controller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:uvv_scalable="true"/>
+
+        <ImageView
+            android:id="@+id/iv_url"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
 
         <ImageView
             android:id="@+id/iv_video_player"

@@ -2,7 +2,6 @@ package com.shuyu.video.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -69,9 +68,13 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
         holder.setText(R.id.tv_content_title, item.getTitle());
         holder.setText(R.id.tv_subtitle, item.getSubTitle());
         if (item.getContentType() == Constants.BANNER_VIDEO) {
-            holder.setVisible(R.id.tv_view_number, View.VISIBLE);
-            holder.setText(R.id.tv_view_number, item.getViewNumber());
+            holder.setVisible(R.id.iv_play, View.VISIBLE);
+            if (!item.getViewNumber().equals("0")) {
+                holder.setVisible(R.id.tv_view_number, View.VISIBLE);
+                holder.setText(R.id.tv_view_number, item.getViewNumber());
+            }
         } else if (item.getContentType() == Constants.BANNER_PICTURE) {
+            holder.setVisible(R.id.iv_play, View.GONE);
             holder.setVisible(R.id.tv_view_number, View.GONE);
         }
 
@@ -99,7 +102,7 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
                 mContext.startActivity(intent);
             } else if (child.getContentType() == Constants.BANNER_PICTURE) {
-                PayUtils.canShowPic((AppCompatActivity) mContext, child.getFeeRule(), child.getId());
+                PayUtils.canShowPic( mContext, child.getFeeRule(), child.getId());
             }
         }
     }

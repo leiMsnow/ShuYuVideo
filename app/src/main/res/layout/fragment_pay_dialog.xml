@@ -55,30 +55,32 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btn_wechat_pay"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_we_chat_pay"
                     android:drawableLeft="@mipmap/ic_logo_wx_normal"
-                    android:paddingRight="8dp"
-                    android:text="微信支付"
+                    android:gravity="center"
+                    android:paddingRight="24dp"
+                    android:text="微信支付(限时折扣)"
                     android:textColor="@color/white"/>
 
                 <Button
                     android:id="@+id/btn_ali_pay"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_ali_pay"
                     android:drawableLeft="@mipmap/ic_logo_alipay_normal"
-                    android:paddingRight="8dp"
-                    android:text="支付宝"
+                    android:gravity="center"
+                    android:paddingRight="24dp"
+                    android:text="支付宝(限时折扣)"
                     android:textColor="@color/white"/>
             </LinearLayout>
         </RelativeLayout>

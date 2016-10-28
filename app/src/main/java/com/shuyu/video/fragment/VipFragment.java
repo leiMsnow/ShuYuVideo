@@ -4,7 +4,6 @@ package com.shuyu.video.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -56,7 +55,7 @@ public class VipFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 final VideoPicDetails vip = (VideoPicDetails) v.getTag();
-                PayUtils.canPlayer((AppCompatActivity) getActivity(), vip.getFeeRule(),
+                PayUtils.canPlayer(getActivity(), vip.getFeeRule(),
                         new PayUtils.IPlayerListener() {
                             @Override
                             public void canPlayer(boolean canPlayer) {

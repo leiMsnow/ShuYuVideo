@@ -1,5 +1,6 @@
 package com.shuyu.video.utils;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -22,7 +23,6 @@ import static com.shuyu.video.api.BaseApi.createApi;
  */
 public class PayUtils {
 
-
     public interface IPlayerListener {
         void canPlayer(boolean canPlayer);
     }
@@ -36,7 +36,7 @@ public class PayUtils {
      * @param context
      * @return
      */
-    public static void canPlayer(final AppCompatActivity context, final int needRule,
+    public static void canPlayer(final Context context, final int needRule,
                                  final IPlayerListener playerListener) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
@@ -56,16 +56,20 @@ public class PayUtils {
 
     }
 
-    private static boolean showPayDialog(AppCompatActivity context, int userRule, int needRule) {
-        if (userRule <= needRule) {
-            PayDialogFragment dialogFragment = new PayDialogFragment();
-            dialogFragment.show(context.getSupportFragmentManager(), "payDialog");
+    private static boolean showPayDialog(Context context, int userRule, int needRule) {
+        if (userRule < needRule) {
+            showPayDialog(context);
             return true;
         }
         return false;
     }
 
-    public static void canShowPic(final AppCompatActivity mContext, final int needRule, final int id) {
+    public static void showPayDialog(Context context) {
+        PayDialogFragment dialogFragment = new PayDialogFragment();
+        dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
+    }
+
+    public static void canShowPic(final Context mContext, final int needRule, final int id) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
@@ -136,7 +140,7 @@ public class PayUtils {
     }
 
     public static String getPayPoint(int userRule) {
-        String[] payPoints = new String[]{"member", "vip", "svip","sipv+"};
+        String[] payPoints = new String[]{"member", "vip", "svip", "sipv+"};
         return payPoints[userRule];
     }
 }

@@ -8,8 +8,8 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -141,7 +141,7 @@ public class ChannelFragment extends BaseFragment {
                     intent.putExtra(Constants.VIDEO_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
                 } else if (channelBanner.getBannerType() == Constants.BANNER_PICTURE) {
-                    PayUtils.canShowPic((AppCompatActivity) getActivity(), channelBanner.getFeeRule(),
+                    PayUtils.canShowPic( getActivity(), channelBanner.getFeeRule(),
                             channelBanner.getTargetId());
                 } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
                     ToastUtils.getInstance().showToast("正在下载...");
@@ -149,6 +149,26 @@ public class ChannelFragment extends BaseFragment {
                 } else if (channelBanner.getBannerType() == Constants.BANNER_WAP) {
                     AppUtils.openBrowser(mContext, channelBanner.getTargetUrl());
                 }
+            }
+        });
+
+        mExpandableListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                switch (scrollState) {
+                    // 当不滚动时
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+                        // 判断滚动到底部
+                        if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+                            PayUtils.showPayDialog(mContext);
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
             }
         });
     }
