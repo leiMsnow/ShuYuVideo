@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jokers.payplatform.MyTask;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
 import com.shuyu.video.R;
@@ -23,6 +23,8 @@ import com.shuyu.video.model.CreateOrderResult;
 import com.shuyu.video.model.OrderInfo;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
+import com.shuyu.video.pay.IPay;
+import com.shuyu.video.pay.PayFactory;
 import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.PayUtils;
@@ -45,9 +47,9 @@ public class PayDialogFragment extends DialogFragment {
     private Payment mAliPayPayment;
     private Payment mWeChatPayment;
     private OrderInfo orderInfo;
-    private double[] mMoneys;
-    private String payUrl = "http://app.6lyy.com/appCharge.aspx";
-    private String callBackUrl = "http://121.199.21.125:8009/notice/yikanotify.service";
+    private double mMoneys;
+    private double mRebateMoneys;
+
     private int userRule = 0;
 
     @Override
@@ -99,20 +101,20 @@ public class PayDialogFragment extends DialogFragment {
 
         if (mPayment == null) return;
 
-        orderInfo = new OrderInfo();
+        orderInfo = new OrderInfo((AppCompatActivity) getActivity());
         orderInfo.setOrderId(PayUtils.createOrderNo());
         orderInfo.setOrderName(tvPriceTips.getText().toString());
         orderInfo.setPartnerId(mPayment.getPartnerId());
         orderInfo.setKey(mPayment.getMd5Key());
-        orderInfo.setPrice(mMoneys[1]);
+        orderInfo.setPrice(mMoneys);
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                         .createOrder(mPayment.getTitle(),
                                 1,
                                 CommonUtils.getUUID(),
                                 orderInfo.getOrderId(),
-                                mMoneys[1],
-                                mMoneys[1],
+                                mMoneys,
+                                mRebateMoneys,
                                 PayUtils.getPayPoint(userRule),
                                 mPayment.getPayType(),
                                 mPayment.getPayCompanyCode(),
@@ -126,11 +128,8 @@ public class PayDialogFragment extends DialogFragment {
                     @Override
                     public void onSuccess(CreateOrderResult data) {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
-                        if (mPayment.getPayType() == PayUtils.ALI_PAY) {
-                            payAliPay(orderInfo);
-                        } else {
-                            payWeChat();
-                        }
+                        IPay pay = PayFactory.create(mPayment.getPayCode(), orderInfo);
+                        if (pay != null) pay.pay(null);
                     }
 
                     @Override
@@ -150,20 +149,13 @@ public class PayDialogFragment extends DialogFragment {
                     mAliPayPayment = payment;
                 }
             }
+            if (mWeChatPayment == null) {
+                btnWeChatPay.setVisibility(View.GONE);
+            }
+            if (mAliPayPayment == null) {
+                btnAliPay.setVisibility(View.GONE);
+            }
         }
-    }
-
-    private void payAliPay(OrderInfo mOrderInfo) {
-        MyTask task = new MyTask(getActivity(),
-                mOrderInfo.getPartnerId(),
-                callBackUrl, mOrderInfo.getKey(), mOrderInfo.getOrderId(),
-                String.valueOf(mOrderInfo.getPrice()),
-                payUrl, mOrderInfo.getOrderName());
-        task.execute(payUrl);
-    }
-
-    private void payWeChat() {
-
     }
 
     @Override
@@ -178,11 +170,12 @@ public class PayDialogFragment extends DialogFragment {
                 } else {
                     payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_member);
                 }
-                mMoneys = PayUtils.getPayMoney(userRule);
-                if (mMoneys[0] > mMoneys[1]) {
-                    tvPrice.setText(String.format("原价：%.2f元", mMoneys[0]));
+                mMoneys = PayUtils.getPayRebateMoney(userRule, false);
+                mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true);
+                if (mMoneys > mRebateMoneys) {
+                    tvPrice.setText(String.format("原价：%.2f元", mMoneys));
                 }
-                tvNewPrice.setText(String.format("特价：%.2f元", mMoneys[1]));
+                tvNewPrice.setText(String.format("特价：%.2f元", mRebateMoneys));
                 tvPriceTips.setText(PayUtils.getPayMoneyTips(userRule));
             }
 

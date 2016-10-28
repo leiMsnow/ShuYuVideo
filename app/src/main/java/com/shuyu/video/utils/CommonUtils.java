@@ -36,7 +36,7 @@ public class CommonUtils {
     }
 
     public static int getAppId() {
-        return 1000;
+        return BuildConfig.APP_ID;
     }
 
     public static String getDcVersion() {

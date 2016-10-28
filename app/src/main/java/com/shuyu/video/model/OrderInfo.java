@@ -1,42 +1,31 @@
 package com.shuyu.video.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by zhangleilei on 10/26/16.
  */
 
-public class OrderInfo implements Parcelable{
+public class OrderInfo {
 
+    private AppCompatActivity context;
     private String orderId;
     private String orderName;
     private double price;
     private String partnerId;
     private String key;
 
-    public OrderInfo() {
+    public OrderInfo(AppCompatActivity context) {
+        this.context = context;
     }
 
-    protected OrderInfo(Parcel in) {
-        orderId = in.readString();
-        orderName = in.readString();
-        price = in.readDouble();
-        partnerId = in.readString();
-        key = in.readString();
+    public AppCompatActivity getContext() {
+        return context;
     }
 
-    public static final Creator<OrderInfo> CREATOR = new Creator<OrderInfo>() {
-        @Override
-        public OrderInfo createFromParcel(Parcel in) {
-            return new OrderInfo(in);
-        }
-
-        @Override
-        public OrderInfo[] newArray(int size) {
-            return new OrderInfo[size];
-        }
-    };
+    public void setContext(AppCompatActivity context) {
+        this.context = context;
+    }
 
     public String getOrderId() {
         return orderId;
@@ -78,17 +67,4 @@ public class OrderInfo implements Parcelable{
         this.key = key;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(orderId);
-        dest.writeString(orderName);
-        dest.writeDouble(price);
-        dest.writeString(partnerId);
-        dest.writeString(key);
-    }
 }

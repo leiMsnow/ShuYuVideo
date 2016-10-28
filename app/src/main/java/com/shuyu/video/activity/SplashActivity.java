@@ -220,6 +220,7 @@ public class SplashActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<List<Payment>>() {
                     @Override
                     public void onSuccess(List<Payment> data) {
+                        PaymentDaoHelper.getHelper().deleteAll();
                         PaymentDaoHelper.getHelper().addDataAll(data);
                     }
 

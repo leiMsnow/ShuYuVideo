@@ -102,6 +102,7 @@ android {
             applicationIdSuffix ".mm.online"
             resValue "string", "app_name", "趣看视频V2"
             buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "int", "APP_ID", "1001"
             buildConfigField "String", "ChannelNo", '"spwysb_111111031_0000114"'
         }
     }

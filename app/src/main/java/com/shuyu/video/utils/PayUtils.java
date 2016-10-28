@@ -12,6 +12,7 @@ import com.shuyu.video.fragment.PayDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.UserInfo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.shuyu.video.api.BaseApi.createApi;
@@ -103,32 +104,39 @@ public class PayUtils {
         return null;
     }
 
-    public static double[] getPayMoney(int userRule) {
+    public static double getPayRebateMoney(int userRule, boolean isRebate) {
         AppPayInfo appPayInfo = getPayInfo();
         if (appPayInfo == null) {
-            return new double[]{30, 25};
+            return 30.00f;
         }
-        double[][] moneys = new double[][]{
-
-                new double[]{appPayInfo.getMemberPrice(),
-                        appPayInfo.getMemberPrice() * appPayInfo.getRebate()},
-
-                new double[]{appPayInfo.getVipPrice(),
-                        appPayInfo.getVipPrice() * appPayInfo.getRebate()},
-
-                new double[]{appPayInfo.getSvipPrice(),
-                        appPayInfo.getSvipPrice() * appPayInfo.getRebate()}
-        };
-        return moneys[userRule];
+        double[] moneys;
+        if (isRebate && appPayInfo.getRebate() > 0 && appPayInfo.getRebate() < 1) {
+            moneys = new double[]{
+                    appPayInfo.getMemberPrice() * appPayInfo.getRebate(),
+                    appPayInfo.getVipPrice() * appPayInfo.getRebate(),
+                    appPayInfo.getSvipPrice() * appPayInfo.getRebate(),
+                    appPayInfo.getSvipPrice() * appPayInfo.getRebate()
+            };
+        } else {
+            moneys = new double[]{
+                    appPayInfo.getMemberPrice(),
+                    appPayInfo.getVipPrice(),
+                    appPayInfo.getSvipPrice(),
+                    appPayInfo.getSvipPrice()
+            };
+        }
+        BigDecimal b = new BigDecimal(moneys[userRule]);
+        return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
+
     public static String getPayMoneyTips(int userRule) {
-        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip"};
+        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "已经满级"};
         return tips[userRule];
     }
 
     public static String getPayPoint(int userRule) {
-        String[] payPoints = new String[]{"member", "vip", "svip"};
+        String[] payPoints = new String[]{"member", "vip", "svip","sipv+"};
         return payPoints[userRule];
     }
 }

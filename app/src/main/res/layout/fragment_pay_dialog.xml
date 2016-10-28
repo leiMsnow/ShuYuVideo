@@ -64,6 +64,8 @@
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_we_chat_pay"
+                    android:drawableLeft="@mipmap/ic_logo_wx_normal"
+                    android:paddingRight="8dp"
                     android:text="微信支付"
                     android:textColor="@color/white"/>
 
@@ -74,6 +76,8 @@
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_ali_pay"
+                    android:drawableLeft="@mipmap/ic_logo_alipay_normal"
+                    android:paddingRight="8dp"
                     android:text="支付宝"
                     android:textColor="@color/white"/>
             </LinearLayout>
