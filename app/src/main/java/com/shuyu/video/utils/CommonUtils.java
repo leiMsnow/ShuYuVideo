@@ -32,7 +32,7 @@ public class CommonUtils {
     }
 
     public static String getVersionCode() {
-        return "10101";
+        return String.valueOf(AppUtils.getAppVersion());
     }
 
     public static int getAppId() {
@@ -48,7 +48,7 @@ public class CommonUtils {
     }
 
     public static String getChannelNo() {
-        return BuildConfig.ChannelNo;
+        return BuildConfig.FLAVOR;
     }
 
     public static String getUUID() {

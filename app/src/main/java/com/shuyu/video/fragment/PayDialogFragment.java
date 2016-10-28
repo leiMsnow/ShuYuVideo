@@ -106,7 +106,7 @@ public class PayDialogFragment extends DialogFragment {
         orderInfo.setOrderName(tvPriceTips.getText().toString());
         orderInfo.setPartnerId(mPayment.getPartnerId());
         orderInfo.setKey(mPayment.getMd5Key());
-        orderInfo.setPrice(mMoneys);
+        orderInfo.setPrice(mRebateMoneys);
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                         .createOrder(mPayment.getTitle(),

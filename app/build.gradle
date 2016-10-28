@@ -69,6 +69,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
+            applicationIdSuffix ".debug"
             buildConfigField "boolean", "IS_DEBUG", "true"
             resValue "string", "app_name", "趣看视频V2DUG"
         }
@@ -86,24 +87,20 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName =
-                                "shuyuvideo_${variant.productFlavors[0].name}_" +
-                                        "${defaultConfig.versionName}_${releaseTime()}.apk"
+                        def fileName = "${variant.productFlavors[0].name}_V" +
+                                "${defaultConfig.versionName}_${releaseTime()}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
             }
         }
     }
-
-    // 多渠道打包
     productFlavors {
-        online {
+        spwysb_111111031_0000001 {
             applicationIdSuffix ".mm.online"
-            resValue "string", "app_name", "趣看视频V2"
-            buildConfigField "String", "ditchNo", '"0"'
+            resValue "string", "app_name", "趣看视频"
             buildConfigField "int", "APP_ID", "1001"
-            buildConfigField "String", "ChannelNo", '"spwysb_111111031_0000114"'
+            buildConfigField "String", "ditchNo", '"0"'
         }
     }
 }
