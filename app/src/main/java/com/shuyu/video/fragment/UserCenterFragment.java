@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
 import com.shuyu.core.uils.ToastUtils;
@@ -15,8 +17,11 @@ import com.shuyu.video.activity.FeedbackActivity;
 import com.shuyu.video.activity.ServiceActivity;
 import com.shuyu.video.activity.WebViewActivity;
 import com.shuyu.video.adapter.SettingAdapter;
+import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.model.SettingsInfo;
+import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.PayUtils;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -29,6 +34,10 @@ public class UserCenterFragment extends BaseFragment {
 
     @Bind(R.id.rv_container)
     RecyclerView mRvContainer;
+    @Bind(R.id.tv_member_tips)
+    TextView mTvMemberTips;
+    @Bind(R.id.btn_member)
+    Button mBtnMember;
     private SettingAdapter mSettingAdapter;
     private IRecommendListener mRecommendListener;
 
@@ -87,6 +96,27 @@ public class UserCenterFragment extends BaseFragment {
                         startActivity(intent);
                         break;
                 }
+            }
+        });
+
+        mBtnMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PayUtils.showPayDialog(getActivity());
+            }
+        });
+    }
+
+    private void getUserInfo(){
+        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+//                mTvMemberTips.setText(data.getUserTypeShow());
+            }
+
+            @Override
+            public void onFail() {
+
             }
         });
     }

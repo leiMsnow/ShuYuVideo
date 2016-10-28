@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f6f7fb">
 
+    <RelativeLayout
+        android:id="@+id/rl_member"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@mipmap/bg_member"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_member_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="亲爱的\n您还未成为会员哦~"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/btn_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_member_tips"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_btn"
+            android:text="成为会员"/>
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_member"/>
 
-</FrameLayout>
+</RelativeLayout>

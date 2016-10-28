@@ -135,7 +135,7 @@ public class PayUtils {
 
 
     public static String getPayMoneyTips(int userRule) {
-        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "已经满级"};
+        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "超级vip"};
         return tips[userRule];
     }
 
