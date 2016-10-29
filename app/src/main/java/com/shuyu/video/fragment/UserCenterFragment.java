@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shuyu.core.BaseFragment;
+import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.AboutActivity;
@@ -29,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class UserCenterFragment extends BaseFragment {
 
@@ -38,8 +44,19 @@ public class UserCenterFragment extends BaseFragment {
     TextView mTvMemberTips;
     @Bind(R.id.btn_member)
     Button mBtnMember;
+    @Bind(R.id.iv_user)
+    ImageView mIvUser;
+    @Bind(R.id.tv_account)
+    TextView mTvAccount;
+    @Bind(R.id.tv_password)
+    TextView mTvPassword;
+    @Bind(R.id.btn_show_password)
+    Button mBtnShowPassword;
+    @Bind(R.id.rl_user)
+    RelativeLayout mRlUser;
     private SettingAdapter mSettingAdapter;
     private IRecommendListener mRecommendListener;
+    private UserInfo mData;
 
     public void setRecommendListener(IRecommendListener recommendListener) {
         mRecommendListener = recommendListener;
@@ -105,13 +122,27 @@ public class UserCenterFragment extends BaseFragment {
                 PayUtils.showPayDialog(getActivity());
             }
         });
+
+        String userName = AppUtils.getIMEI().substring(0, 8);
+        final String password = AppUtils.getIMEI().substring(7);
+        mTvAccount.setText(getString(R.string.user_account, userName));
+        mTvPassword.setText(getString(R.string.user_password, "******"));
+        mBtnShowPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBtnShowPassword.setVisibility(View.GONE);
+                mTvPassword.setText(getString(R.string.user_password, password));
+            }
+        });
+        getUserInfo();
     }
 
-    private void getUserInfo(){
+    private void getUserInfo() {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-//                mTvMemberTips.setText(data.getUserTypeShow());
+                mData = data;
+                setUserInfo();
             }
 
             @Override
@@ -119,6 +150,17 @@ public class UserCenterFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void setUserInfo() {
+        if (mData.getUserType() == 0) {
+            mRlUser.setVisibility(View.GONE);
+            return;
+        }
+        mTvMemberTips.setText(getString(R.string.user_rule_tips, mData.getUserTypeShow()));
+        if (mData.getUserType() == 3) {
+            mBtnMember.setVisibility(View.GONE);
+        }
     }
 
     private List<SettingsInfo> initSettingData() {
@@ -133,6 +175,20 @@ public class UserCenterFragment extends BaseFragment {
         settings.add(new SettingsInfo(SettingsInfo.ABOUT, R.mipmap.ic_about, getString(R.string.about)));
 
         return settings;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     public interface IRecommendListener {

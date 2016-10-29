@@ -15,4 +15,10 @@
     <string name="recommend">精品推荐</string>
     <string name="disclaimer">免责声明</string>
 
+    <string name="user_account">您的专属帐号：%s</string>
+    <string name="user_password">密码：%s</string>
+
+    <string name="user_rule_tips">亲爱的\n您当前是：%s哦~</string>
+    <string name="user_no_rule_tips">亲爱的\n您还未成为会员哦~</string>
+
 </resources>

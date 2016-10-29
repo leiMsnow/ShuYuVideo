@@ -98,7 +98,7 @@ public class AppUtils {
     public static String getIMEI() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getDeviceId() == null ? "" : mTelephonyMgr.getDeviceId();
+        return mTelephonyMgr.getDeviceId() == null ? "055036055872065" : mTelephonyMgr.getDeviceId();
     }
 
     public static String getTelNumber() {

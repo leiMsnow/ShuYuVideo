@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f6f7fb">
+    android:background="#f6f7fb"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl_member"
+        android:id="@+id/rl_user"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/ic_user"/>
+
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/iv_user"
+            android:text="@string/user_account"/>
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_account"
+            android:layout_toRightOf="@+id/iv_user"
+            android:text="@string/user_password"/>
+
+        <Button
+            android:id="@+id/btn_show_password"
+            android:layout_width="72dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_account"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/tv_password"
+            android:background="@drawable/selector_btn"
+            android:text="点击显示"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:background="@mipmap/bg_member"
         android:padding="24dp">
 
@@ -18,13 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:text="亲爱的\n您还未成为会员哦~"
+            android:text="@string/user_no_rule_tips"
             android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_member"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_member_tips"
             android:layout_marginTop="8dp"
@@ -36,7 +78,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rl_member"/>
+        android:layout_height="match_parent"/>
 
-</RelativeLayout>
+</LinearLayout>
