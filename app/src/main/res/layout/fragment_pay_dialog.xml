@@ -16,7 +16,8 @@
             android:id="@+id/rl_pay_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp">
+            android:background="@mipmap/bg_pay_dialog_gift"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/tv_pay_tips"
@@ -54,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="4dp"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_wechat_pay"
@@ -66,8 +67,8 @@
                     android:background="@drawable/btn_we_chat_pay"
                     android:drawableLeft="@mipmap/ic_logo_wx_normal"
                     android:gravity="center"
-                    android:paddingRight="24dp"
-                    android:text="微信支付(限时折扣)"
+                    android:paddingRight="8dp"
+                    android:text="微信支付"
                     android:textColor="@color/white"/>
 
                 <Button
@@ -79,16 +80,16 @@
                     android:background="@drawable/btn_ali_pay"
                     android:drawableLeft="@mipmap/ic_logo_alipay_normal"
                     android:gravity="center"
-                    android:paddingRight="24dp"
-                    android:text="支付宝(限时折扣)"
+                    android:paddingRight="8dp"
+                    android:text="支付宝"
                     android:textColor="@color/white"/>
             </LinearLayout>
         </RelativeLayout>
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="right"
             android:scaleType="center"
             android:src="@mipmap/btn_close"/>

@@ -2,6 +2,7 @@ package com.shuyu.video.activity;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Bundle;
 
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.uils.LogUtils;
@@ -10,7 +11,9 @@ import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.ResultEntity;
+import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.utils.Constants;
+import com.shuyu.video.utils.PayUtils;
 
 import java.util.List;
 
@@ -19,6 +22,8 @@ import java.util.List;
  */
 
 public abstract class AppBaseActivity extends BaseActivity {
+
+    private long currentTime = System.currentTimeMillis();
 
     @Override
     protected boolean hasToolbar() {
@@ -38,6 +43,30 @@ public abstract class AppBaseActivity extends BaseActivity {
         super.onStop();
         if (isBackground(this)) {
             stayTime();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mContext instanceof MainActivity  && System.currentTimeMillis() - currentTime >= 10000) {
+            PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+                @Override
+                public void onSuccess(UserInfo data) {
+                    if (data.getUserType() == 0) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.KEY_PAY_DIALOG,R.mipmap.bg_pay_dialog_gift);
+                        PayUtils.showPayDialog(mContext,bundle);
+                    }
+                }
+
+                @Override
+                public void onFail() {
+                    AppBaseActivity.super.onBackPressed();
+                }
+            });
+            currentTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
         }
     }
 

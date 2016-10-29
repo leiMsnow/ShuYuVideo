@@ -53,8 +53,6 @@
             android:label="@string/service">
         </activity>
 
-        <activity android:name=".activity.PayMainActivity"/>
-
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"

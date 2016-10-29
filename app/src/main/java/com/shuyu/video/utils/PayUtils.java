@@ -2,6 +2,7 @@ package com.shuyu.video.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shuyu.core.uils.LogUtils;
@@ -66,7 +67,13 @@ public class PayUtils {
     }
 
     public static void showPayDialog(Context context) {
+        showPayDialog(context, null);
+    }
+
+    public static void showPayDialog(Context context, Bundle bundle) {
         PayDialogFragment dialogFragment = new PayDialogFragment();
+        if (bundle != null)
+            dialogFragment.setArguments(bundle);
         dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
     }
 

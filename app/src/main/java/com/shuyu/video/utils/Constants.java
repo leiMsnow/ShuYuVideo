@@ -33,4 +33,6 @@ public interface Constants {
 
     String STAY_TIME_ON = "STAY_TIME_ON";
     String KEY_ORDER_INFO = "KEY_ORDER_INFO";
+    String KEY_PAY_DIALOG = "KEY_PAY_DIALOG";
+
 }

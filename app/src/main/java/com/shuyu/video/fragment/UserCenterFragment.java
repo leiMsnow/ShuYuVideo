@@ -131,7 +131,6 @@ public class UserCenterFragment extends BaseFragment {
                 mTvPassword.setText(getString(R.string.user_password, password));
             }
         });
-        getUserInfo();
     }
 
     private void getUserInfo() {
@@ -147,6 +146,14 @@ public class UserCenterFragment extends BaseFragment {
 
             }
         });
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            getUserInfo();
+        }
     }
 
     private void setUserInfo() {

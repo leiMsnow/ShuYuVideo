@@ -90,7 +90,7 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
             if (i == 2) break;
             holder.setVisible(tagIds[i], View.VISIBLE);
             holder.setText(tagIds[i], tags[i]);
-            holder.setVisible(tagIds[i], item.getTagColor()[i]);
+            holder.setBackgroundRes(tagIds[i], item.getTagColor()[i]);
         }
     }
 

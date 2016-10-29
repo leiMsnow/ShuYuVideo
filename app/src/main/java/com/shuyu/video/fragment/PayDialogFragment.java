@@ -26,6 +26,7 @@ import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.pay.IPay;
 import com.shuyu.video.pay.PayFactory;
 import com.shuyu.video.utils.CommonUtils;
+import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.PayUtils;
 
@@ -51,6 +52,7 @@ public class PayDialogFragment extends DialogFragment {
     private double mRebateMoneys;
 
     private int userRule = 0;
+    private int payDialogBG = 0;
 
     @Override
     public boolean isCancelable() {
@@ -71,7 +73,8 @@ public class PayDialogFragment extends DialogFragment {
         tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
         ivClose = (ImageView) layout.findViewById(R.id.iv_close);
         tvPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-
+        if (getArguments() != null)
+            payDialogBG = getArguments().getInt(Constants.KEY_PAY_DIALOG, 0);
         getPayment();
         btnAliPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,9 +154,11 @@ public class PayDialogFragment extends DialogFragment {
             }
             if (mWeChatPayment == null) {
                 btnWeChatPay.setVisibility(View.GONE);
+                btnAliPay.setText("支付宝(限时折扣)");
             }
             if (mAliPayPayment == null) {
                 btnAliPay.setVisibility(View.GONE);
+                btnWeChatPay.setText("微信支付(限时折扣)");
             }
         }
     }
@@ -169,6 +174,9 @@ public class PayDialogFragment extends DialogFragment {
                     payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_vip);
                 } else {
                     payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_member);
+                }
+                if (payDialogBG != 0) {
+                    payBackground.setBackgroundResource(payDialogBG);
                 }
                 mMoneys = PayUtils.getPayRebateMoney(userRule, false);
                 mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true);
