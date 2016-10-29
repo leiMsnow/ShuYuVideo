@@ -67,7 +67,7 @@ public class PayDialogFragment extends DialogFragment {
         View layout = inflater.inflate(R.layout.fragment_pay_dialog, container);
         btnAliPay = (Button) layout.findViewById(R.id.btn_ali_pay);
         btnWeChatPay = (Button) layout.findViewById(R.id.btn_wechat_pay);
-        payBackground = layout.findViewById(R.id.rl_pay_bg);
+        payBackground = layout.findViewById(R.id.v_pay_bg);
         tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
         tvNewPrice = (TextView) layout.findViewById(R.id.tv_pay_new_price);
         tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
@@ -154,11 +154,9 @@ public class PayDialogFragment extends DialogFragment {
             }
             if (mWeChatPayment == null) {
                 btnWeChatPay.setVisibility(View.GONE);
-                btnAliPay.setText("支付宝(限时折扣)");
             }
             if (mAliPayPayment == null) {
                 btnAliPay.setVisibility(View.GONE);
-                btnWeChatPay.setText("微信支付(限时折扣)");
             }
         }
     }
@@ -170,11 +168,7 @@ public class PayDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
-                if (userRule > 0) {
-                    payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_vip);
-                } else {
-                    payBackground.setBackgroundResource(R.mipmap.bg_pay_dialog_member);
-                }
+                payBackground.setBackgroundResource(PayUtils.getPayDialogBG(userRule));
                 if (payDialogBG != 0) {
                     payBackground.setBackgroundResource(payDialogBG);
                 }

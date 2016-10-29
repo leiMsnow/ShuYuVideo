@@ -1,61 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv_parent"
         android:layout_width="270dp"
-        android:layout_height="320dp"
-        android:layout_centerInParent="true"
+        android:layout_height="300dp"
         app:cardCornerRadius="6dp">
 
-
         <RelativeLayout
-            android:id="@+id/rl_pay_bg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp">
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
 
-            <TextView
-                android:id="@+id/tv_pay_tips"
-                android:layout_width="wrap_content"
+            <View
+                android:id="@+id/v_pay_bg"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/ll_pay"
-                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/v_pay_bg"
                 android:layout_marginLeft="8dp"
-                android:layout_toLeftOf="@+id/tv_pay_new_price"
-                tools:text="升级VIP"/>
+                android:layout_marginRight="8dp">
 
-            <TextView
-                android:id="@+id/tv_pay_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/tv_pay_new_price"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:textColor="@color/normal_dark_grey"
-                android:textSize="12sp"
-                tools:text="原价：30元"/>
+                <TextView
+                    android:id="@+id/tv_pay_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_pay_new_price"
+                    tools:text="升级VIP"/>
 
-            <TextView
-                android:id="@+id/tv_pay_new_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/ll_pay"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:textColor="@color/theme_red"
-                tools:text="特价：25元"/>
+                <TextView
+                    android:id="@+id/tv_pay_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_pay_new_price"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/normal_dark_grey"
+                    android:textSize="12sp"
+                    tools:text="原价：30元"/>
+
+                <TextView
+                    android:id="@+id/tv_pay_new_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/theme_red"
+                    tools:text="特价：25元"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/ll_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btn_wechat_pay"
@@ -65,9 +75,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_we_chat_pay"
                     android:drawableLeft="@mipmap/ic_logo_wx_normal"
-                    android:gravity="center"
-                    android:paddingRight="8dp"
-                    android:text="微信支付"
+                    android:paddingRight="16dp"
+                    android:text="微信支付(限时折扣)"
                     android:textColor="@color/white"/>
 
                 <Button
@@ -78,20 +87,19 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_ali_pay"
                     android:drawableLeft="@mipmap/ic_logo_alipay_normal"
-                    android:gravity="center"
-                    android:paddingRight="8dp"
-                    android:text="支付宝"
+                    android:paddingRight="16dp"
+                    android:text="支付宝(限时折扣)"
                     android:textColor="@color/white"/>
             </LinearLayout>
         </RelativeLayout>
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:scaleType="center"
             android:src="@mipmap/btn_close"/>
 
     </android.support.v7.widget.CardView>
-</RelativeLayout>
+</FrameLayout>

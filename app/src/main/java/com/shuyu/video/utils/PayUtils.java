@@ -123,7 +123,8 @@ public class PayUtils {
         }
         double[] moneys;
         if (isSpree) {
-            moneys = new double[]{appPayInfo.getSpreePrice(), appPayInfo.getSpreePrice()};
+            moneys = new double[]{appPayInfo.getSpreePrice(),
+                    appPayInfo.getSpreePrice()};
         } else {
             if (isRebate && appPayInfo.getRebate() > 0 && appPayInfo.getRebate() < 1) {
                 moneys = new double[]{
@@ -145,7 +146,7 @@ public class PayUtils {
         return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
-    public static String getPayMoneyTips(int userRule,boolean isSpree) {
+    public static String getPayMoneyTips(int userRule, boolean isSpree) {
         if (isSpree) return "会员大礼包";
         String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "升级超级vip"};
         return tips[userRule];
@@ -154,6 +155,14 @@ public class PayUtils {
     public static String getPayPoint(int userRule) {
         String[] payPoints = new String[]{"member", "vip", "svip", "sipv+"};
         return payPoints[userRule];
+    }
+
+    public static int getPayDialogBG(int userRule) {
+        int[] vipIcon = new int[]{R.mipmap.bg_pay_dialog_member,
+                R.mipmap.bg_pay_dialog_vip,
+                R.mipmap.bg_pay_dialog_vip,
+                R.mipmap.bg_pay_dialog_vip};
+        return vipIcon[userRule];
     }
 
     public static int getVipIcon(int userRule) {
