@@ -63,6 +63,7 @@ public class ChannelFragment extends BaseFragment {
     private Timer timer;
     private int currIndex = 0;
     private MyHandler mMyHandler;
+    private long currentTime = System.currentTimeMillis();
 
     public static ChannelFragment newInstance(ChannelTitle channelTitle) {
         ChannelFragment fragment = new ChannelFragment();
@@ -141,7 +142,7 @@ public class ChannelFragment extends BaseFragment {
                     intent.putExtra(Constants.VIDEO_DETAIL_ID, channelBanner.getTargetId());
                     mContext.startActivity(intent);
                 } else if (channelBanner.getBannerType() == Constants.BANNER_PICTURE) {
-                    PayUtils.canShowPic( getActivity(), channelBanner.getFeeRule(),
+                    PayUtils.canShowPic(getActivity(), channelBanner.getFeeRule(),
                             channelBanner.getTargetId());
                 } else if (channelBanner.getBannerType() == Constants.BANNER_APP) {
                     ToastUtils.getInstance().showToast("正在下载...");
@@ -152,6 +153,7 @@ public class ChannelFragment extends BaseFragment {
             }
         });
 
+
         mExpandableListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -159,7 +161,9 @@ public class ChannelFragment extends BaseFragment {
                     // 当不滚动时
                     case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
                         // 判断滚动到底部
-                        if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+                        if (view.getLastVisiblePosition() == (view.getCount() - 1)
+                                && System.currentTimeMillis() - currentTime >= 10000) {
+                            currentTime = System.currentTimeMillis();
                             PayUtils.showPayDialog(mContext);
                         }
                         break;

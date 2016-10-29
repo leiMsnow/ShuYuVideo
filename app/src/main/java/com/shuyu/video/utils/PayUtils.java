@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shuyu.core.uils.LogUtils;
+import com.shuyu.video.R;
 import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
@@ -135,12 +136,17 @@ public class PayUtils {
 
 
     public static String getPayMoneyTips(int userRule) {
-        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "超级vip"};
+        String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "升级超级vip"};
         return tips[userRule];
     }
 
     public static String getPayPoint(int userRule) {
         String[] payPoints = new String[]{"member", "vip", "svip", "sipv+"};
         return payPoints[userRule];
+    }
+
+    public static int getVipIcon(int userRule) {
+        int[] vipIcon = new int[]{0, 0, R.mipmap.ic_vip_flag, 0};
+        return vipIcon[userRule];
     }
 }

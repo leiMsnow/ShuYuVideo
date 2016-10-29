@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class UserCenterFragment extends BaseFragment {
 
@@ -153,11 +150,8 @@ public class UserCenterFragment extends BaseFragment {
     }
 
     private void setUserInfo() {
-        if (mData.getUserType() == 0) {
-            mRlUser.setVisibility(View.GONE);
-            return;
-        }
         mTvMemberTips.setText(getString(R.string.user_rule_tips, mData.getUserTypeShow()));
+        mBtnMember.setText(PayUtils.getPayMoneyTips(mData.getUserType()));
         if (mData.getUserType() == 3) {
             mBtnMember.setVisibility(View.GONE);
         }
@@ -175,20 +169,6 @@ public class UserCenterFragment extends BaseFragment {
         settings.add(new SettingsInfo(SettingsInfo.ABOUT, R.mipmap.ic_about, getString(R.string.about)));
 
         return settings;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     public interface IRecommendListener {
