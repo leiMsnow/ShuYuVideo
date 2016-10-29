@@ -213,7 +213,7 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void getVideoList(int cid, int pageNo) {
-        BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoListByChannelId(cid, pageNo, 6)
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoListByChannelId(cid, pageNo)
                 , new BaseApi.IResponseListener<ChannelVideo>() {
 
                     @Override
@@ -229,7 +229,7 @@ public class ChannelFragment extends BaseFragment {
     }
 
     private void getPictureList(int cid, int pageNo) {
-        BaseApi.request(BaseApi.createApi(IServiceApi.class).getPictureListByChannelId(cid, pageNo, 6)
+        BaseApi.request(BaseApi.createApi(IServiceApi.class).getPictureListByChannelId(cid, pageNo)
                 , new BaseApi.IResponseListener<ChannelPicture>() {
 
                     @Override

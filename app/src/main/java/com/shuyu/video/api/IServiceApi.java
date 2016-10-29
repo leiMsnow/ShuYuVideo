@@ -37,10 +37,9 @@ public interface IServiceApi {
     /**
      * 视频频道内容列表
      */
-    @GET("qryVideoChannelContentList.service?rv=2")
+    @GET("qryVideoChannelContentList.service?rv=2&pageSize=20")
     Observable<ChannelVideo> getVideoListByChannelId(@Query("cid") int cid,
-                                                     @Query("pageNo") int pageNo,
-                                                     @Query("pageSize") int pageSize);
+                                                     @Query("pageNo") int pageNo);
 
     /**
      * 视频详情
@@ -51,10 +50,9 @@ public interface IServiceApi {
     /**
      * 图库频道内容列表
      */
-    @GET("qryPicChannelContentList.service?picRv=2")
+    @GET("qryPicChannelContentList.service?picRv=2&pageSize=20")
     Observable<ChannelPicture> getPictureListByChannelId(@Query("cid") int cid,
-                                                         @Query("pageNo") int pageNo,
-                                                         @Query("pageSize") int pageSize);
+                                                         @Query("pageNo") int pageNo);
 
     /**
      * 图片详情

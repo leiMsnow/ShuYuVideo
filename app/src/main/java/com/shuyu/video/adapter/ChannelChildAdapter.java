@@ -78,6 +78,12 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
             holder.setVisible(R.id.tv_view_number, View.GONE);
         }
 
+        if (item.getFeeRule() == 0) {
+            holder.setVisible(R.id.iv_vip, View.GONE);
+        } else {
+            holder.setVisible(R.id.iv_vip, View.VISIBLE);
+        }
+
         String[] tags = item.getTags();
         for (int i = 0; i < tags.length; i++) {
             if (i == 2) break;
@@ -102,7 +108,7 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
                 intent.putExtra(Constants.VIDEO_DETAIL_ID, child.getId());
                 mContext.startActivity(intent);
             } else if (child.getContentType() == Constants.BANNER_PICTURE) {
-                PayUtils.canShowPic( mContext, child.getFeeRule(), child.getId());
+                PayUtils.canShowPic(mContext, child.getFeeRule(), child.getId());
             }
         }
     }
