@@ -116,33 +116,37 @@ public class PayUtils {
         return null;
     }
 
-    public static double getPayRebateMoney(int userRule, boolean isRebate) {
+    public static double getPayRebateMoney(int userRule, boolean isRebate, boolean isSpree) {
         AppPayInfo appPayInfo = getPayInfo();
         if (appPayInfo == null) {
             return 30.00f;
         }
         double[] moneys;
-        if (isRebate && appPayInfo.getRebate() > 0 && appPayInfo.getRebate() < 1) {
-            moneys = new double[]{
-                    appPayInfo.getMemberPrice() * appPayInfo.getRebate(),
-                    appPayInfo.getVipPrice() * appPayInfo.getRebate(),
-                    appPayInfo.getSvipPrice() * appPayInfo.getRebate(),
-                    appPayInfo.getSvipPrice() * appPayInfo.getRebate()
-            };
+        if (isSpree) {
+            moneys = new double[]{appPayInfo.getSpreePrice(), appPayInfo.getSpreePrice()};
         } else {
-            moneys = new double[]{
-                    appPayInfo.getMemberPrice(),
-                    appPayInfo.getVipPrice(),
-                    appPayInfo.getSvipPrice(),
-                    appPayInfo.getSvipPrice()
-            };
+            if (isRebate && appPayInfo.getRebate() > 0 && appPayInfo.getRebate() < 1) {
+                moneys = new double[]{
+                        appPayInfo.getMemberPrice() * appPayInfo.getRebate(),
+                        appPayInfo.getVipPrice() * appPayInfo.getRebate(),
+                        appPayInfo.getSvipPrice() * appPayInfo.getRebate(),
+                        appPayInfo.getSvipPrice() * appPayInfo.getRebate()
+                };
+            } else {
+                moneys = new double[]{
+                        appPayInfo.getMemberPrice(),
+                        appPayInfo.getVipPrice(),
+                        appPayInfo.getSvipPrice(),
+                        appPayInfo.getSvipPrice()
+                };
+            }
         }
         BigDecimal b = new BigDecimal(moneys[userRule]);
         return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
-
-    public static String getPayMoneyTips(int userRule) {
+    public static String getPayMoneyTips(int userRule,boolean isSpree) {
+        if (isSpree) return "恭喜获得大礼包";
         String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "升级超级vip"};
         return tips[userRule];
     }

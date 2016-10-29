@@ -65,7 +65,9 @@ public class SplashActivity extends AppBaseActivity {
     protected void initData() {
         mMyHandler = new MyHandler(this);
         Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, ""))
-                .placeholder(R.mipmap.bg_splash).into(ivLauncherUrl);
+                .placeholder(R.mipmap.bg_splash)
+                .error(R.mipmap.bg_splash)
+                .into(ivLauncherUrl);
         getAppStoreInfo();
         userVisitOrActivation();
         getAppInfo();
@@ -194,7 +196,6 @@ public class SplashActivity extends AppBaseActivity {
     }
 
 
-
     private void userVisit(String data) {
         BaseApi.request(createApi(ILocalServiceApi.class)
                 .userVisit(data, "0"), null);
@@ -210,7 +211,7 @@ public class SplashActivity extends AppBaseActivity {
 
                     @Override
                     public void onFail() {
-                        LogUtils.e("SplashActivity","getAppInfo-Error");
+                        LogUtils.e("SplashActivity", "getAppInfo-Error");
                     }
                 });
     }

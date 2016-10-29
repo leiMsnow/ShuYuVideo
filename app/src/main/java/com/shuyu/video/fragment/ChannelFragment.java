@@ -63,7 +63,7 @@ public class ChannelFragment extends BaseFragment {
     private Timer timer;
     private int currIndex = 0;
     private MyHandler mMyHandler;
-    private long currentTime = System.currentTimeMillis();
+    private long currentTime = 0;
 
     public static ChannelFragment newInstance(ChannelTitle channelTitle) {
         ChannelFragment fragment = new ChannelFragment();
@@ -130,7 +130,6 @@ public class ChannelFragment extends BaseFragment {
             public void onPageScrollStateChanged(int state) {
                 mSwipeContainer.setEnabled(state == ViewPager.SCROLL_STATE_IDLE);
             }
-
         });
 
         mBannerAdapter.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +151,6 @@ public class ChannelFragment extends BaseFragment {
                 }
             }
         });
-
 
         mExpandableListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

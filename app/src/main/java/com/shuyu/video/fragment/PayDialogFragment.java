@@ -178,13 +178,13 @@ public class PayDialogFragment extends DialogFragment {
                 if (payDialogBG != 0) {
                     payBackground.setBackgroundResource(payDialogBG);
                 }
-                mMoneys = PayUtils.getPayRebateMoney(userRule, false);
-                mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true);
+                mMoneys = PayUtils.getPayRebateMoney(userRule, false, payDialogBG != 0);
+                mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true, payDialogBG != 0);
                 if (mMoneys > mRebateMoneys) {
                     tvPrice.setText(String.format("原价：%.2f元", mMoneys));
                 }
                 tvNewPrice.setText(String.format("特价：%.2f元", mRebateMoneys));
-                tvPriceTips.setText(PayUtils.getPayMoneyTips(userRule));
+                tvPriceTips.setText(PayUtils.getPayMoneyTips(userRule, payDialogBG != 0));
             }
 
             @Override

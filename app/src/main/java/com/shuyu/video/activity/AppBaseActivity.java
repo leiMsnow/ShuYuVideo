@@ -22,9 +22,7 @@ import java.util.List;
  */
 
 public abstract class AppBaseActivity extends BaseActivity {
-
-    private long currentTime = System.currentTimeMillis();
-
+    private long currentTime = 0;
     @Override
     protected boolean hasToolbar() {
         return true;
@@ -83,11 +81,9 @@ public abstract class AppBaseActivity extends BaseActivity {
         return false;
     }
 
-
     private void stayTime() {
         long onTime = (long) SPUtils.get(mContext, Constants.STAY_TIME_ON, System.currentTimeMillis());
         long offTime = System.currentTimeMillis();
-
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
                         .stayTime(onTime, offTime, "tg1001"),
                 new BaseApi.IResponseListener<ResultEntity>() {
