@@ -146,7 +146,7 @@ public class PayUtils {
     }
 
     public static String getPayMoneyTips(int userRule,boolean isSpree) {
-        if (isSpree) return "恭喜获得大礼包";
+        if (isSpree) return "会员大礼包";
         String[] tips = new String[]{"注册会员", "升级vip", "升级超级vip", "升级超级vip"};
         return tips[userRule];
     }

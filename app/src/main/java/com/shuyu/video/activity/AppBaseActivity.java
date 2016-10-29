@@ -52,7 +52,7 @@ public abstract class AppBaseActivity extends BaseActivity {
                 public void onSuccess(UserInfo data) {
                     if (data.getUserType() == 0) {
                         Bundle bundle = new Bundle();
-                        bundle.putInt(Constants.KEY_PAY_DIALOG,R.mipmap.bg_pay_dialog_gift);
+                        bundle.putInt(Constants.KEY_PAY_DIALOG,R.mipmap.bg_pay_dialog_spree);
                         PayUtils.showPayDialog(mContext,bundle);
                     }
                 }

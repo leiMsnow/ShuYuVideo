@@ -16,7 +16,6 @@
             android:id="@+id/rl_pay_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/bg_pay_dialog_gift"
             android:padding="8dp">
 
             <TextView
