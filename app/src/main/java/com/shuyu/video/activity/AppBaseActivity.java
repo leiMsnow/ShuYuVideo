@@ -54,6 +54,8 @@ public abstract class AppBaseActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constants.KEY_PAY_DIALOG,R.mipmap.bg_pay_dialog_spree);
                         PayUtils.showPayDialog(mContext,bundle);
+                    }else{
+                        AppBaseActivity.super.onBackPressed();
                     }
                 }
 

@@ -159,9 +159,6 @@ public class UserCenterFragment extends BaseFragment {
     private void setUserInfo() {
         mTvMemberTips.setText(getString(R.string.user_rule_tips, mData.getUserTypeShow()));
         mBtnMember.setText(PayUtils.getPayMoneyTips(mData.getUserType(),false));
-        if (mData.getUserType() == 3) {
-            mBtnMember.setVisibility(View.GONE);
-        }
     }
 
     private List<SettingsInfo> initSettingData() {
