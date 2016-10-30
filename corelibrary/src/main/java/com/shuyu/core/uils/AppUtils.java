@@ -1,5 +1,6 @@
 package com.shuyu.core.uils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -14,6 +15,7 @@ import com.shuyu.core.CoreApplication;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -180,5 +182,17 @@ public class AppUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static boolean isBackground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.processName.equals(context.getPackageName())) {
+                return appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
+            }
+        }
+        return false;
     }
 }

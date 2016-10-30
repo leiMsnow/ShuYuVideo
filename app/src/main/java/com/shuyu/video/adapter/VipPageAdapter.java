@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
+import com.shuyu.video.utils.PayUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -63,6 +64,7 @@ public class VipPageAdapter extends PagerAdapter {
         if (mConvertViews.size() == 0) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.item_vip_page, null);
+            holder.ivVip = (ImageView) convertView.findViewById(R.id.iv_vip);
             holder.ivUrl = (ImageView) convertView.findViewById(R.id.iv_url);
             holder.ivPlay = (ImageView) convertView.findViewById(R.id.iv_play);
             holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_video_title);
@@ -73,6 +75,7 @@ public class VipPageAdapter extends PagerAdapter {
         }
 
         Glide.with(mContext).load(mLiveVideoDataList.get(position).getImgUrl()).into(holder.ivUrl);
+        holder.ivVip.setImageResource(PayUtils.getVipIcon(mLiveVideoDataList.get(position).getFeeRule()));
         holder.tvTitle.setText(mLiveVideoDataList.get(position).getTitle());
         holder.ivPlay.setTag(mLiveVideoDataList.get(position));
         holder.ivPlay.setOnClickListener(mOnClickListener);
@@ -81,6 +84,7 @@ public class VipPageAdapter extends PagerAdapter {
     }
 
     private class ViewHolder {
+        ImageView ivVip;
         ImageView ivUrl;
         ImageView ivPlay;
         TextView tvTitle;

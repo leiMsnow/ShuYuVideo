@@ -39,7 +39,7 @@ import com.shuyu.core.uils.ToastUtils;
 import java.util.Formatter;
 import java.util.Locale;
 
-public class UniversalMediaController extends FrameLayout {
+public class UniversalMediaController extends FrameLayout{
 
     private UniversalMediaController.MediaPlayerControl mPlayer;
     private Context mContext;
@@ -90,7 +90,6 @@ public class UniversalMediaController extends FrameLayout {
     private OnClickListener mOnBackClickListener;
 
     private long mFreeTime = 0;
-    private boolean mStopTimer = false;
 
     public void setBackListener(OnClickListener mOnBackClickListener) {
         this.mOnBackClickListener = mOnBackClickListener;
@@ -252,7 +251,6 @@ public class UniversalMediaController extends FrameLayout {
         // was already true. This happens, for example, if we're
         // paused with the progress bar showing the user hits play.
         mHandler.sendEmptyMessage(SHOW_PROGRESS);
-
         Message msg = mHandler.obtainMessage(FADE_OUT);
         if (timeout != 0) {
             mHandler.removeMessages(FADE_OUT);
@@ -278,7 +276,6 @@ public class UniversalMediaController extends FrameLayout {
         }
     }
 
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -293,12 +290,9 @@ public class UniversalMediaController extends FrameLayout {
                         msg = obtainMessage(SHOW_PROGRESS);
                         sendMessageDelayed(msg, 1000 - (pos % 1000));
                     }
+                    break;
                 case HIDE_PROGRESS:
-                    if (!mStopTimer && mFreeTime > 0) {
-                        setProgress();
-                        msg = obtainMessage(HIDE_PROGRESS);
-                        sendMessageDelayed(msg, 1000);
-                    }
+                    freeTimeEnd();
                     break;
                 case SHOW_LOADING: //3
                     show();
@@ -403,7 +397,6 @@ public class UniversalMediaController extends FrameLayout {
             return 0;
         }
         int position = mPlayer.getCurrentPosition();
-        freeTimeEnd(position);
         long duration = mFreeTime > 0 ? mFreeTime : mPlayer.getDuration();
         if (mProgress != null) {
             if (duration > 0) {
@@ -647,18 +640,21 @@ public class UniversalMediaController extends FrameLayout {
     };
 
 
-    private void freeTimeEnd(long newPosition) {
+    public void freeTimeEnd() {
         if (mFreeTime == 0) return;
-        long lastTime = 15 - newPosition / 1000;
-        if (lastTime > 0) {
-            ToastUtils.getInstance().showToast(String.format("试播剩余%02d秒", lastTime));
-        } else {
-            ToastUtils.getInstance().showToast("试播结束，VIP可免费观看完整视频");
-            if (mIFreeTimeListener != null) {
-                mIFreeTimeListener.freeTimeEnd();
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            long lastTime = 15 - mPlayer.getCurrentPosition() / 1000;
+            if (lastTime > 0) {
+                ToastUtils.getInstance().showToast(String.format("试播剩余%02d秒", lastTime));
+                Message msg = mHandler.obtainMessage(HIDE_PROGRESS);
+                mHandler.sendMessageDelayed(msg, 1000);
+            } else {
+                ToastUtils.getInstance().showToast("试播结束，VIP可免费观看完整视频");
+                if (mIFreeTimeListener != null) {
+                    mIFreeTimeListener.freeTimeEnd();
+                }
+                reset();
             }
-            mStopTimer = true;
-            reset();
         }
     }
 
@@ -679,6 +675,7 @@ public class UniversalMediaController extends FrameLayout {
 
     public void showLoading() {
         mHandler.sendEmptyMessage(SHOW_LOADING);
+        mHandler.sendEmptyMessage(HIDE_PROGRESS);
     }
 
     public void hideLoading() {
