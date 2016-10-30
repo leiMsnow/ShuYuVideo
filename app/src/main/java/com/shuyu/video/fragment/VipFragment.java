@@ -72,8 +72,14 @@ public class VipFragment extends BaseFragment {
 
             }
         });
+    }
 
-        canScroll();
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            canScroll();
+        }
     }
 
     private void canScroll() {

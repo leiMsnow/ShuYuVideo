@@ -54,6 +54,10 @@ public class VideoDetailsActivity extends AppBaseActivity {
     TextView tvComment;
     @Bind(R.id.video_bg)
     View videoBG;
+    @Bind(R.id.ll_free_tips)
+    View mllFreeTips;
+    @Bind(R.id.tv_free_tips)
+    TextView mTvFreeTips;
 
     private VideoPicDetails mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
@@ -167,6 +171,18 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void setVideoAreaSize(final int userRule) {
+        if (userRule == 0) {
+            mTvFreeTips.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mVideoView.pause();
+                    PayUtils.showPayDialog(mContext);
+                }
+            });
+            mllFreeTips.setVisibility(View.VISIBLE);
+        } else {
+            mllFreeTips.setVisibility(View.GONE);
+        }
         mVideoLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -329,5 +345,4 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     }
                 });
     }
-
 }

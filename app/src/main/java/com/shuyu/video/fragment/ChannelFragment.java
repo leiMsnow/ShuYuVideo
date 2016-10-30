@@ -264,7 +264,7 @@ public class ChannelFragment extends BaseFragment {
                 public void run() {
                     Message message = new Message();
                     message.what = UPDATE_VIEWPAGER;
-                    if (currIndex == mChannelBanners.size()) {
+                    if (currIndex == mChannelBanners.size()-1) {
                         currIndex = 0;
                     }
                     message.arg1 = currIndex++;
