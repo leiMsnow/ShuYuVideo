@@ -34,6 +34,8 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import com.shuyu.core.uils.ToastUtils;
+
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -65,6 +67,7 @@ public class UniversalMediaController extends FrameLayout {
     private static final int HIDE_ERROR = 6;
     private static final int SHOW_COMPLETE = 7;
     private static final int HIDE_COMPLETE = 8;
+    private static final int HIDE_PROGRESS = 9;
     StringBuilder mFormatBuilder;
 
     Formatter mFormatter;
@@ -85,6 +88,9 @@ public class UniversalMediaController extends FrameLayout {
     private View mCenterPlayButton;
 
     private OnClickListener mOnBackClickListener;
+
+    private long mFreeTime = 0;
+    private boolean mStopTimer = false;
 
     public void setBackListener(OnClickListener mOnBackClickListener) {
         this.mOnBackClickListener = mOnBackClickListener;
@@ -180,6 +186,10 @@ public class UniversalMediaController extends FrameLayout {
     public void setMediaPlayer(MediaPlayerControl player) {
         mPlayer = player;
         updatePausePlay();
+    }
+
+    public void setFreeTime(long freeTime) {
+        mFreeTime = freeTime;
     }
 
     /**
@@ -283,6 +293,12 @@ public class UniversalMediaController extends FrameLayout {
                         msg = obtainMessage(SHOW_PROGRESS);
                         sendMessageDelayed(msg, 1000 - (pos % 1000));
                     }
+                case HIDE_PROGRESS:
+                    if (!mStopTimer && mFreeTime > 0) {
+                        setProgress();
+                        msg = obtainMessage(HIDE_PROGRESS);
+                        sendMessageDelayed(msg, 1000);
+                    }
                     break;
                 case SHOW_LOADING: //3
                     show();
@@ -296,6 +312,7 @@ public class UniversalMediaController extends FrameLayout {
                     showCenterView(R.id.error_layout);
                     break;
                 case HIDE_LOADING: //4
+
                 case HIDE_ERROR: //6
                 case HIDE_COMPLETE: //8
                     hide();
@@ -355,6 +372,9 @@ public class UniversalMediaController extends FrameLayout {
     }
 
     public void reset() {
+        if (mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
         mCurrentTime.setText("00:00");
         mEndTime.setText("00:00");
         mProgress.setProgress(0);
@@ -363,13 +383,12 @@ public class UniversalMediaController extends FrameLayout {
         hideLoading();
     }
 
-    private String stringForTime(int timeMs) {
-        int totalSeconds = timeMs / 1000;
+    private String stringForTime(long timeMs) {
+        long totalSeconds = timeMs / 1000;
 
-        int seconds = totalSeconds % 60;
-        int minutes = (totalSeconds / 60) % 60;
-        int hours = totalSeconds / 3600;
-
+        long seconds = totalSeconds % 60;
+        long minutes = (totalSeconds / 60) % 60;
+        long hours = totalSeconds / 3600;
         mFormatBuilder.setLength(0);
         if (hours > 0) {
             return mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString();
@@ -379,11 +398,13 @@ public class UniversalMediaController extends FrameLayout {
     }
 
     private int setProgress() {
+
         if (mPlayer == null || mDragging) {
             return 0;
         }
         int position = mPlayer.getCurrentPosition();
-        int duration = mPlayer.getDuration();
+        freeTimeEnd(position);
+        long duration = mFreeTime > 0 ? mFreeTime : mPlayer.getDuration();
         if (mProgress != null) {
             if (duration > 0) {
                 // use long to avoid overflow
@@ -572,6 +593,15 @@ public class UniversalMediaController extends FrameLayout {
         updatePausePlay();
     }
 
+    public interface IFreeTimeListener {
+        void freeTimeEnd();
+    }
+
+    private IFreeTimeListener mIFreeTimeListener;
+
+    public void setIFreeTimeListener(IFreeTimeListener IFreeTimeListener) {
+        mIFreeTimeListener = IFreeTimeListener;
+    }
 
     private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         int newPosition = 0;
@@ -588,14 +618,12 @@ public class UniversalMediaController extends FrameLayout {
 
         public void onProgressChanged(SeekBar bar, int progress, boolean fromuser) {
             if (mPlayer == null || !fromuser) {
-                // We're not interested in programmatically generated changes to
-                // the progress bar's position.
                 return;
             }
 
             long duration = mPlayer.getDuration();
-            long newposition = (duration * progress) / 1000L;
-            newPosition = (int) newposition;
+            long new_position = (duration * progress) / 1000L;
+            newPosition = (int) new_position;
             change = true;
         }
 
@@ -613,14 +641,26 @@ public class UniversalMediaController extends FrameLayout {
             setProgress();
             updatePausePlay();
             show(sDefaultTimeout);
-
-            // Ensure that progress is properly updated in the future,
-            // the call to show() does not guarantee this because it is a
-            // no-op if we are already showing.
             mShowing = true;
             mHandler.sendEmptyMessage(SHOW_PROGRESS);
         }
     };
+
+
+    private void freeTimeEnd(long newPosition) {
+        if (mFreeTime == 0) return;
+        long lastTime = 15 - newPosition / 1000;
+        if (lastTime > 0) {
+            ToastUtils.getInstance().showToast(String.format("试播剩余%02d秒", lastTime));
+        } else {
+            ToastUtils.getInstance().showToast("试播结束，VIP可免费观看完整视频");
+            if (mIFreeTimeListener != null) {
+                mIFreeTimeListener.freeTimeEnd();
+            }
+            mStopTimer = true;
+            reset();
+        }
+    }
 
     @Override
     public void setEnabled(boolean enabled) {
@@ -661,8 +701,8 @@ public class UniversalMediaController extends FrameLayout {
         mHandler.sendEmptyMessage(HIDE_COMPLETE);
     }
 
-    public void setTitle(String titile) {
-        mTitle.setText(titile);
+    public void setTitle(String title) {
+        mTitle.setText(title);
     }
 
     public void setOnErrorView(int resId) {

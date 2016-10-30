@@ -311,7 +311,6 @@ public class UniversalVideoView extends SurfaceView
             mMediaPlayer.setScreenOnWhilePlaying(true);
             mMediaPlayer.prepareAsync();
 
-
             // we don't set the target state here either, but preserve the
             // target state that was there before.
             mCurrentState = STATE_PREPARING;
@@ -473,38 +472,6 @@ public class UniversalVideoView extends SurfaceView
                             return true;
                         }
                     }
-
-            /* Otherwise, pop up an error dialog so the user knows that
-             * something bad has happened. Only try and pop up the dialog
-             * if we're attached to a window. When we're going away and no
-             * longer have a window, don't bother showing the user an error.
-             */
-//                    if (getWindowToken() != null) {
-//                        Resources r = mContext.getResources();
-//                        int messageId;
-//
-//                        if (framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
-//                            messageId = com.android.internal.R.string.VideoView_error_text_invalid_progressive_playback;
-//                        } else {
-//                            messageId = com.android.internal.R.string.VideoView_error_text_unknown;
-//                        }
-//
-//                        new AlertDialog.Builder(mContext)
-//                                .setMessage(messageId)
-//                                .setPositiveButton(com.android.internal.R.string.VideoView_error_button,
-//                                        new DialogInterface.OnClickListener() {
-//                                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                        /* If we get here, there is no onError listener, so
-//                                         * at least inform them that the video is over.
-//                                         */
-//                                                if (mOnCompletionListener != null) {
-//                                                    mOnCompletionListener.onCompletion(mMediaPlayer);
-//                                                }
-//                                            }
-//                                        })
-//                                .setCancelable(false)
-//                                .show();
-//                    }
                     return true;
                 }
             };

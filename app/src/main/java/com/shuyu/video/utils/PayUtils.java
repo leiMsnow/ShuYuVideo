@@ -38,14 +38,15 @@ public class PayUtils {
      * @param context
      * @return
      */
-    public static void canPlayer(final Context context, final int needRule,
-                                 final IPlayerListener playerListener) {
+    public static void isShowPayDialog(final Context context, final int needRule,
+                                       final IPlayerListener playerListener) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
                 LogUtils.d("getUserInfo", data.toString());
+                boolean canPlay = !showPayDialog(context, data.getUserType(), needRule);
                 if (playerListener != null) {
-                    playerListener.canPlayer(!showPayDialog(context, data.getUserType(), needRule));
+                    playerListener.canPlayer(canPlay);
                 }
             }
 
@@ -58,11 +59,30 @@ public class PayUtils {
 
     }
 
+    public static void canPlay(final int needRule, final IPlayerListener playerListener) {
+        getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                boolean canPlay = ((data.getUserType() >= needRule) || (needRule < 2));
+                if (playerListener != null) {
+                    playerListener.canPlayer(canPlay);
+                }
+            }
+
+            @Override
+            public void onFail() {
+                if (playerListener != null)
+                    playerListener.canPlayer(false);
+            }
+        });
+    }
+
     private static boolean showPayDialog(Context context, int userRule, int needRule) {
-        if (userRule < needRule) {
+        if ((userRule < needRule) || (userRule == 0 && needRule == 0)) {
             showPayDialog(context);
             return true;
         }
+
         return false;
     }
 
@@ -70,11 +90,15 @@ public class PayUtils {
         showPayDialog(context, null);
     }
 
+    private static long currentTime = 0;
     public static void showPayDialog(Context context, Bundle bundle) {
         PayDialogFragment dialogFragment = new PayDialogFragment();
         if (bundle != null)
             dialogFragment.setArguments(bundle);
-        dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
+        if (System.currentTimeMillis() - currentTime > 2000) {
+            dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
+            currentTime = System.currentTimeMillis();
+        }
     }
 
     public static void canShowPic(final Context mContext, final int needRule, final int id) {
@@ -166,7 +190,7 @@ public class PayUtils {
     }
 
     public static int getVipIcon(int userRule) {
-        int[] vipIcon = new int[]{0, 0, R.mipmap.ic_vip_flag, 0};
+        int[] vipIcon = new int[]{0, 0, R.mipmap.ic_vip_flag, R.mipmap.ic_svip_flag};
         return vipIcon[userRule];
     }
 }

@@ -2,7 +2,9 @@ package com.shuyu.video.api;
 
 import com.shuyu.core.CoreApplication;
 import com.shuyu.core.uils.LogUtils;
+import com.shuyu.core.uils.NetUtils;
 import com.shuyu.core.uils.SPUtils;
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.MyApplication;
 import com.shuyu.video.converter.MyConverterFactory;
 
@@ -39,6 +41,14 @@ public class BaseApi {
 
     public static <T> void request(Observable<T> observable,
                                    final IResponseListener<T> listener) {
+
+        if (!NetUtils.isConnected(MyApplication.getApplication())) {
+            ToastUtils.getInstance().showToast("网络不可用,请连接网络后重启APP");
+            if (listener != null) {
+                listener.onFail();
+            }
+            return;
+        }
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<T>() {

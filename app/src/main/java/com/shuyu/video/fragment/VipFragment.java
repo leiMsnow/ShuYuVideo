@@ -3,7 +3,6 @@ package com.shuyu.video.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,9 +14,11 @@ import com.shuyu.video.adapter.VipPageAdapter;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.LiveVideo;
+import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.PayUtils;
+import com.shuyu.video.widget.MyViewPager;
 
 import butterknife.Bind;
 import butterknife.OnPageChange;
@@ -25,9 +26,10 @@ import butterknife.OnPageChange;
 public class VipFragment extends BaseFragment {
 
     @Bind(R.id.vp_container)
-    ViewPager vpContainer;
+    MyViewPager vpContainer;
     @Bind(R.id.tv_desc)
     TextView tvDesc;
+    private boolean mCanScroll = false;
 
     private VipPageAdapter mPageAdapter;
 
@@ -55,7 +57,7 @@ public class VipFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 final VideoPicDetails vip = (VideoPicDetails) v.getTag();
-                PayUtils.canPlayer(getActivity(), vip.getFeeRule(),
+                PayUtils.isShowPayDialog(getActivity(), vip.getFeeRule(),
                         new PayUtils.IPlayerListener() {
                             @Override
                             public void canPlayer(boolean canPlayer) {
@@ -70,11 +72,28 @@ public class VipFragment extends BaseFragment {
 
             }
         });
+
+        canScroll();
+    }
+
+    private void canScroll() {
+        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                vpContainer.setCanScroll(mCanScroll = data.getUserType() > 1);
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
     }
 
     @OnPageChange(value = R.id.vp_container, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onPageSelected(int position) {
-        tvDesc.setText(mPageAdapter.getPageTitle(position));
+        if (mCanScroll)
+            tvDesc.setText(mPageAdapter.getPageTitle(position));
     }
 
     private void getLiveVideoList() {

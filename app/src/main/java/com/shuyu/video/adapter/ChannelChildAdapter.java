@@ -79,7 +79,7 @@ public class ChannelChildAdapter extends QuickAdapter<VideoPicDetails> {
         }
 
         int icon = PayUtils.getVipIcon(item.getFeeRule());
-        holder.setBackgroundRes(R.id.iv_vip, icon);
+        holder.setImageResource(R.id.iv_vip, icon);
         if (icon == 0) {
             holder.setVisible(R.id.iv_vip, View.GONE);
         } else {

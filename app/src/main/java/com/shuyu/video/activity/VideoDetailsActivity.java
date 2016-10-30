@@ -23,6 +23,7 @@ import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.api.IServiceApi;
 import com.shuyu.video.model.ResultEntity;
+import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.model.VideoComment;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -165,7 +166,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 });
     }
 
-    private void setVideoAreaSize() {
+    private void setVideoAreaSize(final int userRule) {
         mVideoLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -179,12 +180,14 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        if (mVideoDetails.getFeeRule() == 0)
-                            PayUtils.showPayDialog( mContext);
+                        PayUtils.isShowPayDialog(mContext, mVideoDetails.getFeeRule(), null);
                     }
                 });
-                mVideoView.setVideoPath(mVideoDetails.getVideoUrl());
+                int endTime = (mVideoDetails.getFeeRule() == 1 && userRule < mVideoDetails.getFeeRule())
+                        ? mVideoDetails.getVideoLength() * 1000 : 0;
+                mMediaController.setFreeTime(endTime);
                 mMediaController.setTitle(mVideoDetails.getTitle());
+                mVideoView.setVideoPath(mVideoDetails.getVideoUrl());
                 mVideoView.requestFocus();
                 if (mIsVIP) {
                     mVideoView.setFullscreen(true);
@@ -194,6 +197,12 @@ public class VideoDetailsActivity extends AppBaseActivity {
                     @Override
                     public void onClick(View v) {
                         finish();
+                    }
+                });
+                mMediaController.setIFreeTimeListener(new UniversalMediaController.IFreeTimeListener() {
+                    @Override
+                    public void freeTimeEnd() {
+                        PayUtils.showPayDialog(mContext);
                     }
                 });
             }
@@ -210,7 +219,18 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void initVideoView() {
-        setVideoAreaSize();
+        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                setVideoAreaSize(data.getUserType());
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+
         mVideoView.setVideoViewCallback(new UniversalVideoView.VideoViewCallback() {
             @Override
             public void onScaleChange(boolean isFullscreen) {
@@ -280,13 +300,15 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void startPlay() {
-        PayUtils.canPlayer(this, mVideoDetails.getFeeRule(), new PayUtils.IPlayerListener() {
+        PayUtils.canPlay(mVideoDetails.getFeeRule(), new PayUtils.IPlayerListener() {
             @Override
             public void canPlayer(boolean canPlayer) {
                 if (canPlayer) {
                     mIvUrl.setVisibility(View.GONE);
                     ivVideoPlayer.setVisibility(View.GONE);
                     mVideoView.start();
+                } else {
+                    PayUtils.showPayDialog(mContext);
                 }
             }
         });
