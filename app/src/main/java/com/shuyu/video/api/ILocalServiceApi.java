@@ -21,26 +21,26 @@ public interface ILocalServiceApi {
     /**
      * 应用启动画面接口
      */
-    @GET(BaseApi.BASE_URL + "runInfo.service")
+    @GET(BaseApi.BASE_URL + "start.service")
     Observable<List<RunInfo>> getRunInfo();
 
     /**
      * 应用商店（应用推广）
      */
-    @GET(BaseApi.BASE_URL + "appstore.service")
+    @GET(BaseApi.BASE_URL + "appshop.service")
     Observable<AppStoreList> getAppStoreList(@Query("pageNo") int pageNo);
 
     /**
      * 热搜词（搜索标签）
      */
-    @GET(BaseApi.BASE_URL + "hotword.service")
+    @GET(BaseApi.BASE_URL + "hotsword.service")
     Observable<HotWord> getHotWordList(@Query("pageNo") int pageNo,
                                        @Query("pageSize") int pageSize);
 
     /**
      * 搜索
      */
-    @GET(BaseApi.BASE_URL + "searchVideo.service?rv=2")
+    @GET(BaseApi.BASE_URL + "search.service?rv=2")
     Observable<SearchVideoList> searchVideo(@Query("word") String word,
                                             @Query("pageNo") int pageNo,
                                             @Query("pageSize") int pageSize);
@@ -48,7 +48,7 @@ public interface ILocalServiceApi {
     /**
      * 用户反馈
      */
-    @POST(BaseApi.BASE_URL + "userFeedback.service")
+    @POST(BaseApi.BASE_URL + "feedback.service")
     Observable<ResultEntity> feedback(@Query("qType") int qType,
                                       @Query("content") String content,
                                       @Query("contactWay") String contact);
@@ -56,7 +56,7 @@ public interface ILocalServiceApi {
     /**
      * 在线时长统计
      */
-    @POST(BaseApi.BASE_URL + "suos.service")
+    @POST(BaseApi.BASE_URL + "onlineTime.service")
     Observable<ResultEntity> stayTime(@Query("onTime") long onTime,
                                       @Query("offTime") long offTime,
                                       @Query("thirdChannelId") String thirdChannelId);
@@ -64,21 +64,21 @@ public interface ILocalServiceApi {
     /**
      * 视频观看统计
      */
-    @POST(BaseApi.BASE_URL + "lookVideoStat.service")
+    @POST(BaseApi.BASE_URL + "lookVideoCount.service")
     Observable<ResultEntity> lookVideoState(@Query("videoId") int videoId,
                                             @Query("isRmd") int isRmd);
 
     /**
      * 用户激活应用
      */
-    @POST(BaseApi.BASE_URL + "userActivation.service")
+    @POST(BaseApi.BASE_URL + "appActivation.service")
     Observable<ResultEntity> userActivation(@Query("data") String data,
                                             @Query("dcVersion") String dcVersion);
 
     /**
      * 用户访问接口
      */
-    @POST(BaseApi.BASE_URL + "userVisit.service")
+    @POST(BaseApi.BASE_URL + "appVisit.service")
     Observable<ResultEntity> userVisit(@Query("data") String data,
                                        @Query("dcVersion") String dcVersion);
 
