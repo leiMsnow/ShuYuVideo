@@ -146,17 +146,14 @@ public class PayDialogFragment extends DialogFragment {
 
                     @Override
                     public void onFail() {
-                        if (mBaseDialog.isShowing()) {
-                            mBaseDialog.dismiss();
-                            mBaseDialog = null;
-                        }
+
                     }
                 });
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         if (mBaseDialog.isShowing()) {
             mBaseDialog.dismiss();
             mBaseDialog = null;
