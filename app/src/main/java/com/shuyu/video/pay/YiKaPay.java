@@ -11,10 +11,10 @@ public class YiKaPay {
 
     private static String payUrl = "http://app.6lyy.com/appCharge.aspx";
 
-    public static class YiKaAliPay extends BasePay {
+    public static class AliPay extends BasePay {
         private String callBackUrl = "http://121.199.21.125:8009/notice/yikanotify.service";
 
-        public YiKaAliPay(OrderInfo orderInfo) {
+        public AliPay(OrderInfo orderInfo) {
             super(orderInfo);
         }
 
@@ -33,9 +33,9 @@ public class YiKaPay {
         }
     }
 
-    public static class YiKaWeChatPay extends BasePay {
+    public static class WeChatPay extends BasePay {
 
-        public YiKaWeChatPay(OrderInfo orderInfo) {
+        public WeChatPay(OrderInfo orderInfo) {
             super(orderInfo);
         }
 

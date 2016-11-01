@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
+import com.shuyu.core.widget.BaseProgressDialog;
 import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
@@ -53,6 +54,8 @@ public class PayDialogFragment extends DialogFragment {
 
     private int userRule = 0;
     private int payDialogBG = 0;
+
+    private BaseProgressDialog mBaseDialog;
 
     @Override
     public boolean isCancelable() {
@@ -104,6 +107,12 @@ public class PayDialogFragment extends DialogFragment {
 
         if (mPayment == null) return;
 
+        if (mBaseDialog == null) {
+            mBaseDialog = new BaseProgressDialog(getContext());
+            mBaseDialog.setMessage("正在生成订单...");
+            mBaseDialog.show();
+        }
+
         orderInfo = new OrderInfo((AppCompatActivity) getActivity());
         orderInfo.setOrderId(PayUtils.createOrderNo());
         orderInfo.setOrderName(tvPriceTips.getText().toString());
@@ -137,9 +146,21 @@ public class PayDialogFragment extends DialogFragment {
 
                     @Override
                     public void onFail() {
-
+                        if (mBaseDialog.isShowing()) {
+                            mBaseDialog.dismiss();
+                            mBaseDialog = null;
+                        }
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBaseDialog.isShowing()) {
+            mBaseDialog.dismiss();
+            mBaseDialog = null;
+        }
     }
 
     private void getPayment() {

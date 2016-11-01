@@ -16,6 +16,10 @@ import static com.shuyu.video.utils.Constants.VIDEO_DETAIL_ID;
 
 public class WebViewActivity extends AppBaseActivity {
 
+    public static final int VIEW_VIEW_TYPE_DISCLAIMER = 1;
+    public static final int VIEW_VIEW_TYPE_PLAY_VIDEO = 2;
+    public static final int VIEW_VIEW_TYPE_PAY_URL = 3;
+
     @Bind(R.id.web_view)
     WebView webView;
 
@@ -27,28 +31,28 @@ public class WebViewActivity extends AppBaseActivity {
     @Override
     protected void initData() {
 
-        if (getIntent().getBooleanExtra(Constants.DISCLAIMER, false)) {
-            setTitle("免责声明");
-            webView.loadUrl("file:///android_asset/disclaimer.html");
-            webView.getSettings().setSupportZoom(false);
-        } else {
-            VideoPicDetails contentListBean = (VideoPicDetails)
-                    getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
+        switch (getIntent().getIntExtra(Constants.KEY_WEB_VIEW_TYPE, -1)) {
+            case VIEW_VIEW_TYPE_DISCLAIMER:
+                setTitle("免责声明");
+                webView.loadUrl("file:///android_asset/disclaimer.html");
+                webView.getSettings().setSupportZoom(false);
+                break;
+            case VIEW_VIEW_TYPE_PLAY_VIDEO:
+                VideoPicDetails contentListBean = (VideoPicDetails)
+                        getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
 
-            if (contentListBean == null)
-                return;
-            mToolbar.setVisibility(View.GONE);
-            webView.loadUrl(contentListBean.getVideoPageUrl());
+                if (contentListBean == null)
+                    return;
+                mToolbar.setVisibility(View.GONE);
+                webView.loadUrl(contentListBean.getVideoPageUrl());
+                break;
+
+            case VIEW_VIEW_TYPE_PAY_URL:
+                String payUrl = getIntent().getStringExtra(Constants.KEY_PAY_URL);
+                webView.loadUrl(payUrl);
+                break;
         }
         setView();
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
     }
 
     private void setView() {
@@ -57,5 +61,14 @@ public class WebViewActivity extends AppBaseActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
+
+        webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
     }
 }

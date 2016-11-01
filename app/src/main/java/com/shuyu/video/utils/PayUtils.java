@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shuyu.core.uils.LogUtils;
+import com.shuyu.video.BuildConfig;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
@@ -91,6 +92,7 @@ public class PayUtils {
     }
 
     private static long currentTime = 0;
+
     public static void showPayDialog(Context context, Bundle bundle) {
         PayDialogFragment dialogFragment = new PayDialogFragment();
         if (bundle != null)
@@ -182,6 +184,11 @@ public class PayUtils {
     }
 
     public static int getPayDialogBG(int userRule) {
+
+        if (BuildConfig.ditchNo.equals("normal")) {
+            return 0;
+        }
+
         int[] vipIcon = new int[]{R.mipmap.bg_pay_dialog_member,
                 R.mipmap.bg_pay_dialog_vip,
                 R.mipmap.bg_pay_dialog_vip,

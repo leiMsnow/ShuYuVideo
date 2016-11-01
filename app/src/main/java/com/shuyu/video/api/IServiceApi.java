@@ -22,10 +22,71 @@ import rx.Observable;
 
 public interface IServiceApi {
 
+//    /**
+//     * 顶部（导航）频道列表
+//     */
+//    @GET("qryAllChnl.service")
+//    Observable<List<ChannelTitle>> getChannelList();
+//
+//    /**
+//     * 轮播图Banner
+//     */
+//    @GET("bannerInfo.service")
+//    Observable<List<ChannelBanner>> getChannelBannerList(@Query("cid") int cid);
+//
+//    /**
+//     * 视频频道内容列表
+//     */
+//    @GET("qryVideoChannelContentList.service?rv=2&pageSize=20")
+//    Observable<ChannelVideo> getVideoListByChannelId(@Query("cid") int cid,
+//                                                     @Query("pageNo") int pageNo);
+//
+//    /**
+//     * 视频详情
+//     */
+//    @GET("videoDtl.service")
+//    Observable<VideoPicDetails> getVideoDetails(@Query("id") int id);
+//
+//    /**
+//     * 图库频道内容列表
+//     */
+//    @GET("qryPicChannelContentList.service?picRv=2&pageSize=20")
+//    Observable<ChannelPicture> getPictureListByChannelId(@Query("cid") int cid,
+//                                                         @Query("pageNo") int pageNo);
+//
+//    /**
+//     * 图片详情
+//     */
+//    @GET("pictureList.service")
+//    Observable<List<PictureDetails>> getPictureDetails(@Query("groupId") int groupId);
+//
+//    /**
+//     * vip专区视频列表
+//     */
+//    @GET("liveVideoList.service?rv=2")
+//    Observable<LiveVideo> getLiveVideoList(@Query("pageNo") int pageNo);
+//
+//    /**
+//     * 私密专区试播视频
+//     */
+//    // TODO: 9/21/16  私密专区试播视频
+//    /**
+//     * 私密专区视频列表
+//     */
+//    // TODO: 9/21/16  私密专区视频列表
+//
+//    /**
+//     * 视频下方评论
+//     */
+//    @GET("videoComment.service")
+//    Observable<List<VideoComment>> getVideoCommentList();
+
+    //---------------------------------------------------------------------------------------
+
     /**
      * 顶部（导航）频道列表
      */
-    @GET("qryAllChnl.service")
+    @GET("allChannel.service")
     Observable<List<ChannelTitle>> getChannelList();
 
     /**
@@ -37,20 +98,20 @@ public interface IServiceApi {
     /**
      * 视频频道内容列表
      */
-    @GET("qryVideoChannelContentList.service?rv=2&pageSize=20")
+    @GET("videoChannelList.service?rv=2&pageSize=20")
     Observable<ChannelVideo> getVideoListByChannelId(@Query("cid") int cid,
                                                      @Query("pageNo") int pageNo);
 
     /**
      * 视频详情
      */
-    @GET("videoDtl.service")
+    @GET("videoDetail.service")
     Observable<VideoPicDetails> getVideoDetails(@Query("id") int id);
 
     /**
      * 图库频道内容列表
      */
-    @GET("qryPicChannelContentList.service?picRv=2&pageSize=20")
+    @GET("picChannelList.service?picRv=2&pageSize=20")
     Observable<ChannelPicture> getPictureListByChannelId(@Query("cid") int cid,
                                                          @Query("pageNo") int pageNo);
 
@@ -63,7 +124,7 @@ public interface IServiceApi {
     /**
      * vip专区视频列表
      */
-    @GET("liveVideoList.service?rv=2")
+    @GET("vipVideoList.service?rv=2")
     Observable<LiveVideo> getLiveVideoList(@Query("pageNo") int pageNo);
 
     /**
@@ -78,7 +139,7 @@ public interface IServiceApi {
     /**
      * 视频下方评论
      */
-    @GET("videoComment.service")
+    @GET("commentList.service")
     Observable<List<VideoComment>> getVideoCommentList();
 
 }

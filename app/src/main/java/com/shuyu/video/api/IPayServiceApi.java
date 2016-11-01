@@ -2,6 +2,7 @@ package com.shuyu.video.api;
 
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.CreateOrderResult;
+import com.shuyu.video.model.PayUrl;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
 
@@ -43,32 +44,32 @@ public interface IPayServiceApi {
     Observable<String> getSignData(@Query("payCode") String payCode);
 
     /**
-     * 根据payCode获取支付url
+     * 根据orderNo获取支付url
      */
     @GET(BaseApi.PAY_URL + "getPayUrl.service")
-    Observable<String> getPayUrl(@Query("payCode") String payCode);
+    Observable<PayUrl> getPayUrl(@Query("orderNo") String orderNo);
 
     /**
      * 创建订单
      */
     @POST(BaseApi.ORDER_URL + "createOrder.service")
     Observable<CreateOrderResult> createOrder(
-                                    @Query("payName") String payName,
-                                    @Query("number") int number,
-                                    @Query("userName") String userName,
-                                    @Query("orderNo") String orderNo,
-                                    @Query("payMoney") double payMoney,
-                                    @Query("userPayMoney") double userPayMoney,
-                                    @Query("payPoint") String payPoint,
-                                    @Query("payType") int payType,
-                                    @Query("payCompanyCode") String payCompanyCode,
-                                    @Query("payCode") String payCode,
-                                    //订单状态 0-未支付 1-支付成功 2-支付失败 3-已取消 4-已退款 5-其他
-                                    @Query("payState") int payState,
-                                    @Query("userOs") String userOs,
-                                    @Query("userIp") String userIp,
-                                    @Query("channelNo") String channelNo,
-                                    @Query("sign") String sign);
+            @Query("payName") String payName,
+            @Query("number") int number,
+            @Query("userName") String userName,
+            @Query("orderNo") String orderNo,
+            @Query("payMoney") double payMoney,
+            @Query("userPayMoney") double userPayMoney,
+            @Query("payPoint") String payPoint,
+            @Query("payType") int payType,
+            @Query("payCompanyCode") String payCompanyCode,
+            @Query("payCode") String payCode,
+            //订单状态 0-未支付 1-支付成功 2-支付失败 3-已取消 4-已退款 5-其他
+            @Query("payState") int payState,
+            @Query("userOs") String userOs,
+            @Query("userIp") String userIp,
+            @Query("channelNo") String channelNo,
+            @Query("sign") String sign);
 
     /**
      * app标准通知

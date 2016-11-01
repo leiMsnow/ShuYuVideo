@@ -23,7 +23,7 @@ public interface Constants {
 
     String LAUNCHER_IMG = "LAUNCHER_IMG";
 
-    String DISCLAIMER = "DISCLAIMER";
+    String KEY_WEB_VIEW_TYPE = "KEY_WEB_VIEW_TYPE";
 
     String BANNER_TITLE = "BANNER_TITLE";
     int BANNER_VIDEO = 1;
@@ -35,4 +35,5 @@ public interface Constants {
     String KEY_ORDER_INFO = "KEY_ORDER_INFO";
     String KEY_PAY_DIALOG = "KEY_PAY_DIALOG";
 
+    String KEY_PAY_URL = "KEY_PAY_URL";
 }

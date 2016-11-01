@@ -1,10 +1,18 @@
 package com.shuyu.video.api;
 
 import com.shuyu.video.model.AppStoreList;
+import com.shuyu.video.model.ChannelBanner;
+import com.shuyu.video.model.ChannelPicture;
+import com.shuyu.video.model.ChannelTitle;
+import com.shuyu.video.model.ChannelVideo;
 import com.shuyu.video.model.HotWord;
+import com.shuyu.video.model.LiveVideo;
+import com.shuyu.video.model.PictureDetails;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.model.SearchVideoList;
+import com.shuyu.video.model.VideoComment;
+import com.shuyu.video.model.VideoPicDetails;
 
 import java.util.List;
 
@@ -81,6 +89,10 @@ public interface ILocalServiceApi {
     @POST(BaseApi.BASE_URL + "appVisit.service")
     Observable<ResultEntity> userVisit(@Query("data") String data,
                                        @Query("dcVersion") String dcVersion);
+
+
+
+
 
 }
 
