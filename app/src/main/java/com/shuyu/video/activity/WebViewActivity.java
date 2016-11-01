@@ -1,9 +1,11 @@
 package com.shuyu.video.activity;
 
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
@@ -22,6 +24,8 @@ public class WebViewActivity extends AppBaseActivity {
 
     @Bind(R.id.web_view)
     WebView webView;
+    @Bind(R.id.pb_progress)
+    ProgressBar mPbProgress;
 
     @Override
     protected int getLayoutRes() {
@@ -30,24 +34,21 @@ public class WebViewActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-
         switch (getIntent().getIntExtra(Constants.KEY_WEB_VIEW_TYPE, -1)) {
             case VIEW_VIEW_TYPE_DISCLAIMER:
                 setTitle("免责声明");
                 webView.loadUrl("file:///android_asset/disclaimer.html");
-                webView.getSettings().setSupportZoom(false);
                 break;
             case VIEW_VIEW_TYPE_PLAY_VIDEO:
                 VideoPicDetails contentListBean = (VideoPicDetails)
                         getIntent().getSerializableExtra(VIDEO_DETAIL_ID);
-
                 if (contentListBean == null)
                     return;
-                mToolbar.setVisibility(View.GONE);
+                toolbarHide();
                 webView.loadUrl(contentListBean.getVideoPageUrl());
                 break;
-
             case VIEW_VIEW_TYPE_PAY_URL:
+                toolbarHide();
                 String payUrl = getIntent().getStringExtra(Constants.KEY_PAY_URL);
                 webView.loadUrl(payUrl);
                 break;
@@ -59,15 +60,33 @@ public class WebViewActivity extends AppBaseActivity {
 
         webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
         WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
+        webView.getSettings().setSupportZoom(false);
 
         webView.setWebViewClient(new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("http://b.zhiliaofu.com/")) {
+                    finish();
+                    return true;
+                }
                 view.loadUrl(url);
                 return true;
+            }
+        });
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    mPbProgress.setVisibility(View.GONE);
+                } else {
+                    mPbProgress.setVisibility(View.VISIBLE);
+                    mPbProgress.setProgress(newProgress);
+                }
             }
         });
     }

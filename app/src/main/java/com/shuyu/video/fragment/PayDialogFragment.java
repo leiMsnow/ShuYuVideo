@@ -154,7 +154,7 @@ public class PayDialogFragment extends DialogFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mBaseDialog.isShowing()) {
+        if (mBaseDialog != null && mBaseDialog.isShowing()) {
             mBaseDialog.dismiss();
             mBaseDialog = null;
         }

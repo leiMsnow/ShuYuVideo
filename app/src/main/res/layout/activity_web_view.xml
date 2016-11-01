@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        style="@style/Widget.ProgressBar.Horizontal.Main"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"

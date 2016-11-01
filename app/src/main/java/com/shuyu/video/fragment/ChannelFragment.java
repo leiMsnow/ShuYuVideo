@@ -49,6 +49,8 @@ public class ChannelFragment extends BaseFragment {
     ExpandableListView mExpandableListView;
     @Bind(swipe_container)
     SwipeRefreshLayout mSwipeContainer;
+    private View mFooter;
+    private TextView mTvFreeTips;
 
     private ViewPager mVpContainer;
     private CirclePageIndicator cpiIndicator;
@@ -105,6 +107,15 @@ public class ChannelFragment extends BaseFragment {
 
         mExpandableListView.setAdapter(mGroupAdapter);
         mExpandableListView.setGroupIndicator(null);
+        mFooter = View.inflate(mContext, R.layout.include_free_tips, null);
+        mTvFreeTips = (TextView) mFooter.findViewById(R.id.tv_free_tips);
+        mTvFreeTips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PayUtils.showPayDialog(mContext);
+            }
+        });
+        mExpandableListView.addFooterView(mFooter);
 
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -264,7 +275,7 @@ public class ChannelFragment extends BaseFragment {
                 public void run() {
                     Message message = new Message();
                     message.what = UPDATE_VIEWPAGER;
-                    if (currIndex == mChannelBanners.size()-1) {
+                    if (currIndex == mChannelBanners.size() - 1) {
                         currIndex = 0;
                     }
                     message.arg1 = currIndex++;

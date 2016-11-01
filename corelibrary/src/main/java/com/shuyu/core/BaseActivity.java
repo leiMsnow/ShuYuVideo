@@ -81,9 +81,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         addContentView(toolbarView, layoutParams);
+        setToolbarMarginTop(getToolbarMarginTop());
+    }
 
+    private void setToolbarMarginTop(int toolbarMarginTop) {
         FrameLayout.LayoutParams rootParams = (FrameLayout.LayoutParams) getRootView().getLayoutParams();
-        rootParams.topMargin = getToolBarHeight();
+        rootParams.topMargin = toolbarMarginTop;
         getRootView().setLayoutParams(rootParams);
     }
 
@@ -99,8 +102,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    protected int getToolBarHeight() {
-        return DensityUtils.dp2px(mContext,40);
+    protected void setToolBarMarginTop(int toolbarMarginTop) {
+        setToolbarMarginTop(toolbarMarginTop);
+    }
+
+    protected void toolbarHide() {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
+        setToolBarMarginTop(0);
+    }
+
+    protected int getToolbarMarginTop() {
+        return DensityUtils.dp2px(mContext, 40);
     }
 
     @Override

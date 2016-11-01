@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_free_tips"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="非会员只能观看15秒，"/>
+
+    <TextView
+        android:id="@+id/tv_free_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="升级VIP会员"
+        android:textColor="@color/main_pink"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="即可观看完整影片"/>
+
+</LinearLayout>
