@@ -234,7 +234,7 @@ public class PayDialogFragment extends DialogFragment {
                         @Override
                         public void onFail() {
                             PayDialogFragment.this.dismiss();
-                            ToastUtils.getInstance().showToast("支付失败，请重新尝试");
+                            ToastUtils.getInstance().showToast("查询订单失败，请重新尝试");
                         }
                     });
         }

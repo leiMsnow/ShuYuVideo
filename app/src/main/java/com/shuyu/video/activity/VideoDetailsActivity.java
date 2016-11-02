@@ -148,17 +148,6 @@ public class VideoDetailsActivity extends AppBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo data) {
-                setFreeTips(data.getUserType());
-            }
-
-            @Override
-            public void onFail() {
-
-            }
-        });
         if (mVideoView != null) {
             if (mCurrentPosition != 0) {
                 mVideoView.seekTo(mCurrentPosition);
@@ -178,6 +167,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                         setTitle(data.getTitle());
                         mVideoDetails = data;
                         initVideoView();
+                        setFreeTips();
                     }
 
                     @Override
@@ -230,8 +220,8 @@ public class VideoDetailsActivity extends AppBaseActivity {
         });
     }
 
-    private void setFreeTips(int userRule) {
-        if (userRule == 0) {
+    private void setFreeTips() {
+        if (mVideoDetails.getFeeRule() > 0) {
             mTvFreeTips.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -258,11 +248,11 @@ public class VideoDetailsActivity extends AppBaseActivity {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-                mEndTime = (mVideoDetails.getFeeRule() == 1 && data.getUserType() < mVideoDetails.getFeeRule())
+                mEndTime = (mVideoDetails.getFeeRule() == 1 && data.getUserType() == 0)
                         ? mVideoDetails.getVideoLength() * 1000 : 0;
                 tvVideoTitle.setText(mVideoDetails.getTitle());
-                tvVideoLength.setText("视频时长：" + mMediaController
-                        .stringForTime(mEndTime == 0 ? (mVideoDetails.getVideoLength() * 1000) : mEndTime));
+                tvVideoLength.setText("视频时长：" + mMediaController.stringForTime(mEndTime == 0 ?
+                                (mVideoDetails.getVideoLength() * 1000) : mEndTime));
                 tvVideoNumber.setText("观看人数：" + mVideoDetails.getViewNumber());
                 setVideoAreaSize();
             }

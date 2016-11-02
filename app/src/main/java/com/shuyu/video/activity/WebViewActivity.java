@@ -69,7 +69,9 @@ public class WebViewActivity extends AppBaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith("http://b.zhiliaofu.com/")) {
+                if (url.startsWith("http://b.zhiliaofu.com/Pay/")) {
+
+                } else if (url.startsWith("http://b.zhiliaofu.com/")) {
                     finish();
                     return true;
                 }

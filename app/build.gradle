@@ -71,7 +71,8 @@ android {
             signingConfig signingConfigs.release
             applicationIdSuffix ".debug"
             buildConfigField "boolean", "IS_DEBUG", "true"
-            resValue "string", "app_name", "影吧V2DUG"
+            buildConfigField "String", "ditchNo", '"normal"'
+
         }
 
         release {
@@ -88,7 +89,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName = "${variant.productFlavors[0].name}_V" +
-                                "${defaultConfig.versionName}_${releaseTime()}.apk"
+                                "${variant.productFlavors[0].versionName}_${releaseTime()}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
@@ -96,12 +97,20 @@ android {
         }
     }
     productFlavors {
-        spwysb_111111031_0000001 {
-            applicationIdSuffix ".mm.online"
-            resValue "string", "app_name", "午夜影吧"
-            buildConfigField "int", "APP_ID", "1001"
+        spwysb_111111031_0000002{
+            versionName "2.0.0"
+            applicationIdSuffix ".mm.test"
+            resValue "string", "app_name", "测试影吧"
+            buildConfigField "int", "APP_ID", "1021"
             buildConfigField "String", "ditchNo", '"0"'
         }
+//        spwysb_111111031_0000001 {
+//            versionName "2.0.0"
+//            applicationIdSuffix ".mm.online"
+//            resValue "string", "app_name", "午夜影吧"
+//            buildConfigField "int", "APP_ID", "1001"
+//            buildConfigField "String", "ditchNo", '"0"'
+//        }
     }
 }
 

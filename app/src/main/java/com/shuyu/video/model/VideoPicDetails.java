@@ -52,6 +52,9 @@ public class VideoPicDetails implements Serializable {
     }
 
     public String getViewNumber() {
+        if (viewNumber == 0) {
+            viewNumber = (int) Math.round(Math.random() * 1000000);
+        }
         return String.format("%,d", viewNumber);
     }
 

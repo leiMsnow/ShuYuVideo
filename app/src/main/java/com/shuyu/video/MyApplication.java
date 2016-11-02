@@ -46,7 +46,10 @@ public class MyApplication extends CoreApplication {
             return mOkHttpClient;
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        HttpLoggingInterceptor.Level level = BuildConfig.IS_DEBUG ?
+                HttpLoggingInterceptor.Level.HEADERS :
+                HttpLoggingInterceptor.Level.NONE;
+        logInterceptor.setLevel(level);
 
         Map<String, String> commonParams = CommonUtils.getCommonParams();
 
