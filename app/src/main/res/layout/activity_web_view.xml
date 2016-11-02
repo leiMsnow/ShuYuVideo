@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/pb_progress"
@@ -14,6 +13,33 @@
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"/>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_wechat_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="1.截屏将二维码保存\n2.打开微信扫一扫\n3.右上角从相册选取二维码"/>
+
+        <Button
+            android:id="@+id/btn_open_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_we_chat_pay"
+            android:text="打开微信"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

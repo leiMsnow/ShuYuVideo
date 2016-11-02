@@ -1,12 +1,17 @@
 package com.shuyu.video.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -26,6 +31,10 @@ public class WebViewActivity extends AppBaseActivity {
     WebView webView;
     @Bind(R.id.pb_progress)
     ProgressBar mPbProgress;
+    @Bind(R.id.btn_open_wechat)
+    Button mBtnOpenWechat;
+    @Bind(R.id.ll_wechat_pay)
+    LinearLayout mLlWechatPay;
 
     @Override
     protected int getLayoutRes() {
@@ -69,9 +78,9 @@ public class WebViewActivity extends AppBaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith("http://b.zhiliaofu.com/Pay/")) {
-
-                } else if (url.startsWith("http://b.zhiliaofu.com/")) {
+                if (url.contains("banktype=WEIXIN")) {
+                    mLlWechatPay.setVisibility(View.VISIBLE);
+                } else if (url.equals("http://b.zhiliaofu.com/")) {
                     finish();
                     return true;
                 }
@@ -88,6 +97,19 @@ public class WebViewActivity extends AppBaseActivity {
                 } else {
                     mPbProgress.setVisibility(View.VISIBLE);
                     mPbProgress.setProgress(newProgress);
+                }
+            }
+        });
+
+        mBtnOpenWechat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Uri uri = Uri.parse("weixin://dl/scan");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    ToastUtils.getInstance().showToast("无法跳转到微信，请检查您是否安装了微信");
                 }
             }
         });
