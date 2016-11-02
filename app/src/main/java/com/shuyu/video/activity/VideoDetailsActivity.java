@@ -221,7 +221,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void setFreeTips() {
-        if (mVideoDetails.getFeeRule() > 0) {
+        if (mVideoDetails.getFeeRule() == 1 || mVideoDetails.getFeeRule() == 2) {
             mTvFreeTips.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -252,7 +252,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                         ? mVideoDetails.getVideoLength() * 1000 : 0;
                 tvVideoTitle.setText(mVideoDetails.getTitle());
                 tvVideoLength.setText("视频时长：" + mMediaController.stringForTime(mEndTime == 0 ?
-                                (mVideoDetails.getVideoLength() * 1000) : mEndTime));
+                        (mVideoDetails.getVideoLength() * 1000) : mEndTime));
                 tvVideoNumber.setText("观看人数：" + mVideoDetails.getViewNumber());
                 setVideoAreaSize();
             }

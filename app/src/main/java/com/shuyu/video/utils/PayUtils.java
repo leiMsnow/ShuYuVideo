@@ -178,8 +178,9 @@ public class PayUtils {
         return tips[userRule];
     }
 
-    public static String getPayPoint(int userRule) {
-        String[] payPoints = new String[]{"member", "vip", "svip", "sipv+"};
+    public static String getPayPoint(int userRule, boolean isSpree) {
+        if (isSpree) return "spree";
+        String[] payPoints = new String[]{"member", "vip", "svip", "sivp"};
         return payPoints[userRule];
     }
 

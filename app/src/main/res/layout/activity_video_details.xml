@@ -75,7 +75,6 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"

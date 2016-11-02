@@ -21,7 +21,6 @@ import com.shuyu.core.widget.BaseProgressDialog;
 import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
-import com.shuyu.video.db.helper.PaymentDaoHelper;
 import com.shuyu.video.model.CreateOrderResult;
 import com.shuyu.video.model.OrderInfo;
 import com.shuyu.video.model.PayResult;
@@ -35,6 +34,8 @@ import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.PayUtils;
 
 import java.util.List;
+
+import static com.shuyu.video.api.BaseApi.createApi;
 
 /**
  * Created by zhangleilei on 10/27/16.
@@ -136,7 +137,7 @@ public class PayDialogFragment extends DialogFragment {
                                 orderInfo.getOrderId(),
                                 mMoneys,
                                 mRebateMoneys,
-                                PayUtils.getPayPoint(userRule),
+                                PayUtils.getPayPoint(userRule, payDialogBG != 0),
                                 payment.getPayType(),
                                 payment.getPayCompanyCode(),
                                 payment.getPayCode(),
@@ -170,22 +171,32 @@ public class PayDialogFragment extends DialogFragment {
     }
 
     private void getPayment() {
-        List<Payment> mPayments = PaymentDaoHelper.getHelper().getDataAll();
-        if (mPayments != null) {
-            for (Payment payment : mPayments) {
-                if (payment.getPayType() == PayUtils.WE_CHAT_PAY && mWeChatPayment == null) {
-                    mWeChatPayment = payment;
-                } else if (payment.getPayType() == PayUtils.ALI_PAY && mAliPayPayment == null) {
-                    mAliPayPayment = payment;
-                }
-            }
-            if (mWeChatPayment == null) {
-                btnWeChatPay.setVisibility(View.GONE);
-            }
-            if (mAliPayPayment == null) {
-                btnAliPay.setVisibility(View.GONE);
-            }
-        }
+        BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
+                new BaseApi.IResponseListener<List<Payment>>() {
+                    @Override
+                    public void onSuccess(List<Payment> mPayments) {
+                        if (mPayments != null) {
+                            for (Payment payment : mPayments) {
+                                if (payment.getPayType() == PayUtils.WE_CHAT_PAY && mWeChatPayment == null) {
+                                    mWeChatPayment = payment;
+                                } else if (payment.getPayType() == PayUtils.ALI_PAY && mAliPayPayment == null) {
+                                    mAliPayPayment = payment;
+                                }
+                            }
+                            if (mWeChatPayment == null) {
+                                btnWeChatPay.setVisibility(View.GONE);
+                            }
+                            if (mAliPayPayment == null) {
+                                btnAliPay.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
     }
 
     @Override
@@ -214,13 +225,17 @@ public class PayDialogFragment extends DialogFragment {
             }
         });
 
-        if (TextUtils.isEmpty(mOrderNo)||mPayCode.equals(PayFactory.YI_KA_ALIPAY)) {
+        if (TextUtils.isEmpty(mOrderNo)) {
             return;
         }
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getOrder(mOrderNo),
                 new BaseApi.IResponseListener<PayResult>() {
                     @Override
                     public void onSuccess(PayResult data) {
+                        if (mPayCode.equals(PayFactory.YI_KA_ALIPAY)) {
+                            PayDialogFragment.this.dismiss();
+                            return;
+                        }
                         if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
                             ToastUtils.getInstance().showToast("支付成功");
                         } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
@@ -237,7 +252,5 @@ public class PayDialogFragment extends DialogFragment {
                         ToastUtils.getInstance().showToast("查询订单失败，请重新尝试");
                     }
                 });
-
     }
-
 }

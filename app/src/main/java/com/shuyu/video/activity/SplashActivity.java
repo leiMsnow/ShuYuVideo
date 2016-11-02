@@ -17,11 +17,9 @@ import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
 import com.shuyu.video.db.helper.AppStoreDaoHelper;
-import com.shuyu.video.db.helper.PaymentDaoHelper;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.AppStore;
 import com.shuyu.video.model.AppStoreList;
-import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.RunInfo;
 import com.shuyu.video.utils.CommonUtils;
@@ -71,7 +69,6 @@ public class SplashActivity extends AppBaseActivity {
         getAppStoreInfo();
         userVisitOrActivation();
         getAppInfo();
-        selectPayment();
         getRunInfo();
     }
 
@@ -212,22 +209,6 @@ public class SplashActivity extends AppBaseActivity {
                     @Override
                     public void onFail() {
                         LogUtils.e("SplashActivity", "getAppInfo-Error");
-                    }
-                });
-    }
-
-    private void selectPayment() {
-        BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
-                new BaseApi.IResponseListener<List<Payment>>() {
-                    @Override
-                    public void onSuccess(List<Payment> data) {
-                        PaymentDaoHelper.getHelper().deleteAll();
-                        PaymentDaoHelper.getHelper().addDataAll(data);
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }
