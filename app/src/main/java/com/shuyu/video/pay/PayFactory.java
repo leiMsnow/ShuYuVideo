@@ -8,16 +8,16 @@ import com.shuyu.video.model.OrderInfo;
 
 public class PayFactory {
 
-    private static final String YI_KA_ALIPAY = "yika-alipay";
-    private static final String YI_KA_WECHAT = "yika-yika-weixin";
+    public static final String YI_KA_ALIPAY = "yika-alipay";
+    public static final String YI_KA_WECHAT = "yika-yika-weixin";
 
-    private static final String NOW_PAY_ALIPAY = "inowpay-alipay";
-    private static final String NOW_PAY_WECHAT = "inowpay-weixin";
+    public static final String NOW_PAY_ALIPAY = "inowpay-alipay";
+    public static final String NOW_PAY_WECHAT = "inowpay-weixin";
 
-    private static final String ZHILIAOFU_PAY_ALIPAY = "zhiliaofu-alipay";
-    private static final String ZHILIAOFU_PAY_WECHAT = "zhiliaofu-weixin";
+    public static final String ZHILIAOFU_PAY_ALIPAY = "zhiliaofu-alipay";
+    public static final String ZHILIAOFU_PAY_WECHAT = "zhiliaofu-weixin";
 
-    private static final String ADSMENG_SP = "adsmeng-sp";
+    public static final String ADSMENG_SP = "adsmeng-sp";
 
 
     public static IPay create(String payCode, OrderInfo orderInfo) {

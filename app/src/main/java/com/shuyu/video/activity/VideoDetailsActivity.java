@@ -58,6 +58,12 @@ public class VideoDetailsActivity extends AppBaseActivity {
     View mllFreeTips;
     @Bind(R.id.tv_free_tips)
     TextView mTvFreeTips;
+    @Bind(R.id.tv_video_title)
+    TextView tvVideoTitle;
+    @Bind(R.id.tv_video_length)
+    TextView tvVideoLength;
+    @Bind(R.id.tv_video_number)
+    TextView tvVideoNumber;
 
     private VideoPicDetails mVideoDetails;
     private VideoCommentAdapter mCommentAdapter;
@@ -141,6 +147,17 @@ public class VideoDetailsActivity extends AppBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                setFreeTips(data.getUserType());
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
         if (mVideoView != null) {
             if (mCurrentPosition != 0) {
                 mVideoView.seekTo(mCurrentPosition);
@@ -171,18 +188,6 @@ public class VideoDetailsActivity extends AppBaseActivity {
     }
 
     private void setVideoAreaSize(final int userRule) {
-        if (userRule == 0) {
-            mTvFreeTips.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mVideoView.pause();
-                    PayUtils.showPayDialog(mContext);
-                }
-            });
-            mllFreeTips.setVisibility(View.VISIBLE);
-        } else {
-            mllFreeTips.setVisibility(View.GONE);
-        }
         mVideoLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -221,8 +226,28 @@ public class VideoDetailsActivity extends AppBaseActivity {
                         PayUtils.showPayDialog(mContext);
                     }
                 });
+
+                tvVideoTitle.setText(mVideoDetails.getTitle());
+                tvVideoLength.setText("视频时长：" + mMediaController
+                        .stringForTime(endTime == 0 ? (mVideoDetails.getVideoLength() * 1000) : endTime));
+                tvVideoNumber.setText("观看人数：" + mVideoDetails.getViewNumber());
             }
         });
+    }
+
+    private void setFreeTips(int userRule) {
+        if (userRule == 0) {
+            mTvFreeTips.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mVideoView.pause();
+                    PayUtils.showPayDialog(mContext);
+                }
+            });
+            mllFreeTips.setVisibility(View.VISIBLE);
+        } else {
+            mllFreeTips.setVisibility(View.GONE);
+        }
     }
 
     @Override

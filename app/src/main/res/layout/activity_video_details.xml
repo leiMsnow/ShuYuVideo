@@ -41,6 +41,33 @@
 
     </FrameLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_video_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_video_title"/>
+
+        <TextView
+            android:id="@+id/tv_video_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_video_title"/>
+
+    </RelativeLayout>
+
     <include layout="@layout/include_free_tips"/>
 
     <RelativeLayout

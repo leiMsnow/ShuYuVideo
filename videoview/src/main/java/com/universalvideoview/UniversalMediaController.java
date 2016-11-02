@@ -377,7 +377,7 @@ public class UniversalMediaController extends FrameLayout{
         hideLoading();
     }
 
-    private String stringForTime(long timeMs) {
+    public String stringForTime(long timeMs) {
         long totalSeconds = timeMs / 1000;
 
         long seconds = totalSeconds % 60;

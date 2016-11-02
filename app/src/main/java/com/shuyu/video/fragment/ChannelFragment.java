@@ -107,7 +107,7 @@ public class ChannelFragment extends BaseFragment {
 
         mExpandableListView.setAdapter(mGroupAdapter);
         mExpandableListView.setGroupIndicator(null);
-        mFooter = View.inflate(mContext, R.layout.include_free_tips, null);
+        mFooter = View.inflate(mContext, R.layout.footer_channel_video, null);
         mTvFreeTips = (TextView) mFooter.findViewById(R.id.tv_free_tips);
         mTvFreeTips.setOnClickListener(new View.OnClickListener() {
             @Override

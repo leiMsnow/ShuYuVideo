@@ -29,7 +29,6 @@ public class YiKaPay {
                     payUrl,
                     mOrderInfo.getOrderName());
             task.execute(payUrl);
-
         }
     }
 

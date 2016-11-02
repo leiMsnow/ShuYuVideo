@@ -12,21 +12,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="非会员只能观看15秒，"
+        android:text="购买"
         android:textSize="12sp"/>
 
     <TextView
         android:id="@+id/tv_free_tips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="升级VIP会员"
+        android:text="VIP会员"
         android:textColor="@color/main_pink"
         android:textSize="12sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="即可观看完整影片"
+        android:text="开放更多影片资源"
         android:textSize="12sp"/>
 
 </LinearLayout>

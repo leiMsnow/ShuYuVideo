@@ -2,6 +2,7 @@ package com.shuyu.video.api;
 
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.CreateOrderResult;
+import com.shuyu.video.model.PayResult;
 import com.shuyu.video.model.PayUrl;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
@@ -78,5 +79,11 @@ public interface IPayServiceApi {
     Observable<String> normalNotice(@Query("orderNo") String orderNo,
                                     @Query("payState") String payState,
                                     @Query("sign") String sign);
+
+    /**
+     * 查询订单
+     */
+    @GET(BaseApi.PAY_URL + "getOrder.service")
+    Observable<PayResult> getOrder(@Query("orderNo") String orderNo);
 
 }

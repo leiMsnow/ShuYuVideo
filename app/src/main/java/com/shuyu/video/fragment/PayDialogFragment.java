@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.BaseProgressDialog;
 import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
@@ -22,6 +24,7 @@ import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.PaymentDaoHelper;
 import com.shuyu.video.model.CreateOrderResult;
 import com.shuyu.video.model.OrderInfo;
+import com.shuyu.video.model.PayResult;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.pay.IPay;
@@ -56,6 +59,9 @@ public class PayDialogFragment extends DialogFragment {
     private int payDialogBG = 0;
 
     private BaseProgressDialog mBaseDialog;
+
+    private String mOrderNo;
+    private String mPayCode;
 
     @Override
     public boolean isCancelable() {
@@ -103,9 +109,10 @@ public class PayDialogFragment extends DialogFragment {
         return layout;
     }
 
-    private void createOrderInfo(final Payment mPayment) {
+    private void createOrderInfo(final Payment payment) {
 
-        if (mPayment == null) return;
+        if (payment == null) return;
+        mPayCode = payment.getPayCode();
 
         if (mBaseDialog == null) {
             mBaseDialog = new BaseProgressDialog(getContext());
@@ -113,25 +120,27 @@ public class PayDialogFragment extends DialogFragment {
             mBaseDialog.show();
         }
 
+        mOrderNo = PayUtils.createOrderNo();
+
         orderInfo = new OrderInfo((AppCompatActivity) getActivity());
-        orderInfo.setOrderId(PayUtils.createOrderNo());
+        orderInfo.setOrderId(mOrderNo);
         orderInfo.setOrderName(tvPriceTips.getText().toString());
-        orderInfo.setPartnerId(mPayment.getPartnerId());
-        orderInfo.setKey(mPayment.getMd5Key());
+        orderInfo.setPartnerId(payment.getPartnerId());
+        orderInfo.setKey(payment.getMd5Key());
         orderInfo.setPrice(mRebateMoneys);
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
-                        .createOrder(mPayment.getTitle(),
+                        .createOrder(payment.getTitle(),
                                 1,
                                 CommonUtils.getUUID(),
                                 orderInfo.getOrderId(),
                                 mMoneys,
                                 mRebateMoneys,
                                 PayUtils.getPayPoint(userRule),
-                                mPayment.getPayType(),
-                                mPayment.getPayCompanyCode(),
-                                mPayment.getPayCode(),
-                                0,
+                                payment.getPayType(),
+                                payment.getPayCompanyCode(),
+                                payment.getPayCode(),
+                                PayResult.PAY_STATE_NO_PAY,
                                 CommonUtils.getManufacturer(),
                                 NetUtils.getHostIP(),
                                 CommonUtils.getChannelNo(),
@@ -140,7 +149,7 @@ public class PayDialogFragment extends DialogFragment {
                     @Override
                     public void onSuccess(CreateOrderResult data) {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
-                        IPay pay = PayFactory.create(mPayment.getPayCode(), orderInfo);
+                        IPay pay = PayFactory.create(payment.getPayCode(), orderInfo);
                         if (pay != null) pay.pay(null);
                     }
 
@@ -204,6 +213,31 @@ public class PayDialogFragment extends DialogFragment {
 
             }
         });
+
+        if (!TextUtils.isEmpty(mOrderNo) &&
+                (!mPayCode.equals(PayFactory.YI_KA_ALIPAY) ||
+                        !mPayCode.equals(PayFactory.YI_KA_WECHAT))) {
+            BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getOrder(mOrderNo),
+                    new BaseApi.IResponseListener<PayResult>() {
+                        @Override
+                        public void onSuccess(PayResult data) {
+                            if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
+                                ToastUtils.getInstance().showToast("支付成功");
+                            } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
+                                ToastUtils.getInstance().showToast("支付取消");
+                            } else {
+                                ToastUtils.getInstance().showToast("支付失败");
+                            }
+                            PayDialogFragment.this.dismiss();
+                        }
+
+                        @Override
+                        public void onFail() {
+                            PayDialogFragment.this.dismiss();
+                            ToastUtils.getInstance().showToast("支付失败，请重新尝试");
+                        }
+                    });
+        }
     }
 
 }

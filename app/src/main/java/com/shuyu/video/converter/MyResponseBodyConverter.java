@@ -46,7 +46,7 @@ final class MyResponseBodyConverter<T> implements Converter<ResponseBody, T> {
         if (TextUtils.isEmpty(result)) {
             result = response;
         }
-        LogUtils.d(MyResponseBodyConverter.class.getName(), "服务器返回数据为数据：" + result);
+        LogUtils.d(MyResponseBodyConverter.class.getName(), result);
         responseBody = ResponseBody.create(MEDIA_TYPE, result);
         JsonReader jsonReader = gson.newJsonReader(responseBody.charStream());
         try {

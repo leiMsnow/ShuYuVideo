@@ -98,7 +98,8 @@ public class UserCenterFragment extends BaseFragment {
                         break;
                     case SettingsInfo.DISCLAIMER:
                         intent = new Intent(mContext, WebViewActivity.class);
-                        intent.putExtra(Constants.KEY_WEB_VIEW_TYPE, WebViewActivity.VIEW_VIEW_TYPE_DISCLAIMER);
+                        intent.putExtra(Constants.KEY_WEB_VIEW_TYPE,
+                                WebViewActivity.VIEW_VIEW_TYPE_DISCLAIMER);
                         startActivity(intent);
                         break;
                     case SettingsInfo.SERVICE:
