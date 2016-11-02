@@ -214,30 +214,30 @@ public class PayDialogFragment extends DialogFragment {
             }
         });
 
-        if (!TextUtils.isEmpty(mOrderNo) &&
-                (!mPayCode.equals(PayFactory.YI_KA_ALIPAY) ||
-                        !mPayCode.equals(PayFactory.YI_KA_WECHAT))) {
-            BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getOrder(mOrderNo),
-                    new BaseApi.IResponseListener<PayResult>() {
-                        @Override
-                        public void onSuccess(PayResult data) {
-                            if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
-                                ToastUtils.getInstance().showToast("支付成功");
-                            } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
-                                ToastUtils.getInstance().showToast("支付取消");
-                            } else {
-                                ToastUtils.getInstance().showToast("支付失败");
-                            }
-                            PayDialogFragment.this.dismiss();
-                        }
-
-                        @Override
-                        public void onFail() {
-                            PayDialogFragment.this.dismiss();
-                            ToastUtils.getInstance().showToast("查询订单失败，请重新尝试");
-                        }
-                    });
+        if (TextUtils.isEmpty(mOrderNo)||mPayCode.equals(PayFactory.YI_KA_ALIPAY)) {
+            return;
         }
+        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getOrder(mOrderNo),
+                new BaseApi.IResponseListener<PayResult>() {
+                    @Override
+                    public void onSuccess(PayResult data) {
+                        if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
+                            ToastUtils.getInstance().showToast("支付成功");
+                        } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
+                            ToastUtils.getInstance().showToast("支付取消");
+                        } else {
+                            ToastUtils.getInstance().showToast("支付失败");
+                        }
+                        PayDialogFragment.this.dismiss();
+                    }
+
+                    @Override
+                    public void onFail() {
+                        PayDialogFragment.this.dismiss();
+                        ToastUtils.getInstance().showToast("查询订单失败，请重新尝试");
+                    }
+                });
+
     }
 
 }

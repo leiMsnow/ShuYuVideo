@@ -83,7 +83,7 @@ public interface IPayServiceApi {
     /**
      * 查询订单
      */
-    @GET(BaseApi.PAY_URL + "getOrder.service")
+    @GET(BaseApi.ORDER_URL + "getOrder.service")
     Observable<PayResult> getOrder(@Query("orderNo") String orderNo);
 
 }
