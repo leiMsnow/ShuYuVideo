@@ -100,7 +100,7 @@ android {
             applicationIdSuffix ".mm.online"
             resValue "string", "app_name", "午夜影吧"
             buildConfigField "int", "APP_ID", "1001"
-            buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "String", "ditchNo", '"normal"'
         }
     }
 }
