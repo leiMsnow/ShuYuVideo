@@ -108,6 +108,7 @@ public class ChannelFragment extends BaseFragment {
         mExpandableListView.setAdapter(mGroupAdapter);
         mExpandableListView.setGroupIndicator(null);
         mFooter = View.inflate(mContext, R.layout.footer_channel_video, null);
+        mFooter.setVisibility(View.GONE);
         mTvFreeTips = (TextView) mFooter.findViewById(R.id.tv_free_tips);
         mTvFreeTips.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,6 +264,7 @@ public class ChannelFragment extends BaseFragment {
         for (int i = 0; i < mChannelContents.size(); i++) {
             mExpandableListView.expandGroup(i);
         }
+        mFooter.setVisibility(View.VISIBLE);
     }
 
     private void autoUpdateViewPager() {
