@@ -73,6 +73,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
     private boolean mIsPlaying;
     private boolean mIsFullscreen;
     private boolean mIsLook;
+    private int mEndTime = 0;
 
     @Override
     protected int getLayoutRes() {
@@ -187,7 +188,7 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 });
     }
 
-    private void setVideoAreaSize(final int userRule) {
+    private void setVideoAreaSize() {
         mVideoLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -204,9 +205,8 @@ public class VideoDetailsActivity extends AppBaseActivity {
                         PayUtils.isShowPayDialog(mContext, mVideoDetails.getFeeRule(), null);
                     }
                 });
-                int endTime = (mVideoDetails.getFeeRule() == 1 && userRule < mVideoDetails.getFeeRule())
-                        ? mVideoDetails.getVideoLength() * 1000 : 0;
-                mMediaController.setFreeTime(endTime);
+
+                mMediaController.setFreeTime(mEndTime);
                 mMediaController.setTitle(mVideoDetails.getTitle());
                 mVideoView.setVideoPath(mVideoDetails.getVideoUrl());
                 mVideoView.requestFocus();
@@ -226,11 +226,6 @@ public class VideoDetailsActivity extends AppBaseActivity {
                         PayUtils.showPayDialog(mContext);
                     }
                 });
-
-                tvVideoTitle.setText(mVideoDetails.getTitle());
-                tvVideoLength.setText("视频时长：" + mMediaController
-                        .stringForTime(endTime == 0 ? (mVideoDetails.getVideoLength() * 1000) : endTime));
-                tvVideoNumber.setText("观看人数：" + mVideoDetails.getViewNumber());
             }
         });
     }
@@ -263,7 +258,13 @@ public class VideoDetailsActivity extends AppBaseActivity {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-                setVideoAreaSize(data.getUserType());
+                mEndTime = (mVideoDetails.getFeeRule() == 1 && data.getUserType() < mVideoDetails.getFeeRule())
+                        ? mVideoDetails.getVideoLength() * 1000 : 0;
+                tvVideoTitle.setText(mVideoDetails.getTitle());
+                tvVideoLength.setText("视频时长：" + mMediaController
+                        .stringForTime(mEndTime == 0 ? (mVideoDetails.getVideoLength() * 1000) : mEndTime));
+                tvVideoNumber.setText("观看人数：" + mVideoDetails.getViewNumber());
+                setVideoAreaSize();
             }
 
             @Override
