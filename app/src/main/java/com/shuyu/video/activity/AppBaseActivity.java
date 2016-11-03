@@ -11,6 +11,7 @@ import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.ILocalServiceApi;
 import com.shuyu.video.model.ResultEntity;
 import com.shuyu.video.model.UserInfo;
+import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.PayUtils;
 
@@ -73,7 +74,7 @@ public abstract class AppBaseActivity extends BaseActivity {
         long onTime = (long) SPUtils.get(mContext, Constants.STAY_TIME_ON, System.currentTimeMillis());
         long offTime = System.currentTimeMillis();
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class)
-                        .stayTime(onTime, offTime, "tg1001"),
+                        .stayTime(onTime, offTime, CommonUtils.getDitchNo()),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
                     public void onSuccess(ResultEntity data) {

@@ -62,14 +62,21 @@ public class SplashActivity extends AppBaseActivity {
     @Override
     protected void initData() {
         mMyHandler = new MyHandler(this);
-        Glide.with(mContext).load(SPUtils.get(mContext, Constants.LAUNCHER_IMG, ""))
-                .placeholder(R.mipmap.bg_splash)
-                .error(R.mipmap.bg_splash)
-                .into(ivLauncherUrl);
+        String splashUrl = SPUtils.get(mContext, Constants.LAUNCHER_IMG, "").toString();
+        setSplash(splashUrl);
         getAppStoreInfo();
         userVisitOrActivation();
         getAppInfo();
         getRunInfo();
+    }
+
+    private void setSplash(String splashUrl) {
+        if (!TextUtils.isEmpty(splashUrl)) {
+            Glide.with(mContext).load(splashUrl)
+                    .placeholder(R.mipmap.bg_splash)
+                    .error(R.mipmap.bg_splash)
+                    .into(ivLauncherUrl);
+        }
     }
 
     private void getRunInfo() {
@@ -83,7 +90,7 @@ public class SplashActivity extends AppBaseActivity {
                             SPUtils.put(mContext, BaseApi.KEY_BASE_URL, data.get(0).getFirstHost());
                         }
                         SPUtils.put(mContext, Constants.LAUNCHER_IMG, data.get(0).getContentUrl());
-                        Glide.with(mContext).load(data.get(0).getContentUrl()).into(ivLauncherUrl);
+                        setSplash(data.get(0).getContentUrl());
                         mSecond = data.get(0).getStayTime();
                         startCountdown();
                     }

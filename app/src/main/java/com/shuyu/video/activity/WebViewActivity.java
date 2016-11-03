@@ -2,7 +2,6 @@ package com.shuyu.video.activity;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -35,6 +35,8 @@ public class WebViewActivity extends AppBaseActivity {
     Button mBtnOpenWechat;
     @Bind(R.id.ll_wechat_pay)
     LinearLayout mLlWechatPay;
+
+    private boolean isWeChatPay = false;
 
     @Override
     protected int getLayoutRes() {
@@ -79,7 +81,7 @@ public class WebViewActivity extends AppBaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("banktype=WEIXIN")) {
-                    mLlWechatPay.setVisibility(View.VISIBLE);
+                    isWeChatPay = true;
                 } else if (url.equals("http://b.zhiliaofu.com/")) {
                     finish();
                     return true;
@@ -94,6 +96,8 @@ public class WebViewActivity extends AppBaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
                     mPbProgress.setVisibility(View.GONE);
+                    if (isWeChatPay)
+                        mLlWechatPay.setVisibility(View.VISIBLE);
                 } else {
                     mPbProgress.setVisibility(View.VISIBLE);
                     mPbProgress.setProgress(newProgress);
@@ -104,13 +108,18 @@ public class WebViewActivity extends AppBaseActivity {
         mBtnOpenWechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                ComponentName cn = new ComponentName("com.tencent.mm",
-                        "com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity");
-                intent.setData(Uri.parse("weixin://dl/scan"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-                intent.setComponent(cn);
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent();
+                    ComponentName cmp = new ComponentName(" com.tencent.mm ", "com.tencent.mm.ui.LauncherUI");
+                    intent.setAction(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setComponent(cmp);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.getInstance().showToast("打开微信失败，请手动尝试");
+                }
             }
         });
     }
