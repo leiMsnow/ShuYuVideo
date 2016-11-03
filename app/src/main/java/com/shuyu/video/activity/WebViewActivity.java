@@ -1,5 +1,6 @@
 package com.shuyu.video.activity;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.R;
 import com.shuyu.video.model.VideoPicDetails;
 import com.shuyu.video.utils.Constants;
@@ -104,13 +104,13 @@ public class WebViewActivity extends AppBaseActivity {
         mBtnOpenWechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Uri uri = Uri.parse("weixin://dl/scan");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    ToastUtils.getInstance().showToast("无法跳转到微信，请检查您是否安装了微信");
-                }
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                ComponentName cn = new ComponentName("com.tencent.mm",
+                        "com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity");
+                intent.setData(Uri.parse("weixin://dl/scan"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+                intent.setComponent(cn);
+                startActivity(intent);
             }
         });
     }

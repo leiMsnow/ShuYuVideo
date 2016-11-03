@@ -230,11 +230,11 @@ public class MCrashHandler implements UncaughtExceptionHandler {
 			try {
 				// 文件存储路径
 				String filePath =  Environment.getExternalStorageDirectory().toString();
-				File mDirectory = new File(filePath+"/LOGS");
+				File mDirectory = new File(filePath+"/LOGS/"+ mFileName);
 				if (!mDirectory.exists())
-					mDirectory.mkdir();
+					mDirectory.createNewFile();
 				FileOutputStream mFileOutputStream = new FileOutputStream(
-						mDirectory + "/" + mFileName);
+						mDirectory);
 				mFileOutputStream.write(mStringBuffer.toString().getBytes());
 				mFileOutputStream.close();
 			} catch (FileNotFoundException e) {

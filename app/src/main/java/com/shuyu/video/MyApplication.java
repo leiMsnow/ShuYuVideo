@@ -3,7 +3,6 @@ package com.shuyu.video;
 import android.util.Base64;
 
 import com.shuyu.core.CoreApplication;
-import com.shuyu.core.MCrashHandler;
 import com.shuyu.core.api.BasicParamsInterceptor;
 import com.shuyu.core.api.CacheInterceptor;
 import com.shuyu.core.uils.LogUtils;
@@ -34,8 +33,8 @@ public class MyApplication extends CoreApplication {
 
     @Override
     public void onCreate() {
-        if (BuildConfig.IS_DEBUG)
-            MCrashHandler.getInstance().init(this);
+//        if (BuildConfig.IS_DEBUG)
+//            MCrashHandler.getInstance().init(this);
         super.onCreate();
         mApplication = this;
         LogUtils.isDebug = Constants.IS_DEBUG;
@@ -61,7 +60,9 @@ public class MyApplication extends CoreApplication {
         headerParams.add("Accept-Encoding:gzip");
         headerParams.add("User-Agent:okhttp/2.5.0");
         headerParams.add("H-Quality:L");
+        headerParams.add("referer:img.isycdn.com");
         headerParams.add("Pay-Key:" + getPayKey(commonParams));
+
 
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
                 .addHeaderLinesList(headerParams)
