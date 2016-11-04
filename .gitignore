@@ -10,3 +10,4 @@
 /app/*.apk
 /*.apk
 /.idea/*.xml
+/app/img_optimizer.log

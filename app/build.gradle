@@ -1,13 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
-    }
-}
+apply plugin: 'img-optimizer'
+
 greendao {
     schemaVersion 2
     daoPackage rootProject.ext.android.applicationId + '.db.dao'
@@ -38,6 +32,13 @@ android {
     dexOptions {
         javaMaxHeapSize "2g"
     }
+
+    optimizerOptions {
+        triggerSize 5
+        type "lossy"
+        suffix ""
+    }
+
     signingConfigs {
 
         release {
