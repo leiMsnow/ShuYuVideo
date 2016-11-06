@@ -27,10 +27,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.webkit.permission.PLUGIN" />
 
+    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
     <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
