@@ -65,8 +65,9 @@ public class PayDialogFragment extends DialogFragment {
     private String mPayCode;
 
     @Override
-    public boolean isCancelable() {
-        return false;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setCancelable(false);
     }
 
     @Nullable
