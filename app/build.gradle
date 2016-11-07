@@ -73,7 +73,8 @@ android {
             applicationIdSuffix ".debug"
             buildConfigField "boolean", "IS_DEBUG", "true"
             resValue "string", "app_name", "DEBUG影吧"
-            buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "int", "APP_ID", "1021"
+            buildConfigField "String", "ditchNo", '"normal"'
         }
 
         release {
@@ -98,6 +99,13 @@ android {
         }
     }
     productFlavors {
+        online_111111031_0000001{
+            versionName "1.0.0"
+            applicationIdSuffix ".online"
+            resValue "string", "app_name", "趣看视频"
+            buildConfigField "int", "APP_ID", "1021"
+            buildConfigField "String", "ditchNo", '"normal"'
+        }
         spwysb_111111031_0000001{
             versionName "2.0.0"
             applicationIdSuffix ".mm.test"
