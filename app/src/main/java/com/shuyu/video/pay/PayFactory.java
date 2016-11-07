@@ -18,6 +18,10 @@ public class PayFactory {
     public static final String ZHILIAOFU_PAY_WECHAT = "zhiliaofu-weixin";
 
     public static final String ADSMENG_SP = "adsmeng-sp";
+    //苏州乐鹏10元
+    public static final String PAY_CODE_YUEPENG_SP_10 = "yuepengsp-10";
+    //苏州乐鹏20元
+    public static final String PAY_CODE_YUEPENG_SP_20 = "yuepengsp-20";
 
 
     public static IPay create(String payCode, OrderInfo orderInfo) {
@@ -30,7 +34,10 @@ public class PayFactory {
             case ZHILIAOFU_PAY_ALIPAY:
             case ZHILIAOFU_PAY_WECHAT:
                 return new ZhiLiaoPay(orderInfo);
-            case ADSMENG_SP:
+            case PAY_CODE_YUEPENG_SP_10:
+
+                break;
+            case PAY_CODE_YUEPENG_SP_20:
 
                 break;
         }

@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item>
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="?attr/app_main_color"/>
-            <corners android:radius="24dp"/>
-        </shape>
-    </item>
-    <item
-        android:state_focused="true"
-        android:state_pressed="true">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/app_main_color_pressed"/>
-            <corners android:radius="24dp"/>
-        </shape>
-    </item>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/selector_btn_n"/>
+    <item android:drawable="@drawable/selector_btn_p" android:state_focused="true"
+          android:state_pressed="true"/>
 
 </selector>

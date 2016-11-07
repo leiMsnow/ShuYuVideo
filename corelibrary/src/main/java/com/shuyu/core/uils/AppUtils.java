@@ -1,6 +1,7 @@
 package com.shuyu.core.uils;
 
 import android.app.ActivityManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -100,7 +101,7 @@ public class AppUtils {
     public static String getIMEI() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getDeviceId() == null ? "055036055872065" : mTelephonyMgr.getDeviceId();
+        return mTelephonyMgr.getDeviceId() == null ? "000000000000000" : mTelephonyMgr.getDeviceId();
     }
 
     public static String getTelNumber() {
@@ -113,6 +114,12 @@ public class AppUtils {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyMgr.getSimSerialNumber() == null ? "" : mTelephonyMgr.getSimSerialNumber();
+    }
+
+    public static boolean hasSIM() {
+        TelephonyManager mTelephonyManager = (TelephonyManager)
+                CoreApplication.getApplication().getSystemService(Service.TELEPHONY_SERVICE);
+        return (mTelephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY);
     }
 
     public static String getUUID() {
@@ -183,6 +190,7 @@ public class AppUtils {
             e.printStackTrace();
         }
     }
+
     public static boolean isBackground(Context context) {
         ActivityManager activityManager = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);

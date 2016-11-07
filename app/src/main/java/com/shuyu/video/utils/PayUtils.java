@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.BuildConfig;
 import com.shuyu.video.R;
@@ -12,6 +13,7 @@ import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
+import com.shuyu.video.fragment.ADSDialogFragment;
 import com.shuyu.video.fragment.PayDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.UserInfo;
@@ -94,6 +96,11 @@ public class PayUtils {
     private static long currentTime = 0;
 
     public static void showPayDialog(Context context, Bundle bundle) {
+//        if (AppUtils.hasSIM()) {
+//            ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
+//            adsDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "ADSDialog");
+//            return;
+//        }
         PayDialogFragment dialogFragment = new PayDialogFragment();
         if (bundle != null)
             dialogFragment.setArguments(bundle);
