@@ -105,6 +105,8 @@ public class ChannelFragment extends BaseFragment {
         mGroupAdapter = new ChannelGroupAdapter(mContext);
         mBannerAdapter = new ChannelBannerAdapter(mContext);
 
+        mExpandableListView.addHeaderView(vChannelHeader);
+        mExpandableListView.addFooterView(mFooter);
         mExpandableListView.setAdapter(mGroupAdapter);
         mExpandableListView.setGroupIndicator(null);
         mFooter = View.inflate(mContext, R.layout.footer_channel_video, null);
@@ -113,10 +115,9 @@ public class ChannelFragment extends BaseFragment {
         mTvFreeTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PayUtils.showPayDialog(mContext);
+                PayUtils.showPayDialog(getActivity());
             }
         });
-        mExpandableListView.addFooterView(mFooter);
 
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -124,7 +125,6 @@ public class ChannelFragment extends BaseFragment {
                 return true;
             }
         });
-        mExpandableListView.addHeaderView(vChannelHeader);
 
         cpiIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -174,7 +174,7 @@ public class ChannelFragment extends BaseFragment {
                         if (view.getLastVisiblePosition() == (view.getCount() - 1)
                                 && System.currentTimeMillis() - currentTime >= 10000) {
                             currentTime = System.currentTimeMillis();
-                            PayUtils.showPayDialog(mContext);
+                            PayUtils.showPayDialog(getActivity());
                         }
                         break;
                 }
