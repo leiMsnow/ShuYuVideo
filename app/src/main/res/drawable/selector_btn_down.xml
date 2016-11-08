@@ -3,9 +3,9 @@
           android:enterFadeDuration="500"
           android:exitFadeDuration="500">
 
-    <item android:drawable="@drawable/shape_hot_word_n" android:state_pressed="true"/>
-    <item android:drawable="@drawable/shape_hot_word_n" android:state_focused="true"/>
-    <item android:drawable="@drawable/shape_hot_word_p"/>
+    <item android:drawable="@drawable/shape_hot_word_n"/>
+    <item android:drawable="@drawable/shape_hot_word_p" android:state_pressed="true"/>
+    <item android:drawable="@drawable/shape_hot_word_p" android:state_focused="true"/>
 
 
 </selector>
