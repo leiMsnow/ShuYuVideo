@@ -105,12 +105,13 @@ public class ChannelFragment extends BaseFragment {
         mGroupAdapter = new ChannelGroupAdapter(mContext);
         mBannerAdapter = new ChannelBannerAdapter(mContext);
 
+        mFooter = View.inflate(mContext, R.layout.footer_channel_video, null);
+        mFooter.setVisibility(View.GONE);
+
         mExpandableListView.addHeaderView(vChannelHeader);
         mExpandableListView.addFooterView(mFooter);
         mExpandableListView.setAdapter(mGroupAdapter);
         mExpandableListView.setGroupIndicator(null);
-        mFooter = View.inflate(mContext, R.layout.footer_channel_video, null);
-        mFooter.setVisibility(View.GONE);
         mTvFreeTips = (TextView) mFooter.findViewById(R.id.tv_free_tips);
         mTvFreeTips.setOnClickListener(new View.OnClickListener() {
             @Override
