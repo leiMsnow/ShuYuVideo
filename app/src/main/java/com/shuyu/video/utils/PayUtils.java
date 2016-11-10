@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.shuyu.core.uils.AppUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.BuildConfig;
 import com.shuyu.video.R;
@@ -16,6 +15,7 @@ import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
 import com.shuyu.video.fragment.ADSDialogFragment;
 import com.shuyu.video.fragment.PayDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
+import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
 
 import java.math.BigDecimal;
@@ -34,6 +34,7 @@ public class PayUtils {
 
     public static final int WE_CHAT_PAY = 1;
     public static final int ALI_PAY = 2;
+    public static final int ADS_PAY = 3;
 
     /**
      * 是否拥有播放权限
@@ -89,6 +90,47 @@ public class PayUtils {
         return false;
     }
 
+    public static void showGiftPayDialog(final Context context) {
+        getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo data) {
+                if (data.getUserType() == 0
+//                        && !TextUtils.isEmpty(AppUtils.getIMSI())
+                        ) {
+                    BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
+                            new BaseApi.IResponseListener<List<Payment>>() {
+                                @Override
+                                public void onSuccess(List<Payment> mPayments) {
+                                    if (mPayments != null) {
+                                        for (Payment payment : mPayments) {
+                                            if (payment.getPayType() == PayUtils.ADS_PAY) {
+                                                showADSPayDialog(context);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFail() {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+    }
+
+    private static void showADSPayDialog(Context context) {
+        ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
+        adsDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "ADSDialog");
+    }
+
     public static void showPayDialog(Context context) {
         showPayDialog(context, null);
     }
@@ -96,11 +138,6 @@ public class PayUtils {
     private static long currentTime = 0;
 
     public static void showPayDialog(Context context, Bundle bundle) {
-//        if (AppUtils.hasSIM()) {
-//            ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
-//            adsDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "ADSDialog");
-//            return;
-//        }
         PayDialogFragment dialogFragment = new PayDialogFragment();
         if (bundle != null)
             dialogFragment.setArguments(bundle);

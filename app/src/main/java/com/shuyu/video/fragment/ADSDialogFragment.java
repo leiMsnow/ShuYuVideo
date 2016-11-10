@@ -27,7 +27,6 @@ import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.pay.IPay;
 import com.shuyu.video.pay.PayFactory;
 import com.shuyu.video.utils.CommonUtils;
-import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.PayUtils;
 
@@ -49,7 +48,6 @@ public class ADSDialogFragment extends DialogFragment {
     private double mRebateMoneys;
 
     private int userRule = 0;
-    private int payDialogBG = 0;
 
     private BaseProgressDialog mBaseDialog;
 
@@ -68,11 +66,9 @@ public class ADSDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View layout = inflater.inflate(R.layout.fragment_pay_dialog, container);
+        View layout = inflater.inflate(R.layout.fragment_ads_dialog, container);
         payBackground = layout.findViewById(R.id.v_pay_bg);
         ivClose = (ImageView) layout.findViewById(R.id.iv_close);
-        if (getArguments() != null)
-            payDialogBG = getArguments().getInt(Constants.KEY_PAY_DIALOG, 0);
         getPayment();
         payBackground.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,14 +76,12 @@ public class ADSDialogFragment extends DialogFragment {
                 createOrderInfo(mPayment);
             }
         });
-
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-
         return layout;
     }
 
@@ -118,7 +112,7 @@ public class ADSDialogFragment extends DialogFragment {
                                 orderInfo.getOrderId(),
                                 mMoneys,
                                 mRebateMoneys,
-                                PayUtils.getPayPoint(userRule, payDialogBG != 0),
+                                PayUtils.getPayPoint(userRule,false),
                                 payment.getPayType(),
                                 payment.getPayCompanyCode(),
                                 payment.getPayCode(),
@@ -137,7 +131,7 @@ public class ADSDialogFragment extends DialogFragment {
 
                     @Override
                     public void onFail() {
-
+                        dismiss();
                     }
                 });
     }
@@ -158,8 +152,9 @@ public class ADSDialogFragment extends DialogFragment {
                     public void onSuccess(List<Payment> mPayments) {
                         if (mPayments != null) {
                             for (Payment payment : mPayments) {
-                                if (payment.getPayType() == PayUtils.WE_CHAT_PAY && mPayment == null) {
+                                if (payment.getPayType() == PayUtils.ADS_PAY && mPayment == null) {
                                     mPayment = payment;
+                                    break;
                                 }
                             }
                         }
@@ -167,7 +162,7 @@ public class ADSDialogFragment extends DialogFragment {
 
                     @Override
                     public void onFail() {
-
+                        dismiss();
                     }
                 });
     }
@@ -180,11 +175,8 @@ public class ADSDialogFragment extends DialogFragment {
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
                 payBackground.setBackgroundResource(PayUtils.getPayDialogBG(userRule));
-                if (payDialogBG != 0) {
-                    payBackground.setBackgroundResource(payDialogBG);
-                }
-                mMoneys = PayUtils.getPayRebateMoney(userRule, false, payDialogBG != 0);
-                mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true, payDialogBG != 0);
+                mMoneys = PayUtils.getPayRebateMoney(userRule, false, false);
+                mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true, false);
             }
 
             @Override

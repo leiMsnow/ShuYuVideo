@@ -1,7 +1,6 @@
 package com.shuyu.core.uils;
 
 import android.app.ActivityManager;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -114,12 +113,6 @@ public class AppUtils {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyMgr.getSimSerialNumber() == null ? "" : mTelephonyMgr.getSimSerialNumber();
-    }
-
-    public static boolean hasSIM() {
-        TelephonyManager mTelephonyManager = (TelephonyManager)
-                CoreApplication.getApplication().getSystemService(Service.TELEPHONY_SERVICE);
-        return (mTelephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY);
     }
 
     public static String getUUID() {

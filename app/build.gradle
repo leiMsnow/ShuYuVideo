@@ -73,7 +73,8 @@ android {
             applicationIdSuffix ".debug"
             buildConfigField "boolean", "IS_DEBUG", "true"
             resValue "string", "app_name", "DEBUG影吧"
-            buildConfigField "String", "ditchNo", '"normal"'
+            buildConfigField "String", "ditchNo", '"0"'
+            buildConfigField "int", "APP_ID", "1021"
         }
 
         release {

@@ -22,10 +22,11 @@ public class BaseApi {
 
     public static final String KEY_BASE_URL = "KEY_BASE_URL";
     private static final String LOCAL_SERVER_URL = "http://121.199.21.125";
+    private static final String PAY_SERVER_URL = "http://pay-cps.isycdn.com";
     public static final String BASE_URL = LOCAL_SERVER_URL + ":7008/";
-    public static final String PAY_URL = LOCAL_SERVER_URL + ":8009/pay/";
-    public static final String ORDER_URL = LOCAL_SERVER_URL + ":8009/order/";
-    public static final String NOTICE_URL = LOCAL_SERVER_URL + ":8009/notice/";
+    public static final String PAY_URL = PAY_SERVER_URL + "/pay/";
+    public static final String ORDER_URL = PAY_SERVER_URL + "/order/";
+    public static final String NOTICE_URL = PAY_SERVER_URL + "/notice/";
 
     public static <T> T createApi(Class<T> service) {
         final String url = SPUtils.get(CoreApplication.getApplication()

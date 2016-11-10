@@ -84,14 +84,21 @@ public class SplashActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<List<RunInfo>>() {
                     @Override
                     public void onSuccess(List<RunInfo> data) {
-                        if (TextUtils.isEmpty(data.get(0).getFirstHost())) {
+
+                        RunInfo runInfo = data.get(0);
+                        if (runInfo.getBlackVersion().contains(CommonUtils.getVersionCode())){
+                            finish();
+                            return;
+                        }
+
+                        if (TextUtils.isEmpty(runInfo.getFirstHost())) {
                             SPUtils.put(mContext, BaseApi.KEY_BASE_URL, BaseApi.BASE_URL);
                         } else {
-                            SPUtils.put(mContext, BaseApi.KEY_BASE_URL, data.get(0).getFirstHost());
+                            SPUtils.put(mContext, BaseApi.KEY_BASE_URL, runInfo.getFirstHost());
                         }
-                        SPUtils.put(mContext, Constants.LAUNCHER_IMG, data.get(0).getContentUrl());
-                        setSplash(data.get(0).getContentUrl());
-                        mSecond = data.get(0).getStayTime();
+                        SPUtils.put(mContext, Constants.LAUNCHER_IMG, runInfo.getContentUrl());
+                        setSplash(runInfo.getContentUrl());
+                        mSecond = runInfo.getStayTime();
                         startCountdown();
                     }
 

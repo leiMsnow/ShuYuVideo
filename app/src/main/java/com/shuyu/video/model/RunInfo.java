@@ -17,6 +17,7 @@ public class RunInfo {
     private int notifyCount;
     private int notifyInterval;
     private String wapUrl;
+    private String blackVersion;
 
     public String getContentId() {
         return contentId;
@@ -112,5 +113,13 @@ public class RunInfo {
 
     public void setWapUrl(String wapUrl) {
         this.wapUrl = wapUrl;
+    }
+
+    public String getBlackVersion() {
+        return blackVersion;
+    }
+
+    public void setBlackVersion(String blackVersion) {
+        this.blackVersion = blackVersion;
     }
 }
