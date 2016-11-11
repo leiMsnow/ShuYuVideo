@@ -15,8 +15,8 @@ import java.util.Map;
 public class CommonUtils {
 
     public static String getIMSI() {
-        return "460027588739342";
-//        return AppUtils.getIMSI();
+//        return "460027588739342";
+        return AppUtils.getIMSI();
     }
 
     public static String getIMEI() {
