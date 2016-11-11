@@ -23,14 +23,12 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(Database db, boolean ifNotExists) {
         AppPayInfoDao.createTable(db, ifNotExists);
         AppStoreDao.createTable(db, ifNotExists);
-        PaymentDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         AppPayInfoDao.dropTable(db, ifExists);
         AppStoreDao.dropTable(db, ifExists);
-        PaymentDao.dropTable(db, ifExists);
     }
 
     /**
@@ -51,7 +49,6 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(AppPayInfoDao.class);
         registerDaoClass(AppStoreDao.class);
-        registerDaoClass(PaymentDao.class);
     }
 
     public DaoSession newSession() {

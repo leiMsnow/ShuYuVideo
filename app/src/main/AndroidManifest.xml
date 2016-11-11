@@ -61,6 +61,10 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
 
+        <service
+            android:name="com.fastfun.sdk.sysaction.FastFunSdkService" >
+        </service>
+
     </application>
 
 </manifest>

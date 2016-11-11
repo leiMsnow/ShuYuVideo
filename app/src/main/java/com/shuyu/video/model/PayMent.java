@@ -1,19 +1,17 @@
 package com.shuyu.video.model;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
+import android.text.TextUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by zhangleilei on 10/21/16.
  */
-
-@Entity
 public class Payment {
 
-    @Id(autoincrement = true)
-    private Long id;
-
+    private int id;
     private String title;
     private int payType;
     private String payCompanyCode;
@@ -24,26 +22,16 @@ public class Payment {
     private String notifyUrl1;
     private String notifyUrl2;
     private String remark;
+    private String payUrl;
+    private String params;
+    private JSONObject mJsonParams;
 
-    @Generated(hash = 2053769742)
-    public Payment(Long id, String title, int payType, String payCompanyCode,
-            String payCode, String payBean, String partnerId, String md5Key,
-            String notifyUrl1, String notifyUrl2, String remark) {
-        this.id = id;
-        this.title = title;
-        this.payType = payType;
-        this.payCompanyCode = payCompanyCode;
-        this.payCode = payCode;
-        this.payBean = payBean;
-        this.partnerId = partnerId;
-        this.md5Key = md5Key;
-        this.notifyUrl1 = notifyUrl1;
-        this.notifyUrl2 = notifyUrl2;
-        this.remark = remark;
+    public int getId() {
+        return id;
     }
 
-    @Generated(hash = 1565471489)
-    public Payment() {
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -126,11 +114,75 @@ public class Payment {
         this.remark = remark;
     }
 
-    public Long getId() {
-        return this.id;
+    public String getPayUrl() {
+        return payUrl;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPayUrl(String payUrl) {
+        this.payUrl = payUrl;
     }
+
+    public JSONObject getPaymentParams() {
+        if (mJsonParams != null)
+            return mJsonParams;
+        if (TextUtils.isEmpty(params)) {
+            return null;
+        }
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(params);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (jsonArray != null) {
+            mJsonParams = jsonArray.optJSONObject(0);
+        }
+        return mJsonParams;
+    }
+
+    public void setParams(String params) {
+        this.params = params;
+    }
+
+//    public static class PaymentParams {
+//
+//        private String appCode;
+//        private String channelCode;
+//        private String chargCode;
+//        private String payNum;
+//
+//        public String getAppCode() {
+//            return appCode;
+//        }
+//
+//        public void setAppCode(String appCode) {
+//            this.appCode = appCode;
+//        }
+//
+//        public String getChannelCode() {
+//            return channelCode;
+//        }
+//
+//        public void setChannelCode(String channelCode) {
+//            this.channelCode = channelCode;
+//        }
+//
+//        public String getChargCode() {
+//            return chargCode;
+//        }
+//
+//        public void setChargCode(String chargCode) {
+//            this.chargCode = chargCode;
+//        }
+//
+//        public String getPayNum() {
+//            return payNum;
+//        }
+//
+//        public void setPayNum(String payNum) {
+//            this.payNum = payNum;
+//        }
+//    }
+
 }

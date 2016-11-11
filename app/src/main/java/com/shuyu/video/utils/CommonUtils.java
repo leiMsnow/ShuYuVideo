@@ -14,12 +14,12 @@ import java.util.Map;
 
 public class CommonUtils {
 
-
-    public static String getImsi() {
-        return AppUtils.getIMSI();
+    public static String getIMSI() {
+        return "460027588739342";
+//        return AppUtils.getIMSI();
     }
 
-    public static String getImei() {
+    public static String getIMEI() {
         return AppUtils.getIMEI();
     }
 
@@ -57,8 +57,8 @@ public class CommonUtils {
 
     public static Map<String, String> getCommonParams() {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("imsi", getImsi());
-        queryParams.put("imei", getImei());
+        queryParams.put("imsi", getIMSI());
+        queryParams.put("imei", getIMEI());
         queryParams.put("manufacturer", getManufacturer());
         queryParams.put("model", getModel());
         queryParams.put("versionCode", getVersionCode());
@@ -76,6 +76,5 @@ public class CommonUtils {
         }
         return encodeString.toString().substring(0, encodeString.toString().lastIndexOf("&"));
     }
-
 
 }

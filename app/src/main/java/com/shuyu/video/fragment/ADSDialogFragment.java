@@ -1,17 +1,12 @@
 package com.shuyu.video.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import com.lp.sdk.yninterface.YNInterface;
+import com.shuyu.core.BaseDialogFragment;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
 import com.shuyu.core.uils.ToastUtils;
@@ -38,10 +33,9 @@ import static com.shuyu.video.api.BaseApi.createApi;
  * Created by zhangleilei on 10/27/16.
  */
 
-public class ADSDialogFragment extends DialogFragment {
+public class ADSDialogFragment extends BaseDialogFragment {
 
-    private View payBackground;
-    private ImageView ivClose;
+    private Button btnPay;
     private Payment mPayment;
     private OrderInfo orderInfo;
     private double mMoneys;
@@ -55,34 +49,21 @@ public class ADSDialogFragment extends DialogFragment {
     private String mPayCode;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(false);
-        YNInterface.getInstance(getContext()).initSdk("0005000001", "000500");
+    protected int getLayoutID() {
+        return R.layout.fragment_ads_dialog;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View layout = inflater.inflate(R.layout.fragment_ads_dialog, container);
-        payBackground = layout.findViewById(R.id.v_pay_bg);
-        ivClose = (ImageView) layout.findViewById(R.id.iv_close);
+    protected void init() {
+        YNInterface.getInstance(getContext()).initSdk("0005000001", "000500");
+        btnPay = (Button) mView.findViewById(R.id.btn_pay);
         getPayment();
-        payBackground.setOnClickListener(new View.OnClickListener() {
+        btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createOrderInfo(mPayment);
             }
         });
-        ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        return layout;
     }
 
     private void createOrderInfo(final Payment payment) {
@@ -92,7 +73,7 @@ public class ADSDialogFragment extends DialogFragment {
 
         if (mBaseDialog == null) {
             mBaseDialog = new BaseProgressDialog(getContext());
-            mBaseDialog.setMessage("正在生成订单...");
+            mBaseDialog.setMessage("正在领取礼包...");
             mBaseDialog.show();
         }
 
@@ -104,6 +85,7 @@ public class ADSDialogFragment extends DialogFragment {
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
         orderInfo.setPrice(mRebateMoneys);
+        orderInfo.setPaymentParams(payment.getPaymentParams());
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                         .createOrder(payment.getTitle(),
@@ -112,7 +94,7 @@ public class ADSDialogFragment extends DialogFragment {
                                 orderInfo.getOrderId(),
                                 mMoneys,
                                 mRebateMoneys,
-                                PayUtils.getPayPoint(userRule,false),
+                                PayUtils.getPayPoint(userRule, false),
                                 payment.getPayType(),
                                 payment.getPayCompanyCode(),
                                 payment.getPayCode(),
@@ -126,7 +108,19 @@ public class ADSDialogFragment extends DialogFragment {
                     public void onSuccess(CreateOrderResult data) {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
                         IPay pay = PayFactory.create(payment.getPayCode(), orderInfo);
-                        if (pay != null) pay.pay(null);
+                        if (pay != null) pay.pay(new IPay.IPayCallback() {
+                            @Override
+                            public void paySuccess() {
+                                LogUtils.d("createOrderInfo", "paySuccess" + payment.getPayCode());
+                                ADSDialogFragment.this.dismiss();
+                            }
+
+                            @Override
+                            public void payFail() {
+                                LogUtils.d("createOrderInfo", "payFail:" + payment.getPayCode());
+                                ADSDialogFragment.this.dismiss();
+                            }
+                        });
                     }
 
                     @Override
@@ -174,7 +168,6 @@ public class ADSDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
-                payBackground.setBackgroundResource(PayUtils.getPayDialogBG(userRule));
                 mMoneys = PayUtils.getPayRebateMoney(userRule, false, false);
                 mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true, false);
             }
@@ -197,11 +190,11 @@ public class ADSDialogFragment extends DialogFragment {
                             return;
                         }
                         if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
-                            ToastUtils.getInstance().showToast("支付成功");
+                            ToastUtils.getInstance().showToast("领取成功");
                         } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
-                            ToastUtils.getInstance().showToast("支付取消");
+                            ToastUtils.getInstance().showToast("取消领取");
                         } else {
-                            ToastUtils.getInstance().showToast("支付失败");
+                            ToastUtils.getInstance().showToast("领取失败");
                         }
                         ADSDialogFragment.this.dismiss();
                     }
@@ -209,7 +202,6 @@ public class ADSDialogFragment extends DialogFragment {
                     @Override
                     public void onFail() {
                         ADSDialogFragment.this.dismiss();
-                        ToastUtils.getInstance().showToast("查询订单失败，请重新尝试");
                     }
                 });
     }

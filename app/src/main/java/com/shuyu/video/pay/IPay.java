@@ -8,6 +8,7 @@ public interface IPay {
     void pay(IPayCallback callback);
 
     interface IPayCallback {
-        void callback();
+        void paySuccess();
+        void payFail();
     }
 }

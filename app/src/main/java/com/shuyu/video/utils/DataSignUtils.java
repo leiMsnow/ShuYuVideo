@@ -23,7 +23,6 @@ public class DataSignUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return "";
     }
 
@@ -33,17 +32,16 @@ public class DataSignUtils {
         try {
             return AESUtils.getInstance(AES_KEY).decryptFromBase64Str(decodeData);
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
-
         return "";
     }
 
     //验证签名
     public static String getSign() {
         String sign = CommonUtils.getUUID() +
-                CommonUtils.getImei() +
-                CommonUtils.getImsi() +
+                CommonUtils.getIMEI() +
+                CommonUtils.getIMSI() +
                 CommonUtils.getDitchNo() +
                 CommonUtils.getAppId() +
                 CommonUtils.getVersionCode() +
@@ -66,6 +64,4 @@ public class DataSignUtils {
         queryParams.put("activateFlag", "0");
         return queryParams;
     }
-
-
 }

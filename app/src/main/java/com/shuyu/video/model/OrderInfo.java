@@ -2,6 +2,8 @@ package com.shuyu.video.model;
 
 import android.support.v7.app.AppCompatActivity;
 
+import org.json.JSONObject;
+
 /**
  * Created by zhangleilei on 10/26/16.
  */
@@ -14,6 +16,7 @@ public class OrderInfo {
     private double price;
     private String partnerId;
     private String key;
+    private JSONObject mPaymentParams;
 
     public OrderInfo(AppCompatActivity context) {
         this.context = context;
@@ -67,4 +70,11 @@ public class OrderInfo {
         this.key = key;
     }
 
+    public JSONObject getPaymentParams() {
+        return mPaymentParams;
+    }
+
+    public void setPaymentParams(JSONObject paymentParams) {
+        mPaymentParams = paymentParams;
+    }
 }

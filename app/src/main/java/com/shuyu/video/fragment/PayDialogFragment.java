@@ -1,20 +1,14 @@
 package com.shuyu.video.fragment;
 
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shuyu.core.BaseDialogFragment;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
 import com.shuyu.core.uils.ToastUtils;
@@ -42,7 +36,7 @@ import static com.shuyu.video.api.BaseApi.createApi;
  * Created by zhangleilei on 10/27/16.
  */
 
-public class PayDialogFragment extends DialogFragment {
+public class PayDialogFragment extends BaseDialogFragment {
 
     private Button btnAliPay;
     private Button btnWeChatPay;
@@ -66,34 +60,19 @@ public class PayDialogFragment extends DialogFragment {
     private String mPayCode;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(false);
+    protected int getLayoutID() {
+        return R.layout.fragment_pay_dialog;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Window window = getDialog().getWindow();
-        WindowManager.LayoutParams windowParams = window.getAttributes();
-        windowParams.dimAmount = 0.0f;
-        window.setBackgroundDrawableResource(R.color.transparent);
-        window.setAttributes(windowParams);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View layout = inflater.inflate(R.layout.fragment_pay_dialog, container);
-        btnAliPay = (Button) layout.findViewById(R.id.btn_ali_pay);
-        btnWeChatPay = (Button) layout.findViewById(R.id.btn_wechat_pay);
-        payBackground = layout.findViewById(R.id.v_pay_bg);
-        tvPrice = (TextView) layout.findViewById(R.id.tv_pay_price);
-        tvNewPrice = (TextView) layout.findViewById(R.id.tv_pay_new_price);
-        tvPriceTips = (TextView) layout.findViewById(R.id.tv_pay_tips);
-        ivClose = (ImageView) layout.findViewById(R.id.iv_close);
+    protected void init() {
+        btnAliPay = (Button) mView.findViewById(R.id.btn_ali_pay);
+        btnWeChatPay = (Button) mView.findViewById(R.id.btn_wechat_pay);
+        payBackground = mView.findViewById(R.id.v_pay_bg);
+        tvPrice = (TextView) mView.findViewById(R.id.tv_pay_price);
+        tvNewPrice = (TextView) mView.findViewById(R.id.tv_pay_new_price);
+        tvPriceTips = (TextView) mView.findViewById(R.id.tv_pay_tips);
+        ivClose = (ImageView) mView.findViewById(R.id.iv_close);
         tvPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         if (getArguments() != null)
             payDialogBG = getArguments().getInt(Constants.KEY_PAY_DIALOG, 0);
@@ -102,7 +81,6 @@ public class PayDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 createOrderInfo(mAliPayPayment);
-
             }
         });
         btnWeChatPay.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +96,6 @@ public class PayDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-
-        return layout;
     }
 
     private void createOrderInfo(final Payment payment) {

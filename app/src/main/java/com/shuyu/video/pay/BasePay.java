@@ -19,7 +19,7 @@ public abstract class BasePay implements IPay {
     public void pay(IPayCallback callback) {
         pay();
         if (callback != null) {
-            callback.callback();
+            callback.paySuccess();
         }
     }
 

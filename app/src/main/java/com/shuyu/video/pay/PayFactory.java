@@ -35,11 +35,8 @@ public class PayFactory {
             case ZHILIAOFU_PAY_WECHAT:
                 return new ZhiLiaoPay(orderInfo);
             case PAY_CODE_YUEPENG_SP_10:
-
-                break;
             case PAY_CODE_YUEPENG_SP_20:
-
-                break;
+                return new YuePengSPPay(orderInfo);
         }
 
         return null;

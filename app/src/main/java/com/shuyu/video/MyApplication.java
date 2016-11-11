@@ -55,12 +55,11 @@ public class MyApplication extends CoreApplication {
         Map<String, String> commonParams = CommonUtils.getCommonParams();
 
         List<String> headerParams = new ArrayList<>();
-        headerParams.add("Host:mmys-cps.ywpod.com");
         headerParams.add("Connection:Keep-Alive");
+        headerParams.add("accet:*/*");
         headerParams.add("Accept-Encoding:gzip");
         headerParams.add("User-Agent:okhttp/2.5.0");
         headerParams.add("H-Quality:L");
-        headerParams.add("referer:img.isycdn.com");
         headerParams.add("Pay-Key:" + getPayKey(commonParams));
 
 
