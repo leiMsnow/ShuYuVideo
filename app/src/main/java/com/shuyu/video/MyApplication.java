@@ -23,7 +23,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 /**
  * Created by zhangleilei on 8/31/16.
  */
-
 public class MyApplication extends CoreApplication {
 
     private static MyApplication mApplication;
@@ -33,8 +32,7 @@ public class MyApplication extends CoreApplication {
 
     @Override
     public void onCreate() {
-//        if (BuildConfig.IS_DEBUG)
-//            MCrashHandler.getInstance().init(this);
+        MCrashHandler.getInstance().init();
         super.onCreate();
         mApplication = this;
         LogUtils.isDebug = Constants.IS_DEBUG;
@@ -61,7 +59,6 @@ public class MyApplication extends CoreApplication {
         headerParams.add("User-Agent:okhttp/2.5.0");
         headerParams.add("H-Quality:L");
         headerParams.add("Pay-Key:" + getPayKey(commonParams));
-
 
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
                 .addHeaderLinesList(headerParams)

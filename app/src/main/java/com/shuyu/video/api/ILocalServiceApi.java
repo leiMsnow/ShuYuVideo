@@ -82,5 +82,11 @@ public interface ILocalServiceApi {
     Observable<ResultEntity> userVisit(@Query("data") String data,
                                        @Query("dcVersion") String dcVersion);
 
+    /**
+     * 上传日志
+     */
+    @POST(BaseApi.LOG_URL + "upLog.service")
+    Observable<ResultEntity> upLog(@Query("content") String content,
+                                   @Query("type") int type);
 }
 

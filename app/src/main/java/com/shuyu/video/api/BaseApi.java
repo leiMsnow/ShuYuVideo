@@ -28,6 +28,7 @@ public class BaseApi {
     public static final String PAY_URL = PAY_SERVER_URL + "/pay/";
     public static final String ORDER_URL = PAY_SERVER_URL + "/order/";
     public static final String NOTICE_URL = PAY_SERVER_URL + "/notice/";
+    public static final String LOG_URL = PAY_SERVER_URL + "/log/";
 
     public static <T> T createApi(Class<T> service) {
         final String url = SPUtils.get(CoreApplication.getApplication()

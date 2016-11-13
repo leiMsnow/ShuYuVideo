@@ -75,14 +75,13 @@ public class AppUtils {
     /**
      * [获取应用程序版本名称信息]
      *
-     * @param context context
      * @return 当前应用的版本名称
      */
-    public static String getVersionName(Context context) {
+    public static String getVersionName() {
         try {
-            PackageManager packageManager = context.getPackageManager();
+            PackageManager packageManager = CoreApplication.getApplication().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(
-                    context.getPackageName(), 0);
+                    CoreApplication.getApplication().getPackageName(), 0);
             return packageInfo.versionName;
 
         } catch (NameNotFoundException e) {
