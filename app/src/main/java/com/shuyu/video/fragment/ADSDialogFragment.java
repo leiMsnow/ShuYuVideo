@@ -55,7 +55,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
 
     @Override
     protected void init() {
-        YNInterface.getInstance(getContext()).initSdk("0005000001", "000500");
         btnPay = (Button) mView.findViewById(R.id.btn_pay);
         ivClose = (ImageView) mView.findViewById(R.id.iv_close);
         getPayment();
@@ -157,6 +156,9 @@ public class ADSDialogFragment extends BaseDialogFragment {
                                 if (payment.getPayType() == PayUtils.ADS_PAY && mPayment == null) {
                                     mPayment = payment;
                                     mMoneys = Double.parseDouble(mPayment.getPaymentParams().optString("payNum"));
+                                    YNInterface.getInstance(getContext()).initSdk(
+                                            mPayment.getPaymentParams().optString("appCode"),
+                                            mPayment.getPaymentParams().optString("channelCode"));
                                     break;
                                 }
                             }
