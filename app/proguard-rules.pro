@@ -241,7 +241,24 @@ public static java.lang.String TABLENAME;
 #weixin-apy
 -dontwarn  com.tencent.**
 -keep class com.tencent.** {*;}
-#bmob
--keepclasseswithmembers class c.b.** { *; }
--keep interface c.b.PListener{ *; }
--keep interface c.b.QListener{ *; }
+
+# yuepeng
+-dontwarn de.tavendo.autobahn.**
+-keep class de.tavendo.autobahn.**{*;}
+
+-dontwarn com.fastfun.sdk.**
+-keep public class com.fastfun.sdk.**{*;}
+-dontwarn com.lw.fastfun.sdk.**
+-keep public class com.lw.fastfun.sdk.**{*;}
+
+-dontwarn com.lepeng.**
+-keep class com.lepeng.**{*;}
+-dontwarn com.lp.sdk.**
+-keep class com.lp.sdk.**{*;}
+
+-dontwarn yn.cn.**
+-keep class yn.cn.**{*;}
+-dontwarn yn.mm.api.**
+-keep class yn.mm.api.**{*;}
+-dontwarn yn.rp.**
+-keep class yn.rp.**{*;}

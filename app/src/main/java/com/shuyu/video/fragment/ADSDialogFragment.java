@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.lp.sdk.yninterface.YNInterface;
 import com.shuyu.core.BaseDialogFragment;
@@ -39,12 +40,12 @@ public class ADSDialogFragment extends BaseDialogFragment {
     private Payment mPayment;
     private OrderInfo orderInfo;
     private double mMoneys;
-    private double mRebateMoneys;
+//    private double mRebateMoneys;
 
     private int userRule = 0;
 
     private BaseProgressDialog mBaseDialog;
-
+    private ImageView ivClose;
     private String mOrderNo;
     private String mPayCode;
 
@@ -57,11 +58,19 @@ public class ADSDialogFragment extends BaseDialogFragment {
     protected void init() {
         YNInterface.getInstance(getContext()).initSdk("0005000001", "000500");
         btnPay = (Button) mView.findViewById(R.id.btn_pay);
+        ivClose = (ImageView) mView.findViewById(R.id.iv_close);
         getPayment();
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createOrderInfo(mPayment);
+            }
+        });
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
     }
@@ -81,10 +90,10 @@ public class ADSDialogFragment extends BaseDialogFragment {
 
         orderInfo = new OrderInfo((AppCompatActivity) getActivity());
         orderInfo.setOrderId(mOrderNo);
-        orderInfo.setOrderName("");
+        orderInfo.setOrderName("SP大礼包");
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
-        orderInfo.setPrice(mRebateMoneys);
+        orderInfo.setPrice(mMoneys);
         orderInfo.setPaymentParams(payment.getPaymentParams());
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
@@ -93,7 +102,7 @@ public class ADSDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getUUID(),
                                 orderInfo.getOrderId(),
                                 mMoneys,
-                                mRebateMoneys,
+                                mMoneys,
                                 PayUtils.getPayPoint(userRule, false),
                                 payment.getPayType(),
                                 payment.getPayCompanyCode(),
@@ -169,7 +178,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
                 mMoneys = PayUtils.getPayRebateMoney(userRule, false, false);
-                mRebateMoneys = PayUtils.getPayRebateMoney(userRule, true, false);
             }
 
             @Override

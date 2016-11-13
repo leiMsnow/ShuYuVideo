@@ -25,32 +25,9 @@ public class YuePengSPPay extends BasePay {
 
     }
 
-//    public static class YuePengSPPay10 extends BasePay {
-//
-//        public YuePengSPPay10(OrderInfo orderInfo) {
-//            super(orderInfo);
-//        }
-//
-//        @Override
-//        void pay() {
-//            payDialog(mOrderInfo);
-//        }
-//    }
-
-//    public static class YuePengSPPay20 extends BasePay {
-//
-//        public YuePengSPPay20(OrderInfo orderInfo) {
-//            super(orderInfo);
-//        }
-//
-//        @Override
-//        void pay() {
-//            payDialog(mOrderInfo);
-//        }
-//    }
-
     private static void payDialog(final OrderInfo mOrderInfo, final IPayCallback callback) {
         YNInterface.getInstance(mOrderInfo.getContext()).pay(
+                mOrderInfo.getOrderId(),
                 mOrderInfo.getPaymentParams().optString("chargCode"),
                 Integer.parseInt(mOrderInfo.getPaymentParams().optString("payNum")), new PayListener() {
                     @Override

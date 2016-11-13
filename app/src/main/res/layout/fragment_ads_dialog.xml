@@ -3,22 +3,41 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="center"
+        android:src="@mipmap/ic_close_money"/>
+
     <RelativeLayout
         android:id="@+id/cv_parent"
         android:layout_width="270dp"
         android:layout_height="300dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:background="@mipmap/bg_luck_money">
 
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_pay"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="140dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:text="恭喜获得礼包"
-            android:textSize="10sp"/>
+            android:layout_marginTop="140dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:padding="8dp"
+                android:text="欢迎使用最新版本，观看须知：
+本软件可能包含激情内容，未满18岁禁止观看！网络热播欧美日韩劲爆视频，海内外最新激情大片，超丰富诱惑美女车模，更有明星私密偷拍写真视频等海量资源，为回馈新老用户长期以来的大力支持，凡是首次登录使用app的前100名者，皆可获得一个新人大礼包，先到先得数量有限，现新用户即可参与减免成为我们高级会员并可立即享受本软件提供的特殊高清无码禁播大片，每日实时更新，点击确定开始浏览本应用内容，表示您同意加入会员，现在只需10元，即可获得永久会员，信息费由合作伙伴代为收取，成功后运营商会发送短信通知。
+"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+
+        </ScrollView>
 
         <Button
             android:id="@+id/btn_pay"
@@ -27,7 +46,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:background="@drawable/shape_round_orange"
-            android:text="立即领取"/>
+            android:text="确定"/>
 
     </RelativeLayout>
 </FrameLayout>
