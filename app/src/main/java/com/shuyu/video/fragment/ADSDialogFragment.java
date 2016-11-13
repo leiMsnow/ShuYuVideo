@@ -40,7 +40,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
     private Payment mPayment;
     private OrderInfo orderInfo;
     private double mMoneys;
-//    private double mRebateMoneys;
 
     private int userRule = 0;
 
@@ -157,6 +156,7 @@ public class ADSDialogFragment extends BaseDialogFragment {
                             for (Payment payment : mPayments) {
                                 if (payment.getPayType() == PayUtils.ADS_PAY && mPayment == null) {
                                     mPayment = payment;
+                                    mMoneys = Double.parseDouble(mPayment.getPaymentParams().optString("payNum"));
                                     break;
                                 }
                             }
@@ -177,7 +177,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
             @Override
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
-                mMoneys = PayUtils.getPayRebateMoney(userRule, false, false);
             }
 
             @Override
