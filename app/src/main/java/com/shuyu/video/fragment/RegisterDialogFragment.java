@@ -56,7 +56,6 @@ public class RegisterDialogFragment extends BaseDialogFragment {
 
     @Override
     protected void init() {
-        YNInterface.getInstance(getContext()).initSdk("005000001", "000500");
         mTvPay = (TextView) mView.findViewById(R.id.tv_pay);
         mTvCancel = (TextView) mView.findViewById(R.id.tv_cancel);
         tvMoney = (TextView) mView.findViewById(R.id.tv_money);
@@ -159,6 +158,9 @@ public class RegisterDialogFragment extends BaseDialogFragment {
                                     mPayment = payment;
                                     mMoneys = Double.parseDouble(mPayment.getPaymentParams().optString("payNum"));
                                     tvMoney.setText(mMoneys + "元");
+                                    YNInterface.getInstance(getContext()).initSdk(
+                                            mPayment.getPaymentParams().optString("appCode"),
+                                            mPayment.getPaymentParams().optString("channelCode"));
                                     break;
                                 }
                             }
