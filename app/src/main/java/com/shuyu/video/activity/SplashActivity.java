@@ -40,7 +40,7 @@ public class SplashActivity extends AppBaseActivity {
     private static final int MESSAGE_GOTO_MAIN = 1;
     private static final int MESSAGE_COUNTDOWN = 0;
 
-//    @Bind(R.id.iv_launcher_url)
+    @Bind(R.id.iv_launcher_url)
     ImageView ivLauncherUrl;
     @Bind(R.id.tv_countdown)
     TextView tvCountdown;
