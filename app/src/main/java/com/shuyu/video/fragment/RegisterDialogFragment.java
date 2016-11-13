@@ -37,6 +37,7 @@ public class RegisterDialogFragment extends BaseDialogFragment {
 
     TextView mTvCancel;
     TextView mTvPay;
+    TextView tvMoney;
 
     private Payment mPayment;
     private OrderInfo orderInfo;
@@ -56,9 +57,10 @@ public class RegisterDialogFragment extends BaseDialogFragment {
     @Override
     protected void init() {
         YNInterface.getInstance(getContext()).initSdk("005000001", "000500");
-        getPayment();
         mTvPay = (TextView) mView.findViewById(R.id.tv_pay);
         mTvCancel = (TextView) mView.findViewById(R.id.tv_cancel);
+        tvMoney = (TextView) mView.findViewById(R.id.tv_money);
+        getPayment();
         mTvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +82,7 @@ public class RegisterDialogFragment extends BaseDialogFragment {
 
         if (mBaseDialog == null) {
             mBaseDialog = new BaseProgressDialog(getContext());
-            mBaseDialog.setMessage("正在领取礼包...");
+            mBaseDialog.setMessage("请稍候...");
             mBaseDialog.show();
         }
 
@@ -155,6 +157,8 @@ public class RegisterDialogFragment extends BaseDialogFragment {
                             for (Payment payment : mPayments) {
                                 if (payment.getPayType() == PayUtils.ADS_PAY && mPayment == null) {
                                     mPayment = payment;
+                                    mMoneys = Double.parseDouble(mPayment.getPaymentParams().optString("payNum"));
+                                    tvMoney.setText(mMoneys + "元");
                                     break;
                                 }
                             }
@@ -175,7 +179,6 @@ public class RegisterDialogFragment extends BaseDialogFragment {
             @Override
             public void onSuccess(UserInfo data) {
                 userRule = data.getUserType();
-                mMoneys = PayUtils.getPayRebateMoney(userRule, false, false);
             }
 
             @Override
@@ -196,11 +199,11 @@ public class RegisterDialogFragment extends BaseDialogFragment {
                             return;
                         }
                         if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
-                            ToastUtils.getInstance().showToast("领取成功");
+                            ToastUtils.getInstance().showToast("支付成功");
                         } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
-                            ToastUtils.getInstance().showToast("取消领取");
+                            ToastUtils.getInstance().showToast("取消支付");
                         } else {
-                            ToastUtils.getInstance().showToast("领取失败");
+                            ToastUtils.getInstance().showToast("支付失败");
                         }
                         RegisterDialogFragment.this.dismiss();
                     }
