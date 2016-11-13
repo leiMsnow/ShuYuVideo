@@ -217,6 +217,7 @@ public class SplashActivity extends AppBaseActivity {
                 new BaseApi.IResponseListener<AppPayInfo>() {
                     @Override
                     public void onSuccess(AppPayInfo data) {
+                        AppPayInfoDaoHelper.getHelper().deleteAll();
                         AppPayInfoDaoHelper.getHelper().addData(data);
                     }
 
