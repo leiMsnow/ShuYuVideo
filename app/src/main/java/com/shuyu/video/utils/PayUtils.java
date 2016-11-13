@@ -13,8 +13,8 @@ import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
-import com.shuyu.video.fragment.ADSDialogFragment;
 import com.shuyu.video.fragment.PayDialogFragment;
+import com.shuyu.video.fragment.RegisterDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
@@ -128,7 +128,7 @@ public class PayUtils {
     }
 
     private static void showADSPayDialog(Context context) {
-        ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
+        RegisterDialogFragment adsDialogFragment = new RegisterDialogFragment();
         adsDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "ADSDialog");
     }
 

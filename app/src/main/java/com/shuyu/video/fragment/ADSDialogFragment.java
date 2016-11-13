@@ -33,7 +33,6 @@ import static com.shuyu.video.api.BaseApi.createApi;
 /**
  * Created by zhangleilei on 10/27/16.
  */
-
 public class ADSDialogFragment extends BaseDialogFragment {
 
     private Button btnPay;

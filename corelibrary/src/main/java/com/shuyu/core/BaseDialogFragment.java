@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Azure on 2016/11/11.
  */

@@ -70,10 +70,10 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            applicationIdSuffix ".debug"
+            applicationIdSuffix ".clean.debug"
             buildConfigField "boolean", "IS_DEBUG", "true"
-            resValue "string", "app_name", "DEBUG影吧"
-            buildConfigField "String", "ditchNo", '"0"'
+            resValue "string", "app_name", "DEBUG纯影吧"
+            buildConfigField "String", "ditchNo", '"normal"'
             buildConfigField "int", "APP_ID", "1021"
         }
 

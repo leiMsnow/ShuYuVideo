@@ -3,8 +3,7 @@ package com.shuyu.video.fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lp.sdk.yninterface.YNInterface;
 import com.shuyu.core.BaseDialogFragment;
@@ -36,7 +35,9 @@ import static com.shuyu.video.api.BaseApi.createApi;
 
 public class RegisterDialogFragment extends BaseDialogFragment {
 
-    private Button btnPay;
+    TextView mTvCancel;
+    TextView mTvPay;
+
     private Payment mPayment;
     private OrderInfo orderInfo;
     private double mMoneys;
@@ -44,29 +45,27 @@ public class RegisterDialogFragment extends BaseDialogFragment {
     private int userRule = 0;
 
     private BaseProgressDialog mBaseDialog;
-    private ImageView ivClose;
     private String mOrderNo;
     private String mPayCode;
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_ads_dialog;
+        return R.layout.fragment_register_dialog;
     }
 
     @Override
     protected void init() {
-        YNInterface.getInstance(getContext()).initSdk("0005000001", "000500");
-        btnPay = (Button) mView.findViewById(R.id.btn_pay);
-        ivClose = (ImageView) mView.findViewById(R.id.iv_close);
+        YNInterface.getInstance(getContext()).initSdk("005000001", "000500");
         getPayment();
-        btnPay.setOnClickListener(new View.OnClickListener() {
+        mTvPay = (TextView) mView.findViewById(R.id.tv_pay);
+        mTvCancel = (TextView) mView.findViewById(R.id.tv_cancel);
+        mTvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createOrderInfo(mPayment);
             }
         });
-
-        ivClose.setOnClickListener(new View.OnClickListener() {
+        mTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -89,7 +88,7 @@ public class RegisterDialogFragment extends BaseDialogFragment {
 
         orderInfo = new OrderInfo((AppCompatActivity) getActivity());
         orderInfo.setOrderId(mOrderNo);
-        orderInfo.setOrderName("SP大礼包");
+        orderInfo.setOrderName("注册大礼包");
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
         orderInfo.setPrice(mMoneys);
@@ -212,4 +211,5 @@ public class RegisterDialogFragment extends BaseDialogFragment {
                     }
                 });
     }
+
 }
