@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.BuildConfig;
@@ -95,7 +96,7 @@ public class PayUtils {
             @Override
             public void onSuccess(UserInfo data) {
                 if (data.getUserType() == 0
-//                        && !TextUtils.isEmpty(AppUtils.getIMSI())
+                        && !TextUtils.isEmpty(CommonUtils.getIMSI())
                         ) {
                     BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                             new BaseApi.IResponseListener<List<Payment>>() {
