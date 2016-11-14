@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class BaseApi {
 
     public static final String KEY_BASE_URL = "KEY_BASE_URL";
-    private static final String LOCAL_SERVER_URL = "http://121.199.21.125";
+    private static final String LOCAL_SERVER_URL = "http://118.178.87.139";
     private static final String PAY_SERVER_URL = "http://pay-cps.isycdn.com";
 //    private static final String PAY_SERVER_URL = LOCAL_SERVER_URL + ":8009";
     public static final String BASE_URL = LOCAL_SERVER_URL + ":7008/";

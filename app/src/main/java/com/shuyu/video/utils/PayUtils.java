@@ -13,7 +13,6 @@ import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
-import com.shuyu.video.fragment.PayDialogFragment;
 import com.shuyu.video.fragment.RegisterDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.Payment;
@@ -139,12 +138,13 @@ public class PayUtils {
     private static long currentTime = 0;
 
     public static void showPayDialog(Context context, Bundle bundle) {
-        PayDialogFragment dialogFragment = new PayDialogFragment();
-        if (bundle != null)
-            dialogFragment.setArguments(bundle);
-        if (System.currentTimeMillis() - currentTime > 2000) {
-            dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
-            currentTime = System.currentTimeMillis();
+//        PayDialogFragment dialogFragment = new PayDialogFragment();
+//        if (bundle != null)
+//            dialogFragment.setArguments(bundle);
+        if (System.currentTimeMillis() - currentTime > 10000) {
+            showGiftPayDialog(context);
+//            dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
+//            currentTime = System.currentTimeMillis();
         }
     }
 

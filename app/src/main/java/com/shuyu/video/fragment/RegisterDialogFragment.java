@@ -37,7 +37,7 @@ public class RegisterDialogFragment extends BaseDialogFragment {
 
     TextView mTvCancel;
     TextView mTvPay;
-    TextView tvMoney;
+    TextView tvTips;
 
     private Payment mPayment;
     private OrderInfo orderInfo;
@@ -58,7 +58,7 @@ public class RegisterDialogFragment extends BaseDialogFragment {
     protected void init() {
         mTvPay = (TextView) mView.findViewById(R.id.tv_pay);
         mTvCancel = (TextView) mView.findViewById(R.id.tv_cancel);
-        tvMoney = (TextView) mView.findViewById(R.id.tv_money);
+        tvTips = (TextView) mView.findViewById(R.id.tv_tips);
         getPayment();
         mTvPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,10 +157,13 @@ public class RegisterDialogFragment extends BaseDialogFragment {
                                 if (payment.getPayType() == PayUtils.ADS_PAY && mPayment == null) {
                                     mPayment = payment;
                                     mMoneys = Double.parseDouble(mPayment.getPaymentParams().optString("payNum"));
-                                    tvMoney.setText(mMoneys + "元");
+                                    int money = (int) mMoneys;
+                                    tvTips.setText(mPayment.getPaymentParams().optString("info")
+                                            + "现在只需支付" + money + "元。");
                                     YNInterface.getInstance(getContext()).initSdk(
                                             mPayment.getPaymentParams().optString("appCode"),
                                             mPayment.getPaymentParams().optString("channelCode"));
+
                                     break;
                                 }
                             }

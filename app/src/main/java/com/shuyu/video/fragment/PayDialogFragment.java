@@ -35,7 +35,7 @@ import static com.shuyu.video.api.BaseApi.createApi;
 /**
  * Created by zhangleilei on 10/27/16.
  */
-
+@Deprecated
 public class PayDialogFragment extends BaseDialogFragment {
 
     private Button btnAliPay;
