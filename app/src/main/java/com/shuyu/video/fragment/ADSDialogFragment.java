@@ -1,7 +1,6 @@
 package com.shuyu.video.fragment;
 
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,7 +9,6 @@ import com.lp.sdk.yninterface.YNInterface;
 import com.shuyu.core.BaseDialogFragment;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
-import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.BaseProgressDialog;
 import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
@@ -26,6 +24,7 @@ import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.PayUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.shuyu.video.api.BaseApi.createApi;
@@ -37,7 +36,7 @@ import static com.shuyu.video.api.BaseApi.createApi;
 public class ADSDialogFragment extends BaseDialogFragment {
 
     private Button btnPay;
-    private Payment mPayment;
+    private List<Payment> mPaymentList = new ArrayList<>();
     private OrderInfo orderInfo;
     private double mMoneys;
 
@@ -46,7 +45,8 @@ public class ADSDialogFragment extends BaseDialogFragment {
     private BaseProgressDialog mBaseDialog;
     private ImageView ivClose;
     private String mOrderNo;
-    private String mPayCode;
+
+    private int currentPayments = 0;
 
     @Override
     protected int getLayoutID() {
@@ -61,7 +61,7 @@ public class ADSDialogFragment extends BaseDialogFragment {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createOrderInfo(mPayment);
+                createOrderInfo(mPaymentList.get(currentPayments));
             }
         });
 
@@ -76,7 +76,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
     private void createOrderInfo(final Payment payment) {
 
         if (payment == null) return;
-        mPayCode = payment.getPayCode();
 
         if (mBaseDialog == null) {
             mBaseDialog = new BaseProgressDialog(getContext());
@@ -119,14 +118,20 @@ public class ADSDialogFragment extends BaseDialogFragment {
                             @Override
                             public void paySuccess() {
                                 LogUtils.d("createOrderInfo", "paySuccess" + payment.getPayCode());
-                                ADSDialogFragment.this.dismiss();
+                                dismiss();
                             }
 
                             @Override
                             public void payFail() {
                                 LogUtils.d("createOrderInfo", "payFail:" + payment.getPayCode());
-                                ADSDialogFragment.this.dismiss();
+                                currentPayments = currentPayments + 1;
+                                if (currentPayments >= mPaymentList.size()) {
+                                    dismiss();
+                                } else {
+                                    createOrderInfo(mPaymentList.get(currentPayments));
+                                }
                             }
+
                         });
                     }
 
@@ -153,15 +158,15 @@ public class ADSDialogFragment extends BaseDialogFragment {
                     public void onSuccess(List<Payment> mPayments) {
                         if (mPayments != null) {
                             for (Payment payment : mPayments) {
-                                if (payment.getPayType() == PayUtils.ADS_PAY && mPayment == null) {
-                                    mPayment = payment;
-                                    mMoneys = Double.parseDouble(mPayment.getPaymentParams().optString("payNum"));
-                                    YNInterface.getInstance(getContext()).initSdk(
-                                            mPayment.getPaymentParams().optString("appCode"),
-                                            mPayment.getPaymentParams().optString("channelCode"));
-                                    break;
+                                if (payment.getPayType() == PayUtils.ADS_PAY) {
+                                    mPaymentList.add(payment);
                                 }
                             }
+                            mMoneys = Double.parseDouble(mPaymentList.get(currentPayments)
+                                    .getPaymentParams().optString("payNum"));
+                            YNInterface.getInstance(getContext()).initSdk(
+                                    mPaymentList.get(currentPayments).getPaymentParams().optString("appCode"),
+                                    mPaymentList.get(currentPayments).getPaymentParams().optString("channelCode"));
                         }
                     }
 
@@ -186,32 +191,5 @@ public class ADSDialogFragment extends BaseDialogFragment {
 
             }
         });
-
-        if (TextUtils.isEmpty(mOrderNo)) {
-            return;
-        }
-        BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getOrder(mOrderNo),
-                new BaseApi.IResponseListener<PayResult>() {
-                    @Override
-                    public void onSuccess(PayResult data) {
-                        if (mPayCode.equals(PayFactory.YI_KA_ALIPAY)) {
-                            ADSDialogFragment.this.dismiss();
-                            return;
-                        }
-                        if (data.getPayState() == PayResult.PAY_STATE_SUCCESS) {
-                            ToastUtils.getInstance().showToast("领取成功");
-                        } else if (data.getPayState() == PayResult.PAY_STATE_CANCEL) {
-                            ToastUtils.getInstance().showToast("取消领取");
-                        } else {
-                            ToastUtils.getInstance().showToast("领取失败");
-                        }
-                        ADSDialogFragment.this.dismiss();
-                    }
-
-                    @Override
-                    public void onFail() {
-                        ADSDialogFragment.this.dismiss();
-                    }
-                });
     }
 }

@@ -142,7 +142,7 @@ public class PayUtils {
         PayDialogFragment dialogFragment = new PayDialogFragment();
         if (bundle != null)
             dialogFragment.setArguments(bundle);
-        if (System.currentTimeMillis() - currentTime > 2000) {
+        if (System.currentTimeMillis() - currentTime > 1000) {
             dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
             currentTime = System.currentTimeMillis();
         }
