@@ -38,7 +38,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
     private Button btnPay;
     private List<Payment> mPaymentList = new ArrayList<>();
     private OrderInfo orderInfo;
-    private double mMoneys;
 
     private int userRule = 0;
 
@@ -61,7 +60,11 @@ public class ADSDialogFragment extends BaseDialogFragment {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createOrderInfo(mPaymentList.get(currentPayments));
+                if (!mPaymentList.isEmpty()) {
+                    createOrderInfo(mPaymentList.get(currentPayments));
+                } else {
+                    dismiss();
+                }
             }
         });
 
@@ -90,7 +93,8 @@ public class ADSDialogFragment extends BaseDialogFragment {
         orderInfo.setOrderName("SP大礼包");
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
-        orderInfo.setPrice(mMoneys);
+        orderInfo.setPrice(Double.parseDouble(payment
+                .getPaymentParams().optString("payNum")));
         orderInfo.setPaymentParams(payment.getPaymentParams());
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
@@ -98,8 +102,8 @@ public class ADSDialogFragment extends BaseDialogFragment {
                                 1,
                                 CommonUtils.getUUID(),
                                 orderInfo.getOrderId(),
-                                mMoneys,
-                                mMoneys,
+                                orderInfo.getPrice(),
+                                orderInfo.getPrice(),
                                 PayUtils.getPayPoint(userRule, false),
                                 payment.getPayType(),
                                 payment.getPayCompanyCode(),
@@ -162,8 +166,8 @@ public class ADSDialogFragment extends BaseDialogFragment {
                                     mPaymentList.add(payment);
                                 }
                             }
-                            mMoneys = Double.parseDouble(mPaymentList.get(currentPayments)
-                                    .getPaymentParams().optString("payNum"));
+                            if (mPaymentList.isEmpty())
+                                return;
                             YNInterface.getInstance(getContext()).initSdk(
                                     mPaymentList.get(currentPayments).getPaymentParams().optString("appCode"),
                                     mPaymentList.get(currentPayments).getPaymentParams().optString("channelCode"));

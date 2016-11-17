@@ -29,7 +29,7 @@ public class YuePengSPPay extends BasePay {
         YNInterface.getInstance(mOrderInfo.getContext()).pay(
                 mOrderInfo.getOrderId(),
                 mOrderInfo.getPaymentParams().optString("chargCode"),
-                Integer.parseInt(mOrderInfo.getPaymentParams().optString("payNum")), new PayListener() {
+                ((int) mOrderInfo.getPrice()), new PayListener() {
                     @Override
                     public void onPaySuccess(String extData, String orderCode) {
                         LogUtils.d(YuePengSPPay.class.getName(), "支付成功" + extData + "," + orderCode);

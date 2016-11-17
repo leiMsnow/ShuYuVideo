@@ -324,6 +324,8 @@ public class VideoDetailsActivity extends AppBaseActivity {
 
     @OnClick(R.id.iv_video_player)
     public void onClick(View view) {
+        if (mVideoDetails == null)
+            return;
         if (mVideoDetails.getIsPage().equals("1")) {
             AppUtils.openBrowser(mContext, mVideoDetails.getVideoPageUrl());
         } else {
