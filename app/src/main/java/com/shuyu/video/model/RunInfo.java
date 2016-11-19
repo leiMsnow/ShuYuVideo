@@ -1,5 +1,10 @@
 package com.shuyu.video.model;
 
+import android.text.TextUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by zhangleilei on 9/9/16.
  */
@@ -18,6 +23,24 @@ public class RunInfo {
     private int notifyInterval;
     private String wapUrl;
     private String blackVersion;
+    private String params;
+    private JSONObject mJsonParams;
+
+    public JSONObject getParams() {
+        if (mJsonParams != null)
+            return mJsonParams;
+        if (TextUtils.isEmpty(params)) {
+            return null;
+        }
+
+        try {
+            mJsonParams = new JSONObject(params);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            mJsonParams = new JSONObject();
+        }
+        return mJsonParams;
+    }
 
     public String getContentId() {
         return contentId;
