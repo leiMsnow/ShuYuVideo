@@ -69,11 +69,6 @@ public class SplashActivity extends AppBaseActivity {
         userVisitOrActivation();
         getAppInfo();
         getRunInfo();
-
-        if (!CommonUtils.getIMSI().equals("")) {
-            YNInterface.getInstance(mContext).initSdk(
-                    "0005000001", "000500");
-        }
     }
 
     private void setSplash(String splashUrl) {
@@ -95,6 +90,12 @@ public class SplashActivity extends AppBaseActivity {
                         if (runInfo.getBlackVersion().contains(CommonUtils.getVersionCode())) {
                             finish();
                             return;
+                        }
+
+                        if (!CommonUtils.getIMSI().equals("")) {
+                            YNInterface.getInstance(mContext).initSdk(
+                                    runInfo.getParams().optString("appCode"),
+                                    runInfo.getParams().optString("channelCode"));
                         }
 
                         if (TextUtils.isEmpty(runInfo.getFirstHost())) {
