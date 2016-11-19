@@ -35,7 +35,7 @@ public class PayFactory {
             case PAY_SP_YUEPENG_20:
                 return new YuePengSPPay(orderInfo);
             case PAY_SP_XUN_TONG_10:
-                break;
+                return new XunTuSPPay(orderInfo);
         }
 
         return null;

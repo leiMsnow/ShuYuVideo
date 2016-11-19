@@ -91,6 +91,7 @@ public class ADSDialogFragment extends BaseDialogFragment {
         orderInfo.setPrice(Double.parseDouble(payment
                 .getPaymentParams().optString("payNum")));
         orderInfo.setPaymentParams(payment.getPaymentParams());
+        orderInfo.setPayUrl(payment.getPayUrl());
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                         .createOrder(payment.getTitle(),
@@ -107,7 +108,8 @@ public class ADSDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getManufacturer(),
                                 NetUtils.getHostIP(),
                                 CommonUtils.getChannelNo(),
-                                DataSignUtils.getSign()),
+                                DataSignUtils.getSign(),
+                                CommonUtils.getTelNumber()),
                 new BaseApi.IResponseListener<CreateOrderResult>() {
                     @Override
                     public void onSuccess(CreateOrderResult data) {

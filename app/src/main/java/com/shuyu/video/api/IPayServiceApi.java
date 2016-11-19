@@ -70,7 +70,8 @@ public interface IPayServiceApi {
             @Query("userOs") String userOs,
             @Query("userIp") String userIp,
             @Query("channelNo") String channelNo,
-            @Query("sign") String sign);
+            @Query("sign") String sign,
+            @Query("phoneNum") String phoneNum);
 
     /**
      * app标准通知

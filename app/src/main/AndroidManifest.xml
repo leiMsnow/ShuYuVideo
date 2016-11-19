@@ -65,11 +65,11 @@
             android:name="com.fastfun.sdk.sysaction.FastFunSdkService">
         </service>
 
-        <!--<receiver android:name=".receiver.SMSReceiver">-->
-            <!--<intent-filter android:priority="1000">-->
-                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED"/>-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <receiver android:name=".receiver.SMSReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

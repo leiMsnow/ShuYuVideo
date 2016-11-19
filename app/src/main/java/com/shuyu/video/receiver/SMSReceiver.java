@@ -30,14 +30,11 @@ public class SMSReceiver extends BroadcastReceiver {
                 sb.append(address + "\n");
                 sb.append("内容:" + message[i].getDisplayMessageBody());
             }
-            if (SMSUtils.PhoneNumber == "" && address.equals(GetNumberAddress)) {
+            if (SMSUtils.PhoneNumber.equals("") && address.equals(GetNumberAddress)) {
                 SMSUtils.PhoneNumber = SMSUtils.GetPhoneNumberFromSMSText(sb.toString());
                 ToastUtils.getInstance().showToast(address);
             }
-
             abortBroadcast();
-
         }
     }
-
 }  

@@ -18,6 +18,15 @@ public class OrderInfo {
     private String key;
     private JSONObject mPaymentParams;
     private String callBackUrl;
+    private String payUrl;
+
+    public String getPayUrl() {
+        return payUrl;
+    }
+
+    public void setPayUrl(String payUrl) {
+        this.payUrl = payUrl;
+    }
 
     public String getCallBackUrl() {
         return callBackUrl;

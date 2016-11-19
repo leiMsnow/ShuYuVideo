@@ -18,7 +18,8 @@ public class YiKaPay {
         }
 
         @Override
-        public void pay() {
+        public void pay(IPayCallback callback) {
+            super.pay(callback);
             MyTask task = new MyTask(mOrderInfo.getContext(),
                     mOrderInfo.getPartnerId(),
                     mOrderInfo.getCallBackUrl(),
@@ -37,10 +38,6 @@ public class YiKaPay {
             super(orderInfo);
         }
 
-        @Override
-        void pay() {
-
-        }
     }
 
 }

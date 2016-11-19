@@ -47,7 +47,6 @@ public class PayDialogFragment extends BaseDialogFragment {
     private ImageView ivClose;
     private Payment mAliPayPayment;
     private Payment mWeChatPayment;
-    private OrderInfo orderInfo;
     private double mMoneys;
     private double mRebateMoneys;
 
@@ -58,6 +57,8 @@ public class PayDialogFragment extends BaseDialogFragment {
 
     private String mOrderNo;
     private String mPayCode;
+
+    private OrderInfo orderInfo;
 
     @Override
     protected int getLayoutID() {
@@ -134,7 +135,8 @@ public class PayDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getManufacturer(),
                                 NetUtils.getHostIP(),
                                 CommonUtils.getChannelNo(),
-                                DataSignUtils.getSign()),
+                                DataSignUtils.getSign(),
+                                CommonUtils.getTelNumber()),
                 new BaseApi.IResponseListener<CreateOrderResult>() {
                     @Override
                     public void onSuccess(CreateOrderResult data) {

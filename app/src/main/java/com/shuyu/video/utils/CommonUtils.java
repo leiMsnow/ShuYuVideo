@@ -55,6 +55,10 @@ public class CommonUtils {
         return AppUtils.getUUID();
     }
 
+    public static String getTelNumber(){
+        return AppUtils.getTelNumber();
+    }
+
     public static Map<String, String> getCommonParams() {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("imsi", getIMSI());

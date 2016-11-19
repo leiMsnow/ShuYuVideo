@@ -132,7 +132,7 @@ public class PayUtils {
     private static void showADSPayDialog(Context context, ArrayList<Payment> payments) {
         ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("PaymentList", payments);
+        bundle.putSerializable("PaymentList", payments);
         adsDialogFragment.setArguments(bundle);
         adsDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "ADSDialog");
     }
