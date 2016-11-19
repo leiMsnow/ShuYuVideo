@@ -52,7 +52,6 @@ public class MainActivity extends AppBaseActivity {
         initBottomMenu();
 
         PayUtils.showGiftPayDialog(mContext);
-        CommonUtils.getTelNumber();
     }
 
     @Override
