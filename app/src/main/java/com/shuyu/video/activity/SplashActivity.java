@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.lp.sdk.yninterface.YNInterface;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
@@ -68,6 +69,11 @@ public class SplashActivity extends AppBaseActivity {
         userVisitOrActivation();
         getAppInfo();
         getRunInfo();
+
+        if (!CommonUtils.getIMSI().equals("")) {
+            YNInterface.getInstance(mContext).initSdk(
+                    "0005000001", "000500");
+        }
     }
 
     private void setSplash(String splashUrl) {
@@ -86,7 +92,7 @@ public class SplashActivity extends AppBaseActivity {
                     public void onSuccess(List<RunInfo> data) {
 
                         RunInfo runInfo = data.get(0);
-                        if (runInfo.getBlackVersion().contains(CommonUtils.getVersionCode())){
+                        if (runInfo.getBlackVersion().contains(CommonUtils.getVersionCode())) {
                             finish();
                             return;
                         }

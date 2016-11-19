@@ -2,6 +2,9 @@ package com.shuyu.video.utils;
 
 import android.os.Build;
 
+import com.lepeng.data.UtilApplication;
+import com.lepeng.utils.TelephonyUtil;
+import com.lp.sdk.yninterface.data.param.PhoneInfo;
 import com.shuyu.core.uils.AppUtils;
 import com.shuyu.video.BuildConfig;
 
@@ -15,8 +18,7 @@ import java.util.Map;
 public class CommonUtils {
 
     public static String getIMSI() {
-        return "460027588739342";
-//        return AppUtils.getIMSI();
+        return AppUtils.getIMSI();
     }
 
     public static String getIMEI() {
@@ -55,8 +57,14 @@ public class CommonUtils {
         return AppUtils.getUUID();
     }
 
-    public static String getTelNumber(){
-        return AppUtils.getTelNumber();
+    public static String getTelNumber() {
+        PhoneInfo phoneInfo = UtilApplication.getInstance()
+                .getDbUtil().findById(TelephonyUtil.getIMEI() + "|" + TelephonyUtil.getIMSI()
+                        , PhoneInfo.class);
+        String phone = "";
+        if (phoneInfo != null)
+            phone = phoneInfo.getPhoneNum();
+        return phone;
     }
 
     public static Map<String, String> getCommonParams() {
