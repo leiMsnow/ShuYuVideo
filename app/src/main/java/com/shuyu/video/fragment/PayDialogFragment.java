@@ -117,6 +117,7 @@ public class PayDialogFragment extends BaseDialogFragment {
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
         orderInfo.setPrice(mRebateMoneys);
+        orderInfo.setCallBackUrl(payment.getNotifyUrl1());
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                         .createOrder(payment.getTitle(),
@@ -124,7 +125,7 @@ public class PayDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getUUID(),
                                 orderInfo.getOrderId(),
                                 mMoneys,
-                                mRebateMoneys,
+                                orderInfo.getPrice(),
                                 PayUtils.getPayPoint(userRule, payDialogBG != 0),
                                 payment.getPayType(),
                                 payment.getPayCompanyCode(),
@@ -220,7 +221,7 @@ public class PayDialogFragment extends BaseDialogFragment {
                 new BaseApi.IResponseListener<PayResult>() {
                     @Override
                     public void onSuccess(PayResult data) {
-                        if (mPayCode.equals(PayFactory.YI_KA_ALIPAY)) {
+                        if (mPayCode.equals(PayFactory.PAY_YIKA_ALIPAY)) {
                             PayDialogFragment.this.dismiss();
                             return;
                         }

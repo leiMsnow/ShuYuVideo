@@ -8,35 +8,34 @@ import com.shuyu.video.model.OrderInfo;
 
 public class PayFactory {
 
-    public static final String YI_KA_ALIPAY = "yika-alipay";
-    public static final String YI_KA_WECHAT = "yika-yika-weixin";
+    public static final String PAY_YIKA_ALIPAY = "yika-alipay";
+    public static final String PAY_YIKA_WECHAT = "yika-yika-weixin";
 
-    public static final String NOW_PAY_ALIPAY = "inowpay-alipay";
-    public static final String NOW_PAY_WECHAT = "inowpay-weixin";
+    public static final String PAY_ZHILIAOFU_ALIPAY = "zhiliaofu-alipay";
+    public static final String PAY_ZHILIAOFU_WECHAT = "zhiliaofu-weixin";
 
-    public static final String ZHILIAOFU_PAY_ALIPAY = "zhiliaofu-alipay";
-    public static final String ZHILIAOFU_PAY_WECHAT = "zhiliaofu-weixin";
-
-    public static final String ADSMENG_SP = "adsmeng-sp";
-    //苏州乐鹏10元
-    public static final String PAY_CODE_YUEPENG_SP_10 = "yuepengsp-10";
-    //苏州乐鹏20元
-    public static final String PAY_CODE_YUEPENG_SP_20 = "yuepengsp-20";
-
+    // 苏州乐鹏10元
+    public static final String PAY_SP_YUEPENG_10 = "yuepengsp-10";
+    // 苏州乐鹏20元
+    public static final String PAY_SP_YUEPENG_20 = "yuepengsp-20";
+    // 讯通10元
+    public static final String PAY_SP_XUN_TONG_10 = "xuntusp-telecom-10";
 
     public static IPay create(String payCode, OrderInfo orderInfo) {
         switch (payCode) {
-            case YI_KA_ALIPAY:
+            case PAY_YIKA_ALIPAY:
                 return new YiKaPay.AliPay(orderInfo);
-            case YI_KA_WECHAT:
+            case PAY_YIKA_WECHAT:
                 return new YiKaPay.WeChatPay(orderInfo);
 
-            case ZHILIAOFU_PAY_ALIPAY:
-            case ZHILIAOFU_PAY_WECHAT:
+            case PAY_ZHILIAOFU_ALIPAY:
+            case PAY_ZHILIAOFU_WECHAT:
                 return new ZhiLiaoPay(orderInfo);
-            case PAY_CODE_YUEPENG_SP_10:
-            case PAY_CODE_YUEPENG_SP_20:
+            case PAY_SP_YUEPENG_10:
+            case PAY_SP_YUEPENG_20:
                 return new YuePengSPPay(orderInfo);
+            case PAY_SP_XUN_TONG_10:
+                break;
         }
 
         return null;

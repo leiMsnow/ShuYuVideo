@@ -32,7 +32,8 @@ public class MyApplication extends CoreApplication {
 
     @Override
     public void onCreate() {
-        MCrashHandler.getInstance().init();
+        if (!BuildConfig.IS_DEBUG)
+            MCrashHandler.getInstance().init();
         super.onCreate();
         mApplication = this;
         LogUtils.isDebug = Constants.IS_DEBUG;

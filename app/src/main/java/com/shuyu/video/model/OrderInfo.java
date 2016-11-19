@@ -17,6 +17,15 @@ public class OrderInfo {
     private String partnerId;
     private String key;
     private JSONObject mPaymentParams;
+    private String callBackUrl;
+
+    public String getCallBackUrl() {
+        return callBackUrl;
+    }
+
+    public void setCallBackUrl(String callBackUrl) {
+        this.callBackUrl = callBackUrl;
+    }
 
     public OrderInfo(AppCompatActivity context) {
         this.context = context;

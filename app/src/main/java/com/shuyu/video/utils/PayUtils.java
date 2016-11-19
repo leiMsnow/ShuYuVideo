@@ -20,6 +20,7 @@ import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.shuyu.video.api.BaseApi.createApi;
@@ -103,12 +104,13 @@ public class PayUtils {
                                 @Override
                                 public void onSuccess(List<Payment> mPayments) {
                                     if (mPayments != null) {
+                                        ArrayList<Payment> payments = new ArrayList<>();
                                         for (Payment payment : mPayments) {
                                             if (payment.getPayType() == PayUtils.ADS_PAY) {
-                                                showADSPayDialog(context);
-                                                break;
+                                                payments.add(payment);
                                             }
                                         }
+                                        showADSPayDialog(context, payments);
                                     }
                                 }
 
@@ -127,8 +129,11 @@ public class PayUtils {
         });
     }
 
-    private static void showADSPayDialog(Context context) {
+    private static void showADSPayDialog(Context context, ArrayList<Payment> payments) {
         ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("PaymentList", payments);
+        adsDialogFragment.setArguments(bundle);
         adsDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "ADSDialog");
     }
 
@@ -143,7 +148,7 @@ public class PayUtils {
         if (bundle != null)
             dialogFragment.setArguments(bundle);
         if (System.currentTimeMillis() - currentTime > 1000) {
-            dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "payDialog");
+            dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "PayDialog");
             currentTime = System.currentTimeMillis();
         }
     }

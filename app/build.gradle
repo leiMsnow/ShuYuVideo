@@ -123,7 +123,7 @@ android {
         spwysb_111111031_0003201{
             versionName "3.3.14"
             versionCode 30304
-            applicationId "com.txy.wzd"
+            applicationId "quanmingyingyin.com"
             resValue "string", "app_name", "午夜影吧"
             buildConfigField "int", "APP_ID", "1001"
             buildConfigField "String", "ditchNo", '"0"'

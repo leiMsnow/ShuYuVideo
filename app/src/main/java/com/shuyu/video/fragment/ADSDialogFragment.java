@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.lp.sdk.yninterface.YNInterface;
 import com.shuyu.core.BaseDialogFragment;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
@@ -27,8 +26,6 @@ import com.shuyu.video.utils.PayUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shuyu.video.api.BaseApi.createApi;
-
 /**
  * Created by zhangleilei on 10/27/16.
  */
@@ -43,7 +40,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
 
     private BaseProgressDialog mBaseDialog;
     private ImageView ivClose;
-    private String mOrderNo;
 
     private int currentPayments = 0;
 
@@ -56,18 +52,19 @@ public class ADSDialogFragment extends BaseDialogFragment {
     protected void init() {
         btnPay = (Button) mView.findViewById(R.id.btn_pay);
         ivClose = (ImageView) mView.findViewById(R.id.iv_close);
-        getPayment();
+        if (getArguments() != null) {
+            mPaymentList = getArguments().getParcelableArrayList("PaymentList");
+        }
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mPaymentList.isEmpty()) {
+                if (mPaymentList != null && !mPaymentList.isEmpty()) {
                     createOrderInfo(mPaymentList.get(currentPayments));
                 } else {
                     dismiss();
                 }
             }
         });
-
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,11 +83,9 @@ public class ADSDialogFragment extends BaseDialogFragment {
             mBaseDialog.show();
         }
 
-        mOrderNo = PayUtils.createOrderNo();
-
         orderInfo = new OrderInfo((AppCompatActivity) getActivity());
-        orderInfo.setOrderId(mOrderNo);
-        orderInfo.setOrderName("SP大礼包");
+        orderInfo.setOrderId(PayUtils.createOrderNo());
+        orderInfo.setOrderName("首充大礼包");
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
         orderInfo.setPrice(Double.parseDouble(payment
@@ -153,32 +148,6 @@ public class ADSDialogFragment extends BaseDialogFragment {
             mBaseDialog.dismiss();
             mBaseDialog = null;
         }
-    }
-
-    private void getPayment() {
-        BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
-                new BaseApi.IResponseListener<List<Payment>>() {
-                    @Override
-                    public void onSuccess(List<Payment> mPayments) {
-                        if (mPayments != null) {
-                            for (Payment payment : mPayments) {
-                                if (payment.getPayType() == PayUtils.ADS_PAY) {
-                                    mPaymentList.add(payment);
-                                }
-                            }
-                            if (mPaymentList.isEmpty())
-                                return;
-                            YNInterface.getInstance(getContext()).initSdk(
-                                    mPaymentList.get(currentPayments).getPaymentParams().optString("appCode"),
-                                    mPaymentList.get(currentPayments).getPaymentParams().optString("channelCode"));
-                        }
-                    }
-
-                    @Override
-                    public void onFail() {
-                        dismiss();
-                    }
-                });
     }
 
     @Override
