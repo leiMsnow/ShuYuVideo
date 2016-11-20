@@ -1,6 +1,7 @@
 package com.shuyu.video.fragment;
 
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -88,8 +89,11 @@ public class ADSDialogFragment extends BaseDialogFragment {
         orderInfo.setOrderName("首充大礼包");
         orderInfo.setPartnerId(payment.getPartnerId());
         orderInfo.setKey(payment.getMd5Key());
-        orderInfo.setPrice(Double.parseDouble(payment
-                .getPaymentParams().optString("payNum")));
+        String payNum = payment.getPaymentParams().optString("payNum");
+        if (TextUtils.isEmpty(payNum)) {
+            payNum = "0";
+        }
+        orderInfo.setPrice(Double.parseDouble(payNum));
         orderInfo.setPaymentParams(payment.getPaymentParams());
         orderInfo.setPayUrl(payment.getPayUrl());
 

@@ -58,12 +58,16 @@ public class CommonUtils {
     }
 
     public static String getTelNumber() {
-        PhoneInfo phoneInfo = UtilApplication.getInstance()
-                .getDbUtil().findById(TelephonyUtil.getIMEI() + "|" + TelephonyUtil.getIMSI()
-                        , PhoneInfo.class);
         String phone = "";
-        if (phoneInfo != null)
-            phone = phoneInfo.getPhoneNum();
+        try {
+            PhoneInfo phoneInfo = UtilApplication.getInstance()
+                    .getDbUtil().findById(TelephonyUtil.getIMEI() + "|" + TelephonyUtil.getIMSI()
+                            , PhoneInfo.class);
+            if (phoneInfo != null)
+                phone = phoneInfo.getPhoneNum();
+        } catch (Exception e) {
+            phone = "";
+        }
         return phone;
     }
 

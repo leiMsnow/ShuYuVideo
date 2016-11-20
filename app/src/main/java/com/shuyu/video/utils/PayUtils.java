@@ -93,38 +93,28 @@ public class PayUtils {
     }
 
     public static void showGiftPayDialog(final Context context) {
-        getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo data) {
-                if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
-                    BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
-                            new BaseApi.IResponseListener<List<Payment>>() {
-                                @Override
-                                public void onSuccess(List<Payment> mPayments) {
-                                    if (mPayments != null) {
-                                        ArrayList<Payment> payments = new ArrayList<>();
-                                        for (Payment payment : mPayments) {
-                                            if (payment.getPayType() == PayUtils.ADS_PAY) {
-                                                payments.add(payment);
-                                            }
-                                        }
-                                        showADSPayDialog(context, payments);
+        if (!TextUtils.isEmpty(CommonUtils.getIMSI())) {
+            BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
+                    new BaseApi.IResponseListener<List<Payment>>() {
+                        @Override
+                        public void onSuccess(List<Payment> mPayments) {
+                            if (mPayments != null) {
+                                ArrayList<Payment> payments = new ArrayList<>();
+                                for (Payment payment : mPayments) {
+                                    if (payment.getPayType() == PayUtils.ADS_PAY) {
+                                        payments.add(payment);
                                     }
                                 }
+                                showADSPayDialog(context, payments);
+                            }
+                        }
 
-                                @Override
-                                public void onFail() {
+                        @Override
+                        public void onFail() {
 
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onFail() {
-
-            }
-        });
+                        }
+                    });
+        }
     }
 
     private static void showADSPayDialog(Context context, ArrayList<Payment> payments) {
