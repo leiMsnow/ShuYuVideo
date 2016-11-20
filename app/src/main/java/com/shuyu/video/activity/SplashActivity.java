@@ -74,7 +74,7 @@ public class SplashActivity extends AppBaseActivity {
 
     private void setSplash(String splashUrl) {
         if (!TextUtils.isEmpty(splashUrl)) {
-            Glide.with(mContext).load(splashUrl)
+            Glide.with(getApplicationContext()).load(splashUrl)
                     .placeholder(R.mipmap.bg_splash)
                     .error(R.mipmap.bg_splash)
                     .into(ivLauncherUrl);

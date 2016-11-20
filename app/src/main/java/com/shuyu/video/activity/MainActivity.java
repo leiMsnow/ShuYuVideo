@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.ChangeColorView;
 import com.shuyu.video.R;
 import com.shuyu.video.fragment.MainFragment;
@@ -50,7 +49,7 @@ public class MainActivity extends AppBaseActivity {
         initDefaultFragment();
         setTitle(mTitles[0]);
         initBottomMenu();
-        PayUtils.showGiftPayDialog(mContext);
+        PayUtils.showGiftPayDialog(mContext, "");
     }
 
     @Override
@@ -65,9 +64,7 @@ public class MainActivity extends AppBaseActivity {
             Intent intent = new Intent(mContext, SearchActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.menu_gift) {
-            if (!PayUtils.showGiftPayDialog(mContext)) {
-                ToastUtils.getInstance().showToast("很遗憾，红包领光了，请关注后续活动");
-            }
+            PayUtils.showGiftPayDialog(mContext, "很遗憾，红包领光了，请关注后续活动");
         }
         return super.onOptionsItemSelected(item);
     }

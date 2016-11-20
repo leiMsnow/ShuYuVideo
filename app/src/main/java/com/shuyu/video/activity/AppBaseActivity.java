@@ -58,7 +58,7 @@ public abstract class AppBaseActivity extends BaseActivity {
                         imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                PayUtils.showGiftPayDialog(mContext);
+                                PayUtils.showGiftPayDialog(mContext,"很遗憾，红包领光了，请关注后续活动");
                                 imageView.setVisibility(View.GONE);
                             }
                         });

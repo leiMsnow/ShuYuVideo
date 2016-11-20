@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.shuyu.core.uils.LogUtils;
+import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.BuildConfig;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.PictureDetailsActivity;
@@ -92,7 +93,7 @@ public class PayUtils {
         return false;
     }
 
-    public static boolean showGiftPayDialog(final Context context) {
+    public static void showGiftPayDialog(final Context context, final String message) {
         if (!TextUtils.isEmpty(CommonUtils.getIMSI())) {
             BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                     new BaseApi.IResponseListener<List<Payment>>() {
@@ -105,7 +106,11 @@ public class PayUtils {
                                         payments.add(payment);
                                     }
                                 }
-                                showADSPayDialog(context, payments);
+                                if (!TextUtils.isEmpty(message) && payments.isEmpty()) {
+                                    ToastUtils.getInstance().showToast(message);
+                                } else if (!payments.isEmpty()) {
+                                    showADSPayDialog(context, payments);
+                                }
                             }
                         }
 
@@ -114,9 +119,6 @@ public class PayUtils {
 
                         }
                     });
-            return true;
-        } else {
-            return false;
         }
     }
 
