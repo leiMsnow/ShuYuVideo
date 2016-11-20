@@ -28,7 +28,7 @@ public abstract class AppBaseActivity extends BaseActivity {
     private long currentTime = 0;
     private ImageView imageView;
 
-    private boolean needShowRed = true;
+    private boolean needShowRed = false;
 
     public void setNeedShowRed(boolean needShowRed) {
         this.needShowRed = needShowRed;
@@ -41,7 +41,7 @@ public abstract class AppBaseActivity extends BaseActivity {
         if (!needShowRed)
             return;
 
-        PayUtils.showGiftPayDialog(mContext, new BaseApi.IResponseListener<UserInfo>() {
+        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
                 if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
@@ -58,7 +58,7 @@ public abstract class AppBaseActivity extends BaseActivity {
                         imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                PayUtils.showGiftPayDialog(mContext, null);
+                                PayUtils.showGiftPayDialog(mContext);
                                 imageView.setVisibility(View.GONE);
                             }
                         });

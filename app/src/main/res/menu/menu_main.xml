@@ -5,14 +5,14 @@
     <item
         android:id="@+id/menu_gift"
         android:icon="@mipmap/ic_menu_gift"
-        app:showAsAction="always"
-        android:title="@string/recommend"/>
+        android:title="@string/recommend"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_search"
         android:icon="@mipmap/ic_menu_search"
-        app:showAsAction="always"
-        android:visible="false"
-        android:title="@string/search"/>
+        android:showAsAction="always"
+        android:title="@string/search"
+        android:visible="false"/>
 
 </menu>

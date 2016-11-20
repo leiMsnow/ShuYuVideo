@@ -77,7 +77,7 @@ public class VipFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
+        if (!hidden) {
             canScroll();
         }
     }
@@ -86,7 +86,7 @@ public class VipFragment extends BaseFragment {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-                vpContainer.setCanScroll(mCanScroll = data.getUserType() > 1);
+                vpContainer.setCanScroll(mCanScroll = data.getUserType() > 2);
             }
 
             @Override
@@ -98,8 +98,11 @@ public class VipFragment extends BaseFragment {
 
     @OnPageChange(value = R.id.vp_container, callback = OnPageChange.Callback.PAGE_SELECTED)
     public void onPageSelected(int position) {
-        if (mCanScroll)
+        if (mCanScroll) {
             tvDesc.setText(mPageAdapter.getPageTitle(position));
+        } else {
+            PayUtils.showPayDialog(mContext);
+        }
     }
 
     private void getLiveVideoList() {

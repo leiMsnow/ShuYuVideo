@@ -92,15 +92,10 @@ public class PayUtils {
         return false;
     }
 
-    public static void showGiftPayDialog(final Context context
-            , final BaseApi.IResponseListener<UserInfo> listener) {
+    public static void showGiftPayDialog(final Context context) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-                if (listener != null) {
-                    listener.onSuccess(data);
-                    return;
-                }
                 if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
                     BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                             new BaseApi.IResponseListener<List<Payment>>() {
