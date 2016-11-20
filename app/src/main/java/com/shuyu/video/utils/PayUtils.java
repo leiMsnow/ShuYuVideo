@@ -92,13 +92,16 @@ public class PayUtils {
         return false;
     }
 
-    public static void showGiftPayDialog(final Context context) {
+    public static void showGiftPayDialog(final Context context
+            , final BaseApi.IResponseListener<UserInfo> listener) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo data) {
-                if (data.getUserType() == 0
-                        && !TextUtils.isEmpty(CommonUtils.getIMSI())
-                        ) {
+                if (listener != null) {
+                    listener.onSuccess(data);
+                    return;
+                }
+                if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
                     BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                             new BaseApi.IResponseListener<List<Payment>>() {
                                 @Override

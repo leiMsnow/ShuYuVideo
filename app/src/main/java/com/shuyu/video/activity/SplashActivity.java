@@ -62,6 +62,7 @@ public class SplashActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
+        setNeedShowRed(false);
         mMyHandler = new MyHandler(this);
         String splashUrl = SPUtils.get(mContext, Constants.LAUNCHER_IMG, "").toString();
         setSplash(splashUrl);

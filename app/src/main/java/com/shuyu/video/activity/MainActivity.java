@@ -13,7 +13,6 @@ import com.shuyu.video.fragment.MainFragment;
 import com.shuyu.video.fragment.RecommendFragment;
 import com.shuyu.video.fragment.UserCenterFragment;
 import com.shuyu.video.fragment.VipFragment;
-import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.PayUtils;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class MainActivity extends AppBaseActivity {
         setTitle(mTitles[0]);
         initBottomMenu();
 
-        PayUtils.showGiftPayDialog(mContext);
+        PayUtils.showGiftPayDialog(mContext,null);
     }
 
     @Override

@@ -90,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         getRootView().setLayoutParams(rootParams);
     }
 
-    private View getRootView() {
+    protected View getRootView() {
         return ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
     }
 
