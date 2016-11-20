@@ -3,7 +3,6 @@ package com.shuyu.video.activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,13 +10,10 @@ import android.view.View;
 import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.core.widget.ChangeColorView;
 import com.shuyu.video.R;
-import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.fragment.MainFragment;
 import com.shuyu.video.fragment.RecommendFragment;
 import com.shuyu.video.fragment.UserCenterFragment;
 import com.shuyu.video.fragment.VipFragment;
-import com.shuyu.video.model.UserInfo;
-import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.PayUtils;
 
 import java.util.ArrayList;
@@ -69,21 +65,9 @@ public class MainActivity extends AppBaseActivity {
             Intent intent = new Intent(mContext, SearchActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.menu_gift) {
-            PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
-                @Override
-                public void onSuccess(UserInfo data) {
-                    if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
-                        PayUtils.showGiftPayDialog(mContext);
-                    } else {
-                        ToastUtils.getInstance().showToast("很遗憾，红包领光了，请关注后续活动");
-                    }
-                }
-
-                @Override
-                public void onFail() {
-
-                }
-            });
+            if (!PayUtils.showGiftPayDialog(mContext)) {
+                ToastUtils.getInstance().showToast("很遗憾，红包领光了，请关注后续活动");
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -133,6 +117,7 @@ public class MainActivity extends AppBaseActivity {
         public void onClick(View v) {
             setBottomMenu(position);
         }
+
     }
 
     private void setBottomMenu(int position) {

@@ -92,7 +92,7 @@ public class PayUtils {
         return false;
     }
 
-    public static void showGiftPayDialog(final Context context) {
+    public static boolean showGiftPayDialog(final Context context) {
         if (!TextUtils.isEmpty(CommonUtils.getIMSI())) {
             BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                     new BaseApi.IResponseListener<List<Payment>>() {
@@ -114,6 +114,9 @@ public class PayUtils {
 
                         }
                     });
+            return true;
+        } else {
+            return false;
         }
     }
 
