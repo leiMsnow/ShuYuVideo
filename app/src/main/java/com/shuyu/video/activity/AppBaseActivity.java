@@ -1,15 +1,9 @@
 package com.shuyu.video.activity;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.shuyu.core.BaseActivity;
 import com.shuyu.core.uils.AppUtils;
-import com.shuyu.core.uils.DensityUtils;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.R;
@@ -26,7 +20,7 @@ import com.shuyu.video.utils.PayUtils;
  */
 public abstract class AppBaseActivity extends BaseActivity {
     private long currentTime = 0;
-    private ImageView imageView;
+//    private ImageView imageView;
 
     private boolean needShowRed = false;
 
@@ -41,44 +35,44 @@ public abstract class AppBaseActivity extends BaseActivity {
         if (!needShowRed)
             return;
 
-        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo data) {
-                if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
-                    if (imageView == null) {
-                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                                DensityUtils.dp2px(mContext, 56),
-                                DensityUtils.dp2px(mContext, 56));
-                        int marginBottom = mContext.getResources().getDisplayMetrics().heightPixels;
-                        layoutParams.gravity = Gravity.RIGHT | Gravity.END | Gravity.BOTTOM;
-                        layoutParams.setMargins(0, 0, 0, marginBottom / 6);
-                        imageView = new ImageView(mContext);
-                        imageView.setImageResource(R.mipmap.bg_luck_money);
-                        addContentView(imageView, layoutParams);
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                PayUtils.showGiftPayDialog(mContext,"很遗憾，红包领光了，请关注后续活动");
-                                imageView.setVisibility(View.GONE);
-                            }
-                        });
-                    } else {
-                        imageView.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    if (imageView != null) {
-                        imageView.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            @Override
-            public void onFail() {
-                if (imageView != null) {
-                    imageView.setVisibility(View.GONE);
-                }
-            }
-        });
+//        PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
+//            @Override
+//            public void onSuccess(UserInfo data) {
+//                if (data.getUserType() == 0 && !TextUtils.isEmpty(CommonUtils.getIMSI())) {
+//                    if (imageView == null) {
+//                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+//                                DensityUtils.dp2px(mContext, 56),
+//                                DensityUtils.dp2px(mContext, 56));
+//                        int marginBottom = mContext.getResources().getDisplayMetrics().heightPixels;
+//                        layoutParams.gravity = Gravity.RIGHT | Gravity.END | Gravity.BOTTOM;
+//                        layoutParams.setMargins(0, 0, 0, marginBottom / 6);
+//                        imageView = new ImageView(mContext);
+//                        imageView.setImageResource(R.mipmap.bg_luck_money);
+//                        addContentView(imageView, layoutParams);
+//                        imageView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                PayUtils.showGiftPayDialog(mContext);
+//                                imageView.setVisibility(View.GONE);
+//                            }
+//                        });
+//                    } else {
+//                        imageView.setVisibility(View.VISIBLE);
+//                    }
+//                } else {
+//                    if (imageView != null) {
+//                        imageView.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFail() {
+//                if (imageView != null) {
+//                    imageView.setVisibility(View.GONE);
+//                }
+//            }
+//        });
     }
 
     @Override

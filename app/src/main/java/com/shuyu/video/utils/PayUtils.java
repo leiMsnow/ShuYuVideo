@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 
 import com.shuyu.core.uils.LogUtils;
-import com.shuyu.core.uils.ToastUtils;
 import com.shuyu.video.BuildConfig;
 import com.shuyu.video.R;
 import com.shuyu.video.activity.PictureDetailsActivity;
@@ -93,33 +91,39 @@ public class PayUtils {
         return false;
     }
 
-    public static void showGiftPayDialog(final Context context, final String message) {
-        if (!TextUtils.isEmpty(CommonUtils.getIMSI())) {
-            BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
-                    new BaseApi.IResponseListener<List<Payment>>() {
-                        @Override
-                        public void onSuccess(List<Payment> mPayments) {
-                            if (mPayments != null) {
-                                ArrayList<Payment> payments = new ArrayList<>();
-                                for (Payment payment : mPayments) {
-                                    if (payment.getPayType() == PayUtils.ADS_PAY) {
-                                        payments.add(payment);
-                                    }
-                                }
-                                if (!TextUtils.isEmpty(message) && payments.isEmpty()) {
-                                    ToastUtils.getInstance().showToast(message);
-                                } else if (!payments.isEmpty()) {
-                                    showADSPayDialog(context, payments);
+    public static void showGiftPayDialog(final Context context) {
+        showGiftPayDialog(context, false);
+    }
+
+    public static void showGiftPayDialog(final Context context, final boolean openPay) {
+//        if (TextUtils.isEmpty(CommonUtils.getIMSI())) {
+//            return;
+//        }
+        BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
+                new BaseApi.IResponseListener<List<Payment>>() {
+                    @Override
+                    public void onSuccess(List<Payment> mPayments) {
+                        if (mPayments != null) {
+                            ArrayList<Payment> payments = new ArrayList<>();
+                            for (Payment payment : mPayments) {
+                                if (payment.getPayType() == PayUtils.ADS_PAY) {
+                                    payments.add(payment);
                                 }
                             }
+                            if (!payments.isEmpty()) {
+                                showADSPayDialog(context, payments);
+                            } else if (openPay) {
+                                showPayDialog(context);
+                            }
                         }
+                    }
 
-                        @Override
-                        public void onFail() {
+                    @Override
+                    public void onFail() {
 
-                        }
-                    });
-        }
+                    }
+                });
+
     }
 
     private static void showADSPayDialog(Context context, ArrayList<Payment> payments) {
@@ -133,7 +137,6 @@ public class PayUtils {
     public static void showPayDialog(Context context) {
         showPayDialog(context, null);
     }
-
     private static long currentTime = 0;
 
     public static void showPayDialog(Context context, Bundle bundle) {

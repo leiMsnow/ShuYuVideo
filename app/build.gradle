@@ -40,7 +40,6 @@ android {
     }
 
     signingConfigs {
-
         release {
             keyAlias 'shuyouvideo'
             keyPassword 'shuyouvideo123'
@@ -123,7 +122,8 @@ android {
         spwysb_111111031_0003201{
             versionName "3.3.14"
             versionCode 30304
-            applicationId "quanmingyingyin.com"
+//            applicationId "quanmingyingyin.com"
+            applicationId "com.txy.wzd"
             resValue "string", "app_name", "午夜影吧"
             buildConfigField "int", "APP_ID", "1001"
             buildConfigField "String", "ditchNo", '"0"'

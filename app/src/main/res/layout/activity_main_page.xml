@@ -39,6 +39,11 @@
             app:defaultColor="@color/main_black"/>
 
         <com.shuyu.core.widget.ChangeColorView
+            android:id="@+id/ccv_gift"
+            style="@style/MainMenuStyle"
+            app:changeIcon="@mipmap/ic_nav_gift"/>
+
+        <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_private"
             style="@style/MainMenuStyle"
             app:changeColor="?attr/app_main_color"

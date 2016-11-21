@@ -32,6 +32,9 @@ public class MainActivity extends AppBaseActivity {
     @Bind(R.id.ccv_user)
     ChangeColorView mCcvUser;
 
+    @Bind(R.id.ccv_gift)
+    ChangeColorView mGift;
+
     private List<Fragment> mFragments = null;
     private List<ChangeColorView> mChangeColorViews = null;
     private int[] mTitles = {R.string.nav_main, R.string.nav_vip, R.string.nav_recommend, R.string.nav_me};
@@ -49,7 +52,14 @@ public class MainActivity extends AppBaseActivity {
         initDefaultFragment();
         setTitle(mTitles[0]);
         initBottomMenu();
-        PayUtils.showGiftPayDialog(mContext, "");
+        PayUtils.showGiftPayDialog(mContext);
+
+        mGift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PayUtils.showGiftPayDialog(mContext, true);
+            }
+        });
     }
 
     @Override
@@ -64,7 +74,7 @@ public class MainActivity extends AppBaseActivity {
             Intent intent = new Intent(mContext, SearchActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.menu_gift) {
-            PayUtils.showGiftPayDialog(mContext, "很遗憾，红包领光了，请关注后续活动");
+            PayUtils.showGiftPayDialog(mContext, true);
         }
         return super.onOptionsItemSelected(item);
     }
