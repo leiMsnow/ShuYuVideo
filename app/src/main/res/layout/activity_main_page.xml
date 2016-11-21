@@ -39,9 +39,7 @@
             app:defaultColor="@color/main_black"/>
 
         <com.shuyu.core.widget.ChangeColorView
-            android:id="@+id/ccv_gift"
-            style="@style/MainMenuStyle"
-            app:changeIcon="@mipmap/ic_nav_gift"/>
+            style="@style/MainMenuStyle"/>
 
         <com.shuyu.core.widget.ChangeColorView
             android:id="@+id/ccv_private"
@@ -62,5 +60,14 @@
             app:defaultColor="@color/main_black"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_gift"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:src="@mipmap/ic_nav_gift"/>
 
 </RelativeLayout>

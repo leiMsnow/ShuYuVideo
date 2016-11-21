@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.shuyu.core.widget.ChangeColorView;
 import com.shuyu.video.R;
@@ -32,8 +33,8 @@ public class MainActivity extends AppBaseActivity {
     @Bind(R.id.ccv_user)
     ChangeColorView mCcvUser;
 
-    @Bind(R.id.ccv_gift)
-    ChangeColorView mGift;
+    @Bind(R.id.iv_gift)
+    ImageView mGift;
 
     private List<Fragment> mFragments = null;
     private List<ChangeColorView> mChangeColorViews = null;
