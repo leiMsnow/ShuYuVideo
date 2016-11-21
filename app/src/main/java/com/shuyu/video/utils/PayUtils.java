@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.video.BuildConfig;
@@ -87,7 +88,6 @@ public class PayUtils {
             showPayDialog(context);
             return true;
         }
-
         return false;
     }
 
@@ -96,9 +96,9 @@ public class PayUtils {
     }
 
     public static void showGiftPayDialog(final Context context, final boolean openPay) {
-//        if (TextUtils.isEmpty(CommonUtils.getIMSI())) {
-//            return;
-//        }
+        if (TextUtils.isEmpty(CommonUtils.getIMSI())) {
+            return;
+        }
         BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                 new BaseApi.IResponseListener<List<Payment>>() {
                     @Override
