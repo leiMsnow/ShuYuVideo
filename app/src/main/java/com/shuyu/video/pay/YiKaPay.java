@@ -19,7 +19,6 @@ public class YiKaPay {
 
         @Override
         public void pay(IPayCallback callback) {
-            super.pay(callback);
             MyTask task = new MyTask(mOrderInfo.getContext(),
                     mOrderInfo.getPartnerId(),
                     mOrderInfo.getCallBackUrl(),
@@ -28,7 +27,14 @@ public class YiKaPay {
                     String.valueOf(mOrderInfo.getPrice()),
                     payUrl,
                     mOrderInfo.getOrderName());
-            task.execute(payUrl);
+            try {
+                task.execute(payUrl);
+                callback.paySuccess();
+            } catch (Exception e) {
+                if (callback != null) {
+                    callback.payFail();
+                }
+            }
         }
     }
 
@@ -39,5 +45,4 @@ public class YiKaPay {
         }
 
     }
-
 }
