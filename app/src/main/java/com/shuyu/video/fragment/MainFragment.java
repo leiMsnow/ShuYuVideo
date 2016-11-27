@@ -54,14 +54,13 @@ public class MainFragment extends BaseFragment {
                 new BaseApi.IResponseListener<List<ChannelTitle>>() {
 
                     @Override
-                    public void onSuccess(List<ChannelTitle> data) {
+                    public void onSuccess(int code,List<ChannelTitle> data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         addFragments(data);
                     }
 
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 

@@ -1,6 +1,5 @@
 package com.shuyu.video.api;
 
-import com.shuyu.core.CoreApplication;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
 import com.shuyu.core.uils.SPUtils;
@@ -23,16 +22,18 @@ public class BaseApi {
     public static final String KEY_BASE_URL = "KEY_BASE_URL";
     private static final String LOCAL_SERVER_URL = "http://118.178.87.139";
     private static final String PAY_SERVER_URL = "http://pay-cps.isycdn.com";
-//    private static final String PAY_SERVER_URL = LOCAL_SERVER_URL + ":8009";
+    //    private static final String PAY_SERVER_URL = LOCAL_SERVER_URL + ":8009";
     public static final String BASE_URL = LOCAL_SERVER_URL + ":7008/";
     public static final String PAY_URL = PAY_SERVER_URL + "/pay/";
     public static final String ORDER_URL = PAY_SERVER_URL + "/order/";
     public static final String NOTICE_URL = PAY_SERVER_URL + "/notice/";
     public static final String LOG_URL = PAY_SERVER_URL + "/log/";
 
+    public static final int RESCODE_SUCCESS = 0;
+    public static final int RESCODE_FAILURE = -1;
+
     public static <T> T createApi(Class<T> service) {
-        final String url = SPUtils.get(CoreApplication.getApplication()
-                , KEY_BASE_URL, BASE_URL).toString() + "%20/";
+        final String url = SPUtils.get(KEY_BASE_URL, BASE_URL).toString() + "%20/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(MyApplication.getApplication().genericClient())
@@ -48,7 +49,7 @@ public class BaseApi {
         if (!NetUtils.isConnected(MyApplication.getApplication())) {
             ToastUtils.getInstance().showToast("网络不可用,请连接网络后重启APP");
             if (listener != null) {
-                listener.onFail();
+                listener.onSuccess(RESCODE_FAILURE, null);
             }
             return;
         }
@@ -65,14 +66,14 @@ public class BaseApi {
                                    e.printStackTrace();
                                    LogUtils.d("onError", e.getMessage());
                                    if (listener != null) {
-                                       listener.onFail();
+                                       listener.onSuccess(RESCODE_FAILURE, null);
                                    }
                                }
 
                                @Override
                                public void onNext(T data) {
                                    if (listener != null) {
-                                       listener.onSuccess(data);
+                                       listener.onSuccess(RESCODE_SUCCESS, data);
                                    }
                                }
                            }
@@ -80,10 +81,6 @@ public class BaseApi {
     }
 
     public interface IResponseListener<T> {
-
-        void onSuccess(T data);
-
-        void onFail();
+        void onSuccess(int resCode, T data);
     }
-
 }

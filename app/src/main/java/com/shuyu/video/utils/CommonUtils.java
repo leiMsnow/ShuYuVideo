@@ -6,6 +6,7 @@ import com.lepeng.data.UtilApplication;
 import com.lepeng.utils.TelephonyUtil;
 import com.lp.sdk.yninterface.data.param.PhoneInfo;
 import com.shuyu.core.uils.AppUtils;
+import com.shuyu.core.uils.SPUtils;
 import com.shuyu.video.BuildConfig;
 
 import java.util.HashMap;
@@ -54,8 +55,9 @@ public class CommonUtils {
         return BuildConfig.FLAVOR;
     }
 
-    public static String getUUID() {
-        return AppUtils.getUUID();
+    public static  String getUUID() {
+//        return AppUtils.getUUID();
+        return SPUtils.get(Constants.USER_UUID, "").toString();
     }
 
     public static String getTelNumber() {

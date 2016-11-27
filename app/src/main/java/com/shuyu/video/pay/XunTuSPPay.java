@@ -21,13 +21,11 @@ public class XunTuSPPay extends BasePay {
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getPayUrl(mOrderInfo.getOrderId())
                 , new BaseApi.IResponseListener<PayUrl>() {
                     @Override
-                    public void onSuccess(PayUrl data) {
+                    public void onSuccess(int code,PayUrl data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         LogUtils.d(XunTuSPPay.class.getName(), data.getPayUrl());
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }

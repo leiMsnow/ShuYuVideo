@@ -23,6 +23,8 @@ import com.shuyu.video.model.SearchVideoList;
 
 import butterknife.Bind;
 
+import static com.lp.sdk.yninterface.util.request.ServiceRequester.code;
+
 public class SearchActivity extends AppBaseActivity {
 
     @Bind(R.id.rv_hot_word)
@@ -105,7 +107,7 @@ public class SearchActivity extends AppBaseActivity {
         ImageView searchGo = (ImageView) searchView.findViewById(R.id.search_go_btn);
         searchGo.setImageResource(R.mipmap.ic_menu_search);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = DensityUtils.dp2px(mContext,28);
+        layoutParams.height = DensityUtils.dp2px(mContext, 28);
         view.setLayoutParams(layoutParams);
         view.setBackgroundResource(R.drawable.shape_search_bg);
         searchView.setSubmitButtonEnabled(true);
@@ -129,16 +131,14 @@ public class SearchActivity extends AppBaseActivity {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).getHotWordList(1, 16),
                 new BaseApi.IResponseListener<HotWord>() {
                     @Override
-                    public void onSuccess(HotWord data) {
+                    public void onSuccess(int code, HotWord data) {
+                        if (code == BaseApi.RESCODE_FAILURE)
+                            return;
                         hotTags.setVisibility(View.VISIBLE);
                         mHotWordAdapter.replaceAll(data.getWords());
                         searchVideo(data.getWords().get(0));
                     }
 
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 
@@ -146,15 +146,13 @@ public class SearchActivity extends AppBaseActivity {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).searchVideo(keyword, 1, 4),
                 new BaseApi.IResponseListener<SearchVideoList>() {
                     @Override
-                    public void onSuccess(SearchVideoList data) {
+                    public void onSuccess(int code, SearchVideoList data) {
+                        if (code == BaseApi.RESCODE_FAILURE)
+                            return;
                         hotVideo.setVisibility(View.VISIBLE);
                         mSearchContentAdapter.replaceAllData(data.getChannelContentList());
                     }
 
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 

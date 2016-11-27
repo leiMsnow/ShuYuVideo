@@ -36,4 +36,5 @@ public interface Constants {
     String KEY_PAY_DIALOG = "KEY_PAY_DIALOG";
 
     String KEY_PAY_URL = "KEY_PAY_URL";
+    String USER_UUID = "USER_UUID";
 }

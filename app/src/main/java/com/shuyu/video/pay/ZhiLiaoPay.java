@@ -26,17 +26,16 @@ public class ZhiLiaoPay extends BasePay {
                 new BaseApi.IResponseListener<PayUrl>() {
 
                     @Override
-                    public void onSuccess(PayUrl data) {
+                    public void onSuccess(int code,PayUrl data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         Intent intent = new Intent(mOrderInfo.getContext(), WebViewActivity.class);
                         intent.putExtra(Constants.KEY_WEB_VIEW_TYPE, WebViewActivity.VIEW_VIEW_TYPE_PAY_URL);
                         intent.putExtra(Constants.KEY_PAY_URL, data.getPayUrl());
                         mOrderInfo.getContext().startActivity(intent);
                     }
 
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 }

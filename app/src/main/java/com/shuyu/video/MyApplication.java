@@ -1,5 +1,6 @@
 package com.shuyu.video;
 
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.shuyu.core.CoreApplication;
@@ -37,7 +38,14 @@ public class MyApplication extends CoreApplication {
         super.onCreate();
         mApplication = this;
         LogUtils.isDebug = Constants.IS_DEBUG;
-        SPUtils.put(this, Constants.STAY_TIME_ON, System.currentTimeMillis());
+        SPUtils.put(Constants.STAY_TIME_ON, System.currentTimeMillis());
+
+        String uuid = SPUtils.get(Constants.USER_UUID, "").toString();
+        if (TextUtils.isEmpty(uuid)) {
+            uuid = "client_" + java.util.UUID.randomUUID().toString();
+            SPUtils.put(Constants.USER_UUID, uuid);
+            LogUtils.d(MyApplication.class.getName(), "createUUID : " + uuid);
+        }
     }
 
     public OkHttpClient genericClient() {

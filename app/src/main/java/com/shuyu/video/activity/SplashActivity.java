@@ -62,9 +62,8 @@ public class SplashActivity extends AppBaseActivity {
 
     @Override
     protected void initData() {
-        setNeedShowRed(false);
         mMyHandler = new MyHandler(this);
-        String splashUrl = SPUtils.get(mContext, Constants.LAUNCHER_IMG, "").toString();
+        String splashUrl = SPUtils.get(Constants.LAUNCHER_IMG, "").toString();
         setSplash(splashUrl);
         getAppStoreInfo();
         userVisitOrActivation();
@@ -85,8 +84,11 @@ public class SplashActivity extends AppBaseActivity {
         BaseApi.request(createApi(ILocalServiceApi.class).getRunInfo(),
                 new BaseApi.IResponseListener<List<RunInfo>>() {
                     @Override
-                    public void onSuccess(List<RunInfo> data) {
-
+                    public void onSuccess(int code,List<RunInfo> data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            startCountdown();
+                            return;
+                        }
                         RunInfo runInfo = data.get(0);
                         if (runInfo.getBlackVersion().contains(CommonUtils.getVersionCode())) {
                             finish();
@@ -100,18 +102,13 @@ public class SplashActivity extends AppBaseActivity {
                         }
 
                         if (TextUtils.isEmpty(runInfo.getFirstHost())) {
-                            SPUtils.put(mContext, BaseApi.KEY_BASE_URL, BaseApi.BASE_URL);
+                            SPUtils.put(BaseApi.KEY_BASE_URL, BaseApi.BASE_URL);
                         } else {
-                            SPUtils.put(mContext, BaseApi.KEY_BASE_URL, runInfo.getFirstHost());
+                            SPUtils.put(BaseApi.KEY_BASE_URL, runInfo.getFirstHost());
                         }
-                        SPUtils.put(mContext, Constants.LAUNCHER_IMG, runInfo.getContentUrl());
+                        SPUtils.put(Constants.LAUNCHER_IMG, runInfo.getContentUrl());
                         setSplash(runInfo.getContentUrl());
                         mSecond = runInfo.getStayTime();
-                        startCountdown();
-                    }
-
-                    @Override
-                    public void onFail() {
                         startCountdown();
                     }
                 });
@@ -168,16 +165,14 @@ public class SplashActivity extends AppBaseActivity {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).getAppStoreList(1),
                 new BaseApi.IResponseListener<AppStoreList>() {
                     @Override
-                    public void onSuccess(final AppStoreList data) {
+                    public void onSuccess(int code,final AppStoreList data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         AppStoreDaoHelper.getHelper().deleteAll();
                         for (AppStore entity : data.getAppInfoList()) {
                             AppStoreDaoHelper.getHelper().addData(entity);
                         }
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }
@@ -186,7 +181,7 @@ public class SplashActivity extends AppBaseActivity {
         String encrypt = CommonUtils.parseMap(DataSignUtils.getEncryptParams());
         String data = DataSignUtils.encryptData(encrypt);
         if (!TextUtils.isEmpty(data)) {
-            if (!(Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false)) {
+            if (!(Boolean) SPUtils.get(Constants.IS_ACTIVATION, false)) {
                 userActivation(data);
             }
             userVisit(data);
@@ -194,22 +189,20 @@ public class SplashActivity extends AppBaseActivity {
     }
 
     private void userActivation(String data) {
-        if ((Boolean) SPUtils.get(mContext, Constants.IS_ACTIVATION, false)) return;
+        if ((Boolean) SPUtils.get(Constants.IS_ACTIVATION, false)) return;
 
         BaseApi.request(createApi(ILocalServiceApi.class)
                 .userActivation(data, "0"), new BaseApi.IResponseListener<ResultEntity>() {
             @Override
-            public void onSuccess(ResultEntity data) {
+            public void onSuccess(int code,ResultEntity data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 LogUtils.d(SplashActivity.class.getName(), data.getResultMessage());
                 if (data.getResultCode().equals("0000") ||
                         data.getResultCode().equals("0005")) {
-                    SPUtils.put(mContext, Constants.IS_ACTIVATION, true);
+                    SPUtils.put(Constants.IS_ACTIVATION, true);
                 }
-            }
-
-            @Override
-            public void onFail() {
-
             }
         });
     }
@@ -224,14 +217,12 @@ public class SplashActivity extends AppBaseActivity {
         BaseApi.request(createApi(IPayServiceApi.class).getAppPayInfo(),
                 new BaseApi.IResponseListener<AppPayInfo>() {
                     @Override
-                    public void onSuccess(AppPayInfo data) {
+                    public void onSuccess(int code,AppPayInfo data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         AppPayInfoDaoHelper.getHelper().deleteAll();
                         AppPayInfoDaoHelper.getHelper().addData(data);
-                    }
-
-                    @Override
-                    public void onFail() {
-                        LogUtils.e("SplashActivity", "getAppInfo-Error");
                     }
                 });
     }

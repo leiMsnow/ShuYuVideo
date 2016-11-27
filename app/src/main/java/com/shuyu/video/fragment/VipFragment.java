@@ -85,13 +85,11 @@ public class VipFragment extends BaseFragment {
     private void canScroll() {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code,UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 vpContainer.setCanScroll(mCanScroll = data.getUserType() > 2);
-            }
-
-            @Override
-            public void onFail() {
-
             }
         });
     }
@@ -109,15 +107,13 @@ public class VipFragment extends BaseFragment {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getLiveVideoList(1),
                 new BaseApi.IResponseListener<LiveVideo>() {
                     @Override
-                    public void onSuccess(LiveVideo data) {
+                    public void onSuccess(int code,LiveVideo data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         mPageAdapter.setLiveVideoDataList(data.getNightVideoDetailList());
                         vpContainer.setOffscreenPageLimit(mPageAdapter.getCount());
                         tvDesc.setText(data.getNightVideoDetailList().get(0).getDescription());
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }

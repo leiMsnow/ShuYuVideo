@@ -3,6 +3,8 @@ package com.shuyu.core.uils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.shuyu.core.CoreApplication;
+
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,18 +27,17 @@ public class SPUtils {
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
      * Append methods of putting Double values by chen.
      *
-     * @param context context
      * @param key 键
      * @param object 值
      */
-    public static void put(Context context, String key, Object object) {
-        put(context, FILE_NAME, key, object);
+    public static void put(String key, Object object) {
+        put(FILE_NAME, key, object);
     }
 
-    public static void put(Context context, String fileName, String key, Object object) {
+    public static void put(String fileName, String key, Object object) {
         if (object == null)
             return;
-        SharedPreferences sp = context.getSharedPreferences(fileName,
+        SharedPreferences sp = CoreApplication.getApplication().getSharedPreferences(fileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
 
@@ -60,22 +61,20 @@ public class SPUtils {
         SharedPreferencesCompat.apply(editor);
     }
 
-
     /**
      * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
      * Append methods of getting Double values by chen.
      *
-     * @param context context
      * @param key 键
      * @param defaultObject 默认值
      * @return 返回值
      */
-    public static Object get(Context context, String key, Object defaultObject) {
-        return get(context, FILE_NAME, key, defaultObject);
+    public static Object get( String key, Object defaultObject) {
+        return get(FILE_NAME, key, defaultObject);
     }
 
-    public static Object get(Context context, String fileName, String key, Object defaultObject) {
-        SharedPreferences sp = context.getSharedPreferences(fileName,
+    public static Object get( String fileName, String key, Object defaultObject) {
+        SharedPreferences sp = CoreApplication.getApplication().getSharedPreferences(fileName,
                 Context.MODE_PRIVATE);
 
         if (defaultObject instanceof String) {
@@ -97,19 +96,17 @@ public class SPUtils {
         return null;
     }
 
-
     /**
      * 移除某个key值已经对应的值
      *
-     * @param context context
      * @param key 键
      */
-    public static void remove(Context context, String key) {
-        remove(context, FILE_NAME, key);
+    public static void remove(String key) {
+        remove( FILE_NAME, key);
     }
 
-    public static void remove(Context context, String fileName, String key) {
-        SharedPreferences sp = context.getSharedPreferences(fileName,
+    public static void remove(String fileName, String key) {
+        SharedPreferences sp = CoreApplication.getApplication().getSharedPreferences(fileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove(key);
@@ -119,14 +116,13 @@ public class SPUtils {
     /**
      * 清除所有数据
      *
-     * @param context context
      */
-    public static void clear(Context context) {
-        clear(context, FILE_NAME);
+    public static void clear() {
+        clear(FILE_NAME);
     }
 
-    public static void clear(Context context, String fileName) {
-        SharedPreferences sp = context.getSharedPreferences(fileName,
+    public static void clear(String fileName) {
+        SharedPreferences sp = CoreApplication.getApplication().getSharedPreferences(fileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
@@ -136,35 +132,30 @@ public class SPUtils {
     /**
      * 查询某个key是否已经存在
      *
-     * @param context context
      * @param key 键
      * @return true存在 ; false不存在
      */
-    public static boolean contains(Context context, String key) {
-        return contains(context, FILE_NAME, key);
+    public static boolean contains(String key) {
+        return contains(FILE_NAME, key);
     }
 
-    public static boolean contains(Context context, String fileName, String key) {
-        SharedPreferences sp = context.getSharedPreferences(fileName,
+    public static boolean contains(String fileName, String key) {
+        SharedPreferences sp = CoreApplication.getApplication().getSharedPreferences(fileName,
                 Context.MODE_PRIVATE);
         return sp.contains(key);
     }
 
-
-
-
     /**
      * 返回所有的键值对
      *
-     * @param context
      * @return
      */
-    public static Map<String, ?> getAll(Context context) {
-        return getAll(context,FILE_NAME);
+    public static Map<String, ?> getAll() {
+        return getAll(FILE_NAME);
     }
 
-    public static Map<String, ?> getAll(Context context,String fileName) {
-        SharedPreferences sp = context.getSharedPreferences(fileName,
+    public static Map<String, ?> getAll(String fileName) {
+        SharedPreferences sp = CoreApplication.getApplication().getSharedPreferences(fileName,
                 Context.MODE_PRIVATE);
         return sp.getAll();
     }

@@ -9,9 +9,9 @@ import com.shuyu.video.model.OrderInfo;
  * Created by Azure on 2016/11/7.
  */
 
-public class YuePengSPPay extends BasePay {
+public class LePengSPPay extends BasePay {
 
-    public YuePengSPPay(OrderInfo orderInfo) {
+    public LePengSPPay(OrderInfo orderInfo) {
         super(orderInfo);
 
     }
@@ -28,14 +28,14 @@ public class YuePengSPPay extends BasePay {
                 ((int) mOrderInfo.getPrice()), new PayListener() {
                     @Override
                     public void onPaySuccess(String extData, String orderCode) {
-                        LogUtils.d(YuePengSPPay.class.getName(), "支付成功" + extData + "," + orderCode);
+                        LogUtils.d(LePengSPPay.class.getName(), "支付成功" + extData + "," + orderCode);
                         if (callback != null) {
                             callback.paySuccess();
                         }
                     }
 
                     public void onPayError(String errMsg, String extData, String orderCode) {
-                        LogUtils.d(YuePengSPPay.class.getName(), "支付失败:" + errMsg + "," + extData + "," + orderCode);
+                        LogUtils.d(LePengSPPay.class.getName(), "支付失败:" + errMsg + "," + extData + "," + orderCode);
                         if (callback != null) {
                             callback.payFail();
                         }
@@ -43,7 +43,7 @@ public class YuePengSPPay extends BasePay {
 
                     @Override
                     public void onPayCancel(String extData, String orderCode) {
-                        LogUtils.e(YuePengSPPay.class.getName(), "支付失败");
+                        LogUtils.e(LePengSPPay.class.getName(), "支付失败");
                         if (callback != null) {
                             callback.payFail();
                         }

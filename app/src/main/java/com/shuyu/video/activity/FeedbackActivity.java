@@ -50,14 +50,12 @@ public class FeedbackActivity extends AppBaseActivity {
                         .feedback(1, content, contact),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
-                    public void onSuccess(ResultEntity data) {
-                        ToastUtils.getInstance().showToast("感谢您的反馈");
+                    public void onSuccess(int code, ResultEntity data) {
+                        if (code == BaseApi.RESCODE_SUCCESS)
+                            ToastUtils.getInstance().showToast("感谢您的反馈");
                         finish();
                     }
 
-                    @Override
-                    public void onFail() {
-                    }
                 });
     }
 }

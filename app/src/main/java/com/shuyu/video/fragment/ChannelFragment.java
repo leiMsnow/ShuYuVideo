@@ -208,8 +208,11 @@ public class ChannelFragment extends BaseFragment {
                 new BaseApi.IResponseListener<List<ChannelBanner>>() {
 
                     @Override
-                    public void onSuccess(List<ChannelBanner> data) {
+                    public void onSuccess(int code, List<ChannelBanner> data) {
                         mSwipeContainer.setRefreshing(false);
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         cancelTimer();
                         if (data.isEmpty()) return;
                         mChannelBanners = data;
@@ -219,11 +222,6 @@ public class ChannelFragment extends BaseFragment {
                         tvBannerTitle.setText(data.get(0).getTitle());
                         autoUpdateViewPager();
                     }
-
-                    @Override
-                    public void onFail() {
-                        mSwipeContainer.setRefreshing(false);
-                    }
                 });
     }
 
@@ -232,13 +230,11 @@ public class ChannelFragment extends BaseFragment {
                 , new BaseApi.IResponseListener<ChannelVideo>() {
 
                     @Override
-                    public void onSuccess(ChannelVideo data) {
+                    public void onSuccess(int code,ChannelVideo data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         updateGroupData(data.getVideoChannelList());
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }
@@ -248,14 +244,13 @@ public class ChannelFragment extends BaseFragment {
                 , new BaseApi.IResponseListener<ChannelPicture>() {
 
                     @Override
-                    public void onSuccess(ChannelPicture data) {
+                    public void onSuccess(int code,ChannelPicture data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         updateGroupData(data.getPicChannelList());
                     }
 
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 

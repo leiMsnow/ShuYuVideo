@@ -13,8 +13,8 @@ import com.shuyu.video.activity.PictureDetailsActivity;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
 import com.shuyu.video.db.helper.AppPayInfoDaoHelper;
-import com.shuyu.video.fragment.ADSDialogFragment;
 import com.shuyu.video.fragment.PayDialogFragment;
+import com.shuyu.video.fragment.SPDialogFragment;
 import com.shuyu.video.model.AppPayInfo;
 import com.shuyu.video.model.Payment;
 import com.shuyu.video.model.UserInfo;
@@ -48,18 +48,17 @@ public class PayUtils {
                                        final IPlayerListener playerListener) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code, UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    if (playerListener != null)
+                        playerListener.canPlayer(false);
+                    return;
+                }
                 LogUtils.d("getUserInfo", data.toString());
                 boolean canPlay = !showPayDialog(context, data.getUserType(), needRule);
                 if (playerListener != null) {
                     playerListener.canPlayer(canPlay);
                 }
-            }
-
-            @Override
-            public void onFail() {
-                if (playerListener != null)
-                    playerListener.canPlayer(false);
             }
         });
 
@@ -68,17 +67,16 @@ public class PayUtils {
     public static void canPlay(final int needRule, final IPlayerListener playerListener) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code,UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    if (playerListener != null)
+                        playerListener.canPlayer(false);
+                    return;
+                }
                 boolean canPlay = ((data.getUserType() >= needRule) || (needRule < 2));
                 if (playerListener != null) {
                     playerListener.canPlayer(canPlay);
                 }
-            }
-
-            @Override
-            public void onFail() {
-                if (playerListener != null)
-                    playerListener.canPlayer(false);
             }
         });
     }
@@ -102,7 +100,10 @@ public class PayUtils {
         BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                 new BaseApi.IResponseListener<List<Payment>>() {
                     @Override
-                    public void onSuccess(List<Payment> mPayments) {
+                    public void onSuccess(int code,List<Payment> mPayments) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         if (mPayments != null) {
                             ArrayList<Payment> payments = new ArrayList<>();
                             for (Payment payment : mPayments) {
@@ -117,17 +118,12 @@ public class PayUtils {
                             }
                         }
                     }
-
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
 
     }
 
     private static void showADSPayDialog(Context context, ArrayList<Payment> payments) {
-        ADSDialogFragment adsDialogFragment = new ADSDialogFragment();
+        SPDialogFragment adsDialogFragment = new SPDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("PaymentList", payments);
         adsDialogFragment.setArguments(bundle);
@@ -137,6 +133,7 @@ public class PayUtils {
     public static void showPayDialog(Context context) {
         showPayDialog(context, null);
     }
+
     private static long currentTime = 0;
 
     public static void showPayDialog(Context context, Bundle bundle) {
@@ -152,18 +149,16 @@ public class PayUtils {
     public static void canShowPic(final Context mContext, final int needRule, final int id) {
         getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code,UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 if (showPayDialog(mContext, data.getUserType(), needRule)) {
                     return;
                 }
                 Intent intent = new Intent(mContext, PictureDetailsActivity.class);
                 intent.putExtra(Constants.PICTURE_DETAIL_ID, id);
                 mContext.startActivity(intent);
-            }
-
-            @Override
-            public void onFail() {
-
             }
         });
     }

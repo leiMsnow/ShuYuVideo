@@ -123,7 +123,8 @@ android {
             versionName "3.3.14"
             versionCode 30305
 //            applicationId "quanmingyingyin.com"
-            applicationId "com.txy.wzd"
+//            applicationId "com.txy.wzd"
+            applicationId "com.tdx.wzd"
             resValue "string", "app_name", "午夜影吧"
             buildConfigField "int", "APP_ID", "1001"
             buildConfigField "String", "ditchNo", '"0"'

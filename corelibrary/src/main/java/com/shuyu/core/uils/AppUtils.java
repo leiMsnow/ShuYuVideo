@@ -9,6 +9,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.shuyu.core.CoreApplication;
 
@@ -93,25 +94,25 @@ public class AppUtils {
     public static String getIMSI() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getSubscriberId() == null ? "" : mTelephonyMgr.getSubscriberId();
+        return TextUtils.isEmpty(mTelephonyMgr.getSubscriberId()) ? "" : mTelephonyMgr.getSubscriberId();
     }
 
     public static String getIMEI() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getDeviceId() == null ? "000000000000000" : mTelephonyMgr.getDeviceId();
+        return TextUtils.isEmpty(mTelephonyMgr.getDeviceId()) ? "000000000000000" : mTelephonyMgr.getDeviceId();
     }
 
     public static String getTelNumber() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getLine1Number() == null ? "" : mTelephonyMgr.getLine1Number();
+        return TextUtils.isEmpty(mTelephonyMgr.getLine1Number()) ? "" : mTelephonyMgr.getLine1Number();
     }
 
     public static String getSerialNumber() {
         TelephonyManager mTelephonyMgr = (TelephonyManager)
                 CoreApplication.getApplication().getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getSimSerialNumber() == null ? "" : mTelephonyMgr.getSimSerialNumber();
+        return TextUtils.isEmpty(mTelephonyMgr.getSimSerialNumber()) ? "" : mTelephonyMgr.getSimSerialNumber();
     }
 
     public static String getUUID() {

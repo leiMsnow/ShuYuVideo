@@ -54,14 +54,11 @@ public class PictureDetailsActivity extends AppBaseActivity {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getPictureDetails(groupId),
                 new BaseApi.IResponseListener<List<PictureDetails>>() {
                     @Override
-                    public void onSuccess(List<PictureDetails> data) {
-                        mPictureAdapter.replaceAll(data);
+                    public void onSuccess(int code, List<PictureDetails> data) {
+                        if (code == BaseApi.RESCODE_SUCCESS)
+                            mPictureAdapter.replaceAll(data);
                     }
 
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 

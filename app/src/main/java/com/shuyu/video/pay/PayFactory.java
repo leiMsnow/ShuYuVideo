@@ -33,7 +33,7 @@ public class PayFactory {
                 return new ZhiLiaoPay(orderInfo);
             case PAY_SP_YUEPENG_10:
             case PAY_SP_YUEPENG_20:
-                return new YuePengSPPay(orderInfo);
+                return new LePengSPPay(orderInfo);
             case PAY_SP_XUN_TONG_10:
                 return new XunTuSPPay(orderInfo);
         }

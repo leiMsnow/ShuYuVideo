@@ -137,15 +137,14 @@ public class UserCenterFragment extends BaseFragment {
     private void getUserInfo() {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code,UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 mData = data;
                 setUserInfo();
             }
 
-            @Override
-            public void onFail() {
-
-            }
         });
     }
 

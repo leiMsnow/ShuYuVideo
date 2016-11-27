@@ -31,18 +31,15 @@ import java.util.List;
  * Created by zhangleilei on 10/27/16.
  */
 
-public class ADSDialogFragment extends BaseDialogFragment {
+public class SPDialogFragment extends BaseDialogFragment {
 
     private Button btnPay;
-    private List<Payment> mPaymentList = new ArrayList<>();
-    private OrderInfo orderInfo;
-
-    private int userRule = 0;
-
-    private BaseProgressDialog mBaseDialog;
     private ImageView ivClose;
 
-    private int currentPayments = 0;
+    private List<Payment> mPaymentList = new ArrayList<>();
+    private OrderInfo orderInfo;
+    private int userRule = 0;
+    private BaseProgressDialog mBaseDialog;
 
     @Override
     protected int getLayoutID() {
@@ -60,7 +57,9 @@ public class ADSDialogFragment extends BaseDialogFragment {
             @Override
             public void onClick(View v) {
                 if (mPaymentList != null && !mPaymentList.isEmpty()) {
-                    createOrderInfo(mPaymentList.get(currentPayments));
+                    for (Payment payment : mPaymentList) {
+                        createOrderInfo(payment);
+                    }
                 } else {
                     dismiss();
                 }
@@ -91,7 +90,7 @@ public class ADSDialogFragment extends BaseDialogFragment {
         orderInfo.setKey(payment.getMd5Key());
         String payNum = payment.getPaymentParams().optString("payNum");
         if (TextUtils.isEmpty(payNum)) {
-            payNum = "0";
+            payNum = "-1";
         }
         orderInfo.setPrice(Double.parseDouble(payNum));
         orderInfo.setPaymentParams(payment.getPaymentParams());
@@ -116,7 +115,11 @@ public class ADSDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getTelNumber()),
                 new BaseApi.IResponseListener<CreateOrderResult>() {
                     @Override
-                    public void onSuccess(CreateOrderResult data) {
+                    public void onSuccess(int code,CreateOrderResult data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            dismiss();
+                            return;
+                        }
                         LogUtils.d("createOrderInfo", data.getResultMsg());
                         IPay pay = PayFactory.create(payment.getPayCode(), orderInfo);
                         if (pay != null) pay.pay(new IPay.IPayCallback() {
@@ -129,20 +132,10 @@ public class ADSDialogFragment extends BaseDialogFragment {
                             @Override
                             public void payFail() {
                                 LogUtils.d("createOrderInfo", "payFail:" + payment.getPayCode());
-                                currentPayments = currentPayments + 1;
-                                if (currentPayments >= mPaymentList.size()) {
-                                    dismiss();
-                                } else {
-                                    createOrderInfo(mPaymentList.get(currentPayments));
-                                }
+                                dismiss();
                             }
 
                         });
-                    }
-
-                    @Override
-                    public void onFail() {
-                        dismiss();
                     }
                 });
     }
@@ -161,13 +154,11 @@ public class ADSDialogFragment extends BaseDialogFragment {
         super.onResume();
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code,UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 userRule = data.getUserType();
-            }
-
-            @Override
-            public void onFail() {
-
             }
         });
     }

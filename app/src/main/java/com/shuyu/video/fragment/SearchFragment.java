@@ -71,7 +71,11 @@ public class SearchFragment extends BaseFragment {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).searchVideo(keyword, 1, 20),
                 new BaseApi.IResponseListener<SearchVideoList>() {
                     @Override
-                    public void onSuccess(SearchVideoList data) {
+                    public void onSuccess(int code, SearchVideoList data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            setTvEmpty(keyword);
+                            return;
+                        }
                         if (data.getTotalItemCount() == 0) {
                             setTvEmpty(keyword);
                             return;
@@ -79,11 +83,6 @@ public class SearchFragment extends BaseFragment {
                         tvTotal.setVisibility(View.VISIBLE);
                         tvTotal.setText(String.format("共为您搜索出%d部视频", data.getTotalItemCount()));
                         mSearchContentAdapter.replaceAllData(data.getChannelContentList());
-                    }
-
-                    @Override
-                    public void onFail() {
-                        setTvEmpty(keyword);
                     }
                 });
     }

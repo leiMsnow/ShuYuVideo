@@ -139,15 +139,10 @@ public class PayDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getTelNumber()),
                 new BaseApi.IResponseListener<CreateOrderResult>() {
                     @Override
-                    public void onSuccess(CreateOrderResult data) {
+                    public void onSuccess(int code, CreateOrderResult data) {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
                         IPay pay = PayFactory.create(payment.getPayCode(), orderInfo);
                         if (pay != null) pay.pay(null);
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }
@@ -165,7 +160,10 @@ public class PayDialogFragment extends BaseDialogFragment {
         BaseApi.request(createApi(IPayServiceApi.class).selectPayment(),
                 new BaseApi.IResponseListener<List<Payment>>() {
                     @Override
-                    public void onSuccess(List<Payment> mPayments) {
+                    public void onSuccess(int code, List<Payment> mPayments) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         if (mPayments != null) {
                             for (Payment payment : mPayments) {
                                 if (payment.getPayType() == PayUtils.WE_CHAT_PAY && mWeChatPayment == null) {
@@ -182,11 +180,6 @@ public class PayDialogFragment extends BaseDialogFragment {
                             }
                         }
                     }
-
-                    @Override
-                    public void onFail() {
-
-                    }
                 });
     }
 
@@ -195,7 +188,10 @@ public class PayDialogFragment extends BaseDialogFragment {
         super.onResume();
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code, UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 userRule = data.getUserType();
                 payBackground.setBackgroundResource(PayUtils.getPayDialogBG(userRule));
                 if (payDialogBG != 0) {
@@ -209,11 +205,6 @@ public class PayDialogFragment extends BaseDialogFragment {
                 tvNewPrice.setText(String.format("特价：%.2f元", mRebateMoneys));
                 tvPriceTips.setText(PayUtils.getPayMoneyTips(userRule, payDialogBG != 0));
             }
-
-            @Override
-            public void onFail() {
-
-            }
         });
 
         if (TextUtils.isEmpty(mOrderNo)) {
@@ -222,7 +213,11 @@ public class PayDialogFragment extends BaseDialogFragment {
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class).getOrder(mOrderNo),
                 new BaseApi.IResponseListener<PayResult>() {
                     @Override
-                    public void onSuccess(PayResult data) {
+                    public void onSuccess(int code, PayResult data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            PayDialogFragment.this.dismiss();
+                            return;
+                        }
                         if (mPayCode.equals(PayFactory.PAY_YIKA_ALIPAY)) {
                             PayDialogFragment.this.dismiss();
                             return;
@@ -235,12 +230,6 @@ public class PayDialogFragment extends BaseDialogFragment {
                             ToastUtils.getInstance().showToast("支付失败");
                         }
                         PayDialogFragment.this.dismiss();
-                    }
-
-                    @Override
-                    public void onFail() {
-                        PayDialogFragment.this.dismiss();
-                        ToastUtils.getInstance().showToast("查询订单失败，请重新尝试");
                     }
                 });
     }

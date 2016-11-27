@@ -25,7 +25,7 @@ public class MCrashHandler implements UncaughtExceptionHandler {
 
     private static MCrashHandler mInstance = new MCrashHandler();
 
-    private boolean cancelUp = false;
+    private static boolean cancelUp = false;
     private UncaughtExceptionHandler mDefaultHandler;
     private Map<String, String> mLogInfo = new HashMap<>();
 
@@ -159,15 +159,14 @@ public class MCrashHandler implements UncaughtExceptionHandler {
         BaseApi.request(BaseApi.createApi(ILocalServiceApi.class).upLog(log, 1),
                 new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
-                    public void onSuccess(ResultEntity data) {
+                    public void onSuccess(int code, ResultEntity data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            cancelUp = false;
+                            LogUtils.d(MCrashHandler.class.getName(), "日志上传失败!");
+                            return;
+                        }
                         LogUtils.d(MCrashHandler.class.getName(), "日志上传成功!");
                         cancelUp = true;
-                    }
-
-                    @Override
-                    public void onFail() {
-                        LogUtils.d(MCrashHandler.class.getName(), "日志上传失败!");
-                        cancelUp = false;
                     }
                 });
     }

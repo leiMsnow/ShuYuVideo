@@ -161,19 +161,18 @@ public class VideoDetailsActivity extends AppBaseActivity {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoDetails(id),
                 new BaseApi.IResponseListener<VideoPicDetails>() {
                     @Override
-                    public void onSuccess(VideoPicDetails data) {
+                    public void onSuccess(int code, VideoPicDetails data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            videoBG.setVisibility(View.GONE);
+                            mIvUrl.setImageResource(R.mipmap.ic_default_image);
+                            return;
+                        }
                         videoBG.setVisibility(View.GONE);
                         Glide.with(mContext).load(data.getImgUrl()).into(mIvUrl);
                         setTitle(data.getTitle());
                         mVideoDetails = data;
                         initVideoView();
                         setFreeTips();
-                    }
-
-                    @Override
-                    public void onFail() {
-                        videoBG.setVisibility(View.GONE);
-                        mIvUrl.setImageResource(R.mipmap.ic_default_image);
                     }
                 });
     }
@@ -247,7 +246,10 @@ public class VideoDetailsActivity extends AppBaseActivity {
     private void initVideoView() {
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(UserInfo data) {
+            public void onSuccess(int code,UserInfo data) {
+                if (code == BaseApi.RESCODE_FAILURE) {
+                    return;
+                }
                 mEndTime = (mVideoDetails.getFeeRule() == 1 && data.getUserType() == 0)
                         ? mVideoDetails.getVideoLength() * 1000 : 0;
                 tvVideoTitle.setText(mVideoDetails.getTitle());
@@ -257,10 +259,6 @@ public class VideoDetailsActivity extends AppBaseActivity {
                 setVideoAreaSize();
             }
 
-            @Override
-            public void onFail() {
-
-            }
         });
 
         mVideoView.setVideoViewCallback(new UniversalVideoView.VideoViewCallback() {
@@ -311,13 +309,11 @@ public class VideoDetailsActivity extends AppBaseActivity {
         BaseApi.request(BaseApi.createApi(IServiceApi.class).getVideoCommentList(),
                 new BaseApi.IResponseListener<List<VideoComment>>() {
                     @Override
-                    public void onSuccess(List<VideoComment> data) {
+                    public void onSuccess(int code,List<VideoComment> data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         mCommentAdapter.replaceAll(data);
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }
@@ -353,13 +349,11 @@ public class VideoDetailsActivity extends AppBaseActivity {
                         .lookVideoState(mVideoDetails.getId(), 0)
                 , new BaseApi.IResponseListener<ResultEntity>() {
                     @Override
-                    public void onSuccess(ResultEntity data) {
+                    public void onSuccess(int code,ResultEntity data) {
+                        if (code == BaseApi.RESCODE_FAILURE) {
+                            return;
+                        }
                         LogUtils.d(VideoDetailsActivity.class.getName(), data.getResultMessage());
-                    }
-
-                    @Override
-                    public void onFail() {
-
                     }
                 });
     }
