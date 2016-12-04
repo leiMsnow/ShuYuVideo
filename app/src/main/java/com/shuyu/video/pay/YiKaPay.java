@@ -44,5 +44,25 @@ public class YiKaPay {
             super(orderInfo);
         }
 
+        @Override
+        public void pay(IPayCallback callback) {
+//            WxTask task = new WxTask(mOrderInfo.getContext(),
+//                    mOrderInfo.getPartnerId(),
+//                    mOrderInfo.getCallBackUrl(),
+//                    mOrderInfo.getKey(),
+//                    mOrderInfo.getOrderId(),
+//                    String.valueOf(mOrderInfo.getPrice()),
+//                    payUrl,
+//                    mOrderInfo.getOrderName());
+//            try {
+//                task.execute(payUrl);
+//                callback.paySuccess();
+//            } catch (Exception e) {
+//                if (callback != null) {
+//                    callback.payFail();
+//                }
+//            }
+        }
+
     }
 }

@@ -121,7 +121,7 @@ android {
         }
         spwysb_111111031_0003201{
             versionName "3.3.14"
-            versionCode 30305
+            versionCode 30306
 //            applicationId "quanmingyingyin.com"
 //            applicationId "com.txy.wzd"
             applicationId "com.tdx.wzd"
