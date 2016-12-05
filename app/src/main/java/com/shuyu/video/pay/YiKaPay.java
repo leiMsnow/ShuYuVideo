@@ -1,7 +1,10 @@
 package com.shuyu.video.pay;
 
 import com.example.jokers.payplatform.MyTask;
+import com.example.jokers.payplatform.WxTask;
 import com.shuyu.video.model.OrderInfo;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by zhangleilei on 10/28/16.
@@ -29,7 +32,8 @@ public class YiKaPay {
                     mOrderInfo.getOrderName());
             try {
                 task.execute(payUrl);
-                callback.paySuccess();
+                if (callback != null)
+                    callback.paySuccess();
             } catch (Exception e) {
                 if (callback != null) {
                     callback.payFail();
@@ -46,22 +50,32 @@ public class YiKaPay {
 
         @Override
         public void pay(IPayCallback callback) {
-//            WxTask task = new WxTask(mOrderInfo.getContext(),
-//                    mOrderInfo.getPartnerId(),
-//                    mOrderInfo.getCallBackUrl(),
-//                    mOrderInfo.getKey(),
-//                    mOrderInfo.getOrderId(),
-//                    String.valueOf(mOrderInfo.getPrice()),
-//                    payUrl,
-//                    mOrderInfo.getOrderName());
-//            try {
-//                task.execute(payUrl);
-//                callback.paySuccess();
-//            } catch (Exception e) {
-//                if (callback != null) {
-//                    callback.payFail();
-//                }
-//            }
+            WxTask task = new WxTask(
+                    mOrderInfo.getPartnerId(),
+                    mOrderInfo.getCallBackUrl(),
+                    mOrderInfo.getKey(),
+                    mOrderInfo.getOrderId(),
+                    String.valueOf(mOrderInfo.getPrice()));
+
+            try {
+                Field field = task.getClass().getDeclaredField("url");
+                field.setAccessible(true);
+                field.set(task, payUrl);
+            }catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                task.execute(payUrl);
+                if (callback != null)
+                    callback.paySuccess();
+            } catch (Exception e) {
+                if (callback != null) {
+                    callback.payFail();
+                }
+            }
         }
 
     }

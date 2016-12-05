@@ -192,4 +192,24 @@ public class Payment implements Parcelable {
         dest.writeString(payUrl);
         dest.writeString(params);
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", payType=" + payType +
+                ", payCompanyCode='" + payCompanyCode + '\'' +
+                ", payCode='" + payCode + '\'' +
+                ", payBean='" + payBean + '\'' +
+                ", partnerId='" + partnerId + '\'' +
+                ", md5Key='" + md5Key + '\'' +
+                ", notifyUrl1='" + notifyUrl1 + '\'' +
+                ", notifyUrl2='" + notifyUrl2 + '\'' +
+                ", remark='" + remark + '\'' +
+                ", payUrl='" + payUrl + '\'' +
+                ", params='" + params + '\'' +
+                ", mJsonParams=" + mJsonParams +
+                '}';
+    }
 }

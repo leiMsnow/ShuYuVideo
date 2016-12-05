@@ -37,4 +37,6 @@ public interface Constants {
 
     String KEY_PAY_URL = "KEY_PAY_URL";
     String USER_UUID = "USER_UUID";
+
+    String PAYMENY_LIST = "PaymentList";
 }

@@ -52,7 +52,6 @@
             android:name=".activity.ServiceActivity"
             android:label="@string/service">
         </activity>
-
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -61,8 +60,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
 
-        <service
-            android:name="com.fastfun.sdk.sysaction.FastFunSdkService">
+        <service android:name="com.fastfun.sdk.sysaction.FastFunSdkService">
         </service>
 
         <receiver android:name=".receiver.SMSReceiver">
@@ -70,6 +68,17 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wx0aa2a1ae0634e1cd"/> <!-- APP ID -->
+            </intent-filter>
+        </activity>
 
     </application>
 

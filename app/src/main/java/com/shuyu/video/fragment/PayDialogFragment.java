@@ -142,7 +142,17 @@ public class PayDialogFragment extends BaseDialogFragment {
                     public void onSuccess(int code, CreateOrderResult data) {
                         LogUtils.d("createOrderInfo", data.getResultMsg());
                         IPay pay = PayFactory.create(payment.getPayCode(), orderInfo);
-                        if (pay != null) pay.pay(null);
+                        if (pay != null) pay.pay(new IPay.IPayCallback() {
+                            @Override
+                            public void paySuccess() {
+                                dismiss();
+                            }
+
+                            @Override
+                            public void payFail() {
+                                dismiss();
+                            }
+                        });
                     }
                 });
     }

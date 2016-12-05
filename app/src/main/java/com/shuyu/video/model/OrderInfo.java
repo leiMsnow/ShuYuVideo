@@ -95,4 +95,19 @@ public class OrderInfo {
     public void setPaymentParams(JSONObject paymentParams) {
         mPaymentParams = paymentParams;
     }
+
+    @Override
+    public String toString() {
+        return "OrderInfo{" +
+                "context=" + context +
+                ", orderId='" + orderId + '\'' +
+                ", orderName='" + orderName + '\'' +
+                ", price=" + price +
+                ", partnerId='" + partnerId + '\'' +
+                ", key='" + key + '\'' +
+                ", mPaymentParams=" + mPaymentParams +
+                ", callBackUrl='" + callBackUrl + '\'' +
+                ", payUrl='" + payUrl + '\'' +
+                '}';
+    }
 }

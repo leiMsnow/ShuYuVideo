@@ -9,7 +9,7 @@ import com.shuyu.video.model.OrderInfo;
 public class PayFactory {
 
     public static final String PAY_YIKA_ALIPAY = "yika-alipay";
-    public static final String PAY_YIKA_WECHAT = "yika-yika-weixin";
+    public static final String PAY_YIKA_WECHAT = "yika-weixin";
 
     public static final String PAY_ZHILIAOFU_ALIPAY = "zhiliaofu-alipay";
     public static final String PAY_ZHILIAOFU_WECHAT = "zhiliaofu-weixin";

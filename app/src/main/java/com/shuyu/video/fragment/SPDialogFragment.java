@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import com.shuyu.core.BaseDialogFragment;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.NetUtils;
-import com.shuyu.core.widget.BaseProgressDialog;
 import com.shuyu.video.R;
 import com.shuyu.video.api.BaseApi;
 import com.shuyu.video.api.IPayServiceApi;
@@ -21,25 +20,23 @@ import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.pay.IPay;
 import com.shuyu.video.pay.PayFactory;
 import com.shuyu.video.utils.CommonUtils;
+import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.DataSignUtils;
 import com.shuyu.video.utils.PayUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhangleilei on 10/27/16.
  */
-
 public class SPDialogFragment extends BaseDialogFragment {
 
     private Button btnPay;
     private ImageView ivClose;
 
-    private List<Payment> mPaymentList = new ArrayList<>();
+    private ArrayList<Payment> mPaymentList = new ArrayList<>();
     private OrderInfo orderInfo;
     private int userRule = 0;
-    private BaseProgressDialog mBaseDialog;
 
     @Override
     protected int getLayoutID() {
@@ -51,7 +48,7 @@ public class SPDialogFragment extends BaseDialogFragment {
         btnPay = (Button) mView.findViewById(R.id.btn_pay);
         ivClose = (ImageView) mView.findViewById(R.id.iv_close);
         if (getArguments() != null) {
-            mPaymentList = getArguments().getParcelableArrayList("PaymentList");
+            mPaymentList = getArguments().getParcelableArrayList(Constants.PAYMENY_LIST);
         }
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,12 +74,6 @@ public class SPDialogFragment extends BaseDialogFragment {
 
         if (payment == null) return;
 
-        if (mBaseDialog == null) {
-            mBaseDialog = new BaseProgressDialog(getContext());
-            mBaseDialog.setMessage("正在领取礼包...");
-            mBaseDialog.show();
-        }
-
         orderInfo = new OrderInfo((AppCompatActivity) getActivity());
         orderInfo.setOrderId(PayUtils.createOrderNo());
         orderInfo.setOrderName("首充大礼包");
@@ -95,6 +86,9 @@ public class SPDialogFragment extends BaseDialogFragment {
         orderInfo.setPrice(Double.parseDouble(payNum));
         orderInfo.setPaymentParams(payment.getPaymentParams());
         orderInfo.setPayUrl(payment.getPayUrl());
+
+        LogUtils.d("Payment", payment.toString());
+        LogUtils.d("OrderInfo", orderInfo.toString());
 
         BaseApi.request(BaseApi.createApi(IPayServiceApi.class)
                         .createOrder(payment.getTitle(),
@@ -115,7 +109,7 @@ public class SPDialogFragment extends BaseDialogFragment {
                                 CommonUtils.getTelNumber()),
                 new BaseApi.IResponseListener<CreateOrderResult>() {
                     @Override
-                    public void onSuccess(int code,CreateOrderResult data) {
+                    public void onSuccess(int code, CreateOrderResult data) {
                         if (code == BaseApi.RESCODE_FAILURE) {
                             dismiss();
                             return;
@@ -143,10 +137,6 @@ public class SPDialogFragment extends BaseDialogFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mBaseDialog != null && mBaseDialog.isShowing()) {
-            mBaseDialog.dismiss();
-            mBaseDialog = null;
-        }
     }
 
     @Override
@@ -154,7 +144,7 @@ public class SPDialogFragment extends BaseDialogFragment {
         super.onResume();
         PayUtils.getUserInfo(new BaseApi.IResponseListener<UserInfo>() {
             @Override
-            public void onSuccess(int code,UserInfo data) {
+            public void onSuccess(int code, UserInfo data) {
                 if (code == BaseApi.RESCODE_FAILURE) {
                     return;
                 }

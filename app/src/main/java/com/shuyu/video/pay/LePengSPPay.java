@@ -13,7 +13,6 @@ public class LePengSPPay extends BasePay {
 
     public LePengSPPay(OrderInfo orderInfo) {
         super(orderInfo);
-
     }
 
     @Override

@@ -9,15 +9,8 @@ import com.shuyu.video.model.OrderInfo;
 public abstract class BasePay implements IPay {
 
     protected OrderInfo mOrderInfo;
-
     public BasePay(OrderInfo orderInfo) {
         mOrderInfo = orderInfo;
     }
 
-    @Override
-    public void pay(IPayCallback callback) {
-        if (callback != null) {
-            callback.paySuccess();
-        }
-    }
 }

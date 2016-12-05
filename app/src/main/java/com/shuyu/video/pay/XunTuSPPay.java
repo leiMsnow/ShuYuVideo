@@ -25,6 +25,9 @@ public class XunTuSPPay extends BasePay {
                         if (code == BaseApi.RESCODE_FAILURE) {
                             return;
                         }
+                        if (callback!=null){
+                            callback.paySuccess();
+                        }
                         LogUtils.d(XunTuSPPay.class.getName(), data.getPayUrl());
                     }
                 });
