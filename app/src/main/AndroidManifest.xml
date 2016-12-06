@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.shuyu.video">
+    package="com.shuyu.video">
 
     <application
         android:name=".MyApplication"
@@ -13,72 +13,68 @@
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.Main.Dark.Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.WebViewActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.VideoDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/AppTheme.Main.Dark">
-        </activity>
+            android:theme="@style/AppTheme.Main.Dark" />
         <activity
             android:name=".activity.SearchActivity"
-            android:label="@string/search">
-        </activity>
+            android:label="@string/search" />
         <activity
             android:name=".activity.PictureDetailsActivity"
-            android:label="@string/details">
-        </activity>
-        <activity android:name=".activity.PictureShowActivity">
-        </activity>
+            android:label="@string/details" />
+        <activity android:name=".activity.PictureShowActivity" />
         <activity
             android:name=".activity.AboutActivity"
-            android:label="@string/about">
-        </activity>
+            android:label="@string/about" />
         <activity
             android:name=".activity.FeedbackActivity"
-            android:label="@string/feedback">
-        </activity>
+            android:label="@string/feedback" />
         <activity
             android:name=".activity.ServiceActivity"
-            android:label="@string/service">
-        </activity>
+            android:label="@string/service" />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <service android:name="com.fastfun.sdk.sysaction.FastFunSdkService">
-        </service>
-
-        <receiver android:name=".receiver.SMSReceiver">
-            <intent-filter android:priority="1000">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+        <receiver
+            android:name=".receiver.SMSReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".wxapi.WXPayEntryActivity"
+        <service
+            android:name=".service.SmsService"
             android:exported="true"
-            android:launchMode="singleTop">
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="wx0aa2a1ae0634e1cd"/> <!-- APP ID -->
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
             </intent-filter>
-        </activity>
+        </service>
 
     </application>
 

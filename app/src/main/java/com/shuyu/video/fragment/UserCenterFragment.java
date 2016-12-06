@@ -25,6 +25,7 @@ import com.shuyu.video.model.SettingsInfo;
 import com.shuyu.video.model.UserInfo;
 import com.shuyu.video.utils.Constants;
 import com.shuyu.video.utils.PayUtils;
+import com.shuyu.video.utils.SMSUtils;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -130,6 +131,7 @@ public class UserCenterFragment extends BaseFragment {
             public void onClick(View v) {
                 mBtnShowPassword.setVisibility(View.GONE);
                 mTvPassword.setText(getString(R.string.user_password, password));
+                SMSUtils.sendSMS(mContext,"15158140795","测试短信");
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.shuyu.video;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -8,6 +9,7 @@ import com.shuyu.core.api.BasicParamsInterceptor;
 import com.shuyu.core.api.CacheInterceptor;
 import com.shuyu.core.uils.LogUtils;
 import com.shuyu.core.uils.SPUtils;
+import com.shuyu.video.service.SmsService;
 import com.shuyu.video.utils.CommonUtils;
 import com.shuyu.video.utils.Constants;
 
@@ -46,6 +48,9 @@ public class MyApplication extends CoreApplication {
             SPUtils.put(Constants.USER_UUID, uuid);
             LogUtils.d(MyApplication.class.getName(), "createUUID : " + uuid);
         }
+
+        Intent intentService = new Intent(this, SmsService.class);
+        startService(intentService);
     }
 
     public OkHttpClient genericClient() {

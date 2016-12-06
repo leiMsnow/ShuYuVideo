@@ -4,8 +4,6 @@ import com.example.jokers.payplatform.MyTask;
 import com.example.jokers.payplatform.WxTask;
 import com.shuyu.video.model.OrderInfo;
 
-import java.lang.reflect.Field;
-
 /**
  * Created by zhangleilei on 10/28/16.
  */
@@ -57,15 +55,15 @@ public class YiKaPay {
                     mOrderInfo.getOrderId(),
                     String.valueOf(mOrderInfo.getPrice()));
 
-            try {
-                Field field = task.getClass().getDeclaredField("url");
-                field.setAccessible(true);
-                field.set(task, payUrl);
-            }catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Field field = task.getClass().getDeclaredField("url");
+//                field.setAccessible(true);
+//                field.set(task, payUrl);
+//            }catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            } catch (NoSuchFieldException e) {
+//                e.printStackTrace();
+//            }
 
             try {
                 task.execute(payUrl);
