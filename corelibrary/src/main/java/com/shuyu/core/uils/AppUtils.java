@@ -28,7 +28,7 @@ public class AppUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    /**
+    /** 
      * 获取系统版本号
      *
      * @return 获取系统版本号
